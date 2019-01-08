@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>流程发布</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script src="../../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/prettify.js"></script>
+		<script type="text/javascript" src="../../gmodule/dataaccess/js/jquery.format.js"></script>
+		<script type="text/javascript" src="js/deployflow.js"></script>
+		<style type="text/css">
+			#bizInfo td{
+				border: solid 1px #dddddd;
+			}
+			#bizInfo .tr0{
+				border: solid 1px #dddddd;
+			}
+		</style>
+	</head>
+
+	<body style="margin-right:5px;overflow: hidden;">
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../../images/common/title.gif' align='absmiddle'/>流程发布
+				</td>
+				<td style="text-align: right;">
+					<a href="#" onclick="doSearch()"  class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="#" onclick="businessState()"  class="easyui-linkbutton" iconCls="icon-import">业务状态</a>
+					<a href="#" onclick="doModify()"  class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" onclick="doRelease()"  class="easyui-linkbutton" iconCls="icon-add">&nbsp;发&nbsp;&nbsp;布&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<form id="selectPostForm" class="easyui-form">
+			<!-- 查询 -->
+			<table class="btbForm">
+				<tr>
+					<td colspan="2">
+						关键字&nbsp;<input class="easyui-textbox" id="keyWord" name="keyWord"  data-options="prompt:'请输入流程名称、描述关键字'" style="width: 220px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						流程分类&nbsp;&nbsp;&nbsp;<input id="procCategoryQuery" name="procCategory" class="easyui-combobox" data-options="valueField:'dictCode',textField:'dictDesc',editable:false,panelHeight:'auto'"/>
+					</td>
+					<td style="text-align: right">
+						<input type="checkbox" id="isUsed" onchange="showNoUsedFlow()">显示无效流程
+					</td>
+				</tr>
+			</table>
+		</form>
+
+
+		<!-- 下载form -->
+		<form method="get" class="easyui-form" id="ff" style="display:none"></form>
+		
+		<div style="margin:5px;"></div>
+		
+		<table id="showFlowTable" class="easyui-datagrid" style="width:100%" data-options="pagination:true,pageSize:20,rownumbers:true,striped:true,autoRowHeight:true,singleSelect:true,onDblClickCell:doModify">
+			<thead>
+				<tr>
+					<th data-options="field:'procKey',align:'left',halign:'center',sortable:'true'" style="width:10%;">流程关键字</th>
+					<th data-options="field:'procVer',align:'right',halign:'center'" style="width:5%" >流程版本</th>
+					<th data-options="field:'procName',align:'left',halign:'center',sortable:'true'" style="width:11%;">流程名称</th>
+					<th data-options="field:'procDesc',align:'left',halign:'center',sortable:'true'" style="width:19%"> 流程描述</th>
+					<th data-options="field:'procDefId',align:'left',halign:'center'" style="width:14%">流程定义序号</th>
+					<th data-options="field:'procCategoryDesc',halign:'center',align:'left'" style="width:10%" >流程分类</th>
+					<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isUsedFormatter" style="width:6%" >是否有效</th>
+					<th data-options="field:'createBy',halign:'center',align:'left',sortable:'true'" style="width:6%" >创建人</th>
+					<th data-options="field:'createTime',align:'center',halign:'center',sortable:'true'" style="width:12%"> 创建时间</th>
+					<th data-options="field:'opr',align:'center',halign:'center',formatter:downloadFormatter" style="width:6%"> </th>
+				</tr>
+			</thead>
+		</table>
+
+		<!-- 发布弹窗 -->
+		<div id="addFlowDiv"  class="easyui-dialog" data-options="closed:true,buttons:'#updateOrAddFlowButtons'" >
+			<form id="addFlowForm" class="easyui-form" enctype="multipart/form-data" method="POST">
+				<table style="border-spacing: 0px 10px;">
+					<tr>
+						<td style="width: 30%;text-align: right;">文件选择&nbsp;&nbsp;&nbsp;</td>
+						<td>
+							<input id="flowFile" name="flowFile"class="easyui-filebox" data-options="prompt:'请选择文件',buttonText:'文件选择',required:'true'" />&nbsp;&nbsp;&nbsp;
+							<input id="createBy" name="createBy" style="display: none;">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 保存和关闭按钮 -->
+		<div id="updateOrAddFlowButtons" style="text-align:right">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doDeployFlowSave()">发布</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeFlowDialog()">关闭</a>
+		</div>
+		
+		<!-- 修改弹窗 -->
+		<div id="modifyFlowDiv"  class="easyui-dialog" data-options="closed:true,buttons:'#modifyFlowButtons',width:'550'" >
+			<form id="modifyFlowForm" class="easyui-form" enctype="multipart/form-data" method="POST">
+				<table style="border-spacing: 0px 10px;">
+					<tr>
+						<td style="width: 20%;text-align: right;">流程描述&nbsp;&nbsp;&nbsp;</td>
+						<td colspan="3">
+							<input id="procDescM" name="procDesc" class="easyui-textbox" style="width:100%;" data-options="prompt:'请输入流程描述信息',multiline:true,height:'50'">&nbsp;&nbsp;&nbsp;
+						</td>
+						<td style="width: 20px;"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							权限角色&nbsp;&nbsp;&nbsp;
+						</td>
+						<td colspan="3" id="roles">
+							
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">流程分类&nbsp;&nbsp;&nbsp;</td>
+						<td>
+							<input id="procCategoryM" name="procCategory" class="easyui-combobox" data-options="valueField:'dictCode',textField:'dictDesc',editable:false,panelHeight:'auto'"/>
+						</td>
+						<td style="text-align: right;">是否有效&nbsp;&nbsp;&nbsp;</td>
+						<td>
+							<input type="radio" name="isUsed" value="1" checked="checked"/>
+							<label>有效</label>
+							<input type="radio" name="isUsed" value="0"/>
+							<label>无效</label>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">业务详情&nbsp;&nbsp;&nbsp;</td>
+						<td colspan="2">
+							<input id="" name="viewFormKey" style="width:100%" class="easyui-textbox" data-options=""/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 保存和关闭按钮 -->
+		<div id="modifyFlowButtons" style="text-align:right">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doDeployFlowModify()">保存</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeModifyFlowDialog()">关闭</a>
+		</div>
+		
+		<!-- 预览图片 -->
+		<div id="showPics"></div>
+		
+		<!-- 业务状态弹窗 -->
+		<div id="businessState"  class="easyui-dialog" data-options="width:'600',height:'400',title:'业务状态',closed:true,buttons:'#businessStateButtons'" >
+			<form id="businessStateForm" class="easyui-form" enctype="multipart/form-data" method="POST">
+				<table style="width:100%;border-spacing: 0px 10px;">
+					<tr>
+						<td style="width: 100%;text-align: center;">选择状态&nbsp;&nbsp;&nbsp;
+							<a  class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="openChooseState()"></a>
+						</td>
+					</tr>
+				</table>
+				<table id="bizInfo">
+				
+				</table>
+			</form>
+		</div>
+		<!-- 业务状态保存和关闭按钮 -->
+		<div id="businessStateButtons" style="text-align:right">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveBizState();">保存</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#businessState').dialog('close');">关闭</a>
+		</div>
+		
+		<!-- 业务状态选择状态弹窗 -->
+		<div id="chooseStateDialog"  class="easyui-dialog" data-options="width:'600',height:'430',title:'选择节点状态',closed:true,buttons:'#choosesStateButtons'" >
+			<form id="businessStateForm" class="easyui-form"  method="POST">
+				<table id="businessStateTable" class="easyui-datagrid" style="width:100%;height:350px;float:center;" data-options="pagination:true,striped:true,autoRowHeight:true,singleSelect:true,onDblClickCell:chooseState">
+					<thead>
+						<tr>
+							<th data-options="field:'typeCode',align:'left',halign:'center'" style="width:50%;">类型编码</th>
+							<th data-options="field:'typeDesc',align:'left',halign:'center'" style="width:50%" >类型描述</th>
+						</tr>
+					</thead>
+				</table>
+			</form>
+		</div>
+		<!-- 业务状态保存和关闭按钮 -->
+		<div id="choosesStateButtons" style="text-align:right">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="chooseState();">选择</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#chooseStateDialog').dialog('close');">关闭</a>
+		</div>
+  </body>
+</html>

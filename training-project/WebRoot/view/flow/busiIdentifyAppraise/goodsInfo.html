@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>商品管理</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="../../gmodule/js/pageStacker.js"></script>
+    	<script type="text/javascript" src="../busiIdentifyAppraise/js/goodsInfo.js"></script>
+    	<style type="text/css">
+			.vertical-con {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+			}
+			.next-bg{
+				height:60px;
+				width:60px;
+				margin:auto;
+				float:left;
+				font-size:40px;
+			}
+			.complete-bg{
+				background-color:#28a3ef;
+				background-size:100%;
+				color:#ffffff;
+				border:3px solid #28a3ef;
+				border-radius:50%
+			}
+			.uncomplete-bg{
+				background-size:100%;
+				color:#ddd;
+				border-radius:50%;
+				border:3px solid #ddd;
+			}
+			.next-text{
+				width:90px;
+				margin:auto;
+				text-align:center;
+				padding-top:5px;
+				font-size:14px;
+				float:left;
+				margin-left: -10px
+			}
+			.line-div{
+				height:100%;
+				width:280px;
+				float:left;
+				border:0px solid red;
+				margin-left:1%
+			}
+			.line-bg{
+				height:5px;
+				width:95%;
+				margin-top:35px;
+				background: #ddd;
+				border-radius:3px
+			}
+			
+			.line-bg1{
+				height:5px;
+				width:95%;
+				margin-top:35px;
+				background: #28a3ef;
+				border-radius:3px
+			}
+			
+			.item-content-div{
+				width: 100%;height:100%;
+				margin:0px auto;
+				background:inherit;
+				background-color:#fafafa;
+				box-sizing:border-box;
+				border-width:1px;
+				border-style:solid;
+				border-color:rgba(204, 204, 204, 1);
+			}
+			.content-title-div{
+				width:100%;
+				height:40px;
+				padding:0;
+				margin:0;
+				float:left;
+				border-bottom:1px solid rgba(204, 204, 204, 1);
+				background-color:#28a3ef;
+			}
+			.content-title-img-div{
+				float:left;
+				width:30px;
+				height:30px;
+				border-right:1px solid rgba(204, 204, 204, 1);
+				padding:10px 0 0 10px;
+			}
+			.title-p{
+				float:left;
+				font-size: 15px;
+				margin:10px 0 0 10px;
+			}
+			.close-div{
+				width:30px;
+				height:40px;
+				float:right;
+				cursor:pointer;
+				margin-top:5px
+			}
+			.next-back-button{
+				cursor:pointer;
+				margin:0 auto;
+				color:white;
+				background: rgba(102, 102, 102, 1);
+				width:30%;
+				height:27px;
+				text-align:center;
+				padding-top:10px;
+			}
+		</style>
+	</head>
+  
+	<body>
+		<div id="mainDivPageStacker" style="width: 100%;height:100%;padding:0;margin:0">
+			<div id="addPage" style="width: 100%;height:100%;padding:0;margin:0;background:white;">
+				<div style="height:100px;width:100%;padding-top:10px;">
+					<div style="height:100%;width:7%;margin-left:27%;float:left;">
+						<div id="one"  class="complete-bg vertical-con next-bg">
+							1
+						</div>
+						<div  class="next-text">
+							选择商品分类
+						</div>
+					</div>
+					<div class="line-div">
+						<div id="first_line" class="line-bg">
+						</div>				
+					</div>
+					<div style="height:100%;width:7%;float:left;">
+						<div id="two" class="uncomplete-bg vertical-con next-bg">
+							2
+						</div>
+						<div class="next-text">
+							填写商品信息
+						</div>
+					</div>
+				</div>
+				<div id="addDivPageStacker" style="width:100%;height:76%;padding:0;margin:auto;margin-left: 1px">
+					<div id="addOne" mainPage=true style="width:100%;height:100%;">
+						<div id="addOnePanel" class="easyui-panel" title="商品分类"     
+        						style="width:100%;height:100%;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+							<div style="width:85%;height:65%;margin-left:10%;float:left;">
+				    		<!-- 第一类 -->
+			    			<div style="float:left;width:22%;height:70%;border:1px solid #95b8e7;margin-top:3%;">
+			    				<div style="width:100%;height:22%;float:left;background: #eaf2ff;font-size: 14px;color:black;text-align: center;padding-top:10px;"> 大类</div>
+			    				<div style="width:100%;height:84%;float:left;background: white">
+			    					<select style="height:100%;width:100%;" id="1_select_1" size="5" value='' onchange="selectClass('1',this.value);">
+			    					</select>
+			    				</div>
+			    			</div>
+			    			
+			    			<div style="float:left;width:5%;height:15%;margin:10px;text-align: center;padding-top:50px;margin-top:3%;"><img style="width: 35px;height: 35px" alt="下一类" src="../busiIdentifyAppraise/images/next.png"></div>
+			    			
+			    			<!-- 第二类 -->
+			    			<div style="float:left;width:22%;height:70%;border:1px solid #95b8e7;margin-top:3%;">
+			    				<div style="width:100%;height:22%;float:left;background: #eaf2ff;font-size: 14px;color:black;text-align: center;padding-top:10px;"> 二级分类</div>
+			    				<div style="width:100%;height:84%;float:left;background: white">
+			    					<select style="height:100%;width:100%;" id="1_select_2" size="5" value='' onchange="selectClass('2',this.value);">	
+			    					</select>
+			    				</div>
+			    			</div>
+			    			
+			    			<div style="float:left;width:5%;height:15%;margin:10px;text-align: center;padding-top:50px;margin-top:3%;"><img style="width: 35px;height: 35px" alt="下一类" src="../busiIdentifyAppraise/images/next.png"></div>
+			    			<!-- 第三类 -->
+			    			<div style="float:left;width:22%;height:70%;border:1px solid #95b8e7;margin-top:3%;">
+			    				<div style="width:100%;height:22%;float:left;background: #eaf2ff;font-size: 14px;color:black;text-align: center;padding-top:10px;"> 三级分类</div>
+			    				<div style="width:100%;height:84%;float:left;background: white">
+			    					<select style="height:100%;width:100%;" id="1_select_3" size="5" value='' onchange="selectClass('3',this.value);">
+			    					</select>
+			    				</div>
+			    			</div>
+				    	</div>
+				    	
+					    	<!-- 操作 -->
+					    	<div style="width:100%;height:14%;text-align:center;font-size: 14px;float:left;margin-top:0%">
+					    		<div style="margin:10px auto;">
+					    			<span id="goodsCatDescSpan"></span>
+					    			<span id="showAllCatName"></span>
+					    		</div>
+					    		<a id="1_next" href="javascript:toNextPage(1)" class="easyui-linkbutton" style="padding:10px;">下一步，填写商品信息</a>
+					    		<a href="#" id="nextStepStraight" style="color:blue" onclick="nextStepStraight()">不修改商品类型，直接下一步</a>
+					    	</div>
+						</div> 	
+					</div>
+					<!--  -->
+					<div id="addTwo" style="width:100%;height:100%;margin-left: 4px">
+						<div id="addTwoPanel" class="easyui-panel" title="商品信息"     
+        						style="width:100%;height:100%;padding:10px;background:#fafafa;margin-bottom: 5px"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+							
+							
+							<div style="width:80%;height:77%;margin-left:8%;float:left;font-size:13px;margin-top:0%;">
+					    		<form id="goodsCat_form" >
+					    			<table>
+						    			<tr>
+					    					<td style="width: 25%; text-align: right;">
+					    						商品分类&nbsp;
+					    					</td>
+					    					<td>
+					    						<p id='goodsClass' style="width:240px;margin:0;padding:0"></p>
+					    					</td>
+					    				</tr>
+										<tr>
+											<td style="width: 25%; text-align: right;">
+					    						商品品牌&nbsp;
+					    					</td>
+					    					<td>
+					    						<select id='goodsBrand' name='brandCode' class="easyui-combobox" data-options="panelHeight:'auto',editable:false,valueField: 'brandCode',textField: 'brandName'" value='' style="width:240px;">
+					    						</select>
+					    					</td>
+											
+											<td style="width: 15%; text-align: right;">
+					    						商品名称&nbsp;
+					    					</td>
+					    					<td>
+					    						<input type="text" class="easyui-textbox" name='goodsName' id="goodsName" style="width:240px;"/>
+					    					</td>
+					    					
+					    				</tr>
+					    				<tr>
+					    					<td style="width: 15%; text-align: right;">
+					    						商品来源&nbsp;
+					    					</td>
+					    					<td >
+					    						<select id='sourceType' name='sourceType' class="easyui-combobox" data-options="panelHeight:'auto',editable:false,textField:'dictDesc',valueField:'dictCode'" style="width:240px;">
+					    						</select>
+					    					</td>
+					    					
+					    					<td style="width: 15%; text-align: right;">
+					    						商品货号&nbsp;
+					    					</td>
+					    					<td >
+					    						<input type="text" class="easyui-textbox" id="articleNumber" name='articleNumber' style="width:240px;"/>
+					    					</td>
+					    					
+					    				</tr>
+					    				<tr>
+					    					<td style="width: 15%; text-align: right;" valign = 'top'>
+					    						客户购买价&nbsp;
+					    					</td>
+					    					<td  valign = 'top'>
+					    						<input type="text" class="easyui-textbox" id="firstPrice" name='firstPrice' style="width:240px;"/>
+					    					</td>
+					    					
+					    					<td style="width: 15%; text-align: right;" valign = 'top'>
+					    						<span id="rentOrSaleSpan">可租/可售&nbsp;</span>
+					    					</td>
+					    					<td >
+					    						<span id="isRentableSpan">可租<input type="checkbox" value=1 id="isRentable" name="isRentable"></span><span id="isSalableSpan">可售<input type="checkbox" value=1 id="isSalable" name="isSalable"></span>
+					    					</td>
+					    				</tr>
+					    				<tr>
+					    					<td style="width: 15%; text-align: right;" valign = 'top'>
+					    						商品描述&nbsp;
+					    					</td>
+					    					<td colspan="3">
+					    						<input class="easyui-textbox" name='goodsDesc' id='goodsDesc' multiline="true" value="" style="width:100%;height:60px">
+					    					</td>
+					    				</tr>	    	    				 							    				
+					    			</table>
+					    		</form>
+					    	</div>
+				    		
+				    		
+						</div>
+						
+						<div id="addThreePanel" class="easyui-panel" title="商品属性"     
+        						style="width:100%;height:100%;padding:10px;background:#fafafa;margin-bottom: 5px"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+							
+							<div style="width:80%;height:100%;margin-left:8%;float:left;font-size:13px;margin-top:0%;overflow: auto">
+					    		<form id="goodsAttribute_form" class="easyui-form">
+					    			<table id="goodsAttribute_table" style="width: 100%">
+					    					 							    				
+					    			</table>
+					    		</form>
+					    		<div  id="noAttrTip"></div>
+					    	</div>
+					</div>
+					<div id="addFourPanel" class="easyui-panel" title="商品图片"     
+       						style="width:100%;height:100%;padding:10px;background:#fafafa;margin-bottom: 35px"   
+       						data-options="closable:false,    
+               				collapsible:false,minimizable:false,maximizable:false">
+               	
+						<div id='evalPicDefDiv' style="width:100%;height:77%;float:left;margin-top:3%;font-size:14px;">
+						</div>
+               		</div>
+					<!-- 操作 -->
+			    	<div style="width:100%;height:8%;text-align:center;font-size: 14px;float:left;margin-top:-2%">
+				    	
+			    		<div id="2_back" onclick="backPage(2)" class="easyui-linkbutton"   style="margin-left: 5%;padding:10px;">上一步，选择商品分类</div>
+			    		<span id="aaaa">
+				    		<a id="saveGoodsInfo" onclick="saveGoodsInfo()" class="easyui-linkbutton"  style="margin-left: 10%;;padding:10px;">暂存，完善资料后提交鉴定</a>
+				    		<a id="2_next" onclick="toNextPage(4)" class="easyui-linkbutton"  style="margin-left:10%;padding:10px;">完成，商品提交鉴定</a>
+				    	</span>
+			    	</div>
+				</div>
+				
+			</div> 
+					  
+		</div>
+		
+		</div>
+	</body>
+</html>

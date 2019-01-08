@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>下载图片演示</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../js/dialog/selectuser.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript">
+			/**
+			 * 图片下载方式 1原图 2按宽度等比例缩放 3按高度等比例缩放 4指定宽度高度
+			 */
+			var uloadType;
+			/**
+			 * 下载图片
+			 */
+			function picUpload() {
+				//下载图片传入参数
+				var formData = $("#uploadForm").serializeObject();
+				//验证通过
+				if(formValidate()) {
+					$("#loadPicImgSize").css("display","block");
+					if(uloadType == 1) {
+						//给图片设置src,下载原图
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});		
+						window.open(basePath + "/gmodule_res_picture.json?id="+formData.id+"&t="+new Date().valueOf());
+					}
+					else if(uloadType == 2) {
+						//给图片设置src,下载按宽度缩放的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});	
+						window.open(basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&t="+new Date().valueOf());
+					}
+					else if(uloadType == 3) {
+						//给图片设置src,下载按高度缩放的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&h="+formData.h+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});
+						window.open(basePath + "/gmodule_res_picture.json?id="+formData.id+"&h="+formData.h+"&t="+new Date().valueOf());	
+					}
+					else if(uloadType == 4) {
+						$("#loadPicBgDiv").css("background","#EED8AE");
+						//给图片设置src,下载指定宽高的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&h="+formData.h+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});		
+						window.open(basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&h="+formData.h+"&t="+new Date().valueOf());	
+					}					
+				}
+			}
+			
+			/**
+			 * 图片预览
+			 */
+			function picPreview() {
+				//下载图片传入参数
+				var formData = $("#uploadForm").serializeObject();
+				//验证通过
+				if(formValidate()) {
+					$("#loadPicImgSize").css("display","block");
+					if(uloadType == 1) {
+						//给图片设置src,下载原图
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});
+					}
+					else if(uloadType == 2) {
+						//给图片设置src,下载按宽度缩放的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});
+					}
+					else if(uloadType == 3) {
+						//给图片设置src,下载按高度缩放的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&h="+formData.h+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});		
+					}
+					else if(uloadType == 4) {
+						//$("#loadPicBgDiv").css("background","#EED8AE");
+						//给图片设置src,下载指定宽高的图片
+						$("#loadPicImg").attr("src",basePath + "/gmodule_res_picture.json?id="+formData.id+"&w="+formData.w+"&h="+formData.h+"&t="+new Date().valueOf()).load(function() {
+							$("#imgWidth").html($("#loadPicImg").width());
+							$("#imgHeight").html($("#loadPicImg").height());
+						});		
+					}
+				}
+			}
+			
+			/**
+			 * 传入参数验证
+			 */
+			function formValidate() {
+				var isTrue = true;
+				//资源ID
+				var resId = $("#uploadForm [name='id']").val();
+				var isNum1 = $.isNumeric(resId);
+				//图片宽度
+				var width = $("#uploadForm [name='w']").val();
+				var isNum2 = $.isNumeric(width);
+				//图片高度
+				var height = $("#uploadForm [name='h']").val();
+				var isNum3 = $.isNumeric(height);
+				
+				if(width != "" && height != "") {
+					//下载指定尺寸
+					uloadType = 4;
+				}else if(width != "" && height == "") {
+					//按宽度等比例下载
+					uloadType = 2;
+				}else if(width == "" && height != "") {
+					//按高度等比例下载
+					uloadType = 3;
+				}else{
+					//默认下载原图
+					uloadType = 1;
+				}
+				
+				if(resId == "" || !isNum1) {
+					isTrue = false;
+					alert("请输入正确资源ID");
+					return isTrue;
+				}
+				if(width != "" && !isNum2) {
+					isTrue = false;
+					alert("请输入正确图片宽度(数字)");
+					return isTrue;
+				}
+				
+				if(height != "" && !isNum3) {
+					isTrue = false;
+					alert("请输入正确图片高度(数字)");
+					return isTrue;
+				}
+				
+				return isTrue;
+			}
+		</script>
+	</head>
+	<body>
+		<div>
+			<!-- 下载图片参数设置表单 -->
+			<form id="uploadForm">
+				<table id="uploadTable" style="border-collapse:separate; border-spacing:0px 10px;width:800px;">
+					<tr><td colspan="6" style="font-weight: bold;font-size: 18px;">下载图片传入参数</td></tr>
+					<tr>
+						<td style="text-align: right;">资源ID&nbsp;&nbsp;</td>
+						<td><input name="id" placeholder="输入资源ID" style="width:120px;"></td>						
+						<td style="text-align: right;">图片宽度&nbsp;&nbsp;</td>
+						<td><input name="w" placeholder="输入展示图片宽度" style="width:120px;"></td>						
+						<td style="text-align: right;">图片高度&nbsp;&nbsp;</td>
+						<td><input name="h" placeholder="输入展示图片高度" style="width:120px;"></td>
+						<td><input type="button" onclick="picPreview();" value="预览">&nbsp;&nbsp;<input type="button" onclick="picUpload();" value="下载"></td>
+					</tr>
+					<tr><td colspan="6" style="font-weight: bold;font-size: 18px;">下载图片接口说明</td></tr>
+					<tr><td colspan="6">图片下载接口：basePath + "/gmodule_res_picture.json</td></tr>
+					<tr><td colspan="6">接口参数：id(系统资源的resId,必传参数), &nbsp;&nbsp; w(要展示图片的宽度,可选参数), &nbsp;&nbsp; h(要展示图片的高度,可选参数)</td></tr>
+					<tr><td colspan="6">接口用法：1.当只传入资源id参数时，此时下载的是原图；</td></tr>
+					<tr><td colspan="6">2.当传入参数为id,w时，此时下载的是原图按指定宽度w等比例缩放后的图片（没有无色填充背景）；</td></tr>
+					<tr><td colspan="6">3.当传入参数为id,h时，此时下载的是原图按指定高度h等比例缩放后的图片（没有无色填充背景）；</td></tr>
+					<tr><td colspan="6">4.当传入参数为id,w,h时，此时下载的是原图按指定宽度、高度最大的等比例尺寸缩放后，再由透明的背景填充到指定尺寸的图片；</td></tr>
+				</table>
+			</form>
+			
+			<!-- 图片下载效果预览 -->
+			<div id="loadPicDiv">
+				<div style="font-weight: bold;font-size: 18px;">图片下载效果预览</div>
+				<div id="loadPicBgDiv" style="text-align: center;">
+					<div id="loadPicImgSize" style="display: none;">宽度：<span id="imgWidth"></span>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高度：<span id="imgHeight"></span></div>
+					<img id="loadPicImg" style="margin:10px;border:1px solid #000;">
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>

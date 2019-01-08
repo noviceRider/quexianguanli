@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>padconfig_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+  </head>
+  
+  <body>
+    <div id="padconfig_add_modify_div" data-options="buttons:'#padconfig_add_modify_div_btns'">
+		<table style="width: 100%">
+			<tr>
+				<td align="center">
+					<form id="padconfig_add_modify_form" class="easyui-form" enctype="multipart/form-data" method="POST">
+						<table style="width:100%;margin:0px 0px 15px 0px;border-spacing: 10px;">
+							<tr id="configIdTr" style="display: none">
+								<td style="text-align: right;width:80px;" >配置序号</td>
+								<td>
+									<input id="configIdId" name="configId" class="easyui-textbox" data-options="" style="width:252px;"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:80px;" >表单名称</td>
+								<td>
+									<input id="formNameId" name="formName"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+								</td>
+								<td style="text-align: right;">菜单编号</td>
+								<td>
+									<input id="menuIdId" name="menuId" class="easyui-combotree" data-options="editable:false,panelHeight:'auto'" style="width:252px;"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">API类型</td>
+								<td>
+									<select id="apiTypeId" name="apiType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'" style="width:252px;">
+										<option value=0>数据访问</option>
+										<option value=1>业务逻辑</option>
+									</select>
+								</td>
+								<td style="text-align: right;width:60px;" >API名称</td>
+								<td>
+									<input id="accessNameId" name="accessName" class="easyui-textbox" data-options="editable:false" style="width:252px;"></input><input id="accessCodeId" name="accessCode" type="hidden"></input>
+									<a class="easyui-linkbutton" id="addAccessCodeBtn" data-options="iconCls:'icon-add'" onclick="addAPIName()"></a>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">对应表名</td>
+								<td>
+									<input id="tableNameId" name="tableName" class="easyui-textbox" data-options="editable:false" style="width:252px;"></input>
+									<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTable()"></a>
+								</td>
+								<td style="text-align: right;">是否有效</td>
+								<td>
+									<input id="isUsedYesId" name="isUsed" type="radio" value="1" class="" data-options="" checked="checked" style="width:;height:">
+									<label for="isUsedYesId">是</label>
+									<input id="isUsedNoId" name="isUsed" type="radio" value="0" class="" data-options="" style="width:;height:">
+									<label for="isUsedNoId">否</label>
+									<a class="easyui-linkbutton" onclick="configUI()" style="margin-right: 40px;float:right;">可视化配置</a>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;" valign="top">UI配置</td>
+								<td colspan="3">
+									<input id="uiConfigId" name="uiConfig" class="easyui-textbox" data-options="multiline:true" style="width:610px;height:200px"></input>
+								</td>
+							</tr>
+							<!-- <tr>
+								<td style="text-align: right;" valign="top"></td>
+								<td colspan="3">
+									<a class="easyui-linkbutton" onclick="configUI()">配置UI</a>
+								</td>
+							</tr> -->
+						</table>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="padconfig_add_modify_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancel()">取消</a>
+  	</div>
+  </body>
+</html>

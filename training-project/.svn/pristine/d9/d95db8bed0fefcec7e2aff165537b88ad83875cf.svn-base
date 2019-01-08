@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>moduleconfig_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="module_detail" data-options="buttons:'#detail_close_btn'" style="width:750px;height: 450px;">
+			<table style="width:100%;margin:0px 0px 0px 0px;border-spacing: 10px;">
+				<tr>
+					<td style="text-align: right;width:90px;" >模块编号:</td>
+					<td>
+						<span name="moduleCode"></span>
+					</td>
+					<td style="text-align: right;width:90px;">模块名称:</td>
+					<td>
+						<span name="moduleName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;" >对应的模板:</td>
+					<td>
+						<span name="templateName"></span>
+					</td>
+					<td style="text-align: right;width:90px;">模块分类:</td>
+					<td>
+						<span name="typeName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;" >模块描述:</td>
+					<td colspan="3">
+						<span name="moduleDesc"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;" valign="top">配置参数：</td>
+					<td colspan="3">
+					  <div style="width: 580px;border: solid 1px black;overflow:auto;">
+						<span name="configParam" ></span>
+					  </div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;" valign="top">创建人：</td>
+					<td>
+						<span name="createByName"></span>
+					</td>
+					<td style="text-align: right;width:90px;" valign="top">创建时间：</td>
+					<td>
+						<span name="createTime"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;" valign="top">修改人：</td>
+					<td>
+						<span name="modifyByName"></span>
+					</td>
+					<td style="text-align: right;width:90px;" valign="top">修改时间：</td>
+					<td>
+						<span name="modifyTime"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:90px;">版本号：</td>
+					<td>
+						<span name="ver"></span>
+					</td>
+					<td style="text-align: right;width:90px;">是否有效：</td>
+					<td>
+						<span name="isUsed"></span>
+					</td>
+				</tr>
+			</table>
+	</div>
+	
+	<div id="detail_close_btn">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#module_detail').dialog('close');">关闭</a>
+	</div>
+  </body>
+</html>

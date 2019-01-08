@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>apptemplate.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+    
+    <script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../js/common.js" charset="UTF-8"></script>
+	
+	<script type="text/javascript" src="js/test.js" charset="UTF-8"></script>
+
+  </head>
+  
+  <body>
+    <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">应用模板
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryTemplate()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTemplate()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyTemplate()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeTemplate()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+
+  	<!-- 选择不同获取不同的信息 -->
+	<table class="btbForm">
+		<tr>
+			<td>关键字&nbsp; <input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'输入模板编号或名称...'" style="height:20px;">&nbsp;
+			</td>
+		</tr>
+	</table>
+  	
+  	
+  	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+  	
+  	<!-- 定义datagrid数据网格 -->
+	<div id="template_div">
+		<table id="template_dg" style="width:100%;" class="easyui-datagrid" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,rownumbers:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true'"></th>
+					
+					<th data-options="field:'templateCode',alias:'a.template_code',align:'center',halign:'center',sortable:'true'" style="width:10%">模板编号</th>
+					<th data-options="field:'templateName',alias:'a.template_name',align:'left',halign:'center',sortable:'true'" style="width:15%">模板名称</th>
+					<th data-options="field:'templateDesc',alias:'a.template_desc',align:'left',halign:'center',sortable:'true'" style="width:20%">模板描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'left',halign:'center',sortable:'true'" style="width:15%">模板分类</th>
+					<th data-options="field:'moduleConfigURL',alias:'a.module_config_url',align:'left',halign:'center',sortable:'true'" style="width:20%">配置URL</th>
+					<th data-options="field:'ver',alias:'a.ver',align:'center',halign:'center',sortable:'true'" style="width:10%">版本号</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter" style="width:7%">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+	<!-- 新增、修改页面 -->
+	<div id="dialog_add_modify" style="display: none;"></div>
+	
+  </body>
+</html>

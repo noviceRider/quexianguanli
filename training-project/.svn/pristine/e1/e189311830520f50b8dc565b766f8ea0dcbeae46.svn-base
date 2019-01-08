@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>保养业务</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="../../gmodule/js/pageStacker.js"></script>
+    	<script type="text/javascript" src="../busiMaintain/js/return.js"></script>
+    	
+    	<style type="text/css">
+		</style>
+	</head>
+  
+	<body>
+  		<div style="margin: 10px;"></div>
+  		
+		<!-- 保养收货弹出框 -->
+		<div id="panelOne" class="easyui-panel" style="width:97%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="客户资料">
+  			<div style="margin:10px"></div>
+  			<table id="" style="width:95%;margin:15px 30px 15px 30px;" cellspacing="5px">
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >会员编号</td>
+					<td>
+						<input id="memberId_receive" name="deliveryEmpId" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >姓名</td>
+  					<td>
+  						<input id="memberName_receive" name="memberName" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  					<td  style="text-align: right;width: 100px;" >手机</td>
+  					<td>
+  						<input id="mobile_receive" name="mobile" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >证件号码</td>
+					<td>
+						<input id="certNo_receive" name="certNo" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+  				</tr>
+  			</table>
+  		</div>
+  		
+  		<div style="margin: 10px;"></div>
+  		
+  		<div id="panelTwo" class="easyui-panel" style="width:97%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="商品资料">
+  			<div style="margin:10px"></div>
+  			<table id="" style="width:95%;margin:15px 30px 15px 30px;" cellspacing="5px">
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >商品编号</td>
+					<td>
+						<input id="goodsId_receive" name="goodsId"  disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >名称</td>
+  					<td>
+  						<input id="goodsName_receive" name=""  disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  					<td  style="text-align: right;width: 100px;" >官方价</td>
+  					<td>
+  						<input id="officialPrice_receive" name="officialPrice"  disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >客户购买价</td>
+					<td>
+						<input id="firstPrice_receive" name="firstPrice" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+					<td  style="text-align: right;width: 100px;" >评估价</td>
+					<td>
+						<input id="valuationPrice_receive" name="valuationPrice" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+  				</tr>
+  			</table>
+  		</div>
+  		
+  		<div style="margin: 10px;"></div>
+  		
+  		<div id="panelthree" class="easyui-panel" style="width:97%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="保养价格">
+  			<div style="margin:10px"></div>
+  			<table id="" style="width:95%;margin:15px 30px 15px 30px;" cellspacing="5px">
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >商品类型</td>
+					<td>
+						<input id="goodsNameType_receive" name="goodsName" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >保养类型</td>
+  					<td>
+  						<input id="maintainType_receive" name="maintainType" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  					<td  style="text-align: right;width: 100px;" >保养价格</td>
+  					<td>
+  						<input id="maintainPrice_receive" name="maintainPrice" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+  					</td>
+  				</tr>
+  				<tr>
+  					<td  style="text-align: right;width: 100px;" >保价金额</td>
+					<td>
+						<input id="declarationValue_receive" name="declarationValue" disabled="disabled" class="easyui-textbox" style="width:180px;height:24px">
+					</td>
+  				</tr>
+  			</table>
+  		</div>
+  		
+  		<div style="margin: 10px;"></div>
+  		
+  		<div id="panelfour" class="easyui-panel" style="width:97%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="操作记录">
+  			<table id="detail_task_dg" data-options="rownumbers:true,nowrap:false,singleSelect:true" class="easyui-datagrid" title=""  style="width:100%;" >
+				<thead>
+					<tr>
+						<th data-options="field:'activityName',align:'left',halign:'center'" style="width:15%">任务名称</th>
+						<th data-options="field:'assigneeEmpName',align:'center',halign:'center'" style="width:10%">办理人</th>
+						<th data-options="field:'startTime',align:'left',halign:'center',formatter:timeFormatter" style="width:17%" >开始时间</th>
+						<th data-options="field:'endTime',align:'left',halign:'center',formatter:timeFormatter" style="width:17%" >结束时间</th>
+						<th data-options="field:'timeConsuming',align:'left',halign:'center',formatter:secondFormatter" style="width:9%" >任务耗时</th>
+						<th data-options="field:'comment',align:'left',halign:'center'" style="width:20%">办理意见</th>
+					</tr>
+				</thead>
+			</table>
+  		</div>
+  		
+  		<div style="margin: 10px;"></div>
+  		
+  		<div id="panelfive" class="easyui-panel" style="width:97%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="付款">
+  			<div style="margin:10px"></div>
+  			<form id="collectForm"  class="easyui-form" enctype="multipart/form-data" method="post">
+	  			<table id="" style="width:95%;margin:15px 30px 15px 30px;" cellspacing="5px">
+	  				<tr>
+	  					<td  style="text-align: right;width: 100px;" >收款金额</td>
+	  					<td>
+	  						<input id="amount_receive" name="amount" disabled="disabled"  class="easyui-textbox" style="width:200px;height:24px">
+	  					</td>
+	  					<td rowspan="3" id="imgTd" style="display:none;">
+	  						<div id="preview" style="width:80px;height:62px" ><img src="../../../images/equipment.png"></div> <div style="bottom:1px;"><input id="zhuanzhang" name="uploadFile" class="easyui-filebox" onchange="previewImage(this,1);" data-options="prompt:'选择图片'" style="width:180px;"/></div>
+	  					</td>
+	  				</tr>
+	  				<tr>
+	  					<td  style="text-align: right;width: 100px;" >收款方式</td>
+	  					<td>
+	  						<input id="payType_receive" name="payType" disabled="disabled" class="easyui-combobox" data-options="panelHeight:'auto',editable:false,valueField: 'dictCode',textField: 'dictDesc'" style="width:200px;height:24px">
+	  					</td>
+	  				</tr>
+	  				<!-- <tr>
+	  					<td  style="text-align: right;width: 100px;" >取回日期</td>
+						<td>
+							<input id="returnDate_receive" name="returnDate" class="easyui-datebox" style="width:200px;height:24px">
+						</td>
+	  				</tr> -->
+	  			</table>
+  			</form>
+  		</div>
+  		
+  		<div style="margin: 10px;"></div>
+  		
+		<!-- 保存和关闭按钮 -->
+		<div id="receiveSc">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveReceive()">提交</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelStartProcess()">关闭</a>
+		</div>
+	</body>
+</html>

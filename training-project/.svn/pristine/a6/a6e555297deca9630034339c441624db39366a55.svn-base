@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+#inputForm {
+	color: #407EAC;
+}
+
+#inputForm .menu {
+	margin-bottom: 10px;
+	border:  1px solid #d1d1d1;
+	background-color: white;
+	color: #407EAC;
+	padding: 0px;
+}
+
+#inputForm .menu1 {
+	background-color: #90C7FF;
+	line-height: 25px;
+	height: 25px;
+	padding-left: 1%;
+}
+
+#inputForm .checkbox-text {
+	vertical-align: top;
+}
+
+#inputForm .menu2 {
+	background-color: #ecf6fc;
+	line-height: 25px;
+	height: 25px;
+	padding-left: 6%;
+}
+
+#inputForm .line {
+	line-height: 25px;
+	height: 25px;
+	padding-left: 11%;
+}
+
+#inputForm .line  .menu3{
+	width: 24%;
+	float: left;
+}
+
+#inputForm  .checkbox {
+	margin: 5px 3px 0 0;
+	float: left;
+	height: 16px;
+	width: 16px;
+}
+
+#inputForm .selColor {
+	color: green;
+}
+
+#inputForm input[type=checkbox]{
+	width: 16px;
+	height: 16px;
+	margin-top: auto;
+	margin-left: auto;
+}

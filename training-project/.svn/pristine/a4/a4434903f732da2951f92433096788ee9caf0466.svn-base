@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.frame.dao.SysMenuDao">
+	<!-- 返回系统菜单信息的(PO)数据对象 -->
+	<sql id="resultMenuObj">
+		select
+			menu_id "menuId",
+			menu_name "menuName",
+			p_menu_id "pMenuId",
+			menu_type "menuType",
+			action_js "actionJs",
+			is_spec_function "isSpecFunction",
+			is_sys_manage "isSysManage",
+			url "url",
+			default_img "defaultImg",
+			bg_color "bgColor",
+			is_used "isUsed",
+			sort_no "sortNo"
+	</sql>
+	<!-- 查找全部的系统菜单 -->
+	<select id="findAllMenu" resultType="com.bn.frame.po.SysMenuPo">
+		select
+			menu_id "menuId",
+			menu_name "menuName",
+			p_menu_id "pMenuId",
+			menu_type "menuType",
+			action_js "actionJs",
+			url "url",
+			default_img "defaultImg",
+			select_img "selectImg",
+			expand_img "expandImg",
+			is_used "isUsed",
+			sort_no "sortNo",
+			bg_color "bgColor"
+		from sys_menu
+	</select>
+	
+	<!-- 根据上级菜单编号加载下级树 -->
+	<select id="findMenu" parameterType="com.bn.frame.bo.SysMenuBo" resultType="com.bn.frame.po.SysMenuPo">
+		<include refid="resultMenuObj"/>
+			from sys_menu 
+		<where>
+			p_menu_id = #{menuId}
+			<if test="isUsed != null and isUsed != ''">
+				and is_used = #{isUsed}
+			</if>
+		</where>
+		order by sort_no
+	</select>
+	
+	<!-- 根据用户所属角色加载相应权限的菜单 -->
+	<select id="findUserMenu" parameterType="com.bn.frame.bo.SysMenuBo" resultType="com.bn.frame.po.SysMenuPo">
+		<include refid="resultMenuObj"/>
+			from sys_menu 
+			<where>
+				p_menu_id = #{menuId} and is_used = '1' and menu_id in (
+					select menu_id from sys_vcl where member_id in 		
+					<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+	            		#{item}
+	        		</foreach>)
+	        	<if test="isSpecFunction != null and isSpecFunction != ''">
+	        		and is_spec_function = #{isSpecFunction}
+	        	</if>
+				order by sort_no
+			</where>
+	</select>
+	
+	<!-- 根据用户所属角色加载相应权限的菜单不需传入父目录 -->
+	<select id="findAllUserUsedMenu" parameterType="com.bn.frame.bo.SysMenuBo" resultType="com.bn.frame.po.SysMenuPo">
+		<include refid="resultMenuObj"/>
+			from sys_menu 
+			<where>
+				is_used = '1' and menu_id in (
+					select menu_id from sys_vcl where member_id in 		
+					<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+	            		#{item}
+	        		</foreach>)
+	        	<if test="isSpecFunction != null and isSpecFunction != ''">
+	        		and is_spec_function = #{isSpecFunction}
+	        	</if>
+				order by sort_no
+			</where>
+	</select>
+	
+	<!-- 根据菜单编号查询菜单信息 -->
+	<select id="findById" parameterType="com.bn.frame.bo.SysMenuBo" resultType="com.bn.frame.po.SysMenuPo">
+		<include refid="resultMenuObj"/>
+			from sys_menu 
+			where menu_id = #{menuId}
+	</select>
+	
+	<!-- 查询安卓的当前用户拥有的菜单权限 -->
+	<select id="findAndroidMenu" parameterType="com.bn.frame.bo.SysMenuBo" resultType="com.bn.frame.po.SysMenuPo">
+		select
+			menu_id "menuId",
+			menu_name "menuName",
+			(select count(*) from sys_menu b where m.menu_id = b.p_menu_id) "childNum",
+			default_img "defaultImg",
+			bg_color "bgColor",
+			url "url"
+		from sys_menu m
+		where m.p_menu_id = #{menuId} and m.menu_id in
+			(select menu_id from sys_vcl v where member_id in
+				(select r.role_id from sys_role r , sys_role_member rm , sys_user u
+				where r.role_id = rm.role_id and rm.user_id = #{userId} and v.member_type = 'R')
+			or v.member_id = #{userId} and v.member_type ='U') and m.is_used='1' 
+		order by sort_no
+	</select>
+	
+	<!-- 统计菜单子节点数量 -->
+	<select id="getCountChildNum" parameterType="String" resultType="com.bn.frame.po.SysMenuPo">
+		select 
+			count(menu_id) "childNum"
+		from sys_menu 
+		where p_menu_id = #{menuId}
+	</select>
+	
+	<!-- 新增菜单信息 -->
+	<insert id="addSysMenu" parameterType="com.bn.frame.bo.SysMenuBo">
+		insert into sys_menu (
+			menu_id,
+			menu_name,
+			p_menu_id,
+			url,
+			is_spec_function,
+			is_sys_manage,
+			is_used,
+			sort_no
+		) values (
+			#{menuId},
+			#{menuName},
+			#{pMenuId},
+			#{url},
+			#{isSpecFunction},
+			#{isSysManage},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 根据菜单编号修改信息 -->
+	<update id="modifySysMenu" parameterType="com.bn.frame.bo.SysMenuBo">
+		update sys_menu
+		set
+			menu_name = #{menuName},
+			url = #{url},
+			is_spec_function = #{isSpecFunction},
+			is_sys_manage = #{isSysManage},
+			default_img = #{defaultImg},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where menu_id = #{menuId}
+	</update>
+	
+	<!-- 判断当前用户是否有用某个菜单授权 -->
+	<select id="isMenuVcl" parameterType="com.bn.frame.bo.SysVclBo" resultType="com.bn.frame.po.SysVCLPo">
+		select 
+			count(menu_id) "countNum"
+		from sys_vcl a, sys_role_member b
+		where (a.member_id = b.role_id and a.member_type = 'R') and
+			 a.menu_id = #{menuId} and 
+			 b.user_id = #{memberId}
+	</select>
+</mapper>

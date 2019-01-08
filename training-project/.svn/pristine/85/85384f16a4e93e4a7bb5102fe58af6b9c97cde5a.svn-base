@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>showdetail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+  </head>
+  
+  <body>
+  	<div id="process_detail_div" style="width:820px;height:600px;padding-left:10px" data-options="buttons:'#process_detail_div_btns'">
+	  	<!-- 上下边距 -->
+	 	<div style="margin:10px"></div>
+	  	
+	  	<!-- 业务信息 -->
+	  	<div id="businessInfo">
+			<div id="formParse" class="easyui-panel" style="background:#fafafa;" data-options="collapsed:false,collapsible:true,width:773"></div>	  	
+	  	</div>
+	  	
+	  	<!-- 上下边距 -->
+	 	<div style="margin:10px"></div>
+	 	
+	  	<!-- 流程图 -->
+	  	<div id="processImage">
+	  		<div id="panelOne" class="easyui-panel" style="width:773px;background:#fafafa;" data-options="collapsed:false" title="流程概况">
+	  			<img style="width:100%" id="processpic">
+	  		</div>
+	  	</div>
+	  	
+	  	<!-- 上下边距 -->
+	 	<div style="margin:10px"></div>
+	  	
+	  	<!-- 流程概况 -->
+	 	<div id="processInfo">
+	 	<div id="panelOne" class="easyui-panel" style="background:#fafafa;" data-options="collapsed:false,width:773" title="流程概况">
+	 		<table id="content"  style="border-spacing: 8px;border-collapse:collapse;width:750px">
+					<tr>
+						<td style="text-align: left;width:10%;" >流程ID:</td>
+						<td  style="width:15%;">
+							<span name="procInstId"></span>
+						</td>
+						<td style="text-align: left;width:10%;" >流程定义ID:</td>
+						<td  style="width:20%;">
+							<span name="procDefId"></span>
+						</td>		
+						<td style="text-align: left;width:8%;" >业务KEY:</td>
+						<td  style="width:16%;">
+							<span name="businessKey"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;width:8%;" >流程发起人:</td>
+						<td  style="width:15%;">
+							<span name="empName"></span>
+						</td>
+						<td style="text-align: left;width:10%;" >流程启动时间:</td>
+						<td  style="width:16%;">
+							<span name="startTime"></span>
+						</td>
+						<td style="text-align: left;width:10%;" >流程结束时间:</td>
+						<td  style="width:16%;">
+							<span name="endTime"></span>
+						</td>		
+					</tr>
+					<tr>
+						<td style="text-align: left;width:8%;" >流程状态:</td>
+						<td  style="width:15%;">
+							<span name="processState"></span>
+						</td>
+					</tr>
+				</table>
+			</div>
+	 	</div>
+	 	
+	 	<!-- 上下边距 -->
+	 	<div style="margin:10px"></div>
+	 	
+	 	<!-- 历史活动 -->
+	 	<div>
+		  	<div id="panelOne" class="easyui-panel" style="background:#fafafa;" data-options="collapsible:true,collapsed:false,width:773" title="办理过程">
+				<table id="detail_task_dg" data-options="rownumbers:true,nowrap:false,singleSelect:true" class="easyui-datagrid" title=""  style="width:100%;" >
+					<thead>
+						<tr>
+							<th data-options="field:'activityName',align:'left',halign:'center'" style="width:15%">任务名称</th>
+							<th data-options="field:'assigneeEmpName',align:'center',halign:'center'" style="width:10%">办理人</th>
+							<th data-options="field:'startTime',align:'left',halign:'center',formatter:timeFormatter" style="width:17%" >开始时间</th>
+							<th data-options="field:'endTime',align:'left',halign:'center',formatter:timeFormatter" style="width:17%" >结束时间</th>
+							<th data-options="field:'timeConsuming',align:'left',halign:'center',formatter:secondFormatter" style="width:9%" >任务耗时</th>
+							<th data-options="field:'comment',align:'left',halign:'center'" style="width:20%">办理意见</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+	 	</div>
+ 	</div>
+ 	
+ 	<div id="process_detail_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#process_detail_div').dialog('close');">关闭</a>
+  	</div>
+  </body>
+</html>

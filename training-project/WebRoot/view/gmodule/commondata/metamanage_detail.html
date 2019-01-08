@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>metamanage_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+	<div id="meta_detail" data-options="buttons:'#detail_close_btn'">
+		<table style="margin:0px 0px 15px 0px;border-spacing: 10px;width:100%">
+			<tr>
+				<td style="width:18%;text-align: right;">表名：</td>
+				<td style="width:32%"><span name="tableName"></span></td>
+				<td style="width:18%;text-align: right;">分类：</td>
+				<td style="width:32%"><span name="tableTypeDesc"></span></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;vertical-align:top;">表描述：</td>
+				<td colspan='3'><span name="tableDesc" style="word-break: break-all"></span></td>
+			</tr>
+			<tr>
+				<td style="width:18%;text-align: right;">实体名：</td>
+				<td style="width:32%"><span name="entityName"></span></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;vertical-align:top;">实体描述：</td>
+				<td colspan='3'><span name="entityDesc" style="word-break: break-all"></span></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;vertical-align:top;">是否有效：</td>
+				<td><span name="isUsed" style="word-break: break-all"></span></td>
+				<td style="text-align: right;vertical-align:top;display: none">顺序号：</td>
+				<td style="display: none"><span name="sortNo" style="word-break: break-all"></span></td>
+			</tr>
+			<tr>
+				<td colspan="4" align="center">
+				<!-- 字段信息数据网格 -->
+					<div style="width:97%;">
+						<table style="width:100%;height:150px;" id="detail_column_dg" class="easyui-datagrid" title="字段信息" data-options="striped:true,autoRowHeight:true,rownumbers:true" >
+							<thead>
+								<tr>
+									<th data-options="field:'ckc',checkbox:'true',hidden:true"></th>
+									
+									<th data-options="field:'tableName',align:'center',halign:'center',hidden:true">表名</th>
+									<th data-options="field:'attributeName',align:'left',halign:'center',hidden:true">属性名</th>
+									<th data-options="field:'attributeDesc',align:'left',halign:'center',hidden:true">属性描述</th>
+									<th data-options="field:'columnInputTypeDesc',align:'left',halign:'center',hidden:true">输入类型</th>
+									<th data-options="field:'optionsSource',align:'left',halign:'center',hidden:true">选项来源</th>
+									<th data-options="field:'columnEnum',align:'left',halign:'center',hidden:true">枚举信息</th>
+									<th data-options="field:'columnValidateTypeDesc',align:'left',halign:'center',hidden:true">验证类型</th>
+									<th data-options="field:'columnValidateRegex',align:'left',halign:'center',hidden:true">验证表达式</th>
+									<th data-options="field:'valueRange',align:'left',halign:'center',hidden:true">取值范围</th>
+									<th data-options="field:'isPrimaryKey',align:'left',halign:'center',hidden:true">是否主键</th>
+									<th data-options="field:'notNull',align:'left',halign:'center',hidden:true">是否非空</th>
+									<th data-options="field:'sortNo',align:'center',halign:'center',hidden:true" >顺序号</th>
+										
+									<th data-options="field:'columnName',align:'left',halign:'center'" style="width:20%">字段名</th>
+									<th data-options="field:'columnTypeDesc',align:'center',halign:'center'" style="width:18%">字段类型</th>
+									<th data-options="field:'columnLength',align:'center',halign:'center'" style="width:10%">字段长度</th>
+									<th data-options="field:'columnDesc',align:'left',halign:'center'" style="width:30%">字段描述</th>
+									<th data-options="field:'isUsed',align:'center',halign:'center',formatter:isUsedFormatter" style="width:10%">是否有效</th>
+									<th data-options="field:'detail',align:'center',halign:'center',formatter:columnDetailFormatter" style="width:10%">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="detail_close_btn">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#meta_detail').dialog('close');">关闭</a>
+	</div>
+  </body>
+</html>

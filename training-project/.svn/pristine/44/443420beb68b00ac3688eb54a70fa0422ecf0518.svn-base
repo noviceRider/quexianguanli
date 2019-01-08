@@ -1,0 +1,43 @@
+<table class="btb">
+	<tr>
+		<td width="20%" align="right">
+			部门编号：
+		</td>
+		<td>
+			<span id="deptId"></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right">
+			部门名称：
+		</td>
+		<td>
+			<span id="deptName"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			上级部门：
+		</td>
+		<td>
+			<span id="pDeptName"></span>
+		</td>
+	</tr>
+	<tr style="display: none">
+		<td align="right">
+			部门经理：
+		</td>
+		<td>
+			<span id="managerName"></span>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			排序号：
+		</td>
+		<td>
+			<span id="sortNo"></span>
+		</td>
+	</tr>
+</table>

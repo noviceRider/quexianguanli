@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dictmanage_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+    <div id="dictmanage_dlg_am" style="width:350px;" data-options="buttons:'#dictmanage_dlg_am_btns'">
+		<form id="dictmanage_fm_am">
+			<table style="width: 100%;border-collapse: separate;border-spacing: 8px;">
+				<tr>
+  					<td style="width: 25%;text-align: right;">字典编码&nbsp;&nbsp;</td>
+  					<td ><input id="dictCodeId" name="dictCode" class="easyui-textbox" style="width: 210px;" data-options="prompt:'请输入字典编码'"></td>
+  				</tr>
+  				<tr>
+  					<td style="width: 25%;text-align: right;">数据类型&nbsp;&nbsp;</td>
+  					<td ><input id="typeDescId" name="typeDesc"  class="easyui-textbox" style="width: 210px;" data-options="prompt:'请输入数据类型'"></td>
+  				</tr>
+				<tr>
+					<td style="width: 25%;text-align: right;">字典描述&nbsp;&nbsp;</td>
+					<td>
+						<input id="dictDescCnid" name="dictDesc" class="easyui-textbox" style="width: 210px;" data-options="prompt:'请输入字典描述'">
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 25%;text-align: right;">顺序&nbsp;&nbsp;</td>
+					<td>
+						<input id="sortNoModify" name="sortNo" class="easyui-textbox" style="width: 210px;">
+					</td>
+				</tr>
+				
+				<tr id="isUsedRow">
+					<td style="width: 25%;text-align: right;">是否有效&nbsp;&nbsp;</td>
+					<td style="text-align: left;">
+						<input id="isUsed" name="isUsed" type="radio" value="1" checked="checked"> 有效 
+						<input id="isUsed" name="isUsed" type="radio" value="0"> 无效
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<div id="dictmanage_dlg_am_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveDictManage()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelDictManage()">关闭</a>
+  	</div>
+  </body>
+</html>

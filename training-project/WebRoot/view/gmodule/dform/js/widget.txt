@@ -1,0 +1,2633 @@
+[{
+	"id": 1,
+	"name": "表单",
+	"classify": "form",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "表名",
+		"flag": "table",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "标题描述",
+		"flag": "desc",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	}]
+},{
+	"id": 2,
+	"name": "分类",
+	"classify": "category",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "分类名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "分类标题",
+		"flag": "title",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否显示图标",
+		"flag": "icon",
+		"value": "none",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "样式",
+		"flag": "disType",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"普通样式"},{"value":3,"text":"复选框样式"}],
+            	"panelHeight":"auto"
+			}
+		}
+	}]
+},{
+	"id": 3,
+	"name": "分组",
+	"classify": "groups",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "分组名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "标题",
+		"flag": "title",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "样式",
+		"flag": "disType",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"显示title"},{"value":"","text":"不显示title"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "是否有边框",
+		"flag": "borderWidth",
+		"value": "",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"有边框"},{"value":"","text":"没有边框"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "title下的说明",
+		"flag": "description",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "title上的说明",
+		"flag": "beforeDescription",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	}]
+},{
+	"id": 4,
+	"name": "其他文本(1)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "1",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "其他文本",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "显示值",
+		"flag": "value",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/1.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 5,
+	"name": "输入框(2)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "2",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "输入框",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "输入法类型",
+		"flag": "inputMethod",
+		"value": "",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"设置"},{"value":"","text":"不设置"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/2.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 6,
+	"name": "日期文本(3)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "3",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "日期文本",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "日期格式",
+		"flag": "format",
+		"value": "3",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"20**-**-**"},
+						{"value":2,"text":"20**年**月**日"},
+						{"value":3,"text":"20**年**月**日 星期*"},
+						{"value":"pattern","text":"自定义格式"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/3.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 7,
+	"name": "引导员文本(4)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "4",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "引导员文本",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/4.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 8,
+	"name": "时间选择(5)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "5",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "时间选择",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "日期格式",
+		"flag": "format",
+		"value": "yyyy-MM-dd HH:mm",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "是否默认显示时间",
+		"flag": "hasDefault",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"显示当前时间"},{"value":0,"text":"没有默认值"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/5.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 9,
+	"name": "下拉选择(数据库)(6)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "6",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "下拉选择（数据库）",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库表",
+		"flag": "fromTable",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "展示数据对应字段",
+		"flag": "nameCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "保存时取的字段",
+		"flag": "valueCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "查询条件",
+		"flag": "where",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/6.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 10,
+	"name": "下拉选择(固定数据)(6)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "6",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "下拉选择（固定数据）",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "下拉框数据",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "value-text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/6.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 11,
+	"name": "车牌号选择(7)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "7",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "车牌号选择",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "车牌号",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "对应单位控件名称",
+		"flag": "unit",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "vehicleCode",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库表",
+		"flag": "fromTable",
+		"value": "VEHICLEINFO",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/7.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 12,
+	"name": "检查项列表(8)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "8",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "检查项列表",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "检查项列表",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "text-name"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/8.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 13,
+	"name": "备注(9)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "9",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "备注",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "备注：",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/9.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 14,
+	"name": "有前缀的输入框(10)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "10",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "有前缀的输入框",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "前缀",
+		"flag": "prefix",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/10.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 15,
+	"name": "单选(11)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "11",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "单选",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "单选内容",
+		"flag": "select",
+		"value": "",
+		"group": "",
+		"editor": "select"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/11.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 16,
+	"name": "横向关联下拉列表(12)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "12",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "横向关联下拉列表",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库表",
+		"flag": "fromTable",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "查询条件",
+		"flag": "where",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "展示数据对应字段",
+		"flag": "nameCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "保存时取得字段",
+		"flag": "valueCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/12.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 17,
+	"name": "拍照或者选取图片(13)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "13",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "拍照或者选取图片",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/13.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 18,
+	"name": "签名(14)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "14",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "签名",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "请签名",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/14.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 19,
+	"name": "关联下拉框(数据库)(15)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "15",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "关联下拉框(数据库)",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库表",
+		"flag": "fromTable",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "展示数据对应字段",
+		"flag": "nameCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "保存时取得字段",
+		"flag": "valueCol",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "查询条件",
+		"flag": "where",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "关联下拉框的名称",
+		"flag": "linkedName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/15.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 20,
+	"name": "关联下拉框(固定数据)(15)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "15",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "关联下拉框(固定数据)",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "关联下拉框的名称",
+		"flag": "linkedName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "下拉框内容集合",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "value-text"
+	},{
+		"name": "关联下拉框内容",
+		"flag": "descList",
+		"value": "",
+		"group": "",
+		"editor": "descList"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/15.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 21,
+	"name": "单选下方有备注的集合(16)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "16",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "单选下方有备注的集合",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "日期格式",
+		"flag": "format",
+		"value": "2",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"20**-**-**"},
+						{"value":2,"text":"20**年**月**日"},
+						{"value":3,"text":"20**年**月**日 星期*"},
+						{"value":"pattern","text":"自定义格式"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "单选和备注集合",
+		"flag": "checks",
+		"value": "",
+		"group": "",
+		"editor": "checks"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/16.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 22,
+	"name": "单选后面有输入框(17)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "17",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "单选后面有输入框",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "默认选中项",
+		"flag": "default",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "单选内容",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "value-text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/17.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 23,
+	"name": "日期后面有时间选择(18)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "18",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "日期后面有时间选择",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/18.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 24,
+	"name": "填写长宽深(19)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "19",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "填写长宽深",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "长的名称",
+		"flag": "lengthName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "宽的名称",
+		"flag": "widthName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "深的名称",
+		"flag": "deepName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/19.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 25,
+	"name": "滑行路线(20)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "20",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "滑行路线",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "必填数量",
+		"flag": "least",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "总共填写数量",
+		"flag": "lineCount",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/20.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 26,
+	"name": "输入框后有单选(21)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "21",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "输入框后有单选",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "单选的名称",
+		"flag": "typeName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "位置的名称",
+		"flag": "locationName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "默认值",
+		"flag": "default",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "按钮内容",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "value-text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/21.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 27,
+	"name": "显示/隐藏其他控件(22)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "22",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "显示/隐藏其他控件",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "所有关联的名称",
+		"flag": "linkedName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "第一行单选信息",
+		"flag": "useInfo",
+		"value": "",
+		"group": "",
+		"editor": "useInfo"
+	},{
+		"name": "第二行多选信息",
+		"flag": "deviceInfo",
+		"value": "",
+		"group": "",
+		"editor": "deviceInfo"
+	},{
+		"name": "第三行单选信息",
+		"flag": "apuInfo",
+		"value": "",
+		"group": "",
+		"editor": "apuInfo"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/22.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 28,
+	"name": "显示/隐藏其他(单行)(23)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "23",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "显示/隐藏其他控件(单行)",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "标签",
+		"flag": "label",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "所有关联的名称",
+		"flag": "linkedName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "多选信息",
+		"flag": "deviceInfo",
+		"value": "",
+		"group": "",
+		"editor": "deviceInfo"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/23.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 29,
+	"name": "添加其他item(24)",
+	"classify": "items-items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "24",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "添加其他item的item",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "输入提示",
+		"flag": "promptText",
+		"value": "清填写全",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "数据库表名",
+		"flag": "table",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "父表外键",
+		"flag": "foreignKey",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "是否可以为空",
+		"flag": "canNull",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"可以为空"},{"value":0,"text":"不能为空"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "所有关联的名称",
+		"flag": "linkedName",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/24.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 30,
+	"name": "group的title一样(25)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "25",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "group的title一样的item",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "显示内容",
+		"flag": "title",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/25.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 31,
+	"name": "非选中下方图片集合(26)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "26",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "非选中下方图片集合",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "数据库列名",
+		"flag": "column",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "按钮集合",
+		"flag": "options",
+		"value": "",
+		"group": "",
+		"editor": "text-t-p"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/26.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+},{
+	"id": 32,
+	"name": "特殊的控件(1001)",
+	"classify": "items",
+	"properties":[{
+		"name": "编号",
+		"flag": "id",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "字段名称",
+		"flag": "name",
+		"value": "",
+		"group": "",
+		"editor": "text"
+	},{
+		"name": "控件类型",
+		"flag": "type",
+		"value": "1001",
+		"group": "noShow",
+		"editor": "type"
+	},{
+		"name": "控件类型",
+		"flag": "showType",
+		"value": "特殊的控件",
+		"group": "noSave",
+		"editor": "type"
+	},{
+		"name": "显示边框",
+		"flag": "showBorder",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"显示"},{"value":0,"text":"不显示"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "新增是否保存",
+		"flag": "newSave",
+		"value": "1",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "修改是否保存",
+		"flag": "modifySave",
+		"value": "0",
+		"group": "",
+		"editor": {
+			"type":"combobox",
+			"options":{
+				"data":[{"value":1,"text":"保存"},{"value":0,"text":"不保存"}],
+            	"panelHeight":"auto"
+			}
+		}
+	},{
+		"name": "列明集合",
+		"flag": "header",
+		"value": "",
+		"group": "",
+		"editor": "header"
+	},{
+		"name": "列的集合",
+		"flag": "columns",
+		"value": "",
+		"group": "",
+		"editor": "columns"
+	},{
+		"name": "图片",
+		"flag": "img",
+		"value": "images/widget/1001.png",
+		"group": "noSave",
+		"editor": "type"
+	}]
+}]

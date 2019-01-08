@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据访问维护</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../js/jquery-migrate-1.1.0.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="js/dataaccess.js" charset="UTF-8"></script>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+   <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">数据访问维护
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-search'" onclick="searchAccess()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" id="add_button"  data-options="iconCls:'icon-add'" onclick="addAccess()">&nbsp;添&nbsp;&nbsp;加&nbsp;</a>
+				<a class="easyui-linkbutton" id="modify_button"  data-options="iconCls:'icon-edit'" onclick="modifyAccess()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" id="remove_button"  data-options="iconCls:'icon-remove'" onclick="removeAccess()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+    
+	<!-- 数据访问状态、时间、设备类型查询条件 -->
+	<form id="form_search">
+		<table class="btbForm">
+			<tr>
+	    		<td style="text-align:left;">
+	    			关键字&nbsp;<input id="keyWord" name="keyWord" class="easyui-textbox"  data-options="prompt:'请输入名称、描述'" />
+				</td>
+    		</tr>
+		</table>
+	</form>
+	
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+  	
+  	<!--我的数据访问 -->
+  	<div style="width:100%;" id="typeDiv">
+		<table id="accessTable" class="easyui-datagrid"  data-options="pagination:true,striped:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:true"style="width:5%;"></th>
+					<th data-options="field:'accessCode',align:'left',halign:'center',alias:'a.access_code',sortable:'true'" style="width:10%;">访问编号</th>
+					<th data-options="field:'accessName',align:'left',halign:'center'" style="width:15%"> 访问名称</th>
+					<th data-options="field:'accessDesc',align:'left',halign:'center'" style="width:28%"> 访问描述</th>
+					<th data-options="field:'typeName',align:'left',halign:'center'," style="width:12%" >访问类型</th>
+					<th data-options="field:'categoryName',align:'left',halign:'center'," style="width:12%">访问分类</th>
+					<th data-options="field:'isUsed',align:'center',halign:'center',formatter:setIsUsed" style="width:7%">是否有效</th>
+					<th data-options="field:'sortNo',halign:'center',align:'left',alias:'a.sort_no',sortable:'true'" style="width:8%" >顺序号</th>
+					<th data-options="field:'detail',halign:'center',align:'center',formatter:detailFormmater" style="width:8%" >操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+  	<!-- 添加、修改数据访问页面 -->
+	<div id="amAccess" style="overflow-x:hidden;padding-top:10px;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_add',width:'570',height: '350',inline:true,modal:true" >
+		<form method="post" class="easyui-form" id="am_form" >
+			<table style="border-collapse: separate;border-spacing: 8px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问编号&nbsp;</td>
+	  				<td ><input id="am_accessCode" name="accessCode" class="easyui-textbox"  style="width: 150px;"></td>
+	  				<td style="text-align: right;width: 90px;">访问名称&nbsp;</td>
+	  				<td ><input id="am_accessName" name="accessName" class="easyui-textbox" style="width: 150px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问描述&nbsp;</td>
+	  				<td colspan="3"><input id="am_accessDesc" name="accessDesc" class="easyui-textbox" style="width: 410px;" ></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问类型</td>
+	  				<td ><input id="am_typeCode" name="typeCode" class="easyui-textbox"  data-options="editable:false" style="width: 120px;"><a id="choose_btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="openChoose()"></a></td>
+	  				<td style="text-align: right;width: 90px;">访问分类</td>
+	  				<td ><input id="am_categoryCode" name="categoryCode" class="easyui-combotree"  style="width: 150px;" ></td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="4" align="center">
+						<div id="param_panel" class="easyui-panel" style="width:99%;background:#fafafa;" data-options="iconCls:'icon-save',collapsible:true," title="参数描述">
+							<table style="width:100%;">
+						    	<tr>
+						    		<td style="text-align: right;">
+						    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addParam()">&nbsp;添&nbsp;&nbsp;加&nbsp;</a>
+										<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyParam()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+										<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeParam()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+						    		</td>
+						    	</tr>
+						    </table>
+							<table id="param_table" class="easyui-datagrid" style="width:100%;" >
+								<thead>
+									<tr>
+										<th data-options="field:'paramName',align:'left',halign:'center'" style="width:25%;">参数名</th>
+										<th data-options="field:'paramDesc',align:'left',halign:'center'" style="width:30%">参数描述</th>
+										<th data-options="field:'paramType',align:'center',halign:'center',formatter:paramTypeFormartter" style="width:20%">类型</th>
+										<th data-options="field:'paramTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</td>
+	  			</tr>
+	   			<tr>
+	  				<td colspan="4" align="center">
+						<div id="back_panel" class="easyui-panel" style="width: 99%;background:#fafafa;" data-options="iconCls:'icon-save',collapsible:true," title="返回值描述">
+							<table style="width:100%;">
+						    	<tr>
+						    		<td style="text-align: right;">
+						    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addBack()">&nbsp;添&nbsp;&nbsp;加&nbsp;</a>
+										<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyBack()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+										<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeBack()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+						    		</td>
+						    	</tr>
+						    </table>
+							<table id="back_table" class="easyui-datagrid" style="width:100%;" >
+								<thead>
+									<tr>
+										<th data-options="field:'backName',align:'left',halign:'center'" style="width:25%;">返回值名</th>
+										<th data-options="field:'backDesc',align:'left',halign:'center'" style="width:30%">返回值描述</th>
+										<th data-options="field:'backType',align:'center',halign:'center',formatter:backTypeFormartter" style="width:20%">类型</th>
+										<th data-options="field:'backTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问SQL&nbsp;</td>
+	  				<td colspan="3" ><textarea id="am_accessSQL" name="accessSQL"  style="width: 410px;height:200px;"></textarea></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">顺序号&nbsp;</td>
+	  				<td ><input id="am_sortNo" name="sortNo" class="easyui-textbox"  style="width: 150px;"></td>
+	  				<td style="text-align: right;" id="hide1">是否有效&nbsp;</td>
+  					<td id="hide2">
+  						<input id="noUsed" type="radio" name="isUsed" value="1"  >
+  						<label for="noUsed">有效</label>
+  						<input id="isUsed" type="radio" name="isUsed" value="0">
+  						<label for="isUsed">无效</label>
+  					</td>
+	  			</tr>
+	  		</table>
+		</form>
+	</div>
+	
+	<!-- 新增dialog对应按钮 -->
+	<div id="sc_add" style="text-align:right;">
+		<a id="save_button" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#amAccess').dialog('close');">关闭</a>
+	</div>
+	
+	<!-- 数据访问详情页面 -->
+	<div id="AccessDetail" style="overflow-x:hidden;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_detail',width:'600',height: '350',inline:true,title: '数据访问详情',modal:true" >
+		<form method="post" class="easyui-form" id="Access_detail_form" >
+			<table style="border-collapse: separate;border-spacing: 8px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问编号：&nbsp;</td>
+	  				<td style="text-align: left;width: 150px;"><span id="de_accessCode" name="accessCode" ></span></td>
+	  				<td style="text-align: right;width: 90px;">访问名称：&nbsp;</td>
+	  				<td ><span id="de_accessName" name="accessName" ></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问描述：&nbsp;</td>
+	  				<td colspan="3"><span id="de_accessDesc" name="accessDesc"  ></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问类型：</td>
+	  				<td ><span id="de_typeCode" name="typeName" ></span></td>
+	  				<td style="text-align: right;width: 90px;">访问分类：</td>
+	  				<td ><span id="de_categoryCode" name="categoryName"  ></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">javaMethod：</td>
+	  				<td ><span id="de_javaMethod" name="javaMethod" ></span></td>
+	  				<td style="text-align: right;width: 90px;">访问url：</td>
+	  				<td ><span id="de_accessUrl" name="accessUrl"  ></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="4">
+		  				<table id="detail_param_table" class="easyui-datagrid" style="width:100%;" title="参数描述" >
+							<thead>
+								<tr>
+									<th data-options="field:'paramName',align:'left',halign:'center'" style="width:25%;">参数名</th>
+									<th data-options="field:'paramDesc',align:'left',halign:'center'" style="width:30%">参数描述</th>
+									<th data-options="field:'paramType',align:'center',halign:'center',formatter:paramTypeFormartter" style="width:20%">类型</th>
+									<th data-options="field:'paramTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+								</tr>
+							</thead>
+						</table>
+					</td>
+	  			</tr>
+	   			<tr>
+	  				<td colspan="4">
+		  				<table id="detail_back_table" class="easyui-datagrid" style="width:100%;" title="返回值描述" >
+							<thead>
+								<tr>
+									<th data-options="field:'backName',align:'left',halign:'center'" style="width:25%;">返回值名</th>
+									<th data-options="field:'backDesc',align:'left',halign:'center'" style="width:30%">返回值描述</th>
+									<th data-options="field:'backType',align:'center',halign:'center',formatter:backTypeFormartter" style="width:20%">类型</th>
+									<th data-options="field:'backTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+								</tr>
+							</thead>
+						</table>
+					</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">访问SQL：&nbsp;</td>
+	  				<td colspan="3" style="height:30px;"><span id="de_accessSQL" name="accessSQL"  style="width: 410px;height:40px;"></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 90px;">顺序号：&nbsp;</td>
+	  				<td ><span id="de_sortNo" name="sortNo" ></span></td>
+	  				<td style="text-align: right;" >是否有效：&nbsp;</td>
+  					<td >
+  						<span name="isUsed"></span>
+  					</td>
+	  			</tr>
+  			</table>
+		</form>
+	</div>
+	
+	<!-- 修改dialog对应按钮 -->
+	<div id="sc_detail" style="text-align:center;">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#AccessDetail').dialog('close');">关闭</a>
+	</div>
+	
+	<!-- 选择数据访问类型 -->
+	<div id="chooseType" style="overflow-x:hidden;padding-top:10px;" class="easyui-dialog" data-options="title:'选择数据访问类型',closed:true,buttons:'#sc_choose_type',width:'560',height: '350',inline:true,modal:true" >
+		<!-- 查询条件 -->
+		<table class="btbForm">
+			<tr>
+				<td>
+					关键字&nbsp;<input id="type_keyword" class="easyui-textbox" data-options="prompt:'请输入关键字',width:'100'"/>
+				</td>
+				<td style="text-align:right;">
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSearchType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<div style="margin:5px 0;"></div>
+		<table id="type_dg" class="easyui-datagrid" style="width:100%;padding:10px;"  
+			data-options="pagination:true,pageSize:10,striped:true,singleSelect:true,autoRowHeight:true">
+			<thead>
+				<tr>
+					<th data-options="field:'typeCode', halign:'center',align:'left'" width="20%" >类型编码</th>
+					<th data-options="field:'typeName', halign:'center',align:'left'" width="20%">类型名称</th>
+					<th data-options="field:'typeDesc', halign:'center',align:'left'" width="60%">类型描述</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+	<!-- 新增dialog对应按钮 -->
+	<div id="sc_choose_type" style="text-align:center;">
+		<a id="save_button" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="chooseType()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#chooseType').dialog('close');">关闭</a>
+	</div>
+	
+	<!-- 参数描述新增、修改页面 -->
+	<div id="dialog_param_add_modify" style="display: none;"></div>
+
+	<!-- 返回值描述新增、修改页面 -->
+	<div id="dialog_back_add_modify" style="display: none;"></div>
+	
+  </body>
+</html>

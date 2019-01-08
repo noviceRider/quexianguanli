@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.ResourcetypeDao">
+	<!-- 返回资源分类的(PO)数据对象 -->
+	<sql id="resultResourcetypeObj">
+		select
+			type_id "typeId",
+			type_name "typeName",
+			p_type_id "pTypeId",
+			info_type "infoType",
+			is_used "isUsed",
+			is_default "isDefault",
+			type_route "typeRoute",
+			clear_not_rel "clearNotRel",
+			sort_no "sortNo"
+	</sql>
+	
+	<!-- 根据资源分类序号查询数据 -->
+	<select id="findById" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+			where type_id = #{typeId}
+	</select>
+	
+	<!-- 查找上级节点信息 -->
+	<select id="findByPid" parameterType="Integer" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+			where type_id = #{pTypeId}
+	</select>
+
+	<!-- 根据项目id查询当前项目下的‘默认分类’数据 -->
+	<select id="findByinfoType" parameterType="String" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+			where info_type = #{infoType}
+	</select>
+	
+	<!-- 添加资源分类 -->
+	<insert id="addResourcetype" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo">
+		insert into code_ge_restype (
+			type_id,
+			type_name,
+			p_type_id,
+			info_type,
+			is_used,
+			is_default,
+			clear_not_rel,
+			type_route,
+			sort_no
+		) values (
+			#{typeId},
+			#{typeName},
+			#{pTypeId},
+			#{infoType},
+			#{isUsed},
+			#{isDefault},
+			#{clearNotRel},
+			#{typeRoute},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 修改资源分类 -->
+	<update id="modifyResourcetype" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo">
+		update code_ge_restype
+		set
+			type_name = #{typeName},
+			p_type_id = #{pTypeId},
+			is_used = #{isUsed},
+			info_type = #{infoType},
+			is_default =#{isDefault},
+			clear_not_rel =#{clearNotRel},
+			sort_no = #{sortNo}
+		where type_id = #{typeId}
+	</update>
+	
+	<!-- 修改资源分类 -->
+	<update id="updateResourcetype" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo">
+		update code_ge_restype
+		set
+			type_route =#{typeRoute}
+		where type_id = #{typeId}
+	</update>
+	
+	<!-- 修改资源分类 -->
+	<update id="setOtherZero" parameterType="Integer">
+		update code_ge_restype
+		set
+			is_default = 0
+		where type_id != #{typeId}
+	</update>
+	
+	<!-- 根据上级分类序号查找下级树 -->
+	<select id="findType" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+		<where>
+			p_type_id = #{typeId}
+			<if test="isUsed != null and isUsed != '' and isUsed !=1">
+				and is_used = 1
+			</if>
+		</where>
+		order by sort_no
+	</select>
+	
+			<!-- 根据上级菜单编号加载下级树 -->
+	<select id="findMenu" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+		<where>
+			p_type_id = #{typeId} and info_type = #{infoType}
+			<if test="isUsed != null and isUsed != '' and isUsed !=1">
+				and is_used = 1
+			</if>
+		</where>
+		order by sort_no
+	</select>
+	
+		<!-- 根据上级分类序号查找下级树 -->
+	<select id="findAll" parameterType="com.bn.gmodule.commondata.bo.ResourcetypeBo" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+		<where>
+			p_type_id = #{typeId}
+		</where>
+		order by sort_no
+	</select>
+	
+	<!-- 统计菜单子节点数量 -->
+	<select id="getCountChildNum" parameterType="Integer" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		select 
+			count(type_id) "childNum"
+		from code_ge_restype 
+		where p_type_id = #{typeId}
+	</select>
+	
+	<!-- 获取当前新增数据的Id-->
+	<select id="getThisId" resultType="Integer">
+		select nextval('SEQ_CODE_GE_RESTYPE')
+	</select>
+	
+	<!-- 查找clearNotRel字段为1的数据类型-->
+	<select id="findIsClear" resultType="com.bn.gmodule.commondata.po.ResourcetypePo">
+		<include refid="resultResourcetypeObj"/>
+			from code_ge_restype 
+		<where>
+			clear_not_rel = '1'
+		</where>
+		order by sort_no
+	</select>
+	
+</mapper>

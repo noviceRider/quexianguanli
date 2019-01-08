@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>template_business.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="template_business_div" style="width: 680px;height: 350px" data-options="buttons:'#template_business_div_btns'">
+    	<!-- 查询 -->
+    	<form id="logicForm">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp; <input id="logicKeyWordId" name="logicKeyWord" class="easyui-textbox" data-options="prompt:'输入编号或名称'" style="width:140px;height:20px;">
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						业务逻辑分类&nbsp; <input id="logicTypeTree" name="logicTypeKeyWord" class="easyui-combotree" data-options="editable:false,panelHeight:'auto',prompt:'请选择业务逻辑分类'" style="width:200px;height:20px;">&nbsp;
+					</td>
+					<td>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchLogic()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  		
+  		<!-- 数据列表 -->
+		<table id="template_logic_dg" class="easyui-datagrid" style="width:100%" data-options="pagination:true,striped:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'inParams',alias:'in_params',align:'center',halign:'center',sortable:'true',hidden:true">输入参数</th>
+					<th data-options="field:'retInfo',alias:'ret_info',align:'center',halign:'center',sortable:'true',hidden:true">返回信息</th>
+					<th data-options="field:'logicScript',alias:'logic_script',align:'center',halign:'center',sortable:'true',hidden:true">业务逻辑脚本</th>
+					<th data-options="field:'url',alias:'url',align:'center',halign:'center',sortable:'true',hidden:true">访问地址</th>
+					<th data-options="field:'logicType',alias:'a.logic_type',align:'left',halign:'center',sortable:'true',hidden:true">业务逻辑分类</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',hidden:true" style="width: 7%">是否有效</th>
+					<th data-options="field:'isPreDefin',alias:'a.is_pre_define',align:'center',halign:'center',sortable:'true',hidden:true" style="width: 7%">是否预定义</th>
+					
+					<th data-options="field:'logicCode',alias:'a.logic_code',align:'left',halign:'center',sortable:'true'" style="width: 22%">业务逻辑编号</th>
+					<th data-options="field:'logicName',alias:'a.logic_name',align:'left',halign:'center',sortable:'true'" style="width: 22%">业务逻辑名称</th>
+					<th data-options="field:'logicDesc',alias:'a.logic_desc',align:'left',halign:'center',sortable:'true'" style="width: 40%">业务逻辑描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'left',halign:'center',sortable:'true'" style="width: 15%">业务逻辑分类</th>
+				</tr>
+			</thead>
+		</table>
+    </div>
+    
+     <div id="template_business_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectLogic()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelSelectLogic()">取消</a>
+	</div>
+    
+  </body>
+</html>

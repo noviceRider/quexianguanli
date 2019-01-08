@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>perfectEmpInfo.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../empregister/js/perfectEmpInfo.js"></script>
+  </head>
+  	<body>
+   		<form id="addAndSubmitForm" class="easyui-form" enctype="multipart/form-data"  method="POST">
+			<table style="border-collapse: separate;border-spacing: 5px;">
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">员工编码&nbsp;</td>
+	  				<td style="text-align: left;"><input id="empCodeEdit" name="empCode" class="easyui-textbox" style="width: 170px;">
+	  				<input  type="hidden" name="empId">
+	  				</td> 			
+	  				<td style="text-align: right;width: 100px;">姓名&nbsp;</td>
+	  				<td style="text-align: left;"><input id="empNameEdit" name="empName" data-options="required:true,missingMessage: '请输入员工姓名'" class="easyui-textbox" style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">性别&nbsp;</td>
+	  				<td style="text-align: left;"><input id="genderEdit" name="gender" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='gender' style="width: 170px;"></td>	  				
+	  				<td style="text-align: right;width: 100px;">民族&nbsp;</td>
+	  				<td style="text-align: left;"><input name="national" id="nationalEdit"  class="easyui-combobox"  data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='national'  style="width: 170px;"></td>
+	  			</tr>	  			
+	  			<tr>
+	 					<td style="text-align: right;width: 100px;">员工类型&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="empType" id="empTypeEdit" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='empType'  style="width: 170px;"></td>
+	  				<td style="text-align: right;width: 100px;">员工照片&nbsp;</td>
+	  				<td style="text-align: left;"><input id="picLogo" name="uploadFile" class="easyui-filebox" data-options="prompt:'请选择文件',buttonText:'文件选择'"  style="width: 170px;"/></td>
+	  			</tr>	
+	  			<tr style="display:none">
+	 					<td style="text-align: right;width: 100px;">员工状态&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="empState" id="empStateEdit" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='empState'  style="width: 170px;"></td>
+	  			</tr>			
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">手机号码&nbsp;</td>
+	  				<td style="text-align: left;"><input id="mobileEdit" name="mobile" class="easyui-textbox" style="width: 170px;"></td>  			
+	  				<td style="text-align: right;width: 100px;">电子邮箱&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="email" class="easyui-textbox" style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">微信&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="weiXin" class="easyui-textbox" style="width: 170px;"></td>  			
+	  				<td style="text-align: right;width: 100px;">qq&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="qq" class="easyui-textbox" style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">身份证号码&nbsp;</td>
+	  				<td style="text-align: left;"><input id="idNoEdit" name="idNo" class="easyui-textbox" style="width: 170px;"></td>	  				
+	  				<td style="text-align: right;width: 100px;">其他联系方式&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="otherContact" class="easyui-textbox" style="width: 170px;"></td>	 
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">通讯地址&nbsp;</td>
+	  				<td colspan="3" style="text-align: left;"><input  name="address" class="easyui-textbox" style="width: 460px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">邮政编码&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="zipCode" class="easyui-textbox" style="width: 170px;"></td>	  			
+	  				<td style="text-align: right;width: 100px;">最高学历&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="eduQualification" id="eduQualificationEdit" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='eduQualification'  style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">毕业时间&nbsp;</td>
+	  				<td style="text-align: left;"><input id="graduateTimeEdit" name="graduateTime" class="easyui-datebox" style="width: 170px;" value="0"  data-options="editable:false"></td> 			
+	  				<td style="text-align: right;width: 100px;">所学专业&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="studySubject" class="easyui-textbox" style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">毕业院校&nbsp;</td>
+	  				<td style="text-align: left;"><input  name="graduateCollege" class="easyui-textbox" style="width: 170px;"></td>
+	  				<td style="text-align: right;width: 100px;">院校级别&nbsp;</td>
+	  				<td style="text-align: left;"><input id="collegeLvlEdit" name="collegeLvl" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='collegeLvl'  style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">英语能力&nbsp;</td>
+	  				<td style="text-align: left;"><input id="engAbilityEdit"  name="engAbility" class="easyui-combobox" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='engAbility'  style="width: 170px;"></td>  			
+	  				<td style="text-align: right;width: 100px;">开始工作时间&nbsp;</td>
+	  				<td style="text-align: left;"><input id="workStartEdit" name="workStart" class="easyui-datebox" style="width: 170px;" value="0" data-options="editable:false"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">入职时间&nbsp;</td>
+	  				<td style="text-align: left;"><input id="joinTimeEdit" name="joinTime" class="easyui-datebox" style="width: 170px;" value="0" data-options="editable:false"></td>	  			
+	  				<td style="text-align: right;width: 100px;">职位&nbsp;</td>
+	  				<td style="text-align: left;"><input id="jobPositionEdit" name="jobPosition" class="easyui-combobox" data-options="required:true,missingMessage: '请选择员工职位',editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" name='jobPosition'  style="width: 170px;"></td>
+	  			</tr>
+	  			<tr>
+	  			 	<td style="text-align: right;width: 100px;">所属部门&nbsp;</td>
+	  			 	<td style="text-align: left;">
+	  					<select id="deptNameEdit" data-options="required:true,missingMessage: '请选择员工部门'" name="deptName" class="easyui-combotree" style="width: 170px;"></select>
+	  					<input id="deptIdEdit" type="hidden" name="deptId">
+	  				</td>
+	  			   	<td style="text-align: right;width: 100px;">工作岗位&nbsp;</td>
+	  				<td style="text-align: left;">
+	  					<input id="postNameEdit" name="postId" class="easyui-combobox" data-options="required:true,missingMessage: '请选择员工岗位',editable:false,valueField: 'postId',textField: 'postName',multiple:true, panelHeight:'auto'"   style="width: 170px;">
+	  					<!-- <input id="postIdEdit" type="hidden" name="postId"> -->
+	  				</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 100px;">备注&nbsp;</td>
+	  				<td colspan="3" style="text-align: left;">
+	  					<textarea id="remarkadd" name="remark"  style="width:450px;height:50px;"></textarea>
+	  				</td>
+	  			</tr>
+			</table>
+			
+			<!-- 工作经验容器 -->
+			<div id="workExp"></div>
+			
+			<!-- 电子资料容器 -->
+			<div id="eleRecord"></div>
+
+		</form>
+		
+		<!-- 工作经验新增修改 -->
+	    <div id="work_dialog" class="easyui-dialog" data-options="closed:true,buttons:'#sc_work',modal:true,width:'365',height: '293'" style="top:10px;border-bottom:1px solid #D5E5F4;">
+   			<form id="work_am"  class="easyui-form" method="POST">
+				<table style="border-collapse: separate;border-spacing: 8px;">
+		  			<tr>
+		  				<td style="text-align: right;">公司名称</td>
+		  				<td><input id="unitNameWork" name="unitName" class="easyui-textbox" style="width: 170px;"></td>
+		  			</tr>
+		  			<tr>
+		  				<td style="text-align: right;">工作岗位</td>
+		  				<td><input id="jobPositionWork" name="jobPosition" class="easyui-textbox" style="width: 170px;"></td>
+		  			</tr>
+		  			<tr>
+		  				<td style="text-align: right;width: 100px;">开始时间&nbsp;</td>
+		  				<td ><input id="startTimeWork" name="startTime" class="easyui-datebox" style="width: 170px;"  data-options="editable:false"></td>
+		  			</tr>
+		  			<tr>
+		  				<td style="text-align: right;width: 100px;">结束时间&nbsp;</td>
+		  				<td ><input id="endTimeWork" name="endTime" class="easyui-datebox" style="width: 170px;"  data-options="editable:false"></td>
+		  			</tr>
+		
+		  			<tr>
+		  				<td style="text-align: right;">工作职责</td>
+		  				<td><input id="workScopeWork" name="workScope" class="easyui-textbox" style="width: 170px;"></td>
+		  			</tr>
+		  			<tr>
+		  				<td style="text-align: right;">工作地点</td>
+		  				<td><input id="workAreaWork" name="workArea" class="easyui-textbox" style="width: 170px;"></td>
+		  			</tr>
+		  		</table>  			
+  			</form>
+  	  	</div>
+  	  	
+	    <!-- 工作经验的保存和关闭按钮 -->
+		<div id="sc_work">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doWorkSave()">保存</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#work_dialog').dialog('close');">关闭</a>
+		</div>
+		
+		<!--  工作经验 -->
+		<div id="workExpOld">
+		    <div id="workContent" style="width:97% ;border-top:1px solid #D5E5F4;float:left;overflow: auto;display:none">
+		    	<!-- 标题以及各种功能按钮 -->
+			    <table style="width:100%;padding:5px;">
+			    	<tr>
+			    		<td style="text-align:left;">
+							<!-- &nbsp;&nbsp;&nbsp;关键字&nbsp;<input id="work_keyWord" class="easyui-textbox" name="keyWord" data-options="prompt:'请输入公司名称或职位'"  style="width:120px;height:20px;">-->
+							
+						</td>
+			    		<td style="text-align: right;">
+			    			<!-- <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchWork()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+			    			 -->
+			    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addWork()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+							<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyWork()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+							<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeWork()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+			    		</td>
+			    	</tr>
+			    </table>
+				<!-- 定义外边距 
+			  	<div style="margin-top:5px;w"></div>-->
+			  	
+				<div style="width:97%; padding-left:15px;"  >
+					<table style="width:100%;" id="workTable" class="easyui-datagrid" title="工作经历" data-options="striped:true,singleSelect:true" >
+						<thead>
+							<tr>
+								<th data-options="field:'listId',align:'center',checkbox:true," style="width:5%"></th>
+								<th data-options="field:'empId',align:'left',halign:'center',sortable:'true',hidden:'true'" ></th>
+								<th data-options="field:'startTime',align:'left',halign:'center',sortable:'true'" style="width:14%">开始时间</th>
+								<th data-options="field:'endTime',align:'left',halign:'center',sortable:'true'" style="width:14%">结束时间</th>
+								<th data-options="field:'unitName',align:'left',halign:'center',sortable:'true'" style="width:28%">公司名称</th>
+								<th data-options="field:'jobPosition',align:'left',halign:'center',sortable:'true'" style="width:14%">职位</th>
+								<th data-options="field:'workScope',align:'left',halign:'center',sortable:'true'" style="width:14%">工作职责</th>
+								<th data-options="field:'workArea',align:'left',halign:'center',sortable:'true'" style="width:14%">工作地点</th>
+							</tr>
+						</thead>
+					</table>
+				</div>    
+		    </div>
+	    </div>
+	    
+	    <!-- 电子资料 -->
+	    <div id="eleRecordOld">
+	        <div id="eleRecordContent" style="width:97% ;border-top:1px solid #D5E5F4;float:left;overflow: auto;display:none;margin-top:10px">
+			    <table style="width:100%;padding:5px;">
+			    	<tr>
+			    		<td style="text-align:left;">
+							<!-- &nbsp;&nbsp;&nbsp;关键字&nbsp;<input id="work_keyWord" class="easyui-textbox" name="keyWord" data-options="prompt:'请输入公司名称或职位'"  style="width:120px;height:20px;">-->
+							
+						</td>
+			    		<td style="text-align: right;">
+			    			<!-- <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchWork()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+			    			 -->
+			    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-add'" onclick="uploadEleRes()">&nbsp;上&nbsp;&nbsp;传&nbsp;</a>
+			    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-edit'" onclick="modifyEleRes()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+							<a class="easyui-linkbutton"  data-options="iconCls:'icon-remove'" onclick="deleteEleRes()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+			    		</td>
+			    	</tr>
+			    </table>
+				<div style="width:97%; padding-left:15px;margin-bottom:10px"  >
+					<table style="width:100%;" id="resTable" class="easyui-datagrid" title="电子资料" data-options="striped:true,singleSelect:true" >
+						<thead>
+							<tr>
+							<th data-options="field:'resId',align:'center',checkbox:true," style="width:5%"></th>
+							<th data-options="field:'resDesc',align:'left',halign:'center'" width="37%">资源描述</th>
+							<th data-options="field:'resFile',align:'left',halign:'center'" width="25%">资源文件名</th>
+							<th data-options="field:'fileSize',align:'right',halign:'center',formatter:fileSizeFormatter" width="23%">文件大小</th>
+							<th data-options="field:'mimeType',align:'left',halign:'center',hidden:'true'" width="16%">文件类型</th>
+							<th data-options="field:'uploadTime',align:'center',halign:'center',hidden:'true',formatter:uploadTimeFormatter" width="15%">上传时间</th>
+							<th data-options="field:'detail',align:'center',halign:'center',formatter:downFormatter" width="12%">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+	    </div>
+    	
+    	<!-- 上传电子资料页面 -->
+		<div id="dictType" style="display: none;">
+			<div id="techlvl_dlg_am" style="width:350px;" data-options="buttons:'#techlvl_dlg_am_btns'">
+				<form id="techlvl_fm_am" class="easyui-form" enctype="multipart/form-data" method="POST">
+					<table style="width: 100%;border-spacing: 0px 10px;">
+						<tr style="display:none">
+							<td style="width: 30%;text-align: right;">资源序号&nbsp;&nbsp;&nbsp;</td>
+							<td>
+								<input id="resId" name="resId" class="easyui-textbox" style="width: 210px;" data-options="prompt:'请输入代码'">
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 30%;text-align: right;">资源描述&nbsp;&nbsp;&nbsp;</td>
+							<td>
+								<input id="resDesc" name="resDesc" class="easyui-textbox" style="width: 210px;" data-options="prompt:'请输入资源描述'">
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 30%;text-align: right;">文件选择&nbsp;&nbsp;&nbsp;</td>
+							<td>
+								<input id="picLogo" name="uploadFile" class="easyui-filebox" style="width:210px;" data-options="prompt:'请选择文件上传',buttonText:'上传文件'">
+							</td>
+						</tr>	
+					</table>
+				</form>
+			</div>
+			<div id="techlvl_dlg_am_btns">
+	  			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveResource()">保存</a>
+	  			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCloseResource()">关闭</a>
+	  		</div>
+	  		
+	  		<!-- form表单按钮 -->
+			<div id="sc_form">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="perfectEmpInfo('save')">保存</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="perfectEmpInfo('submit')">提交</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="refresh()">关闭</a>
+			</div>
+		</div>
+  </body>
+</html>

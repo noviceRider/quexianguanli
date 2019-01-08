@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>metamanage.html</title>
+	
+    <meta charset="UTF-8">
+	<meta name="content-type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	
+	<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	
+	<script type="text/javascript" src="js/metamanage.js" charset="UTF-8"></script>
+	
+  </head>
+  
+  <body>
+    <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">元数据管理
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryMetamanage()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addMetamanage()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyMetamanage()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<!-- <a class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="createTable()">&nbsp;生&nbsp;成&nbsp;表&nbsp;</a> -->
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeMetamanage()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="exportMetamanage()">&nbsp;导&nbsp;&nbsp;出&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-import'" onclick="importMetamanage()">&nbsp;导&nbsp;&nbsp;入&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+
+  	<!-- 选择不同获取不同的信息 -->
+	<table class="btbForm">
+		<tr>
+			<td>关键字&nbsp; <input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'输入表名、表描述、实体名'" style="height:20px;">&nbsp;
+			&nbsp;&nbsp;&nbsp;分类&nbsp;&nbsp;&nbsp;<input id="tbtype" style="width:200px" class="easyui-combobox" name="tableType" data-options="valueField:'typeCode',textField:'typeName',panelHeight:'auto',editable:false">
+			</td>
+		</tr>
+	</table>
+  	
+  	
+  	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+  	
+  	<!-- 定义datagrid数据网格 -->
+	<div id="metamanage_div">
+		<form method="post" class="easyui-form" id="ff" style="display:none">
+				
+		</form>
+		<table id="metamanage_dg" style="width:100%;" class="easyui-datagrid"
+			data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,rownumbers:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true',hidden:true"></th>
+					
+					<th data-options="field:'tableName',alias:'a.table_name',align:'left',halign:'center',sortable:'true'" style="width:20%">表名</th>
+					<th data-options="field:'tableDesc',alias:'a.table_desc',align:'left',halign:'center',sortable:'true'" style="width:30%">表描述</th>
+					<th data-options="field:'tableTypeDesc',alias:'a.table_type',align:'left',halign:'center',sortable:'true'" style="width:15%">分类</th>
+					<th data-options="field:'entityName',alias:'a.entity_name',align:'left',halign:'center',sortable:'true'" style="width:15%">实体名</th>
+					<th data-options="field:'entityDesc',alias:'a.entity_desc',align:'left',halign:'center',hidden:true">实体描述</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter" style="width:10%">是否有效</th>
+					<th data-options="field:'sortNo',alias:'a.sort_no',align:'center',halign:'center',sortable:'true',hidden:true">顺序号</th>
+					<th data-options="field:'detail',align:'center',halign:'center',formatter:detailFormatter" style="width:7%">操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	<!-- 新增、修改页面 -->
+	<div id="dialog_add_modify" style="display: none;"></div>
+	
+	<!--选择代码类型页面 -->
+	<div id="dialog_metamanage_dicttype" style="display: none;"></div>
+	
+	<!-- 详情页面 -->
+	<div id="dialog_detail" style="display: none;"></div>
+	
+	<!-- 新增_修改字段页面 -->
+	<div id="dialog_column_add_modifycolumn" style="display: none;"></div>
+
+	<!-- 字段详情页面 -->
+	<div id="dialog_column_detail" style="display: none;"></div>
+
+	<!-- 新增、修改枚举信息页面 -->
+	<div id="dialog_column_enum_add_modify" style="display: none;"></div>
+	
+	<div id="exportDg"  class="easyui-dialog" data-options="title:'元数据导出',closed:true,buttons:'#sc_export',width:'560',height: '350',inline:true,modal:true">
+		<h3>选择元数据分类导出：</h3>
+		<div id="posthtml"></div>
+	</div>
+	
+	<!-- 导出dialog对应按钮 -->
+	<div id="sc_export" style="text-align:right;">
+		<a id="save_button" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="exportData()">导出</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#exportDg').dialog('close');">关闭</a>
+	</div>
+	
+			<!-- 导入对话框 -->
+	<div id="dlg_importExcel" style="display: none;width:320px;padding: 10px;"
+		data-options="buttons:'#btn_dlg_importExcel'">
+		<form id="form_import" enctype="multipart/form-data" method="post">
+			<table style="font-size: 16px;overflow: hidden;">
+				<tr>
+					<td style="line-height: 35px;">
+						请选择要导入的xml文件：
+					</td>
+				</tr>
+				<tr>
+					<td style="line-height: 35px;">
+						<input type="file" name="file" accept=".xml">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- 导入信息弹出框内按钮 -->
+		<div id="btn_dlg_importExcel" style="display:none;padding:5px;text-align: center;">
+			<a class="easyui-linkbutton" iconCls="icon-import"
+				onclick="doImportExcel()">导 入</a> <a class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="$('#dlg_importExcel').dialog('close');">关闭</a>
+		</div>
+	</div>
+
+  </body>
+</html>

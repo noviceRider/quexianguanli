@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.businesslogic.dao.BusinessCategoryDao">
+	<!-- 新增业务逻辑分类 -->
+	<insert id="addBusinessCategory" parameterType="com.bn.gmodule.businesslogic.bo.CategoryBo">
+		insert into code_business_logic_category(
+			category_code,
+			p_category_code,
+			category_name,
+			category_path,
+			is_used,
+			sort_no
+		) values (
+			#{categoryCode},
+			#{pCategoryCode},
+			#{categoryName},
+			#{categoryPath},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 查询节点 -->
+	<select id="findNodes" parameterType="com.bn.gmodule.businesslogic.bo.CategoryBo" resultType="com.bn.gmodule.businesslogic.po.CategoryPo">
+		select
+          	 m.category_code "categoryCode",
+          	 m.p_category_code "pCategoryCode",
+          	 m.category_name "categoryName",
+          	 m.category_path "categoryPath",
+         	 m.is_used "isUsed",
+          	 m.sort_no "sortNo"
+    	from code_business_logic_category m
+		<where>
+			<if test="pCategoryCode != null and pCategoryCode!=''">
+				p_category_code = #{pCategoryCode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 通过编号查找节点 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.businesslogic.po.CategoryPo">
+		select 
+			cblc.category_code "categoryCode",
+        	cblc.p_category_code "pCategoryCode",
+        	cblc.category_name "categoryName",
+        	cblc.category_path "categoryPath",
+        	cblc.is_used "isUsed",
+        	cblc.sort_no "sortNo"
+		from code_business_logic_category cblc
+		where cblc.category_code = #{Id}
+	</select>
+	
+	<!-- 修改节点信息 -->
+	<update id="modifyBusinessCategory" parameterType="com.bn.gmodule.businesslogic.bo.CategoryBo">
+		update code_business_logic_category cblc
+		set 
+			cblc.category_name = #{categoryName},
+			cblc.is_used = #{isUsed},
+			cblc.sort_no = #{sortNo}
+		where cblc.category_code = #{categoryCode}
+	</update>
+	
+	<!-- 删除节点数据 -->
+	<delete id="removeBusinessCategory" parameterType="String">
+		delete from code_business_logic_category cblc where cblc.category_code = #{categoryCode}
+	</delete>
+	
+	<!-- 查找子节点的数量 -->
+	<select id="countChildNode" parameterType="String" resultType="Integer">
+		select count(category_code) from code_business_logic_category where p_category_code =#{pCategoryCode}
+	</select>
+	
+	<!-- 通过编号查找表中存在的数量 -->
+	<select id="validateCategoryCode" parameterType="com.bn.gmodule.businesslogic.bo.CategoryBo" resultType="Integer">
+		select count(category_code) from code_business_logic_category where category_code = #{categoryCode}
+	</select>
+</mapper>

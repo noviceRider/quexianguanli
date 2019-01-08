@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>主页面图片</title>
+
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td> </td>
+			</tr>
+		</table>
+		<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+			<TBODY>
+				<tr>
+					<td height="16"></td>
+				</tr>
+				<TR>
+					<TD valign="middle" align="center"><img id="icon" src="" /></TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+	</body>
+
+	<script type="text/javascript">
+        $(function(){
+            $("#icon").attr("src",basePath+"/"+getIcons("04.jpg"));
+        });
+
+        /**
+         * 获取icon
+         * @param iconId
+         * @returns {String}
+         */
+        function getIcons(iconId){
+            var iconPath = '';
+            //获取icon
+            $.ajax({
+                url:basePath+"/frame_mainframe_findicons.json",
+                type:"post",
+                data:{iconsId:iconId},
+                dataType:"json",
+                async:false,
+                success:function(data){
+                    iconPath = data.icons.rows.userFilePath;
+                }
+            });
+            return iconPath;
+        }
+	</script>
+
+</html>

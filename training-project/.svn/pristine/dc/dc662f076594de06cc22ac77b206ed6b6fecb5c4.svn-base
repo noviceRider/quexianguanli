@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>selectinfotype.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+
+<script>
+
+</script>
+</head>
+
+<body>
+	
+
+	<!-- 定义datagrid数据网格 -->
+	<div id="infotype_Div" style="width:800px;" >
+		<!-- 选择不同获取不同的信息 -->
+		<table class="btbForm" border="0">
+			<tr>
+				<td>资源大类名称&nbsp; <input id="keyWord" name="keyWord"
+					class="easyui-textbox" data-options="prompt:'输入资源大类名称'"
+					style="width:200px;height:20px;">&nbsp;
+				</td>
+				<td style="text-align: right;width:80px;"><a class="easyui-linkbutton"
+					data-options="iconCls:'icon-search'" onclick="queryInfoType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	
+		<!-- 定义外边距 -->
+		<div style="margin-top:5px"></div>
+		
+		<table id="dictTable" class="easyui-datagrid" style="width:100%;height:315px;"
+		data-options="pagination:true,striped:true,singleSelect:true">
+		<thead>
+			<tr>
+				<th
+					data-options="field:'dictCode',align:'left',halign:'center',sortable:'true',alias:'dict_code'"
+					style="width:20%">资源大类编码</th>
+				<th
+					data-options="field:'dictDesc',align:'left',halign:'center',sortable:'true',alias:'dict_desc'"
+					style="width:30%">资源大类名称</th>
+				<th
+					data-options="field:'typeDesc',align:'center',halign:'center',sortable:'true',alias:'type_desc'"
+					style="width:22%">数据类型</th>
+				<th
+					data-options="field:'sortNo',align:'center',halign:'center',sortable:'true',alias:'a.sort_no'"
+					style="width:17%">顺序</th>
+				<th
+					data-options="field:'isUsed',align:'center',halign:'center',sortable:'true',alias:'a.is_used',formatter:setUsed"
+					style="width:13%">有效否</th>
+			</tr>
+		</thead>
+	</table>
+	</div>
+	
+	<div id="select_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectInfoType()">选择</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelselectInfoType()">关闭</a>
+  	</div>
+</body>
+</html>
+

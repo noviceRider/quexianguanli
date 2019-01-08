@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.IssuePriorityDao">
+
+	<!-- 查询优先级信息 -->
+	<select id="getIssuePriority" resultType="com.huibo.issue.po.IssuePriorityPo" parameterType="com.bn.javax.dao.Page">
+		SELECT
+			priority.PRIORITY_CODE 		priorityCode,
+			priority.PRIORITY_DESC 		priorityDesc,
+			<!-- priority.MODULE_STATE 		priorityState, -->
+			dict.DICT_DESC				priorityState,
+			priority.CREATE_BY 			createBy,
+			USER1.USER_NAME 			createByName,
+			priority.CREATE_TIME 		createTime,
+			priority.MODIFY_BY 			modifyBy,
+			USER2.USER_NAME 			modifyByNmae,
+			priority.MODIFY_TIME 		modifyTime
+		FROM
+			i_issue_priority priority
+		LEFT JOIN info_ge_dict dict ON priority.MODULE_STATE = dict.DICT_CODE
+		AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		LEFT JOIN sys_user USER1 ON priority.CREATE_BY = USER1.user_id
+		LEFT JOIN sys_user USER2 ON priority.MODIFY_BY = USER2.user_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				and priority.PRIORITY_DESC  like '%${params.bo.keyWord}%'
+				or priority.PRIORITY_CODE like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by priority.CREATE_TIME desc
+		</if>		
+	</select>
+	
+	
+	<!-- 通过id查询优先级 -->
+	<select id="getIssuePriorityId" resultType="com.huibo.issue.po.IssuePriorityPo">
+		SELECT
+			priority.PRIORITY_CODE 		priorityCode,
+			priority.PRIORITY_DESC 		priorityDesc,
+			<!-- priority.MODULE_STATE 		priorityState, -->
+			dict.DICT_DESC				priorityState,
+			priority.CREATE_BY 			createBy,
+			USER1.USER_NAME 			createByName,
+			priority.CREATE_TIME 		createTime,
+			priority.MODIFY_BY 			modifyBy,
+			USER2.USER_NAME 			modifyByNmae,
+			priority.MODIFY_TIME 		modifyTime
+		FROM
+			i_issue_priority priority
+		LEFT JOIN info_ge_dict dict ON priority.MODULE_STATE = dict.DICT_CODE
+		AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		LEFT JOIN sys_user USER1 ON priority.CREATE_BY = USER1.user_id
+		LEFT JOIN sys_user USER2 ON priority.MODIFY_BY = USER2.user_id
+		where
+			priority.PRIORITY_CODE = #{id}
+	</select>
+	
+	<!-- 新增优先级信息 -->
+	<insert id="addPriorityPo">
+		insert
+		into
+		i_issue_priority
+			(
+				PRIORITY_CODE,
+				PRIORITY_DESC,
+				MODULE_STATE,
+				CREATE_BY,
+				CREATE_TIME,
+				MODIFY_BY,
+				MODIFY_TIME
+			)
+		values
+			(
+				#{priorityCode},
+				#{priorityDesc},
+				#{priorityState},
+				#{createBy},
+				now(),
+				#{modifyBy},
+				now()
+				
+			)
+	</insert>
+
+
+	<!-- 删除优先级信息 -->
+	<delete id="delPriorityPo">
+		delete
+			priority
+		from
+			i_issue_priority priority
+		LEFT JOIN info_ge_dict dict ON priority.MODULE_STATE = dict.DICT_CODE
+		AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		LEFT JOIN sys_user USER1 ON priority.CREATE_BY = USER1.user_id
+		LEFT JOIN sys_user USER2 ON priority.MODIFY_BY = USER2.user_id
+		where 
+			priority.PRIORITY_CODE 
+		in
+		<foreach collection="array" item="id"
+			open="(" close=")" separator=",">
+		  #{id}
+		</foreach>
+	
+	</delete>
+	
+	<!-- 修改优先级信息 -->
+	<update id="updPriorityPo">
+		update
+			i_issue_priority
+		set
+			PRIORITY_DESC = #{priorityDesc},
+			MODULE_STATE = #{priorityState},
+			MODIFY_BY = #{modifyBy},
+			MODIFY_TIME = now()
+		where
+			PRIORITY_CODE = #{priorityCode}
+	</update>
+	
+	
+	<!-- 编号验证 -->
+	<select id="validatePriorityCode" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM i_issue_priority priority
+		<where>
+			<if test="priorityCode != null and priorityCode != ''">
+				and priority.PRIORITY_CODE = #{priorityCode}
+			</if>
+			<!-- <if test="priorityDesc != null and priorityDesc != ''">
+				and priority.PRIORITY_DESC = #{priorityDesc}
+			</if> -->
+		</where>
+	</select>
+</mapper>

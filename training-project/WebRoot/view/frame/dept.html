@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>部门信息</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+</head>
+
+<body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:40px;">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../themes/default/images/common/title.gif' align='absmiddle'/>部门信息 
+				</td>
+				<td style="text-align: right;">
+					<a href="#" id="addFirstLvlBtn" class="easyui-linkbutton" onclick="doAddNode(1);" iconCls="icon-add">加第一级</a>
+					<a href="#" id="addBtn" class="easyui-linkbutton" onclick="doAddNode(0);" iconCls="icon-add">增加下级</a>
+					<a href="#" id="modifyBtn" class="easyui-linkbutton" onclick="doModify();" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" id="deleteBtn" class="easyui-linkbutton" onclick="doDelete();" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a href="#" id="refreshBtn" class="easyui-linkbutton" onclick="doRefresh();" iconCls="icon-reload">&nbsp;刷&nbsp;&nbsp;新&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div data-options="region:'west',split:true" style="width:250px">
+		<ul id="tt" class="easyui-tree">
+		</ul>
+	</div>
+	
+	<div data-options="region:'center'">
+		<div id="pp1" class="easyui-panel"  data-options="border: false,href: 'dept-show.html'"  style="padding:20px;display:none">
+		</div>
+		<div id="pp2" class="easyui-panel"  data-options="border: false,href: 'dept-input.html'"  style="padding:20px;display:none">
+		</div>
+	</div>
+
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div onclick="doAddNode(0)" data-options="iconCls:'icon-add'">增加下级</div>
+		<div onclick="doDelete()" data-options="iconCls:'icon-remove'">删除部门</div>
+		<div class="menu-sep"></div>
+		<div onclick="doModify()">修改部门</div>
+	</div>
+	
+</body>
+
+<script>
+	//部门编号最大长度
+	var maxDeptLen = 0;
+	
+	/**
+	* 初始加载数据
+	**/
+	$(function(){
+		$.ajax({  
+			url: basePath + '/dept_maxdeptlen.json',  
+			type: 'post',  
+			dataType: 'json', 
+			beforeSend:Common.ajaxLoading,
+			success:function(data) {
+				maxDeptLen = data.maxDeptLen;
+				Common.ajaxLoadEnd();
+			},
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+
+	});
+	
+	//初始化tree动态加载数据的url
+	$('#tt').tree({
+		url:basePath + '/dept_loadchild.json', 
+		method:'post',
+		animate: true,
+		//onBeforeLoad: Common.ajaxLoading,
+		//onLoadSuccess: Common.ajaxLoadEnd,
+		loadFilter: function(data, parent) {
+			//这里filter做了不同处理主要是为了满足不同的场景
+			if(data.nodePoList)
+				//这种情况是为了解析dept_loadchild.json异步加载数据的格式
+				return data.nodePoList;
+			else
+				//这种情况是为了满足程序append节点的数据格式要求
+				return data;
+		},
+		onSelect: function(node) {
+			if(node) showDept(node.id);
+		},
+		//在树上右键点击的菜单
+		onContextMenu: function(e, node){
+			e.preventDefault();
+			$(this).tree('select',node.target);
+			$('#mm').menu('show',{
+				left: e.pageX,
+				top: e.pageY
+			});
+		}
+	});
+
+	/**
+	* 显示指定部门的详细情况
+	**/
+	function showDept(deptIdValue) {
+		$.ajax({  
+			url: basePath + '/dept_load.json',  
+			type: 'post',  
+			data: {deptId: deptIdValue},	//对应的部门编号
+			dataType: 'json', 
+			//beforeSend:Common.ajaxLoading,
+			success:function(data) {
+				Common.loadLabelData(data.dept);
+				
+				$('#pp1').css('display', '');
+				$('#pp2').css('display', 'none');
+
+				var managerName = (data.dept.userName == null) ? '无' : data.dept.userName;
+				$('#managerName').html(managerName);
+				
+				//Common.ajaxLoadEnd();
+				$('#input_deptId').tooltip('destroy');
+			},  
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+	}
+	
+	/**
+	* 增加节点
+	**/
+	function doAddNode(firstLvl) {
+		var param = null;
+		
+		if(firstLvl)
+			param = {deptId: '%root%', opType: 0};
+		else {
+			var node = $('#tt').tree('getSelected');
+			if(node == null) {
+				$.messager.alert('提示','请选择指定的部门!','info');
+				return;
+			}
+
+			if(node.id.length >= maxDeptLen) {
+				$.messager.alert('提示','已经是最大级次，不能添加下级部门!','info');
+				return;
+			}
+			
+			//构造请求参数
+			param = {deptId: node.id, opType: 0};
+		}	
+		
+		$.ajax({  
+			url: basePath + '/dept_load.json',  
+			type: 'post',  
+			data: param,
+			dataType: 'json', 
+			success:function(data) {
+				var dept = data.dept;
+				
+				$('#pp1').css('display', 'none');
+				$('#pp2').css('display', '');
+
+				$('#input_deptId').css('display', '');
+				$('#show_limitLen').css('display', '');
+
+				$('#inputForm').form('clear');
+				if(firstLvl)
+					$('#show_pDeptId').html('');
+				else
+					$('#show_pDeptId').html(dept.pDeptId);
+				
+				$('#limitLen').html(data.limitLen);
+				$('#input_pDeptName').html(dept.pDeptName);
+				$('#input_pDeptId').val(dept.pDeptId);
+				$('#opType').val('0');
+
+				$('#input_deptId').focus();
+
+				//初始化部门编号后台验证
+				deptValid();
+			},  
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+	}
+	
+	/**
+	* 修改当前节点
+	**/
+	function doModify() {
+		var node = $('#tt').tree('getSelected');
+		if(node == null) {
+			$.messager.alert('提示','请选择要修改的部门!','error');
+			return;
+		}
+		
+		$.ajax({  
+			url: basePath + '/dept_load.json',  
+			type: 'post',  
+			data: {deptId: node.id, opType: 1},
+			dataType: 'json', 
+			success:function(data) {
+				var dept = data.dept;
+				
+				$('#pp1').css('display', 'none');
+				$('#pp2').css('display', '');
+				$('#input_deptName').focus();
+
+				$('#input_deptId').css('display', 'none');
+				$('#show_limitLen').css('display', 'none');
+				$('#input_pDeptName').html(dept.pDeptName);
+				//使用pdeptId显示要修改的部门编号(完整的部门编号)
+				$('#show_pDeptId').html(dept.deptId);
+				$('#opType').val('1');
+				$('#input_pDeptId').val(dept.pDeptId);
+				$('#input_deptName').val(dept.deptName);
+				$('#input_deptId').val(dept.deptId);
+				$('#input_sortNo').val(dept.sortNo);
+				
+				//初始化部门编号后台验证
+				deptValid();
+			},  
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+	}
+
+	/**
+	* 部门编号唯一性验证
+	**/
+	function deptValid() {
+		$('#input_deptId').validatebox({
+		    required: true,
+		    missingMessage: '请输入部门编号',
+		    invalidMessage: '部门编号已经存在',
+		    //参数说明：第一个,URL;第二个是表单中要验证的输入项id;第三个是额外的参数(JSON)
+		    validType: "remoteValid['" + basePath + "/dept_valid.json', 'deptId', " + 
+		    			"{pDeptId:'" + $('#input_pDeptId').val() + "'}]"
+		});	
+
+		//新增的时候才对部门编号进行校验
+		if($('#opType').val() == '1') 
+			$('#input_deptId').validatebox('disableValidation');
+		else
+			$('#input_deptId').validatebox('enableValidation');
+
+		//定制未输入数据验证的提示内容
+		$('#input_deptName').validatebox({required: true, missingMessage: '请输入部门名称'});
+		$('#input_sortNo').validatebox({required: true, missingMessage: '请输入排序号'});
+
+		//销毁部门编号长度验证的tooltip，这个tooltip是在按下保存按钮的时候创建的
+		$('#input_deptId').tooltip('destroy');
+	}
+
+	/**
+	* 新增、修改的保持功能，通过调用保存的业务逻辑，将数据保存到数据库中
+	**/
+	function doSave() {
+		var valid = false;
+		
+		if($('#inputForm').form('validate')) {
+			//新增的时候才对输入的部门编号长度进行验证
+			if($('#opType').val() == '0') {
+				var limitLen = parseInt($('#limitLen').html());
+		
+				$('#input_deptId').tooltip({
+				    position: 'right',
+				    content: '<span style="color:#000">请输入' + $('#limitLen').html() + '位数的部门编号</span>',
+				    onShow: function(){
+				        $(this).tooltip('tip').css({
+				            backgroundColor: '#FFFFCC',
+				            borderColor: '#CC9933'
+				        });
+				    }
+				});		
+
+				//验证部门编号长度是否满足要求
+				if($('#input_deptId').val().length != limitLen)
+					$('#input_deptId').tooltip('show');
+				else  {
+					//验证通过,清除位数提示框
+					$('#input_deptId').tooltip('destroy');
+					valid = true;
+				}
+			}
+			else
+				valid = true;
+
+			//通过验证，提交保存数据
+			if(valid) {
+				//将数据保存
+				$.ajax({  
+					url: basePath + '/dept_save.json',  
+					data: $('#inputForm').serializeObject(),  
+					type: 'post',  
+					dataType: 'json',  
+					success:function(data) {
+						if(data.resultCode) {
+							
+							//新添加/修改的节点
+							var node;
+							
+							//保存成功，更新树
+							if($('#opType').val() == '0') {
+								var parentNode = null;
+								var idValue = null;
+								
+								//新增：需要分为新增下级和新增第一级，分别做操作
+								if($('#input_pDeptId').val() != '%root%') {
+									parentNode = $('#tt').tree('getSelected');
+									//如果有子节点，并且没有展开的情况下，首先将这个节点展开
+									if(parentNode.state == 'closed')
+										$('#tt').tree('expand', parentNode.target);
+									
+									idValue = $('#input_pDeptId').val() + $('#input_deptId').val();
+								}
+								else
+									idValue = $('#input_deptId').val();
+
+								//增加子节点
+								$('#tt').tree('append', {
+										parent: (parentNode ? parentNode.target : null),
+										data: [{
+											id: idValue,
+											text: $('#input_deptName').val()
+										}]
+									});		
+								//添加成功后，查到这个节点，以便后面选定新添加的节点
+								node = $('#tt').tree('find', idValue);
+							}
+							else {
+								//修改：直接更新内容
+								node = $('#tt').tree('getSelected');
+								if (node){
+									$('#tt').tree('update', {
+										target: node.target,
+										text: $('#input_deptName').val()
+									});
+								}
+							}
+
+							if(node) {
+								//然后选择当前节点，显示详细情况
+								$('#tt').tree('select', node.target);
+							}
+							$.messager.alert('提示','部门信息保存成功!','info');
+						}
+						else
+							$.messager.alert('错误','部门信息保存过程中出现错误!','error');
+					},  
+					error : function() {
+						$.messager.alert('错误','服务器内部错误!','error');
+					}
+				});		
+			}
+		}
+	}
+	
+	/**
+	* 删除选定的部门信息(逻辑删除)
+	**/
+	function doDelete() {
+		var node = $('#tt').tree('getSelected');
+		if(node == null) {
+			$.messager.alert('提示','请选择要删除的部门!','error');
+			return;
+		}
+
+		$.messager.confirm('确认', '是否将选择的部门信息从数据库中删除，这一操作是不可逆的，是否继续？', function(r){
+			if (r){
+				$.ajax({  
+					url: basePath + '/dept_delete.json',  
+					data: {deptId: node.id},  
+					type: 'post',  
+					dataType: 'json',  
+					success:function(data) {
+						if(data.resultCode) {
+							var neighborNode = Common.getNeighborNode($('#tt'), node);
+							
+							//删除成功，将数据从树上删除
+							$('#tt').tree('remove', node.target);
+
+							if(neighborNode) 
+								//删除节点之后，选中相邻的节点
+								$('#tt').tree('select', neighborNode.target);
+							else
+								//已经删除了所有节点，现在没有任何节点，刷新页面
+								doRefresh();
+						}
+						else
+							$.messager.alert('错误','删除部门信息过程中出现问题!','error');
+					},  
+					error : function() {
+						$.messager.alert('错误','服务器内部错误!','error');
+					}
+				});		
+			}
+		});
+	}
+	
+	/**
+	* 页面刷新
+	**/
+	function doRefresh() {
+		$('#tt').tree('reload');
+		$('#pp1').css('display', 'none');
+		$('#pp2').css('display', 'none');
+	}
+
+</script>
+	
+</html>

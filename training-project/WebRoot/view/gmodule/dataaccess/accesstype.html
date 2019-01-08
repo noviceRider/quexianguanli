@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据访问类型</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../js/jquery-migrate-1.1.0.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="js/accesstype.js" charset="UTF-8"></script>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+   <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">数据访问类型
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-search'" onclick="searchType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" id="add_button"  data-options="iconCls:'icon-add'" onclick="addType()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" id="modify_button"  data-options="iconCls:'icon-edit'" onclick="modifyType()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" id="remove_button"  data-options="iconCls:'icon-remove'" onclick="removeType()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+    
+	<!-- 类型状态、时间、设备类型查询条件 -->
+	<form id="form_search">
+		<table class="btbForm">
+			<tr>
+	    		<td style="text-align:left;">
+	    			关键字&nbsp;<input id="keyWord" name="keyWord" class="easyui-textbox"  data-options="prompt:'请输入名称、编号'" />
+				</td>
+    		</tr>
+		</table>
+	</form>
+	
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+  	
+  	<!--类型数据 -->
+  	<div style="width:100%;" id="typeDiv">
+		<table id="typeTable" class="easyui-datagrid"  data-options="pagination:true,striped:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:true"style="width:5%;"></th>
+					<th data-options="field:'typeCode',align:'left',halign:'center',alias:'a.type_code',sortable:'true'" style="width:10%;">类型编号</th>
+					<th data-options="field:'typeName',align:'left',halign:'center'" style="width:20%"> 类型名称</th>
+					<th data-options="field:'opTypeDesc',align:'center',halign:'center'" style="width:9%"> 操作分类</th>
+					<th data-options="field:'typeDesc',align:'left',halign:'center'," style="width:20%" >类型描述</th>
+					<th data-options="field:'accessUrl',align:'left',halign:'center'," style="width:25%">访问URL</th>
+					<th data-options="field:'isUsed',align:'center',halign:'center',formatter:setIsUsed" style="width:7%">是否有效</th>
+					<th data-options="field:'sortNo',halign:'center',align:'center',alias:'a.sort_no',sortable:'true'" style="width:8%" >顺序号</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+  	<!-- 添加、修改类型页面 -->
+	<div id="amType" style="overflow-x:hidden;padding-top:5px;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_add',width:'530',height: '260',modal:true" >
+		<form method="post" class="easyui-form" id="am_form" >
+			<table style="border-collapse: separate;border-spacing: 10px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">类型编号&nbsp;</td>
+	  				<td ><input id="am_typeCode" name="typeCode" class="easyui-textbox"  style="width: 150px;"></td>
+	  				<td style="text-align: right;width: 65px;">类型名称&nbsp;</td>
+	  				<td ><input id="am_typeName" name="typeName" class="easyui-textbox" style="width: 150px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">操作分类</td>
+	  				<td ><input id="am_opType" name="opType" class="easyui-combobox"  data-options="editable:false, panelHeight:'auto',prompt:'请选择操作分类',valueField: 'dictCode',textField: 'dictDesc'" style="width: 150px;"></td>
+	  				<td style="text-align: right;width: 50px;display:none">JAVA方法名</td>
+	  				<td style="display:none"><input id="am_javaMethod" name="javaMethod" class="easyui-textbox" style="width: 150px;" ></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">类型描述&nbsp;</td>
+	  				<td colspan="3"><input id="am_typeDesc" name="typeDesc" class="easyui-textbox" style="width: 410px;" ></td>
+	  			</tr>
+	   			<tr>
+	  				<td style="text-align: right;width: 65px;">访问URL&nbsp;</td>
+	  				<td colspan="3" ><input id="am_accessUrl" name="accessUrl" class="easyui-textbox" style="width: 410px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">顺序号&nbsp;</td>
+	  				<td ><input id="am_sortNo" name="sortNo" class="easyui-textbox"  style="width: 150px;"></td>
+	  				<td style="text-align: right;" id="hide1">是否有效&nbsp;</td>
+  					<td id="hide2">
+  						<input id="noUsed" type="radio" name="isUsed" value="1"  >
+  						<label for="noUsed">有效</label>
+  						<input id="isUsed" type="radio" name="isUsed" value="0">
+  						<label for="isUsed">无效</label>
+  					</td>
+	  			</tr>
+	  		</table>
+		</form>
+	</div>
+	
+	<!-- 新增dialog对应按钮 -->
+	<div id="sc_add"">
+		<a id="save_button" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#amType').dialog('close');">关闭</a>
+	</div>
+	
+  </body>
+</html>

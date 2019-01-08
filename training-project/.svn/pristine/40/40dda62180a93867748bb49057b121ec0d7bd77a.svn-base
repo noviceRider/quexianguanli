@@ -1,0 +1,156 @@
+package com.huibo.issue.controller;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssueTypeBo;
+import com.huibo.issue.po.IssueTypePo;
+import com.huibo.issue.service.DefectClassificationService;
+
+/**
+* <p>Title: 缺陷跟踪管理系统 - BusinesslogicService</p>
+*
+* <p>Description:控制层层管理的控制器</p>
+*
+* <p>Copyright: Copyright hbkj(c) 2018</p>
+*
+* <p>Company: 重庆汇博科技股份有限公司</p>
+*
+* @author 揭振宇
+* @version 1.0
+*/
+@Controller
+public class DefectClassificationController {
+
+		/**
+		* 对应服务层对象
+		*/	
+		@Autowired
+		private DefectClassificationService defectClassificationService;
+		
+		//调用业务层方法加载数据
+		@RequestMapping("/DefectClassification.json")
+		public Map<String,Object> getIssueType(IssueTypeBo issueTypeBo) {
+			Map<String, Object> result = null;
+			try {
+				Page page = new Page(issueTypeBo);
+				result = new HashMap<String,Object>();
+				result.put("rows", defectClassificationService.getIssueType(page));
+				result.put("total", page.getTotalRecord());
+				System.out.println(result.get("rows"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return result;
+					
+		}
+		//调用业务层方法删除
+		@RequestMapping("/DelClassification.json")
+		public Map<String,Object> delIssueType(@RequestParam("delIds[]") String[] delIds) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.delIssueType(delIds));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//返回IssueTypePo对象
+			return result;
+					
+		}
+		//调用业务层方法增加
+		@RequestMapping("/addIssueClassification.json")
+		public Map<String,Object> addIssueType(IssueTypePo issueTypePo) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.addIssueType(issueTypePo));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//返回IssueTypePo对象
+			return result;
+					
+		}
+		
+		//调用业务方法加载要修改的数据
+		@RequestMapping("/searchIssueForModify.json")
+		public Map<String,Object> searchIssueForModify(String typeCode) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.searchIssueForModify(typeCode));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//返回IssueTypePo对象
+			return result;
+					
+		}
+		
+		//调用业务方法修改数据
+		@RequestMapping("/modifyIssueClassification.json")
+		public Map<String,Object> modifyIssueClassification(IssueTypePo issueTypePo) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.modifyIssueClassification(issueTypePo));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return result;
+					
+		}
+		
+		@RequestMapping("/modifyDictDesc.json")
+		public Map<String,Object> modifyDictDesc(IssueTypePo issueTypePo) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.modifyDictDesc(issueTypePo));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//返回IssueTypePo对象
+			return result;
+					
+		}
+		//详情
+		@RequestMapping("/showDetaiInfo.json")
+		public Map<String,Object> showDetaiInfo(IssueTypePo issueTypePo) {
+			Map<String, Object> result = null;
+			try {
+				result = new HashMap<String,Object>();
+				result.put("result", defectClassificationService.showDetaiInfo(issueTypePo));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//返回IssueTypePo对象
+			return result;
+		}
+		//表单验证
+		@RequestMapping("/jvalidatePriorityCode.json")
+		public  Map<String, Object> validatePriorityCode(IssueTypePo po){
+			int code = 0 ;
+			Map<String,Object> map = new HashMap<String,Object>();
+			Integer count = defectClassificationService.validatePriorityCode(po);
+			if(count == 0) {
+				code = 1;
+			}
+			map.put("resultCode", code);
+			return map;
+		}
+}

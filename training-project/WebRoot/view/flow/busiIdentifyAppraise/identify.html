@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>perfectEmpInfo.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../busiIdentifyAppraise/js/identify.js"></script>
+  </head>
+  	<body>
+		<div id="detailsPage" style="width: 100%;padding:0;margin:0;background:white;border:0px solid rgba(204, 204, 204, 1);float:left">
+		    	<!-- 详情 -->
+		    	<div style="width:100%;float:left;padding:0;margin:0;border-top:0px solid rgba(204, 204, 204, 1);font-size: 14px;">
+		    	
+		    		<table style="width:100%;height:100%">
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="商品信息"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<table id="details_table"  style="width:100%;margin-top:5px;border:0px solid red" >
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品编号：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="goodsIdP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					
+				    						<td style="width:25%;text-align: right;">
+				    							来源门店：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="shopCodeP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td  style="width:25%;text-align: right;">
+				    							提交人：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="inputUserP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					
+				    						<td style="width:25%;text-align: right;">
+				    							提交时间：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="inputDateP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					</tr >
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品分类：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="catCodeP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					
+				    						<td style="width:25%;text-align: right;">
+				    							商品名称：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="goodsNameP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品品牌：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="goodsBrandP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					
+				    						<td style="width:25%;text-align: right;">
+				    							商品货号：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="articleNumberP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							客户首买价：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span  style="padding:0;margin:0;"><span id="firstPriceP"></span>元</span>
+				    						</td>
+				    					
+				    						<td style="width:25%;text-align: right;" valign="top">
+				    							商品描述：
+				    						</td>
+				    						<td style="width:25%;">
+				    							<span id="goodsDescP" style="padding:0;margin:0;"></span>
+				    						</td>
+				    					</tr>
+			    					</table>
+                				</div>
+		    				</td>
+		    				
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="商品属性"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<div id="goodsAttrDiv" style="width:100%;height:100%;margin:auto;border:0px red solid;">
+			    							
+			    					</div>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="商品图片"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+	   								
+   									</div>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="鉴定记录"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+	   									<div id="historyIdentify" style="width:100%;height:100%;margin:auto;border:0px red solid">
+				    						<form id="identifyForm" class="easyui-form">
+			    								<table  title="历史鉴定记录" style="width:61%;margin-top: 5px">
+			    									<tr>
+			    										<td style="text-align: right;width:25%">新旧程度</td>
+			    										<td style="text-align: left;width:auto"><select id="oldOrNewSelect" name="goodsQuality" class="easyui-combobox"></select></td>
+			    										<td style="text-align: left;"><a onclick="queryHistoryIdentify()" href="#" style="color:blue">历史鉴定记录(<span id="historyIdentifyCount"></span>条)</a></td>
+			    									</tr>
+			    									<tr>
+			    										<td style="text-align: right;width:25%">备注</td>
+			    										<td style="text-align: left;width:25%" valign="top" colspan="2"><input type="text" class="easyui-textbox" name="identifyDesc"  data-options="multiline:true" style="height:60px;width:287px"></td>
+			    									</tr>
+			    									<tr>
+			    										<td style="text-align: right;width:25%"></td>
+			    										<td style="text-align: left;" colspan="2">
+			    											<a  href="#" onclick="identifyOprate('01')" class="easyui-linkbutton" iconCls="icon-ok">鉴定为正品</a>
+			    											<a	href="#" onclick="identifyOprate('02')" style="margin-left: 10px" href="#" class="easyui-linkbutton" iconCls="icon-no">鉴定为假货</a>
+			    											<a	href="#" onclick="identifyOprate('03')" style="margin-left: 10px" href="#" class="easyui-linkbutton" iconCls="icon-redo">资料不全</a>
+			    										</td>
+			    									</tr>
+			    								</table>
+		    								</form>
+		    							</div>
+		    							
+   									</div>
+                				</div>
+                			</td>
+		    			</tr>
+		    		</table>
+		    	</div>
+			</div>
+			<!-- 鉴定记录弹窗 --> 
+			<div id="historyIdentifyDig" class="easyui-dialog" data-options="closed:true">
+				<table id="historyIdentifyTable" style="width:600px;height:400px" class="easyui-datagrid">
+				</table>
+			</div>
+		<!-- 图片显示容器 -->
+		<div id="showPics"></div>	
+  </body>
+</html>

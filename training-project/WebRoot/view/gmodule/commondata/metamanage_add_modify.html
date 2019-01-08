@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>metamanage_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+  </head>
+  
+  <body>
+    <div id="metamanage_add_modify_div" data-options="buttons:'#metamanage_add_modify_div_btns'" style="overflow-x:hidden;overflow-y:auto;">
+		<table style="width: 100%">
+			<tr>
+				<td align="center">
+					<form id="metamanage_add_modify_form" class="easyui-form" enctype="multipart/form-data" method="POST">
+						<table style="width:100%;margin:0px 0px 15px 0px;border-spacing: 10px;">
+							<tr>
+								<td style="text-align: right;width:60px;" >表名</td>
+								<td>
+									<input id="tableNameId" name="tableName" class="easyui-textbox" data-options="" style="width:263px;"></input>
+								</td>
+								<td style="text-align: right;width:60px;" >分类</td>
+								<td>
+									<select id="tableTypeId" name="tableType"  class="easyui-combobox" data-options="editable:false,valueField: 'dictCode',textField: 'dictDesc', panelHeight:'auto'" style="width: 260px;"></select>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;" valign="top">表描述</td>
+								<td colspan="3">
+									<input id="tableDescId" name="tableDesc" class="easyui-textbox" data-options="multiline:true" style="width:610px;height:50px"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:60px;" >实体名</td>
+								<td>
+									<input id="entityNameId" name="entityName" class="easyui-textbox" data-options="" style="width:263px;"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:60px;white-space:nowrap;"  valign="top">实体描述</td>
+								<td colspan="3">
+									<input id="entityDescId" name="entityDesc" class="easyui-textbox" data-options="multiline:true" style="width:610px;height:50px"></input>
+								</td>
+							</tr>
+							<tr id="isUsedRow">
+								<td style="text-align: right;width:60px;white-space:nowrap;"  valign="top">是否有效</td>
+								<td>
+									<input id="yesId" name="isUsed" type="radio" value="1" class="" data-options="" style="width:;height:">
+									<label for="yesId">是</label>
+									<input id="noId" name="isUsed" type="radio" value="0" class="" data-options="" style="width:;height:">
+									<label for="noId">否</label>
+								</td>
+								<td style="text-align: right;display: none"  valign="top">顺序号</td>
+								<td style="display: none">
+									<input id="sortNoId" name="sortNo" class="easyui-textbox" data-options="" style="width: 263px;">
+								</td> 
+							</tr>
+						</table>
+					</form>
+				</td>
+			</tr>
+			<tr>
+			  	<td align="center">
+			  		<!--  字段数据 -->
+				    <table style="width:100%;border-top:1px solid #D5E5F4;float:left;overflow: auto;">
+				    	<tr>
+							<td>
+							   <!-- 标题以及各种功能按钮 -->
+								<table style="width:100%;padding-right: 7px">
+									<tr>
+										<td style="text-align: right;">
+											<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addColumn()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+											<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyColumn()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+											<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeColumn()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+				    	</tr>
+				    	<tr>
+							<td style="width:97%;" align="center">
+								<!-- 字段信息数据网格 -->
+								<table  style="width:97%;" id="column_dg" class="easyui-datagrid" title="字段信息" data-options="striped:true,autoRowHeight:true,rownumbers:true," >
+									<thead>
+										<tr>
+											<th data-options="field:'ckc',checkbox:'true',hidden:true"></th>
+											
+											<th data-options="field:'tableName',align:'center',halign:'center',hidden:true">表名</th>
+											<th data-options="field:'attributeName',align:'left',halign:'center',hidden:true">属性名</th>
+											<th data-options="field:'attributeDesc',align:'left',halign:'center',hidden:true">属性描述</th>
+											<th data-options="field:'columnInputTypeDesc',align:'left',halign:'center',hidden:true">输入类型</th>
+											<th data-options="field:'optionsSource',align:'left',halign:'center',hidden:true">选项来源</th>
+											<th data-options="field:'columnEnum',align:'left',halign:'center',hidden:true">枚举信息</th>
+											<th data-options="field:'columnValidateTypeDesc',align:'left',halign:'center',hidden:true">验证类型</th>
+											<th data-options="field:'columnValidateRegex',align:'left',halign:'center',hidden:true">验证表达式</th>
+											<th data-options="field:'valueRange',align:'left',halign:'center',hidden:true">取值范围</th>
+											<th data-options="field:'isPrimaryKey',align:'left',halign:'center',hidden:true">是否主键</th>
+											<th data-options="field:'notNull',align:'left',halign:'center',hidden:true">是否非空</th>
+											<th data-options="field:'sortNo',align:'center',halign:'center',hidden:true" style="width:15%">顺序号</th>
+											
+											<th data-options="field:'columnName',align:'left',halign:'center'" style="width:20%">字段名</th>
+											<th data-options="field:'columnTypeDesc',align:'center',halign:'center'" style="width:18%">字段类型</th>
+											<th data-options="field:'columnLength',align:'center',halign:'center'" style="width:18%">字段长度</th>
+											<th data-options="field:'columnDesc',align:'left',halign:'center'" style="width:30%">字段描述</th>
+											<th data-options="field:'isUsed',align:'center',halign:'center',formatter:isUsedFormatter,hidden:true" style="width:10%">是否有效</th>
+											<th data-options="field:'detail',align:'center',halign:'center',formatter:columnDetailFormatter" style="width:10%">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</td>
+				    	</tr>
+				    </table>
+			  	</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="metamanage_add_modify_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancel()">取消</a>
+  	</div>
+  </body>
+</html>

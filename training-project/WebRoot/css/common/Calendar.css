@@ -1,0 +1,134 @@
+.calendarDiv {
+	BORDER-RIGHT: #317082 1px solid; 
+	PADDING-RIGHT: 1px; 
+	BORDER-TOP: #317082 1px solid; 
+	FONT-SIZE: 10pt; 
+	display: none; 
+	PADDING-BOTTOM: 20px; 
+	BORDER-LEFT: #317082 1px solid; 
+	PADDING-TOP: 1px; 
+	BORDER-BOTTOM: #317082 1px solid; 
+	FONT-FAMILY: arial; 
+	POSITION: absolute; 
+	BACKGROUND-COLOR: #fff;
+	width:205px;
+	z-index: 2000;
+}
+
+.calendarDiv span {
+	FLOAT: left
+}
+.calendarDiv img {
+	FLOAT: left
+}
+
+.calendarDiv .selectBox {
+	BORDER-RIGHT: #e2ebed 1px 
+	solid; BORDER-TOP: #e2ebed 1px solid; 
+	BORDER-LEFT: #e2ebed 1px solid; 
+	COLOR: #e2ebed; 
+	BORDER-BOTTOM: #e2ebed 1px solid; 
+	POSITION: relative;
+	PADDING-RIGHT: 1px; 
+	PADDING-LEFT: 2px; 
+	PADDING-BOTTOM: 1px; 
+	CURSOR: pointer; 
+	LINE-HEIGHT: 12px; 
+	PADDING-TOP: 1px
+}
+
+.calendarDiv .selectBoxOver {
+	BORDER-RIGHT: #fff 1px solid;
+	BORDER-TOP: #fff 1px solid;
+	BORDER-LEFT: #fff 1px solid;
+	COLOR: #fff;
+	BORDER-BOTTOM: #fff 1px solid;
+	POSITION: relative;
+	BACKGROUND-COLOR: #317082;
+	PADDING-RIGHT: 1px;
+	PADDING-LEFT: 2px;
+	PADDING-BOTTOM: 1px;
+	CURSOR: pointer;
+	LINE-HEIGHT: 12px; 
+	PADDING-TOP: 1px
+}
+
+.calendarDiv .topBar {
+	PADDING-RIGHT: 2px;
+	PADDING-LEFT: 2px;
+	PADDING-BOTTOM: 2px;
+	PADDING-TOP: 2px;
+	HEIGHT: 16px;
+	BACKGROUND-COLOR: #317082
+}
+
+.calendarDiv .monthYearPicker {
+	BORDER-RIGHT: #aaaaaa 1px solid;
+	BORDER-TOP: #aaaaaa 1px solid;
+	DISPLAY: none;
+	Z-INDEX: 1000;
+	LEFT: 0px;
+	BORDER-LEFT: #aaaaaa 1px solid;
+	COLOR: #317082;
+	BORDER-BOTTOM: #aaaaaa 1px solid;
+	POSITION:absolute;
+	TOP: 20px;
+	BACKGROUND-COLOR: #e2ebed
+}
+.calendarDiv #monthSelect {
+	WIDTH: 70px
+}
+.calendarDiv .monthYearPicker .div {
+	CLEAR: both;
+	PADDING-RIGHT: 1px;
+	PADDING-LEFT: 1px;
+	FLOAT: none;
+	PADDING-BOTTOM: 1px;
+	MARGIN: 1px;
+	CURSOR:pointer;
+	PADDING-TOP: 1px;
+}
+
+.calendarDiv .monthYearActive {
+	COLOR: #e2ebed; 
+	BACKGROUND-COLOR: #317082
+}
+
+.calendarDiv .topBar img {
+	cursor: pointer
+}
+
+.calendarDiv .topBar div {
+	FLOAT: left; 
+	MARGIN-RIGHT: 1px
+}
+
+.calendarDiv .todaysDate {
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 2px; 
+	PADDING-BOTTOM: 2px; 
+	WIDTH: 201px; 
+	BOTTOM: 0px; 
+	LINE-HEIGHT: 17px; 
+	PADDING-TOP: 2px; 
+	POSITION: absolute ; 
+	HEIGHT: 17px; 
+	BACKGROUND-COLOR: #e2ebed; 
+	TEXT-ALIGN: center;
+}
+
+.calendarDiv .todaysDate DIV {
+	FLOAT: left
+}
+
+.activeDay {
+	COLOR: #ff0000
+}
+
+.calendarDiv TD {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; FONT-SIZE: 10px; PADDING-BOTTOM: 3px; MARGIN: 0px; PADDING-TOP: 3px
+}
+
+.calendarDiv TD {
+	CURSOR: pointer; TEXT-ALIGN: right
+}

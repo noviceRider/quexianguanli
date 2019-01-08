@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>selectManager.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript">
+    </script>
+  </head>
+  <body>
+  		<!-- 定义datagrid数据网格 -->
+	<div id="selectManager_Div" style="width:500px;" data-options="buttons:'#select_btns'">
+		<!-- 选择不同获取不同的信息 -->
+		<table class="btbForm" border="0">
+			<tr>
+				<td>姓名&nbsp; <input id="manager_keyWord" name="manager_keyWord"
+					class="easyui-textbox" data-options="prompt:'输入姓名'"
+					style="width:140px;height:20px;">&nbsp;
+				</td>
+				<td style="text-align: right;width:80px;"><a class="easyui-linkbutton"
+					data-options="iconCls:'icon-search'" onclick="queryManager()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	
+		<!-- 定义外边距 -->
+		<div style="margin-top:5px"></div>
+		
+		<table id="mamangerTable" class="easyui-datagrid" style="width:100%;height:200px;"
+		data-options="pagination:true,striped:true,singleSelect:true,onDblClickRow:managerDblClickRow">
+		<thead>
+			<tr>
+				<th
+					data-options="field:'empCode',align:'left',halign:'center',sortable:'true',alias:'emp_code'"
+					style="width:50%">员工编号</th>
+				<th
+					data-options="field:'empName',align:'left',halign:'center',sortable:'true',alias:'emp_name'"
+					style="width:50%">姓名</th>
+			</tr>
+		</thead>
+	</table>
+	</div>
+	
+	<div id="select_btns" style="text-align: center;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectManger()">选择</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelSelectManger()">关闭</a>
+  	</div>
+  </body>
+</html>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>guide.html</title>
+	<meta charset="UTF-8">
+	<meta name="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="http://192.168.1.200:8080/arcgis_js_v316_api/arcgis_js_api/library/3.16/3.16/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="http://192.168.1.200:8080/arcgis_js_v316_api/arcgis_js_api/library/3.16/3.16/esri/css/esri.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../js/common/kindeditor/kindeditor-all.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/common/kindeditor/lang/zh_CN.js" charset="UTF-8" ></script>	
+	<script type="text/javascript" src="js/highcharts/highcharts.js"></script>	
+	<script type="text/javascript" src="js/highcharts/exporting.js"></script>	
+	<script type="text/javascript" src="js/yearmonth.js"></script>	
+	<script type="text/javascript" src="js/guide.js"></script>
+	<script src="http://192.168.1.200:8080/arcgis_js_v316_api/arcgis_js_api/library/3.16/3.16/init.js"></script>
+	<style type="text/css">
+		.titleTd{
+		font-size: 20px;
+		text-align: right;
+		vertical-align:top;
+		}
+
+		.contentTd{
+		font-size: 16px;
+		text-align: left;
+		vertical-align:top;
+		padding-left: 16px;
+		padding-top: 6px;
+		}
+		
+		
+	</style> 
+  </head>
+  
+  <body>
+	<div id="container" class="easyui-tabs" data-options="onSelect: onSelect" style="width:100%;height:100%;">
+	    <div id="week-view" title="数据访问" style="padding:20px;overflow:auto;vertical-align:middle;" >
+			<table>
+				<tr>
+					<td class="titleTd">
+						数据访问:
+					</td>
+					<td class="contentTd">
+						数据访问对应数据库操作
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						访问URL:
+					</td>
+					<td class="contentTd">
+						/dataaccess.json
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						参数说明:
+					</td>
+					<td class="contentTd">
+						accessId:数据访问编号（必要参数）<br>
+						map:其他参数（根据具体数据访问传入）
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						调用实例:
+					</td>
+					<td class="contentTd">
+							$("#template_dg").datagrid({
+								url:basePath+"/dataaccess.json",
+								queryParams:{
+									accessId:"3101"
+								}
+							});
+						
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						实例说明:
+					</td>
+					<td class="contentTd">
+						通过编号为3101的数据访问，请求分页数据
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						返回值说明:
+					</td>
+					<td class="contentTd">
+							数据访问类型为分页查询，普通查询（多条记录），则返回形式{"rows":List&lt;Map&gt;}；<br>
+							数据访问类型为普通查询（单条记录），则返回形式Map；<br>
+							其他数据访问类型，返回形式{"resultCode":result}。
+					</td>
+				</tr>
+			</table>
+   		</div>
+    	<div id="month-view" title="业务逻辑" style="padding:20px;overflow:auto;vertical-align:middle;" >
+    		<table>
+				<tr>
+					<td class="titleTd">
+						业务逻辑访问:
+					</td>
+					<td class="contentTd">
+						调用数据访问，处理数据访问结果
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						访问URL:
+					</td>
+					<td class="contentTd">
+						/businesslogic.json
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						参数说明:
+					</td>
+					<td class="contentTd">
+						logicId:业务逻辑访问编号（必要参数）<br>
+						map:其他参数（根据具体业务逻辑访问传入）
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						调用实例:
+					</td>
+					<td class="contentTd">
+							$.ajax({
+								url:basePath+"/businesslogic.json",
+								data:{
+									logicId:"1000"
+								},
+								success:function(){
+								
+								}
+							});
+						
+					</td>
+				</tr>
+				<tr>
+					<td class="titleTd">
+						实例说明:
+					</td>
+					<td class="contentTd">
+						通过编号为1000的业务逻辑访问，请求数据
+					</td>
+				</tr>
+			</table>
+   		</div>
+	</div>
+  </body>
+</html>

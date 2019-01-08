@@ -1,0 +1,147 @@
+@charset "utf-8";
+.main {
+	background-color: #157A96;
+}
+li {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	width: 440px;
+}
+
+.divMain {
+	position: absolute;
+	height: 469px;
+	width: 851px;
+	margin-left:-425.5px;
+	left:50%;
+	margin-top: -234.5px;
+	top: 50%;
+}
+.divHead {
+	height: 94px;
+	width: 850px;
+	background-image: url(../../../images/frame/sc/enter/head.jpg);
+	background-repeat: repeat-x;
+}
+.divCenter {
+	height: 229px;
+	width: 850px;
+}
+.divEnd {
+	height: 160px;
+	width: 850px;
+	background-image: url(../../../images/frame/sc/enter/sta.jpg);
+	background-repeat: repeat-x;
+	background-color: #FFFFFF;
+}
+.divEnd_inner {
+	position: relative;
+	left: 15px;
+	top: 8px;
+	height: 150px;
+	width: 820px;
+}
+.divEnd_inner_left {
+	float: left;
+	width: 465px;
+	border-right:2px dashed #666666;
+	height: 150px;
+	font-family: "瀹嬩綋";
+	font-size: 12px;
+	color: #333333;
+	line-height: 28px;
+}
+.divEnd_inner_right {
+	float: left;
+	height: 150px;
+	width: 353px;
+}
+.divEnd_inner_right_input {
+	position: relative;
+	height: 120px;
+	width: 310px;
+	left: 40px;
+	top: 10px;
+	vertical-align: bottom;
+}
+.userName {
+	height: 22px;
+	font-size: 12px;
+	line-height: 22px;
+	position: relative;
+	color: #333333;
+	top: 5px;
+}
+.pwd {
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	position: relative;
+	height: 22px;
+	top: 30px;
+}
+.company-userName {
+	height: 22px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+}
+.company-pwd {
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	position: relative;
+	height: 22px;
+	top: 13px;
+}
+.companyId {
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	position: relative;
+	height: 22px;
+	top: 23px;
+}
+.input-l {
+	width: 70px;
+	float: left;
+	text-align: right;
+	margin-right: 5px;
+}
+.input-r {
+	float: left;
+}
+.divEnd_inner_right_input_sub {
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	position: relative;
+	height: 22px;
+	top: 35px;
+}
+
+
+.inputMsg {
+	border-top-width: 2px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 2px;
+	border-top-style: inset;
+	border-right-style: solid;
+	border-bottom-style: double;
+	border-left-style: inset;
+	height: 16px;
+	width: 160px;
+	border-right-color: #CCCCCC;
+	border-bottom-color: #CCCCCC;
+}
+.button_1 {
+	background-image: url(../../../images/frame/sc/enter/button.jpg);
+	background-repeat: repeat-x;
+	height: 20px;
+	width: 50px;
+	border: 1px solid #76A7D3;
+	font-size: 12px;
+	color: #333333;
+}

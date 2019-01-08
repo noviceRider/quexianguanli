@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>template_002.html</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../js/ejs_production.js"></script>
+	<script type="text/javascript" src="js/parsehtml3.js"></script>
+	<script type="text/javascript" src="js/template_003.js"></script>
+  </head>
+  <body>
+  	  <!-- 标题-->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">模块生成向导
+    		</td>
+    		<td>
+    			<!-- 保存所有数据的按钮 -->
+				<div id="button" style="text-align: right;width: 99%;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="SaveAllData()">保存</a>
+				</div>
+    		</td>
+    	</tr>
+    </table>
+    
+    <form id="fm">
+    <div style="display: none;">
+    	<table style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+	   			<tr>
+	   				<td style="text-align: right;width: 70px;">模板编码</td>
+	   				<td ><input id="moudleCode" name="moudleCode"  class="easyui-textbox"  style="width: 160px;" data-options="required: true, missingMessage: '请输入模板编码'" ></td>
+	   			</tr>
+    	</table>
+    </div>
+    <table style="width:100%;">
+     <tr>
+      <td>
+      <div class="easyui-panel" title="列表页面配置" data-options="buttons:'#button',collapsible:true" style="width: 99%;">
+	   		<table style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+	   			<tr>
+	   				<td style="text-align: right;width: ;">标题&nbsp;</td>
+	   				<td colspan="7"><input id="title" name="title" class="easyui-textbox"  style="width: 300px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+	   			</tr>
+	   			<tr>
+	   				<td style="text-align: right;width: ;">查询&nbsp;</td>
+	   				<td>
+	   					<input type="hidden" id="searchUrl" name="searchUrl" value="dataaccess" data-options=""></input>
+	   					<select id="searchTypeId" name="searchType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'" style="width:100px;">
+							<option value=0>数据访问</option>
+							<option value=1>业务逻辑</option>
+						</select>
+	   					<input type="hidden" id="searchAccessCodeId" name="searchAccessCode" data-options="required: true, missingMessage: ''"></input>
+	   					<input class="easyui-textbox" id="searchAccessDescId" name="searchAccessDesc" data-options="required: true, missingMessage: '',editable:false,width:300"></input>
+	   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAccess('1001','search')"></a>
+	   				</td>
+	   			</tr>
+	   			<tr>
+	   				<td colspan="8">
+	   					<div class="easyui-panel" title="查询条件" style="width: 100%;">
+		   					<table id="conditionTable" class="easyui-datagrid" style="height: 200px;" data-options="toolbar:'#query_btns',singleSelect:true" onDblClickRow="dblClickCondition()">
+		   						<thead>
+		   							<tr>
+		   								<th data-options="field:'name',align:'left',halign:'center',width:'25%'">名称</th>
+		   								<th data-options="field:'type',align:'left',halign:'center',width:'25%',hidden:true">类型</th>
+		   								<th data-options="field:'typeDesc',align:'left',halign:'center',width:'25%'">类型</th>
+		   								<th data-options="field:'label',align:'left',halign:'center',width:'25%'">标题</th>
+		   								<th data-options="field:'c',align:'center',halign:'center',width:'25%',formatter:conditionHandle">操作</th>
+		   							</tr>
+		   						</thead>
+		   					</table>
+	   					</div>
+	   				</td>
+	   			</tr>
+	   			<tr>
+	   				<td colspan="8">
+	   					<div class="easyui-panel" title="数据网格参数" style="width: 100%;">
+	   						<table>
+	   							<tr>
+	   								<td style="text-align: right;width: 80px;">表格ID&nbsp;</td>
+	   								<td><input class="easyui-textbox" id="id" name="id" data-options="required: true, missingMessage: '请输入表格ID'"></td>
+		   						</tr>
+	   						</table>
+		   					<table id="dgTable" class="easyui-datagrid" style="height: 200px;" data-options="toolbar:'#option_btns',singleSelect:true">
+		   						<thead>
+		   							<tr>
+		   								<th data-options="field:'field',align:'left',halign:'center',width:'20%'">列名</th>
+		   								<th data-options="field:'title',align:'left',halign:'center',width:'20%'">数据属性</th>
+		   								<th data-options="field:'align',align:'left',halign:'center',width:'20%'">对其方式</th>
+		   								<th data-options="field:'width',align:'left',halign:'center',width:'20%'">宽度</th>
+		   								<th data-options="field:'c',align:'center',width:'20%',halign:'center',formatter:optionHandle">操作</th>
+		   							</tr>
+		   						</thead>
+		   					</table>
+	   					</div>
+	   				</td>
+	   			</tr>
+		</table>
+    </div>
+      </td>
+     </tr>
+    </table>
+    </form>
+    
+    <!-- 操作查询条件数据网格的按钮 -->
+    <div id="query_btns" style="text-align: right;">
+    	<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addCondition()">增加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeCondition()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyCondition()">修改</a>
+    </div>
+    <!-- 查询条件新增、修改界面 -->
+    <div id="queryConditions_html" style="display: none;"></div>
+    
+    <!-- 数据网格参数操作按钮 -->
+    <div id="option_btns" style="text-align: right;">
+    	<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDataOption()">增加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeDataOption()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyDataOption()">修改</a>
+    </div>
+	<!-- 数据网格参数新增、修改界面 -->
+    <div id="dataoptions_html" style="display: none;"></div>
+    
+    <!-- 选择代码类型界面 -->
+    <div id="typecode_html" style="display: none;"></div>
+    
+    <!-- 查询条件枚举新增、修改界面 -->
+    <div id="enum_am_html" style="display: none;"></div>
+     
+     <!-- 数据访问选择界面 -->
+    <div id="template_dataaccess" style="display: none;"></div>
+
+     <!-- 业务逻辑选择界面 -->
+    <div id="template_businesslogic" style="display: none;"></div>
+
+  </body>
+</html>
+

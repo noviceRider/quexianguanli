@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>商品典当</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="../../gmodule/js/pageStacker.js"></script>
+    	<script type="text/javascript" src="../busiRent/js/collect.js"></script>
+	</head>
+  
+	<body>
+		<div id="detailsPage" style="width: 100%;padding:0;margin:0;background:white;border:0px solid rgba(204, 204, 204, 1);float:left">
+		    	
+		    	<!-- 详情 -->
+		    	<div style="width:800px;float:left;padding:0;margin:0;border-top:0px solid rgba(204, 204, 204, 1);font-size: 14px;">
+		    	
+		    		<table style="width:100%;height:100%">
+		    			<tr>
+		    				<td style="width:97%">
+		    					<div id="p" class="easyui-panel" title="商品信息" style="width:96%;height:auto;padding:10px;background:#fafafa;"   data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+	               					<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品编号：
+				    						</td>
+				    						<td>
+				    							<p id="goodsIdP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							来源门店：
+				    						</td>
+				    						<td>
+				    							<p id="shopCodeP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td  style="width:25%;text-align: right;">
+				    							提交人：
+				    						</td>
+				    						<td>
+				    							<p id="inputUserP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							提交时间：
+				    						</td>
+				    						<td>
+				    							<p id="inputDateP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品分类：
+				    						</td>
+				    						<td>
+				    							<p id="catCodeP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							商品名称：
+				    						</td>
+				    						<td>
+				    							<p id="goodsNameP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							商品品牌：
+				    						</td>
+				    						<td>
+				    							<p id="goodsBrandP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							商品货号：
+				    						</td>
+				    						<td>
+				    							<p id="articleNumberP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							客户首买价：
+				    						</td>
+				    						<td>
+				    							<p  style="padding:0;margin:0;width:240px"><span id="firstPriceP"></span>元</p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							商品描述：
+				    						</td>
+				    						<td style="">
+				    							<p id="goodsDescP" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+			    					</table>
+	               				</div>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:97%">
+		    					<div id="p" class="easyui-panel" title="商品属性" style="width:96%;height:auto;padding:10px;background:#fafafa;"   data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+	               					<div id="goodsAttrDiv" style="width:100%;height:100%;margin:auto;border:0px red solid">
+			    						<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							产地：
+					    						</td>
+					    						<td>
+					    							<p name="modePlace" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							年代：
+					    						</td>
+					    						<td>
+					    							<p name="nianDai" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							适用人群：
+					    						</td>
+					    						<td>
+					    							<p name="fitPeople" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							颜色：
+					    						</td>
+					    						<td>
+					    							<p name="color" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							材质：
+					    						</td>
+					    						<td>
+					    							<p name="caiZi" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							重量：
+					    						</td>
+					    						<td>
+					    							<p name="weight" style="padding:0;margin:0;width:240px"></p>
+					    						</td>
+					    					</tr>
+				    					</table>
+			    					</div>
+	               				</div>
+	               			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:97%">
+		    					<div id="p" class="easyui-panel" title="商品图片" style="width:96%;height:auto;padding:10px;background:#fafafa;"data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+	               					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+	  								</div>
+	               				</div>
+	               			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:97%">
+		    					<div id="p" class="easyui-panel" title="客户资料" style="width:96%;height:auto;padding:10px;background:#fafafa;"data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+                					<form id="memberInfo_form" class="easyui-form" method="post">
+	                					<table id="memberDetails_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							会员编号:
+					    						</td>
+					    						<td>
+					    							<input id="memberId" name="memberId"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							会员姓名:
+					    						</td>
+					    						<td>
+					    							<input id="memberName" name="memberName"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td  style="width:25%;text-align: right;">
+					    							手机号码:
+					    						</td>
+					    						<td>
+					    							<input id="mobile"  type="text" name="mobile"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							证件号码:
+					    						</td>
+					    						<td>
+					    							<input  id="certNo" name="certNo"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							账户名称:
+					    						</td>
+					    						<td>
+					    							<input id="accountName" name="accountName" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    						<td style="width:25%;text-align: right;">
+					    							开户银行:
+					    						</td>
+					    						<td>
+					    							<input id="bankName" name="bankName"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							银行卡号:
+					    						</td>
+					    						<td>
+					    							<input id="account" name="account"  style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+				    					</table>
+			    					</form>
+                				</div>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:97%">
+		    					<div id="p" class="easyui-panel" title="租赁信息" style="width:96%;height:auto;padding:10px;background:#fafafa;" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+		               				<form id="rentData" class="easyui-form">
+		               					<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    					<tr>
+					    						<td style="width:123px;text-align: right;">
+					    							会员编号
+					    						</td>
+					    						<td>
+					    							<input id="memberId_receive" name="memberId" disabled="disabled" readonly='readonly' class="easyui-textbox" style="width:200px;height:24px">
+					    						</td>
+					    						<td style="text-align: right;">
+					    							姓名
+					    						</td>
+					    						<td>
+					    							<input id="memberName_receive" name="memberName" disabled="disabled" class="easyui-textbox" data-options="readonly:true" style="width:200px;"/>
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td  style="text-align: right;">
+					    							手机
+					    						</td>
+					    						<td>
+					    							<input id="mobile_receive" name="mobile" disabled="disabled" class="easyui-textbox" data-options="readonly:true" style="width:200px;"/>
+					    						</td>
+					    						<td  style="text-align: right;width: 100px;" >证件号码</td>
+												<td>
+													<input id="certNo_receive" name="certNo" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+												</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="text-align: right;">
+					    							付款金额
+					    						</td>
+					    						<td>
+					    							<input name="payAmount" class="easyui-textbox" disabled="disabled" data-options="" style="width:200px;"/>元
+					    						</td>
+					    						<td style="text-align: right;">
+					    							租赁时长
+					    						</td>
+					    						<td>
+					    							<input id="bdaysInput" name="rentTerm" disabled="disabled" class="easyui-textbox" data-options="" style="width:200px;"/>天
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="text-align: right;">
+					    							归还日期
+					    						</td>
+					    						<td>
+					    							<input id="returnDateInput" name="returnDate" disabled="disabled" class="easyui-textbox" data-options="readonly:true,editable:false" style="width:200px;"/>
+					    						</td>
+					    						<td style="text-align: right;">
+					    							收款方式
+					    						</td>
+					    						<td>
+					    							<input id="payTypeCombo" name="payType" class="easyui-combobox" data-options="required:true,missingMessage:'请选择收款方式',panelHeight:'auto',editable:false,valueField: 'dictCode',textField: 'dictDesc'" style="width:200px;"/>
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td rowspan="2" colspan="4" id="imgTd" style="display: none">
+					    							<div style="margin-left: 130px"><div id="preview" style="width:80px;height:62px" ><img src="../../../images/equipment.png"></div> <div style="bottom:1px;"><input id="zhuanzhang" name="uploadFile" type="file" multiple onchange="previewImage(this,1);" data-options="prompt:'选择图片',buttonText:'选择文件'" style="width:180px;"/></div></div>
+					    						</td>
+					    					</tr>
+				    					</table>
+				    				</form>
+	               				</div>
+		    				</td>
+		    			</tr>
+		    		</table>
+		    	</div>
+		
+		</div>
+		
+		<!-- form表单按钮 -->
+		<div id="gath_form">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="gath()">确认收款</a>
+			<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="refresh()">取消</a>
+		</div>
+	</body>
+</html>

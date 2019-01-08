@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="AOFOrModifyPanel">
+
+		<form id="AOFIssueForm" method="post">
+			
+		<table>
+		<tr><td>账号：</td><td><input type="text" name="userId" id="AOFuserId" data-options="required:true"><br></td></tr>
+ 		<tr><td>密码：</td><td><input name="password" id="AOFpassword" data-options="required:true"><br></td></tr>
+ 		<tr><td>确认密码：</td><td><input id="AOFpasswordAga" data-options="required:true"><br></td></tr>
+		<tr><td>用户姓名：</td><td><input type="text" name="userName" id="AOFuserName" data-options="required:true"><br></td></tr>
+		<tr><td>用户性别：</td><td><input type="text" name="genderId" id="AOFgenderId" data-options="required:true"><br></td></tr>
+		<tr><td>用户部门：</td><td><input type="text" name="deptId" id="AOFdeptId" data-options="required:true"><br></td></tr>
+<!-- 		<tr><td>角色：</td><td><input type="text" name="role" id="AOFrole" data-options="required:true"><br></td></tr>
+ -->		<tr><td>联系方式：</td><td><input type="text" name="mobile" id="AOFmobile" data-options="required:true"><br></td></tr>
+		<tr><td>电子邮箱：</td><td><input type="text" name="email" id="AOFemail" data-options="required:true"><br></td></tr>
+		<tr><th colspan="2"><a  id="AOFFormSubmit"></a>&nbsp;&nbsp;&nbsp;&nbsp;<a  id="AOFFormCancel"></a></th></tr></table>
+			</form>
+</div>
+</body>
+</html>

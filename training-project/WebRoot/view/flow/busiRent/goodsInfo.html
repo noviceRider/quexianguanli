@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>商品管理</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+    	<script type="text/javascript" src="../busiRent/js/goodsInfo.js"></script>
+ 
+	</head>
+	<body>
+		<div id="detailsPage" style="width: 800px;padding:0;margin:0;background:white;border:0px solid rgba(204, 204, 204, 1);float:left">
+	    	<!-- 详情 -->
+	    	<div style="width:100%;float:left;padding:0;margin:0;border-top:0px solid rgba(204, 204, 204, 1);font-size: 14px;">
+	    		<table style="width:800px;height:100%">	
+					<!-- 商品信息 -->
+			    	<tr>
+			    		<td style="width:97%">
+			    			<div id="p" class="easyui-panel" title="商品信息" style="width:96%;height:auto;padding:10px;background:#fafafa;" data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+		               			<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    			<tr>
+					    				<td style="width:25%;text-align: right;">
+					    					商品编号：
+					    				</td>
+					    				<td>
+					    					<p id="goodsIdP" style="padding:0;margin:0;width:240px"></p>
+					    				</td>
+					    				<td style="width:25%;text-align: right;">
+					    					来源门店：
+					    				</td>
+					    				<td>
+					    					<p id="shopCodeP" style="padding:0;margin:0;width:240px"></p>
+					    				</td>
+					    			</tr>
+					    			<tr>
+					    				<td  style="width:25%;text-align: right;">
+					    					提交人：
+					    				</td>
+					    				<td>
+					    					<p id="inputUserP" style="padding:0;margin:0;width:240px"></p>
+					    				</td>
+					    				<td style="width:25%;text-align: right;">
+					    					提交时间：
+					    				</td>
+					    				<td>
+					    					<p id="inputDateP" style="padding:0;margin:0;width:240px"></p>
+					    				</td>
+					    			</tr>
+					    			<tr>
+					    				<td style="width:25%;text-align: right;">
+					    					商品分类：
+					    				</td>
+					    			<td>
+					    				<p id="catCodeP" style="padding:0;margin:0;width:240px"></p>
+					    			</td>
+					    			<td style="width:25%;text-align: right;">
+					    				商品名称：
+					    			</td>
+					    			<td>
+					    				<p id="goodsNameP" style="padding:0;margin:0;width:240px"></p>
+					    			</td>
+					    			</tr>
+					    			<tr>
+			    						<td style="width:25%;text-align: right;">
+			    							商品品牌：
+			    						</td>
+			    						<td>
+			    							<p id="goodsBrandP" style="padding:0;margin:0;width:240px"></p>
+			    						</td>
+			    						<td style="width:25%;text-align: right;">
+			    							商品货号：
+			    						</td>
+			    						<td>
+			    							<p id="articleNumberP" style="padding:0;margin:0;width:240px"></p>
+			    						</td>
+			    					</tr>
+			    					<tr>
+			    						<td style="width:25%;text-align: right;">
+			    							客户首买价：
+			    						</td>
+			    						<td>
+			    							<p  style="padding:0;margin:0;width:240px"><span id="firstPriceP"></span>元</p>
+			    						</td>
+			    						<td style="width:25%;text-align: right;">
+			    							商品描述：
+			    						</td>
+			    						<td style="">
+			    							<p id="goodsDescP" style="padding:0;margin:0;width:240px"></p>
+			    						</td>
+			    					</tr>
+				    			</table>
+		               		</div>
+			    		</td>
+			    	</tr>
+			    	
+			    	<!-- 商品属性 -->
+	    			<tr>
+	    				<td style="width:97%">
+	    					<div id="p" class="easyui-panel" title="商品属性" style="width:96%;height:auto;padding:10px;background:#fafafa;"data-options="closable:false,collapsible:false,minimizable:false,maximizable:false">
+	              				<div id="goodsAttrDiv" style="width:100%;height:100%;margin:auto;border:0px red solid">
+		    						<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							产地：
+				    						</td>
+				    						<td>
+				    							<p name="modePlace" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							年代：
+				    						</td>
+				    						<td>
+				    							<p name="nianDai" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							适用人群：
+				    						</td>
+				    						<td>
+				    							<p name="fitPeople" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							颜色：
+				    						</td>
+				    						<td>
+				    							<p name="color" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							材质：
+				    						</td>
+				    						<td>
+				    							<p name="caiZi" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    						<td style="width:25%;text-align: right;">
+				    							重量：
+				    						</td>
+				    						<td>
+				    							<p name="weight" style="padding:0;margin:0;width:240px"></p>
+				    						</td>
+				    					</tr>
+		    						</table>
+		    					</div>
+	              			</div>
+	              		</td>
+	    			</tr>
+	    			
+	    			<!-- 商品图片 -->
+	    			<tr>
+	    				<td style="width:97%">
+	    					<div id="p" class="easyui-panel" title="商品图片"     
+	      						style="width:96%;height:auto;padding:10px;background:#fafafa;"   
+	      						data-options="closable:false,    
+	              				collapsible:false,minimizable:false,maximizable:false">
+	              					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+	  								
+	 									</div>
+	              				</div>
+	              			</td>
+	    			</tr>
+			    			
+	    			<!-- 租赁记录 -->
+	    			<tr>
+	    				<td style="width:97%">
+	    					<div id="p" class="easyui-panel" title="租赁信息"     
+	      						style="width:96%;height:auto;padding:10px;background:#fafafa;"   
+	      						data-options="closable:false,    
+	              				collapsible:false,minimizable:false,maximizable:false">
+	              				<form id="rentData" class="easyui-form">
+	              					<table id="details_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+			    					<tr>
+			    						<td style="width:123px;text-align: right;">
+			    							会员编号
+			    						</td>
+			    						<td>
+			    							<input id="memberId_receive" name="memberId" readonly='readonly' class="easyui-textbox" style="width:200px;height:24px">
+											<a href="javascript:doOpenSelectMemberDlg()" class="easyui-linkbutton" iconCls="icon-add"></a>				    						
+			    						</td>
+			    						<td style="text-align: right;">
+			    							姓名
+			    						</td>
+			    						<td>
+			    							<input id="memberName_receive" name="memberName" disabled="disabled" class="easyui-textbox" data-options="readonly:true" style="width:200px;"/>
+			    						</td>
+			    					</tr>
+			    					<tr>
+			    						<td  style="text-align: right;">
+			    							手机
+			    						</td>
+			    						<td>
+			    							<input id="mobile_receive" name="mobile" disabled="disabled" class="easyui-textbox" data-options="readonly:true" style="width:200px;"/>
+			    						</td>
+			    						<td  style="text-align: right;width: 100px;" >证件号码</td>
+										<td>
+											<input id="certNo_receive" name="certNo" disabled="disabled" class="easyui-textbox" style="width:200px;height:24px">
+										</td>
+			    					</tr>
+			    					<tr>
+			    						<td style="text-align: right;">
+			    							付款金额
+			    						</td>
+			    						<td>
+			    							<input name="payAmount" class="easyui-textbox" data-options="" style="width:200px;"/>元
+			    						</td>
+			    						<td style="text-align: right;">
+			    							租赁时长
+			    						</td>
+			    						<td>
+			    							<input id="bdaysInput" name="rentTerm" class="easyui-textbox" data-options="" style="width:200px;"/>天
+			    						</td>
+			    					</tr>
+			    					<tr>
+			    						<td style="text-align: right;">
+			    							归还日期
+			    						</td>
+			    						<td>
+			    							<input id="returnDateInput" name="returnDate" class="easyui-datebox" data-options="readonly:true,editable:false" style="width:200px;"/>
+			    						</td>
+			    						<td style="text-align: right;">
+			    							租金
+			    						</td>
+			    						<td>
+			    							<input id="rentPriceInput" name="rentPrice" disabled="disabled" class="easyui-textbox" data-options="readonly:true,editable:false" style="width:200px;"/>元/天
+			    						</td>
+			    					</tr>
+		    					</table>
+		    				</form>
+	              			</div>
+	    				</td>
+	    			</tr>
+			    </table>
+	    	</div>
+		</div>
+		
+				<!-- 客户资料弹窗 -->
+		<div id="memberDialog" class="easyui-dialog" data-options="closed:true,modal:false,buttons:'#memberSc',title:'客户资料'" style="width:600px;height:450px;">
+			<table style="width:100%;">
+				<tr>
+					<td>
+						&nbsp;关键字&nbsp;&nbsp;
+						<input id="memberNameQuery"  class="easyui-textbox" data-options="prompt:'姓名、手机或证件号关键字'" style="width:200px;height:24px">
+					</td>
+					<td style="float:right;">
+						<a href="javascript:doQueryMember()" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;询&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+			<table id="memberSelect_dg" data-options="rownumbers:true,pagination:true,nowrap:false,singleSelect:true" class="easyui-datagrid" title=""  style="width:100%;" >
+					<thead>
+						<tr>
+							<th data-options="field:'memberId',align:'left',halign:'center'" style="width:20%">会员编号</th>
+							<th data-options="field:'memberName',align:'left',halign:'center'" style="width:20%">姓名</th>
+							<th data-options="field:'mobile',align:'left',halign:'center'" style="width:24%" >手机</th>
+							<th data-options="field:'certNo',align:'left',halign:'center'" style="width:28%" >证件号码</th>
+						</tr>
+					</thead>
+				</table>
+		</div>
+		
+		<!-- 客户资料弹窗保存和关闭按钮 -->
+		<div id="memberSc">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSelectMember()">选择</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCloseMemberDialog()">关闭</a>
+		</div>  
+		
+		<!-- form表单按钮 -->
+		<div id="sc_form">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="charge('0')">保存</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="charge('1')">提交</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="refresh()">关闭</a>
+		</div>
+	</body>
+</html>

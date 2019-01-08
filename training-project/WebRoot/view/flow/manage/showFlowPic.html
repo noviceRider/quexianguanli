@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>showFlowPic.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+  </head>
+  
+  <body>
+  	<div id="process_detail_div" style="width:780px;height:500px;padding-left:10px" data-options="buttons:'#process_detail_div_btns'">
+	  	<!-- 上下边距 -->
+	 	<div style="margin:10px"></div>
+	 	
+	  	<!-- 流程图 -->
+	  	<div id="processImage">
+	  		<div id="panelOne" class="easyui-panel" style="width:740px;background:#fafafa;" data-options="collapsed:false">
+	  			<img style="width:100%" id="processpic">
+	  		</div>
+	  	</div>
+	  
+	 	<div id="process_detail_div_btns">
+	  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#process_detail_div').dialog('close');">关闭</a>
+	  	</div>
+  	</div>
+  </body>
+</html>

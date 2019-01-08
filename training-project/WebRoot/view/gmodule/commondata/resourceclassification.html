@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>resourceclassification.html</title>
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/common/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="../../../js/common.js"></script>
+<script type="text/javascript" src="js/resourceclassification.js" charset="UTF-8"></script>
+<style type=text/css>
+	.tree-title {
+		font-size: 13px;
+	}
+	/* 改变datagrid标题的高度，使datagrid内部不出现滚动条 */
+	.datagrid-header-row{
+		 height:24px;
+	}
+</style>
+</head>
+
+<body>
+	<!-- 标题和新增、修改按钮 -->
+	<table class='btbHead'>
+		<tr>
+			<td style="width:25%;"><img
+				src="../../../images/common/title.gif"
+				align="absmiddle">资源分类</td>
+			<td style="text-align:right;"><a href="#" id="queryBtn"
+				class="easyui-linkbutton" onclick="addRootType()" iconCls="icon-add">增加第一级</a>
+				<a href="#" id="queryBtn" class="easyui-linkbutton"
+				onclick="addNextType()" iconCls="icon-add">增加下级</a> <a href="#"
+				id="queryBtn" class="easyui-linkbutton" onclick="modifyType()"
+				iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a></td>
+		</tr>
+	</table>
+
+	<!-- 选择项目、无效分类选择和刷新 -->
+	<form id="searchresForm">
+		<table class="btbForm">
+			<tr>
+				<td>资源大类&nbsp;&nbsp; <input id="searchresForm_dictCode" name="modifyTypeForm_projectId" type="hidden" /> 
+				<input id="searchresForm_dictDesc" name="modifyTypeForm_projectName" class="easyui-textbox" data-options="prompt:'请选择资源大类',width:230," readonly="readonly" /> <a id="selectBtn_res" class="easyui-linkbutton"
+					data-options="iconCls:'icon-add',plain:true" onclick="selectPro()"></a>
+				</td>
+				<td style="text-align: right;">
+					<input id="showNoUsedType" type="checkbox" style="vertical-align: middle;" onchange="showNoUsed()"> <label for="showNoUsedType">显示无效的分类</label>
+						&nbsp;&nbsp; 
+					<a href="javascript:doRefresh()" class="easyui-linkbutton" iconCls="icon-reload" plain="true"></a>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<div style="margin:5px 0;"></div>
+
+	<!-- 资源分类数据网格 -->
+	<table id="typeTreeGrid" class="easyui-treegrid" style="width:100%;">
+		<thead>
+			<tr>
+				<th data-options="field:'typeName',halign:'center',align:'left'" style="width:30%;">分类名称</th>
+				<th data-options="field:'typeId',halign:'center',align:'left'" style="width:10%;">分类序号</th>
+				<th data-options="field:'isDefault',halign:'center',align:'center'" style="width:7%;" formatter="isDefaultFormatter">默认分类</th>
+				<th data-options="field:'infoType',halign:'center',align:'left',formatter:dictDescFormatter" style="width:26%;">信息类型</th>
+				<th data-options="field:'sortNo',halign:'center',align:'left'" style="width:10%;">排序号</th>
+				<th data-options="field:'clearNotRel',halign:'center',align:'center'" style="width:10%;" formatter="isUsedFormatter">清除游离</th>
+				<th data-options="field:'isUsed',halign:'center',align:'center'" style="width:7%;" formatter="isUsedFormatter">有效否</th>
+			</tr>
+		</thead>
+	</table>
+
+	<!-- 增加第一级弹窗 -->
+	<div id="addRootType" class="easyui-dialog" data-options="closed:true,width:'390',height:'',title:'增加第一级分类',iconCls:'icon-add'">
+		<form id="addRootTypeForm" method="post">
+			<table
+				style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">分类名称 &nbsp; &nbsp;
+						<input id="addRootTypeForm_typeName" name="typeName" style="width:230px;" />
+					</td>
+				</tr>
+				<tr>
+					<td  style="width: 47%;padding-left: 40px;">
+						<input type="checkbox" id="isDefault" name="isDefault" style="vertical-align: middle;" /> 
+						<label for="isUsed">默认分类</label>
+					</td>
+					<td  style="width: 47%;text-align: left;">
+						<input type="checkbox" id="clearNotRel" name="clearNotRel" style="vertical-align: middle;" /> 
+						<label for="IsClear" title="清除没有被引用的资源">清除游离</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">排序号 &nbsp; &nbsp;
+						<input class="easyui-textbox" id="sortNo" name="sortNo" style="width:230px;" />
+					</td>
+				</tr>
+				<tr style="display:none">
+					<td style="width: 60px;text-align: right;">分类路径</td>
+					<td ><input class="easyui-textbox" id="typeRoute" name="typeRoute" style="width:230px;" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 增加下级弹窗 -->
+	<div id="addNextType" class="easyui-dialog"
+		data-options="closed:true,width:'390',height:'',title:'增加下级分类',iconCls:'icon-add'">
+		<form id="addNextTypeForm">
+			<input type="hidden" name="pTypeId">
+			<table
+				style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td style="width: 90px;text-align: right;">上级分类</td>
+					<td><span id="addNextTypeForm_pTypeId"></span></td>
+					<td style="width: 90px;text-align: right;"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">分类名称</td>
+					<td colspan="3"><input name="typeName" id="addNextTypeForm_typeName" style="width:230px;" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">
+						<input type="checkbox" id="isDefault" name="isDefault" style="vertical-align: middle;" /> 
+						<label for="isUsed">默认分类</label>
+					</td>
+					<td colspan="2" style="text-align: left;">
+						<input type="checkbox" id="clearNotRel" name="clearNotRel" style="vertical-align: middle;" /> 
+						<label for="IsClear" title="清除没有被引用的资源">清除游离</label>
+					</td>
+				</tr>
+				<tr style="display:none">
+					<td style="width: 90px;text-align: right;">分类路径</td>
+					<td>
+						<input class="easyui-textbox" id="typeRoute" name="typeRoute" style="width:230px;" />
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">排序号</td>
+					<td colspan="3">
+						<input class="easyui-textbox" name="sortNo" id="sortNo" style="width:230px;" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 修改分类 -->
+	<div id="modifyType" class="easyui-dialog" data-options="closed:true,title:'修改分类',iconCls:'icon-edit'">
+		<form id="modifyTypeForm">
+			<table
+				style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td style="width: 90px;text-align: right;">分类序号</td>
+					<td><span id="typeId"></span></td>
+					<td style="width: 90px;text-align: right;"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">分类名称</td>
+					<td colspan="3">
+						<input id="modifyTypeForm_typeName" name="typeName" style="width:230px;" /> 
+						<input id="pTypeId" name="pTypeId" style="width:230px;" type="hidden" />
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">排序号</td>
+					<td colspan="3"><input class="easyui-textbox" id="sortNo" name="sortNo" style="width:230px;" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">
+						<input type="checkbox" id="modifyIsDefault" name="isDefault" style="vertical-align: middle;" /> 
+						<label for="modifyIsDefault">默认分类</label>
+					</td>
+					<td colspan="2" style="text-align: left;">
+						<input type="checkbox" id="modifyclearNotRel" name="clearNotRel" style="vertical-align: middle;" /> 
+						<label for="modifyIsClear" title="清除没有被引用的资源">清除游离</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">
+						<input type="checkbox" id="isUsed" name="isUsed" style="vertical-align: middle;" />
+						<label for="isUsed">有效否</label>
+					</td>
+					<td style="width: 90px;text-align: right;"></td>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<!-- 鼠标右键点击数据弹出的新增和修改选项 -->
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div data-options="iconCls:'icon-add'" onclick="addNextType()">增加下级</div>
+		<div class="menu-sep"></div>
+		<div data-options="iconCls:'icon-edit'" onclick="modifyType()">修改分类</div>
+	</div>
+
+	<!-- 选择所属项目对话框 -->
+	<div id="detaile" class="easyui-dialog" data-options="closed:true"></div>
+
+</body>
+</html>

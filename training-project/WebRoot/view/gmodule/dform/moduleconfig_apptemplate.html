@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>moduleconfig_apptemplate.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+  </head>
+  
+  <body>
+  
+    <div id="module_template_div" style="width: 680px;height: 350px" data-options="buttons:'#module_template_div_btns'">
+   		<!-- 查询输入框及按钮 -->
+   	<form id="templateForm">
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="">
+					关键字&nbsp; <input id="templateKeyWordId" name="templateKeyWord" class="easyui-textbox" data-options="prompt:'输入模板编号或名称...'" style="width:200px;height:20px;">&nbsp;
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryTemplate()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>
+	</form>
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!--我的数据访问 -->
+  		<div style="width:100%;">
+		<table id="module_template_dg" style="width:100%;" class="easyui-datagrid"  data-options="striped:true,singleSelect:true,pagination:true,pageSize:20,">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true',hidden:true"></th>
+					
+					<th data-options="field:'templateCode',alias:'a.template_code',align:'center',halign:'center',sortable:'true'" style="width:25%">模板编号</th>
+					<th data-options="field:'templateName',alias:'a.template_name',align:'left',halign:'center',sortable:'true'" style="width:20%">模板名称</th>
+					<th data-options="field:'templateDesc',alias:'a.template_desc',align:'left',halign:'center',sortable:'true',hidden:true" style="width:">模板描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'left',halign:'center',sortable:'true'" style="width:15%">模板分类</th>
+					<th data-options="field:'moduleConfigURL',alias:'a.module_config_url',align:'left',halign:'center',sortable:'true'" style="width:40%">模块配置URL</th>
+					<th data-options="field:'ver',alias:'a.ver',align:'center',halign:'center',sortable:'true',hidden:true" style="width:">模板版本号</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter,hidden:true" style="width:">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+	
+    <div id="module_template_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectTemplate()">选择</a>
+		<a id="clearSelectTemplateBtn" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="clearSelectTemplate()">清除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelSelectTemplate()">取消</a>
+	</div>
+	
+  </body>
+</html>

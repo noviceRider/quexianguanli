@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.ProjectManagementDao">
+
+<!-- 查询所有 -->
+<select id="getProjects1" resultType="com.huibo.issue.po.ProjectManagementPo">
+SELECT
+	project1.PROJECT_ID 			projectId,
+	project1.PROJECT_NAME 			projectName,
+	project1.PROJECT_INTRO 			projectIntro,
+	project1.PROJECT_DSC 			projectDsc,
+	project1.P_PROJECT_ID 			topProjectId,
+	project1.PROJECT_STATE 			projectState,
+	dict.DICT_DESC 					dictCode,
+	project1.CREATE_BY 				createBy,
+	USER1.USER_NAME 				createByName,
+	project1.CREATE_TIME 			createTime,
+	project1.MODIFY_BY 				modifyBy,
+	USER2.USER_NAME 				modifyByName,
+	project1.MODIFY_TIME			modifyTime
+from
+	info_issue_project project1
+LEFT JOIN 
+	info_ge_dict dict ON project1.PROJECT_STATE = dict.DICT_CODE AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+	LEFT JOIN sys_user USER1 ON project1.CREATE_BY = USER1.user_id
+	LEFT JOIN sys_user USER2 ON project1.MODIFY_BY = USER2.user_id
+where project1.P_PROJECT_ID = #{pId}
+</select>
+
+<!-- 查询有效 -->
+<select id="getProjects" resultType="com.huibo.issue.po.ProjectManagementPo">
+SELECT
+	project1.PROJECT_ID 			projectId,
+	project1.PROJECT_NAME 			projectName,
+	project1.PROJECT_INTRO 			projectIntro,
+	project1.PROJECT_DSC 			projectDsc,
+	project1.P_PROJECT_ID 			topProjectId,
+	project1.PROJECT_STATE 			projectState,
+	dict.DICT_DESC 					dictCode,
+	project1.CREATE_BY 				createBy,
+	USER1.USER_NAME 				createByName,
+	project1.CREATE_TIME 			createTime,
+	project1.MODIFY_BY 				modifyBy,
+	USER2.USER_NAME 				modifyByName,
+	project1.MODIFY_TIME			modifyTime
+from
+	info_issue_project project1
+LEFT JOIN 
+	info_ge_dict dict ON project1.PROJECT_STATE = dict.DICT_CODE AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+	LEFT JOIN sys_user USER1 ON project1.CREATE_BY = USER1.user_id
+	LEFT JOIN sys_user USER2 ON project1.MODIFY_BY = USER2.user_id
+where project1.P_PROJECT_ID = #{pId}  and project1.PROJECT_STATE = '01'
+	<!-- <if test="dictCod =='01'">
+		and project1.PROJECT_STATE = #{dictCode}
+	</if> -->
+</select>
+
+<!--  单条查询 --> 
+<select id="queryProjectById" resultType="com.huibo.issue.po.ProjectManagementPo">
+select
+	project1.PROJECT_ID 			projectId,
+	project1.PROJECT_NAME 			projectName,
+	project1.PROJECT_INTRO 			projectIntro,
+	project1.PROJECT_DSC 			projectDsc,
+	project1.P_PROJECT_ID 			topProjectId,
+	project2.PROJECT_NAME 			topProjectName ,
+	project1.PROJECT_STATE 			projectState,
+	dict.DICT_DESC 					dictCode,
+	project1.CREATE_BY 				createBy,
+	USER1.USER_NAME 				createByName,
+	project1.CREATE_TIME 			createTime,
+	project1.MODIFY_BY 				modifyBy,
+	USER2.USER_NAME 				modifyByName,
+	project1.MODIFY_TIME				modifyTime
+from
+	info_issue_project project1
+LEFT JOIN 
+	info_ge_dict dict ON project1.PROJECT_STATE = dict.DICT_CODE AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+	LEFT JOIN sys_user USER1 ON project1.CREATE_BY = USER1.user_id
+	LEFT JOIN sys_user USER2 ON project1.MODIFY_BY = USER2.user_id
+	LEFT JOIN info_issue_project project2 ON project1.P_PROJECT_ID  = project2.PROJECT_ID
+where project1.PROJECT_ID = #{project}
+</select>
+
+<!-- 增加 -->
+<insert id="addProject">
+	insert
+	into
+		info_issue_project(
+			PROJECT_ID ,
+			PROJECT_NAME ,
+			PROJECT_INTRO ,
+			PROJECT_DSC ,
+			P_PROJECT_ID ,
+			PROJECT_STATE ,
+			CREATE_BY ,
+			CREATE_TIME ,
+			MODIFY_BY ,
+			MODIFY_TIME
+		)
+	values(
+		#{projectId},
+		#{projectName},
+		#{projectIntro},
+		#{projectDsc},
+		#{topProjectId},
+		#{projectState},
+		#{createBy},
+		now(),
+		#{modifyBy},
+		now()
+	)
+</insert>
+
+<!-- 修改 -->
+<update id="updateProject">
+	update
+		info_issue_project
+	set
+		PROJECT_NAME = #{projectName},
+		PROJECT_INTRO = #{projectIntro},
+		PROJECT_DSC = #{projectDsc} ,
+		MODIFY_BY = #{modifyBy},
+		MODIFY_TIME = now()
+	where
+		PROJECT_ID = #{projectId}
+</update>
+
+<update id="conversion">
+	update
+		info_issue_project
+	set
+		PROJECT_STATE = #{projectState}
+	where
+		PROJECT_ID = #{projectId}
+</update>
+
+<select id="validatePriorityCode" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM info_issue_project p
+		<where>
+			<if test="projectId != null and projectId != ''">
+				and p.PROJECT_ID = #{projectId}
+			</if>
+		</where>
+	</select>
+</mapper>

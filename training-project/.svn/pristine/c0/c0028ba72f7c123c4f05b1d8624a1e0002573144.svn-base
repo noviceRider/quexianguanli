@@ -1,0 +1,43 @@
+package com.huibo.issue.dao;
+
+import java.util.List;
+
+
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssueSeverityBo;
+import com.huibo.issue.po.IssueSeverityPo;
+
+/**
+ * <p>title:缺陷管理系统-IssueSeverityDao</p>
+ * 
+ * <p>Description:缺陷严重程度的dao</p>
+ * 
+ * <p>Copyright:Copyright hbrc(c) 2018</p>
+ * 
+ * <p>Company:重庆汇博人才</p>
+ * 
+ * @author 张浩
+ * @version 1.0
+ */
+public interface IssueSeverityDao {
+
+	public List<IssueSeverityPo> getIssueSeverity(Page page);
+
+
+	public Integer addSeverity(IssueSeverityPo po);
+
+
+	public Integer deleteSeverity(String[] delIds);
+
+
+	public Integer operation(IssueSeverityBo bo);
+
+
+	public IssueSeverityPo getSeverityByCode(IssueSeverityPo po);
+
+
+	public Integer updateSeverity(IssueSeverityPo po);
+
+
+	public Integer validatePriorityCode(IssueSeverityPo po);
+}

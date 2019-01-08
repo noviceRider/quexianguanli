@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>addhtml_am.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+  	<div id="addhtml_dlg" data-options="buttons:'#amhtml_btns'" style="width:550px;">
+	    <form id="addhtml_fm">
+	    	<table style="border-collapse:separate; border-spacing:0px 10px;">
+	    		<tr>
+	    			<td style="text-align: right;width: 100px;">标题</td>
+	    			<td style="width: 190px;"><input class="easyui-textbox" id="title" name="title" style="width: 140px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+	    			<td style="text-align: right;width: 80px;">名称</td>
+	    			<td><input class="easyui-textbox" id="name" name="name" style="width: 140px;" data-options="required: true, missingMessage: '请输入名称'"></td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">类型</td>
+	    			<td><input class="easyui-textbox" id="type" name="type" style="width: 140px;" editable="false" data-options="required: true, missingMessage: '请输入类型'"></td>
+	    			<td style="text-align: right;">是否单行</td>
+	    			<td>
+	    				<input type="radio" value="1" name="isSingleLine">是
+    					<input type="radio" value="0" name="isSingleLine" checked="checked">否
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">重复验证</td>
+	    			<td>
+	    				<input type="hidden" id="repeatUrl" name="repeatUrl" style="width: 140px;" ></input>
+	    				<input type="hidden" id="addLogicAccessCodeId" name="repeatUrlLogicCode"></input>
+	    				<input class="easyui-textbox" id="addLogicAccessDescId" name="repeatUrlLogicDesc" style="width: 140px;" data-options=""></input>
+	   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addLogic()"></a>
+	    			</td>
+    				<td style="text-align: right;">是否空验证</td>
+    				<td>
+    					<input type="radio" value="1" name="validEmpty" checked="checked">是
+    					<input type="radio" value="0" name="validEmpty">否
+    				</td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">数据来源</td>
+	    			<td><input class="easyui-combobox" id="dataSrc" name="dataSrc" style="width: 140px;" editable="false"></td>
+	    			<td class="editTypeCodeTd" style="text-align: right;">代码类型</td>
+	    			<td class="editTypeCodeTd" style="width: 190px;">
+	    				<input type="hidden" id="typeCode" name="typeCode">
+	    				<input class="easyui-textbox" id="typeDesc" name="typeDesc" editable="false" style="width: 140px;">
+	    				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEditTypeCode();"></a>
+	    			</td>
+	    		</tr>
+	    		<tr id="editEnumerationTr">
+	    			<td colspan="4">
+					  <table style="width:100%;border-spacing: 10px;">
+					   <tr>
+					    <td style="text-align: right;width:69px;" >枚举信息</td>
+						<td colspan="3" style="padding-left: 0px">
+							<table style="padding-left: 0px">
+								<tr>
+									<td style="padding-left: 0px">
+										<select name="columnEditEnum" id="columnEditEnum" class="" multiple="multiple"  style="width:300px;height:85px" size="13"></select>
+									</td>
+									<td>
+										<table>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEditEnum()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyEditEnum()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeEditEnum()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					   </tr>
+					  </table>
+					</td>
+	    		</tr>
+	    	</table>
+	    </form>
+  	</div>
+  	<div id="amhtml_btns" style="text-align: right;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveAmhtml()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeAmhtml()">关闭</a>
+  	</div>
+  </body>
+</html>

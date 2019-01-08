@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dataaccess.dao.AccessTypeDao">
+	<!-- 返回数据访问类型信息的(PO)数据对象 -->
+	<sql id="resultObj">
+		select       
+			a.type_code	"typeCode",
+			a.type_name	"typeName",
+			a.op_type		"opType",
+			b.dict_desc		"opTypeDesc",
+			a.type_desc	"typeDesc",
+			a.access_url	"accessUrl",
+			a.java_method	"javaMethod",
+			a.is_used		"isUsed",
+			a.sort_no		"sortNo"
+	</sql>
+	
+	<!-- 根据查询条件查询数据访问类型数据集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dataaccess.po.AccessTypePo">
+		<include refid="resultObj"/>
+			from code_data_access_type a 
+			left join info_ge_dict b on a.op_type = b.dict_code 
+		<where>
+			<if test="params.bo.keyWord!= null and params.bo.keyWord != ''">
+				a.type_name like '%${params.bo.keyWord}%' or
+				a.type_desc like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		<!-- 排序方式 -->
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>		
+		<!-- 默认排序方式 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.sort_no
+		</if>
+	</select>
+	
+	<!-- 根据查询条件查询数据访问类型数据集 -->
+	<select id="findAll"  resultType="com.bn.gmodule.dataaccess.po.AccessTypePo">
+		<include refid="resultObj"/>
+			from code_data_access_type a 
+			left join info_ge_dict b on a.op_type = b.dict_code 
+	</select>
+	
+	<!-- 根据查询条件查询数据访问类型数据集 -->
+	<select id="findByTypeCode" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.AccessTypePo">
+		<include refid="resultObj"/>
+			from code_data_access_type a 
+			left join info_ge_dict b on a.op_type = b.dict_code 
+		<where>
+			a.type_code=#{typeCode}
+		</where>
+	</select>
+	
+	<!-- 用于验证编码 -->
+	<select id="valideCode" parameterType="com.bn.gmodule.dataaccess.bo.AccessTypeBo" resultType="com.bn.gmodule.dataaccess.po.AccessTypePo">
+		<include refid="resultObj"/>
+		 from code_data_access_type a 
+		 left join info_ge_dict b on a.op_type = b.dict_code
+		 where a.type_code = #{typeCode}
+	</select>
+	
+	<!-- 新增数据访问类型信息 -->
+	<insert id="add" parameterType="com.bn.gmodule.dataaccess.bo.AccessTypeBo" >
+		insert into code_data_access_type 
+		(
+			type_code	,
+			type_name	,
+			op_type		,
+			type_desc	,
+			access_url	,
+			java_method	,
+			is_used		,
+			sort_no	
+		)
+		values
+		(
+			#{typeCode},
+			#{typeName},
+			#{opType},
+			#{typeDesc},
+			#{accessUrl,jdbcType=VARCHAR},
+			#{javaMethod},
+			1,
+			#{sortNo}
+		)
+	</insert>
+	
+	
+	<!-- 修改数据访问类型信息 -->
+	<update id="modify" parameterType="com.bn.gmodule.dataaccess.bo.AccessTypeBo" >
+		update code_data_access_type
+		set
+			type_name =	#{typeName},
+			op_type	 =	#{opType},
+			type_desc  = #{typeDesc},
+			access_url  =	#{accessUrl},
+			java_method  =	#{javaMethod},
+			is_used	 =	#{isUsed},
+			sort_no	 =	#{sortNo}
+		where type_code = #{typeCode}
+	</update>
+	
+	<!-- 删除数据访问类型信息 -->
+	<delete id="remove"  parameterType="com.bn.gmodule.dataaccess.bo.AccessTypeBo" >
+		delete from code_data_access_type
+		where type_code = #{typeCode}
+	</delete>
+	
+</mapper>

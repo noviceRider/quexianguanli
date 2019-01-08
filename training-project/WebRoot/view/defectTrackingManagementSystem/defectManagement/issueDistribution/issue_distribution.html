@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据访问类型</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery-migrate-1.1.0.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="js/distribution.js" charset="UTF-8"></script>
+  </head>
+  
+  <body>
+   <!-- 标题以及各种功能按钮 -->
+   <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../../images/common/title.gif' style="vertical-align:middle;">缺陷分配
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-search'" onclick="distributionQueryIssueBaseInfoPo();">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+    
+	<!-- 查询条件 -->
+	<form id="distributionSearch">
+		<table class="btbForm">
+			<tr>
+				<td style="text-align:left;">
+	    			项目&nbsp;<input id="distributionProjectId" name="projectId" class="easyui-combobox" data-options="editable:false"/>&nbsp;&nbsp;&nbsp;&nbsp;
+	    			登记时间&nbsp;<input id="distributionPlanStartTime" name="startTime" class="easyui-datebox"  data-options="prompt:'请选择日期',editable:false" />
+	    			~&nbsp;<input id="distributionPlanEndTime" name="endTime" class="easyui-datebox"  data-options="prompt:'请选择日期',editable:false" />
+				</td>
+	    		<td style="text-align:left;">
+	    			
+				</td>
+    		</tr>
+		</table>
+	</form>
+	
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+  	
+  	<!-- 类型数据 -->
+  	<div style="width:100%;" id="distributionTypeIssueBaseInfoPo">
+			<table id="distributionlistTable" class="easyui-datagrid" data-options="striped:true,fitColumns:true,autoRowHeight:true,pagination:true,loadMsg:'正在加载数据中，请等待！',sortName:'issueId'">   
+   				 <thead>   
+        			<tr>   
+           		 		<th data-options="field:'issueId',width:100,align:'center',halign:'center',sortable:'true'">编号</th>   
+            			<th data-options="field:'projectName',width:120,align:'center',halign:'center'">项目名称</th>   
+            			<th data-options="field:'issueName',width:120,align:'center',halign:'center'">缺陷名称</th>   
+            			<!-- <th data-options="field:'parentIssueId',width:120,align:'center',halign:'center'">上级缺陷任务</th> -->  
+            			<th data-options="field:'issuePriority',width:120,align:'center',halign:'center'">优先级</th>
+            			<th data-options="field:'issueSeverity',width:120,align:'center',halign:'center'">严重程度</th>
+            			<th data-options="field:'typeDesc',width:120,align:'center',halign:'center'">缺陷分类</th>
+            			<th data-options="field:'issueStateName',width:120,align:'center',halign:'center'">状态</th>
+            			<th data-options="field:'assigneeName',width:120,align:'center',halign:'center'">指派</th>
+            			<th data-options="field:'planEndTime',width:200,align:'center',halign:'center'">计划完成时间</th>
+            			<th data-options="field:'cz',width:120,align:'center',halign:'center',formatter:distribution">操作</th> 
+        			</tr>   
+    			</thead>   
+			</table> 
+	</div>
+	
+		<!-- 查看分配界面 -->
+		<div id="distributionContainer" class="easyui-dialog" data-options="title:'缺陷分配',closed:true,buttons:'#sc_add',modal:true" style="width:400px;height:450px;">
+			<form id="distributionForm" method="post" class="easyui-form">
+				<br>
+				项目名称:&nbsp;<span id="showprojectName"></span>
+				<br>
+				<br>
+				上级缺陷:&nbsp;<span id="showparentIssueId"></span>
+				<br>
+				<br>
+				缺陷名称:&nbsp;<span id="showissueName"></span>
+				<br>
+				<br>
+				缺陷分类:&nbsp;<span id="showtypeDesc"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				状态:&nbsp;<span id="showissueState"></span>
+				<br>
+				<br>
+				严重程度:&nbsp;<span id="showissueSeverityName"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				优先级:&nbsp;<span id="showissuePriorityName"></span>
+				<br>
+				<br>
+				预计工时:&nbsp;<span id="showplanWorkHours"></span>小时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				完成率:&nbsp;<span id="showdoneRatio"></span>%
+				<br>
+				<br>
+				计划开始时间:&nbsp;<span id="showplanStartTime"></span>
+				<br>
+				计划完成时间:&nbsp;<span id="showplanEndTime"></span>
+				<br>
+				<br>
+				缺陷描述:&nbsp;<span id="showissueDesc"></span>
+				<br>
+				<br>
+				<br>
+				缺陷要求:&nbsp;<span id="showdoneCondition"></span>
+				<br>
+				<br>
+				<br>
+				<input id="showissueId" name="issueId" hidden>
+				指派给&nbsp;&nbsp;<input id="showassigneeName" name="assignee" class="easyui-combobox" data-options="editable:false,prompt:'请选择',required:true">
+			</form>
+		</div>
+	
+	<div id="sc_add">
+		<a id="searehdistributionBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="color:blue" onclick="DistributionOfPreservation();">保存</a>
+		<a id="closeDistributionFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" style="color:blue" onclick="distributionSave();">关闭</a>
+	</div>
+  </body>
+</html>

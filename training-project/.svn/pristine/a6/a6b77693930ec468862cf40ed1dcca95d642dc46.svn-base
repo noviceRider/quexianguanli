@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>padconfig_businesslogic.html</title>
+	
+   	<meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+  </head>
+  
+  <body>
+    <div id="padconfig_businesslogic_div" style="width: 680px;height: 350px" data-options="buttons:'#padconfig_businesslogic_div_btns'">
+   		<!-- 查询输入框及按钮 -->
+   	<form id="businesslogicForm">
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="logicKeyWord" class="easyui-textbox" data-options="prompt:'请输入名称或描述'" style="width:200px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryBusinesslogic()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!--我的数据访问 -->
+  		<div style="width:100%;">
+		<table style="width:100%;" id="padconfig_businesslogic_dg" class="easyui-datagrid"  data-options="pagination:true,striped:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'logicCode',alias:'a.logic_code',align:'left',halign:'center',sortable:'true'" style="width: 15%">业务逻辑编号</th>
+					<th data-options="field:'logicName',alias:'a.logic_name',align:'left',halign:'center',sortable:'true'" style="width: 20%">业务逻辑名称</th>
+					<th data-options="field:'logicDesc',alias:'a.logic_desc',align:'left',halign:'center',sortable:'true'" style="width: 36%">业务逻辑描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'left',halign:'center',sortable:'true'" style="width: 16%">业务逻辑分类</th>
+					<th data-options="field:'isUsed',align:'center',halign:'center',formatter:setIsUsed" style="width:8%">是否有效</th>
+					
+					<th data-options="field:'sortNo',halign:'center',align:'left',alias:'a.sort_no',sortable:'true',hidden:true" style="" >顺序号</th>
+					<th data-options="field:'detail',halign:'center',align:'center',formatter:detailFormmater,hidden:true" style="" >操作</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+	
+    <div id="padconfig_businesslogic_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectLogic()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelSelectLogic()">取消</a>
+	</div>
+  </body>
+</html>

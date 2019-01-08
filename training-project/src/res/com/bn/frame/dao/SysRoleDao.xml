@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.frame.dao.SysRoleDao">
+	<!-- 返回角色信息以及角色成员的(PO)数据对象 -->
+	<sql id="resultRoleObj">
+		select
+			sr.role_id "roleId",
+			sr.role_name "roleName",
+			sr.role_desc "roleDesc",
+			rm.role_member "roleMember",
+			sr.is_used "isUsed",
+			sr.sort_no "sortNo"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findRolePage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.frame.po.SysRolePo">
+		<include refid="resultRoleObj"/>
+			from sys_role sr
+			left join (select role_id,listagg(user_name,', ') within group (order by user_name) as role_member from (
+						select srm.role_id, srm.user_id, su.user_name from sys_role_member srm 
+						left join sys_user su on srm.user_id = su.user_id)
+						group by role_id ) rm 
+			on sr.role_id = rm.role_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				(sr.role_id like '%${params.bo.keyWord}%' or 
+				sr.role_name like '%${params.bo.keyWord}%' or
+				sr.role_desc like '%${params.bo.keyWord}%' or
+				rm.role_member like '%${params.bo.keyWord}%')
+			</if>
+			<if test="params.bo.isUsed != null and params.bo.isUsed != ''">
+				and sr.is_used = #{params.bo.isUsed}
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by sr.sort_no 
+		</if>		
+	</select>
+	
+	<!-- 根据用户ID查询所属角色 -->
+	<select id="findRoleMember"  parameterType="com.bn.frame.bo.SysRoleMemberBo" resultType="com.bn.frame.po.SysRoleMemberPo">
+		select 
+			rm.role_id "roleId",
+			rm.user_id "userId",
+			r.role_name "roleName"
+		from sys_role_member rm
+		left join sys_role r on r.role_id = rm.role_id
+		where user_id = #{userId}
+	</select>
+	
+	<!-- 根据角色编号查询所有角色成员 -->
+	<select id="findMemberById"  parameterType="com.bn.frame.bo.SysRoleBo" resultType="com.bn.frame.po.SysRoleMemberPo">
+		select 
+			rm.role_id "roleId",
+			rm.user_id "userId",
+			u.user_name "userName"
+		from sys_role_member rm , sys_user u
+		where rm.user_id = u.user_id  and  role_id = #{roleId}
+	</select>
+	
+	<!-- 根据角色编号查询不属于成员的其他用户信息 -->
+	<select id="findNonMember" parameterType="com.bn.frame.bo.SysRoleBo" resultType="com.bn.frame.po.SysUserPo">
+		select 
+			user_id "userId",
+			user_name "userName"
+		from sys_user 
+		where user_id not in (select user_id from sys_role_member where role_id = #{roleId})
+	</select>
+	
+	<!-- 根据已选成员用户编号查询其他用户信息 -->
+	<select id="findOtherUser"  parameterType="com.bn.frame.bo.SysRoleBo" resultType="com.bn.frame.po.SysUserPo">
+		select 
+			user_id "userId",
+			user_name "userName"
+		from sys_user 
+		<where>
+			user_id not in 
+			<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            	#{item}
+        	</foreach>
+			<if test="keyWord != null and keyWord != ''">
+				and (user_id like '%${keyWord}%' or 
+				user_name like '%${keyWord}%')
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 判断是否属于对应角色 -->
+	<select id="isTargetRole" parameterType="com.bn.frame.bo.SysRoleMemberBo" resultType="com.bn.frame.po.SysRoleMemberPo">
+		select 
+			count(role_id) "countNum"
+		from sys_role_member
+		where user_id = #{userId} and role_id = #{roleId}
+	</select>
+	
+	<!-- 查询所有不是预定义所属角色 -->
+	<select id="finRoleAll" resultType="com.bn.frame.po.SysRolePo">
+		select  
+			ROLE_ID as "roleId",
+			ROLE_NAME as "roleName"
+		from sys_role 
+		where is_used = '1'
+		order by SORT_NO
+	</select>
+	
+	<!-- 新增角色信息 -->
+	<insert id="addSysRole" parameterType="com.bn.frame.bo.SysRoleBo">
+		insert into sys_role (
+			role_id,
+			role_name,
+			role_desc,
+			is_pre_define,
+			is_used,
+			sort_no
+		) values (
+			#{roleId},
+			#{roleName},
+			#{roleDesc},
+			#{isPreDefine},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 新增角色成员信息 -->
+	<insert id="addRoleMember" parameterType="com.bn.frame.bo.SysRoleBo">
+		insert into sys_role_member (
+			role_id,
+			user_id
+		) values (
+			#{roleId},
+			#{userId}
+		)
+	</insert>
+	
+	<!-- 根据角色编号修改信息 -->
+	<update id="modifySysRole" parameterType="com.bn.frame.bo.SysRoleBo">
+		update sys_role
+		set
+			role_name = #{roleName},
+			role_desc = #{roleDesc},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where role_id = #{roleId}
+	</update>
+	
+	<!-- 根据角色编号删除信息 -->
+	<delete id="removeSysRole" parameterType="String">
+		delete from sys_role where role_id = #{roleId}
+	</delete>
+	
+	<!-- 根据角色编号删除角色成员信息 -->
+	<delete id="removeRoleMember" parameterType="String">
+		delete from sys_role_member where role_id = #{roleId}
+	</delete>
+	
+	<!-- 根据用户ID查询的所属角色记录 -->
+	<select id="findUsedRoleMember"  parameterType="com.bn.frame.bo.SysRoleMemberBo" resultType="com.bn.frame.po.SysRoleMemberPo">
+		select 
+			role_id "roleId",
+			user_id "userId"
+		from sys_role_member
+		where user_id = #{userId}
+	</select>
+	
+	<!-- 判断当前输入角色编号是否存在 -->
+	<select id="countRole" parameterType="com.bn.frame.bo.SysRoleBo" resultType="Integer">
+		select
+			count(*)
+		from sys_role 
+		where role_id = #{roleId}
+	</select>
+	
+	<!-- 根据角色编号查询角色信息 -->
+	<select id="findRoleById" parameterType="String" resultType="com.bn.frame.po.SysRolePo">
+		select
+			role_id "roleId",
+			role_name "roleName",
+			role_desc "roleDesc"
+		from sys_role
+		where role_id = #{roleId}
+	</select>
+</mapper>

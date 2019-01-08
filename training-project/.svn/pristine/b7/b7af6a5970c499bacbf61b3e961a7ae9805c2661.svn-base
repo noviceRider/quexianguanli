@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>资源授权</title>
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="css/vcl4role-auth.css"
+	media='screen'>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="js/vclresource-auth.js"></script>
+</head>
+
+<body style='margin: 0 5px;'>
+	<table class='btbHead'>
+		<tr>
+			<td style='width: 25%;'><img
+				src='../../themes/default/images/common/title.gif' align='absmiddle' />
+				资源授权</td>
+			<td style='text-align: right;'><a
+				href="javascript:saveResAuths()" class="easyui-linkbutton"
+				iconCls="icon-save">&nbsp;保&nbsp;&nbsp;存&nbsp;</a> <a
+				href="javascript:reback()" class="easyui-linkbutton"
+				iconCls="icon-back">&nbsp;返&nbsp;&nbsp;回&nbsp;</a></td>
+		</tr>
+	</table>
+	<!-- 查询表单 -->
+	<form id="searchForm">
+		<table class="btbForm">
+			<tr>
+				<td style="width: 40%;"><span>资源类型&nbsp;</span> <input
+					 type="text" name='typeDesc' 
+					style="background-color: #ccc;width: 120px;" readonly="readonly" />
+					<input type="hidden" name="typeCode">
+					 <a
+					href="javascript:openrtsw()" class="easyui-linkbutton"
+					data-options="iconCls:'icon-add',plain:false">请选择资源类型</a></td>
+				<td style='text-align: right;'>您正在对【<span id="roleName"
+					style="color:red;"></span>】进行授权操作
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div style="margin:5px 0;"></div>
+	<table id="ResTreeGrid" class="easyui-treegrid" style="width:100%;">
+	</table>
+	<!-- 资源类型选择框 -->
+	<div id="rtsw" class="easyui-dialog"
+		data-options="closed:true,width:800,height:400,iconCls:'icon-ok',modal:true,title:'资源类型',buttons:'#btn_dlg'"
+		style="padding: 10px;background-color: #F8F8FF;">
+		<span style="color:	#EEC591;font-size: 18px;">双击选择指定资源类型</span>
+		<div style="float: right;">
+			<input id="keyWord" type="text"  class="easyui-searchbox"
+				name="keyWord" data-options="searcher:doSearch,prompt:'请输入分类编号或名称'" />
+		</div>
+		<div style="margin-top: 5px;"></div>
+		<table id="rd" class="easyui-datagrid"
+			data-options="pagination:true,singleSelect:true,pageList:[10,20,30,40,50],pageSize: 10,buttons:'btn_window',method:'post',onLoadSuccess:onLoadSuccess,onDblClickRow:selectResType"
+			style="width: 100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'typeCode',align:'center',halign:'center'"
+						style="width: 18%;">类型编号</th>
+					<th
+						data-options="field:'typeDesc',align:'center',halign:'center',title:'类型名称'"
+						style="width: 28%;"></th>
+					<th
+						data-options="field:'isPreDef',align:'center',halign:'center',formatter:isPreDefFormatter"
+						style="width: 18%;">系统保留否</th>
+					<th
+						data-options="field:'isUsed',align:'center',halign:'center',formatter:isUsedFormatter"
+						style="width: 18%;">有效否</th>
+					<th data-options="field:'sortNo',align:'center',halign:'center'"
+						style="width: 18%;">顺序号</th>
+				</tr>
+			</thead>
+		</table>
+		<!-- 弹出框底部的按钮 -->
+		<div id="btn_dlg" style="display:none;text-align: center;">
+			<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+			<a href="javascript:doCancel()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+		</div>
+	</div>
+</body>
+</html>

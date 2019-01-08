@@ -1,0 +1,112 @@
+package com.huibo.issue.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bn.frame.util.CommonFunction;
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssueTypeBo;
+import com.huibo.issue.dao.DefectClassificationDao;
+import com.huibo.issue.po.IssueTypePo;
+
+/**
+* <p>Title: 缺陷跟踪管理系统 - BusinesslogicService</p>
+*
+* <p>Description:服务层管理的service</p>
+*
+* <p>Copyright: Copyright hbkj(c) 2018</p>
+*
+* <p>Company: 重庆汇博科技股份有限公司</p>
+*
+* @author 揭振宇
+* @version 1.0
+*/
+@Service
+public class DefectClassificationService {
+	/**
+	* 对应持久层对象
+	*/	
+	@Autowired
+	private DefectClassificationDao defectClassificationDao;
+	
+	//得到所有的数据
+	public List<IssueTypePo> getIssueType(Page page) {
+		List<IssueTypePo> list = defectClassificationDao.getIssueType(page);
+		return list;
+				
+	}
+	
+	//删除一条或多条数据通过id数组
+	public Integer delIssueType(String[] delIds) {
+		// TODO Auto-generated method stub
+		return defectClassificationDao.delIssueType(delIds);
+	}
+	
+	//增加一条记录同时获取用户和当前时间构造对象
+	public Integer addIssueType(IssueTypePo issueTypePo) {
+		String user = CommonFunction.getUserFromSession().getUserId();
+		String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		issueTypePo.setCreateBy(user);
+		issueTypePo.setCreateTime(nowTime);
+		issueTypePo.setModifyBy(user);
+		issueTypePo.setModifyTime(nowTime);
+		issueTypePo.setMoudleState("01");
+		System.out.println(issueTypePo);
+		return defectClassificationDao.addIssueType(issueTypePo);
+	}
+	
+	//通过字符串查找对应的记录
+	public Object searchIssueForModify(String typeCode) {
+		// TODO Auto-generated method stub
+		return defectClassificationDao.searchIssueForModify(typeCode);
+	}
+	
+	//通过po对象修改
+	public Integer modifyIssueClassification(IssueTypePo issueTypePo) {
+		// TODO Auto-generated method stub
+		String user = CommonFunction.getUserFromSession().getUserId();
+		String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		issueTypePo.setModifyByName(user);
+		issueTypePo.setModifyTime(nowTime);
+		return defectClassificationDao.modifyIssueClassification(issueTypePo);
+	}
+	
+	//通过po修改状态信息
+	public Integer modifyDictDesc(IssueTypePo issueTypePo) {
+		// TODO Auto-generated method stub
+		String user = CommonFunction.getUserFromSession().getUserId();
+		String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		issueTypePo.setModifyByName(user);
+		issueTypePo.setModifyTime(nowTime);
+		if(issueTypePo.getDictCode().equals("01")) {
+			issueTypePo.setDictCode("00");
+		}else {
+			issueTypePo.setDictCode("01");
+		}
+		
+		return defectClassificationDao.modifyDictDesc(issueTypePo);
+	}
+	
+	//通过po对象得到数据库信息并返回前端
+	public IssueTypePo showDetaiInfo(IssueTypePo issueTypePo) {
+		// TODO Auto-generated method stub
+		System.out.println(issueTypePo.getTypeCode());
+		return defectClassificationDao.searchIssueForModify(issueTypePo.getTypeCode());
+	}
+
+	public Integer validatePriorityCode(IssueTypePo po) {
+		// TODO Auto-generated method stub
+		return defectClassificationDao.validatePriorityCode(po);
+	}
+
+	
+
+	
+}

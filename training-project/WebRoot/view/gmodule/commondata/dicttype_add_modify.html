@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dicttype_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+  	<div id="dicttype_am" style="width: 300px;" data-options="buttons:'#dlg_am_btns'">
+  		<form id="fm_dicttype_am" class="easyui-form" method="POST">
+  			<table style="border-collapse: separate;border-spacing: 8px;">
+  				<tr>
+  					<td style="text-align: right;width: 100px;">类型编码</td>
+  					<td style="width: 200px;"><input id="typeCodeid" name="typeCode" class="easyui-textbox" style="width: 170px;" data-options="onChange:fillSortNo"></td>
+  				</tr>
+  				<tr>
+  					<td style="text-align: right;">类型名称</td>
+  					<td><input id="typeDescid" name="typeDesc" class="easyui-textbox" style="width: 170px;"></td>
+  				</tr>
+  				<tr>
+  					<td style="text-align: right;">顺序</td>
+  					<td><input id="sorNoid" name="sortNo" class="easyui-textbox" style="width: 170px;"></td>
+  				</tr>
+  				<tr id="dicttype_isUsedRow">
+  					<td style="text-align: right;">是否有效</td>
+  					<td>
+  						<input id="noUsed" type="radio" name="isUsed" value="1" checked="checked">
+  						<label for="noUsed">有效</label>
+  						<input id="isUsed" type="radio" name="isUsed" value="0">
+  						<label for="isUsed">无效</label>
+  					</td>
+  				</tr>
+  			</table>
+  		</form>
+  	</div>
+  	<div id="dlg_am_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveDictType()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelDictType()">关闭</a>
+  	</div>
+  </body>
+</html>

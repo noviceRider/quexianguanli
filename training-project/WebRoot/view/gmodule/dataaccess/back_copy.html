@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>businesslogic_back_copy.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+  </head>
+  
+  <body>
+  
+    <div id="logic_back_div" style="width: 680px;height: 350px" data-options="buttons:'#logic_back_div_btns'">
+  		<!--我的数据访问 -->
+		<table id="logic_back_dg" fit="true" style="width:100%;" class="easyui-datagrid"  data-options="">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true'"></th>
+					<th data-options="field:'backName',align:'left',halign:'center'" style="width:25%;">返回值名</th>
+					<th data-options="field:'backDesc',align:'left',halign:'center'" style="width:27%">返回值描述</th>
+					<th data-options="field:'backType',align:'center',halign:'center',formatter:backTypeFormartter" style="width:15%">类型</th>
+					<th data-options="field:'backTestValue',align:'left',halign:'center'" style="width:20%" >参考值</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+    <div id="logic_back_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectBack()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelSelectBack()">取消</a>
+	</div>
+	
+  </body>
+</html>

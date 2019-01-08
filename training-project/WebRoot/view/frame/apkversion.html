@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>APP版本管理</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../../Font-Awesome-master/css/font-awesome.min.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.qrcode.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../js/common/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="js/apkversion.js"></script>
+		
+		<style type="text/css">
+			.datagrid-btable .datagrid-cell{padding:4px 4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;} 
+		</style>
+	</head>
+
+	<body>
+		<table class="btbHead">
+			<tr>
+				<td style='width:25%'>
+					<img src="../../images/common/title.gif" align="absmiddle" />APP版本管理
+				</td>
+				<td style="text-align:right;">
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSearch()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAdd()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a href="#" id="modifyBtn" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="doModify()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" id="publishBtn" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="doPublish()">&nbsp;发&nbsp;&nbsp;布&nbsp;</a>
+					<a href="#" id="deleteBtn" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doDelete()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a href="#" class="easyui-linkbutton"  style='width:80px;height:26px;' onclick="istallPackageDownload()"><i class="fa fa-download fa-lg" aria-hidden="true" style="color:green"></i>&nbsp;扫码安装</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- 条件查询 -->
+		<form id="form_search">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input class="easyui-textbox" name="keyWord" data-options="prompt:'请输入版本号、更新内容等'" onblur="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')" onafterpaste="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;更新时间&nbsp;<input type="text" id="startTime" name="startTime" class="Wdate" style="width:150px"	onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endTime\')}'})" readonly="true"/>
+						&nbsp;至&nbsp;<input type="text" id="endTime" name="endTime" class="Wdate" style="width:150px" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startTime\')}'})" readonly="true"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="margin:5px"></div>
+		
+		<!-- 数据网格 -->
+		<table id="dg" style="width:100%" data-options="pagination:true,singleSelect:true,onDblClickRow:onDblClickRow,onSelect:onSelect">
+			<thead>
+				<tr>
+					<th data-options="field:'versionId',alias:'version_id',sortable:true,halign:'center',align:'center'" style="width:7%">版本号</th>
+					<th data-options="field:'versionDesc',alias:'version_desc',sortable:true,halign:'center',align:'center'" style="width:10%">版本描述</th>
+					<th data-options="field:'updateTime',alias:'update_time',sortable:true,halign:'center',align:'center'" style="width:13%">更新时间</th>
+					<th data-options="field:'updateContent',alias:'update_content',sortable:true,halign:'center',align:'left'" formatter=updateContentFormatter style="width:30%">更新内容</th>
+					<th data-options="field:'installFile',alias:'install_file',sortable:true,halign:'center',align:'left'" style="width:20%">安装文件</th>
+					<th data-options="field:'versionState',alias:'version_stat',sortable:true,halign:'center',align:'center',formatter:stateFormatter" style="width:10%">状态</th>
+					<th data-options="field:'operator',alias:'operator',sortable:true,halign:'center',align:'left'" style="width:10%">操作人</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<!-- 新增对话框 -->
+		<div id="dlg_add" style="display:none;overflow:hidden;width:500px;height:400px;padding-top:5px;">
+			<form id="form_add" enctype="multipart/form-data" method="post">
+				<table cellpadding="3px">
+					<tr>
+						<td style="width:20%;text-align:right;">版本号：</td>
+						<td style="width:70%;">
+							<input type="text" name="versionId" style="width:100px;" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:20%;text-align:right;">版本描述：</td>
+						<td style="width:70%;">
+							<input type="text" name="versionDesc" class="easyui-validatebox" required="required" missingMessage="版本号不能为空" style="width:100px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;vertical-align:top;">更新内容：</td>
+						<td>
+							<textarea type="text" name="updateContent" class="easyui-validatebox" required="required" missingMessage="更新内容不能为空" style="width:350px;height:206px;resize:none;" ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">安装文件：</td>
+						<td>
+							<input type="file" name="picLogo" accept=".apk" class="easyui-validatebox" required="required" missingMessage="安装文件不能为空" style="width:270px;"/>
+							<!-- <input name="picLogo" class="easyui-filebox" accept=".apk" data-options="missingMessage:'安装文件不能为空',prompt:'请选择文件',buttonText:'文件选择',required:'true'" style="width:270px;"/> -->
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 修改对话框 -->
+		<div id="dlg_modify" style="display:none;overflow:hidden;width:500px;height:370px;padding-top:5px;">
+			<form id="form_modify">
+				<input type="hidden" name="versionId"/>
+				<table cellpadding="3px">
+					<tr>
+						<td style="width:20%;text-align:right;">版本描述：</td>
+						<td style="width:70%;">
+							<input type="text" name="versionDesc" class="easyui-validatebox" required="required" missingMessage="版本号不能为空" style="width:100px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;vertical-align:top;">更新内容：</td>
+						<td>
+							<textarea type="text" name="updateContent" class="easyui-validatebox" required="required" missingMessage="更新内容不能为空" style="width:350px;height:206px;resize:none;" ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">安装文件：</td>
+						<td>
+							<span id="installFile"></span>&nbsp;&nbsp;
+							<a class="easyui-linkbutton" plain="true" onclick="downloadApk(1)">
+								<i class="fa fa-download fa-lg" aria-hidden="true" style="color:green"></i>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 详情对话框 -->
+		<div id="dlg_detail" style="display:none;overflow:hidden;width:500px;padding-top:5px;">
+			<form id="form_detail">
+				<table cellpadding="3px">
+					<tr>
+						<td style="width:20%;text-align:right;">版本号：</td>
+						<td style="width:70%;">
+							<span id="versionId"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:20%;text-align:right;">版本描述：</td>
+						<td style="width:70%;">
+							<span id="versionDesc"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;vertical-align:top;">更新内容：</td>
+						<td>
+							<span id="updateContent"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">安装文件：</td>
+						<td>
+							<span id="installFile"></span>&nbsp;&nbsp;
+							<a class="easyui-linkbutton" plain="true" onclick="downloadApk(2)">
+								<i class="fa fa-download fa-lg" aria-hidden="true" style="color:green"></i>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 扫码对话框 -->
+		<div id="dlg_qrcode" style="display:none;width:536px;height:450px;padding:10px;">
+			<table cellpadding="3px" style="width: 98%;">
+				<tr>
+					<td style="text-align: center; vertical-align: middle;">
+						<div id="qrcode" style="width: 300px;margin-left: auto;margin-right: auto;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-size: 2em;text-align: center;">
+						<span>请扫描二维码进行下载安装！</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">
+						<span>点击下载安装文件</span>&nbsp;&nbsp;
+							<a href="" id="APKDownloadURL" class="easyui-linkbutton" plain="true" >
+								<i class="fa fa-download fa-lg" aria-hidden="true" style="color:green"></i>
+							</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- 新增对话框按钮 -->
+		<div id="btns_add" style="display:none;text-align: right;">
+			<a href="javascript:saveAdd(0)" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+			<a href="javascript:saveAdd(1)" class="easyui-linkbutton" iconCls="icon-reload">保存并发布</a>
+			<a href="javascript:doCancel('#dlg_add')" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		</div>
+		
+		<!-- 修改对话框按钮 -->
+		<div id="btns_modify" style="display:none;text-align: right;">
+			<a href="javascript:saveModify()" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+			<a href="javascript:doCancel('#dlg_modify')" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		</div>
+	</body>
+</html>

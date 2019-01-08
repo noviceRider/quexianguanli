@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>角色授权</title>
+	<meta name="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="css/vcl4role-auth.css" media='screen'>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="js/vcl4role-auth.js"></script>
+  </head>
+  
+  <body style='margin: 0 5px;'>
+  		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../themes/default/images/common/title.gif' align='absmiddle' /> 角色授权
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 40%;">
+					您正在对【<span id="roleName" style="color:red;"></span>】进行授权操作
+				</td>
+				<td style='text-align: right;'>
+					<a href="javascript:saveAuthFunc()" class="easyui-linkbutton" iconCls="icon-save" >&nbsp;保&nbsp;&nbsp;存&nbsp;</a>
+					<a href="javascript:reback()" class="easyui-linkbutton" iconCls="icon-back">&nbsp;返&nbsp;&nbsp;回&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<form name="inputForm" id="inputForm" >
+		
+		</form>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- <div id="delPanel">
+		<form id="delIssuePriorityPoForm" method="post">
+			编号<input type="text" id="delPriorityCode" name="priorityCode" readonly="true"><br><br>
+			描述<input type="text" id="delPriorityDesc" name="priorityDesc"><br><br>
+			<input type="hidden" id="delPriorityState" name="priorityState"></input>
+			<a id="delFormBtn" style="text-align: right;"></a>
+			<a id="delCloseFormBtn" style="text-align: right;"></a>
+		</form>
+		
+	
+	</div> -->
+	
+	
+	<div id="delPanel" style="overflow-x:hidden;padding-top:5px;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_add',width:'530',height: '260',modal:true" >
+		<form method="post" class="easyui-form" id="delIssuePriorityPoForm" >
+			<table style="border-collapse: separate;border-spacing: 10px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">编号&nbsp;</td>
+	  				<td ><input id="delPriorityCode" name="priorityCode" class="easyui-textbox"  style="width: 150px;" readonly="true"></td>
+	  				
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">描述&nbsp;</td>
+	  				<td ><input id="delPriorityDesc" name="priorityDesc" class="easyui-textbox" style="width: 410px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;"></td>
+	  				<td ><input type="hidden" id="delPriorityState" name="priorityState"></input></td>
+	  			</tr>
+	  		</table>
+	  	</form>
+	  </div>
+	  
+	  <div id="sc_add"">
+		<a id="delFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" >保存</a>
+		<a id="delCloseFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+	</div>
+</body>
+</html>

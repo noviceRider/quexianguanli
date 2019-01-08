@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+		<title>登录用户对话框选择</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="../../js/house/plugin/selecttag.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				/**
+				 *房源  参数及调用
+				 */
+				var params={
+						id:"selTagDialog",
+						onSelect:function(tagInfo){		
+								$("#tagName").textbox("setValue",tagInfo.tagNameArray);
+								$("#tagId").val(tagInfo.tagIdArray);
+						},
+						onCancel:function(){
+						},
+						forHouseResource:"1",  //房源
+						forClientResource:"", //客源
+						forAgent:""  //置业顾问
+				};
+				//jquery方式调用
+				$("#selTagDialog").selTagDialog(params);
+			
+			
+			}) ;
+	
+			
+			function openDialog(){
+				//打开对话框
+				$("#selTagDialog").selTagDialog("open");
+			}
+
+		</script>
+</head>
+<body>
+	<!-- 查询表单 -->
+	<form id="form_search" style="margin-top:15px">
+		 房&emsp;&emsp;源：&emsp;
+		 选择标签&nbsp;<input id="tagName" class="easyui-textbox" data-options="prompt:'请选择标签',multiline:true" readonly="readonly" style="width:200px;height:50px"/> 
+		 <input id="tagId" type="hidden"/> 
+		 <a href="javascript:openDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'"></a>
+	</form>
+	
+	<!--房源    对话框  -->
+	<div id="selTagDialog"></div>
+
+</body>
+</html>

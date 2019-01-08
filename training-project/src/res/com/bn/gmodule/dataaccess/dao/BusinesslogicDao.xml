@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dataaccess.dao.BusinesslogicDao">
+
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultBusinesslogicObj">
+		select
+			a.logic_code "logicCode",
+			a.logic_name "logicName",
+			a.logic_desc "logicDesc",
+			a.logic_type "logicType",
+			b.type_name "typeName",
+			a.is_pre_define "isPreDefin",
+			a.in_params "inParams",
+			a.ret_info "retInfo",
+			a.logic_script "logicScript",
+			a.url "url",
+			a.is_used "isUsed",
+			a.api_call_type "apiCallType"
+	</sql>
+	
+	<!-- 分页获取数据 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dataaccess.po.BusinesslogicPo">
+		<include refid="resultBusinesslogicObj"/>
+		from info_business_logic a
+		left join code_ge_multilevel b on a.logic_type = b.type_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				(
+				a.logic_code like '%${params.bo.keyWord}%'
+				or
+				a.logic_name like '%${params.bo.keyWord}%'
+				or
+				a.logic_desc like '%${params.bo.keyWord}%'
+				)and
+			</if>
+			<if test="params.bo.logicType != null and params.bo.logicType != ''">
+				(
+				a.logic_type = '${params.bo.logicType}'
+				)and
+			</if>
+			<if test="params.bo.apiCallType != null and params.bo.apiCallType != ''">
+				(
+				a.api_call_type = '${params.bo.apiCallType}'
+				)and
+			</if>
+		b.info_type = '1003'
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.logic_code
+		</if>
+	</select>
+
+	<!-- 根据主键获取数据 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.BusinesslogicPo">
+		<include refid="resultBusinesslogicObj"/>
+		from info_business_logic a
+		left join code_ge_multilevel b on a.logic_type = b.type_id
+		where a.logic_code = #{logicCode}
+		and b.info_type = '1003'
+	</select>
+
+	<!-- 根据业务逻辑分类获取数据 -->
+	<select id="findByLogicType" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.BusinesslogicPo">
+		<include refid="resultBusinesslogicObj"/>
+		from info_business_logic a
+		left join code_ge_multilevel b on a.logic_type = b.type_id
+		where a.logic_type = #{logicType}
+		and b.info_type = '1003'
+	</select>
+	
+	<!-- 根据业务逻辑分类获取所有子节点数据 -->
+	<select id="findByRoot" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo" resultType="com.bn.gmodule.dataaccess.po.BusinesslogicPo">
+		<include refid="resultBusinesslogicObj"/>
+		from info_business_logic a
+		left join code_ge_multilevel b on a.logic_type = b.type_id
+		where b.type_route like '${logicType}%'
+		and b.info_type = '1003'
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="addBusinesslogic" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo">
+		insert into info_business_logic
+		(
+			logic_code,
+			logic_name,
+			logic_desc,
+			logic_type,
+			is_pre_define,
+			in_params,
+			ret_info,
+			logic_script,
+			url,
+			is_used,
+			api_call_type
+		)
+		values
+		(
+			#{logicCode},
+			#{logicName},
+			#{logicDesc},
+			#{logicType},
+			#{isPreDefin},
+			#{inParams},
+			#{retInfo},
+			#{logicScript},
+			#{url},
+			#{isUsed},
+			#{apiCallType}
+		)
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="modifyBusinesslogic" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo">
+		update info_business_logic
+		set
+			logic_name = #{logicName},
+			logic_desc = #{logicDesc},
+			logic_type = #{logicType},
+			is_pre_define = #{isPreDefin},
+			in_params = #{inParams},
+			ret_info = #{retInfo},
+			logic_script = #{logicScript},
+			url = #{url},
+			is_used = #{isUsed},
+			api_call_type = #{apiCallType}
+		where logic_code = #{logicCode}
+	</update>
+	
+	<!-- 根据tableName删除数据 -->
+	<delete id="removeBusinesslogic" parameterType="String">
+		delete from info_business_logic 
+		where logic_code = #{logicCode}
+	</delete>
+	
+	<!-- 根据根节点id删除数据 -->
+	<delete id="deleteByRoot" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo">
+		delete from info_business_logic
+			where logic_code in (
+				select a.logic_code from(
+				select logic_code
+				from info_business_logic a, code_ge_multilevel b
+				where a.logic_type = b.type_id and
+				b.info_type = '1003' and
+				b.type_route like '${logicType}%'
+			)a
+			)
+	</delete>
+	
+	<!-- 验证编号是否存在 -->
+	<select id="validateLogicCode" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo" resultType="Integer">
+		select count(*)
+		from info_business_logic
+		where logic_code = #{logicCode}
+	</select>
+	
+	<!-- 验证名称是否存在 -->
+	<select id="validateLogicName" parameterType="com.bn.gmodule.dataaccess.bo.BusinesslogicBo" resultType="Integer">
+		select count(*)
+		from info_business_logic
+		where logic_name = #{logicName}
+	</select>
+	
+</mapper>

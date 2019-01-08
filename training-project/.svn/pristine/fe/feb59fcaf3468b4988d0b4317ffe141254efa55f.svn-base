@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>数据访问分类</title>
+<link rel="stylesheet" type="text/css"
+	href="../../../css/common/main.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/icon.css">
+<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/common.js"></script>
+<script type="text/javascript" src="js/multilevel.js"></script>
+</head>
+
+<body class="easyui-layout" style="margin-left:5px;margin-right:5px;">
+	<div data-options="region:'north',border:false" style="height:80px;">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'><img
+					src='../../../images/common/title.gif'
+					align='absmiddle' />多级分类</td>
+				<td style="text-align: right;"><a href="#" id="addFirstLvlBtn"
+					class="easyui-linkbutton" onclick="doAddNode(1);"
+					iconCls="icon-add">加第一级</a> <a href="#" id="addBtn"
+					class="easyui-linkbutton" onclick="doAddNode(0);"
+					iconCls="icon-add">增加下级</a> <a href="#" id="modifyBtn"
+					class="easyui-linkbutton" onclick="doModify();" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" id="refreshBtn" class="easyui-linkbutton"
+					onclick="doRefresh();" iconCls="icon-reload">&nbsp;刷&nbsp;&nbsp;新&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<!-- 选择项目、无效分类选择和刷新 -->
+		<form id="searchresForm">
+			<table class="btbForm">
+				<tr><td>信息类型&nbsp;&nbsp; <input id="searchresForm_dictCode"
+					name="modifyTypeForm_projectId" type="hidden" /> <input
+					id="searchresForm_dictDesc" name="modifyTypeForm_projectName"
+					class="easyui-textbox" data-options="prompt:'请选择信息类型',width:230,"
+					readonly="readonly" /> <a id="selectBtn_res"
+					class="easyui-linkbutton"
+					data-options="iconCls:'icon-add',plain:true" onclick="selectPro()"></a>
+				</td>
+					<td style="text-align: right;"><input id="showNoUsedType"
+						type="checkbox" style="vertical-align: middle;"
+						onchange="loadTree()"> <label for="showNoUsedType">显示无效的分类</label>
+						&nbsp;&nbsp;</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div data-options="region:'west',split:true" style="width:350px">
+		<ul id="tt" class="easyui-tree">
+		</ul>
+	</div>
+
+	<div data-options="region:'center'">
+		<div id="pp1" class="easyui-panel" data-options="border: false"
+			style="padding:20px;display:none">
+			<table class="btb">
+				<tr>
+					<td width="20%" align="right">分类序号</td>
+					<td><span id="typeId"></span></td>
+				</tr>
+
+				<tr>
+					<td align="right">分类名称</td>
+					<td><span id="typeName"></span></td>
+				</tr>
+				<tr style="display:none">
+					<td align="right">所属信息类型</td>
+					<td><span id="infoType"></span></td>
+				</tr>
+				<tr>
+					<td align="right">有效否</td>
+					<td><span id="isUsed"></span></td>
+				</tr>
+				<tr>
+					<td align="right">排序号</td>
+					<td><span id="sortNo"></span></td>
+				</tr>
+			</table>
+
+		</div>
+		<div id="pp2" class="easyui-panel" data-options="border: false"
+			style="padding:20px;display:none">
+			<form name="inputForm" id="inputForm">
+				<input type="hidden" name="pTypeId" id="pid" />
+				<table id="deptShow" class="btb" style="margin-top: 5px;">
+					<tr>
+						<td width="20%" align="right">分类序号</td>
+						<td><input class="easyui-textbox"
+							id="addRootCategoryForm_categoryCode" name="typeId"
+							data-options="prompt:'输入分类编号'" style="width:220px;height:24px">
+							<span id="addRootCategoryForm_categoryCode_span"></span></td>
+					</tr>
+					<tr>
+						<td align="right">分类名称</td>
+						<td><input class="easyui-textbox"
+							data-options="prompt:'请输入分类名称',required:true, missingMessage:'输入分类名称'"
+							id="addRootCategoryForm_categoryName" name="typeName"
+							style="width:220px;height:24px"></td>
+					</tr>
+					<tr style="display:none">
+						<td align="right">所属信息类型</td>
+						<td><input class="easyui-textbox"
+							id="addRootCategoryForm_packageName" name="infoType"
+							data-options=""
+							style="width:220px;height:24px"></td>
+					</tr>
+					<tr>
+						<td align="right">顺序号</td>
+						<td><input class="easyui-textbox"
+							id="addRootCategoryForm_sortNo" name="sortNo"
+							data-options="prompt:'输入顺序号',required:true, missingMessage:'输入顺序号'"
+							style="width:220px;height:24px"></td>
+					</tr>
+					<tr id="modifyIsUsed" style="display:none">
+						<td align="right">有效否</td>
+						<td><label> <input type="radio" name="isUsed"
+								style="vertical-align: middle;" value='1' />&nbsp;有效
+						</label> &nbsp;&nbsp;&nbsp;&nbsp; <label> <input type="radio"
+								name="isUsed" style="vertical-align: middle;" value='0' />&nbsp;无效
+						</label></td>
+					</tr>
+				</table>
+
+				<table class='btbForm' style='border: 0px;'>
+					<tr>
+						<td id="resultDesc" style="width:45%;">&nbsp;</td>
+						<td><a href="#" id="saveBtn" class="easyui-linkbutton"
+							onclick="doSave();">&nbsp;&nbsp;保存&nbsp;&nbsp;</a></td>
+					</tr>
+				</table>
+			</form>
+
+		</div>
+	</div>
+
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div onclick="doAddNode(0)" data-options="iconCls:'icon-add'">增加下级</div>
+		<div class="menu-sep"></div>
+		<div onclick="doModify()" data-options="iconCls:'icon-modify'">修改分类</div>
+	</div>
+	<!-- 选择所属项目对话框 -->
+	<div id="detaile" class="easyui-dialog" data-options="closed:true"></div>
+</body>
+</html>

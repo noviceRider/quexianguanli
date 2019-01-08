@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.ResManageDao">
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultProjectResObj">
+		select
+		a.res_id "resId",
+		a.info_type "infoType",
+		a.type_id "typeId",
+		a.res_desc "resDesc",
+		a.res_file "resFile",
+		a.file_size "fileSize",
+		a.mime_type "mimeType",
+		a.is_pic "isPic",
+		a.create_by "createBy",
+		a.create_time "createTime",
+		a.modify_by "modifyBy",
+		a.modify_time "modifyTime",
+		b.type_name "typeName",
+		a.ref_nums  "resNums",
+		(select count(a.res_id) "count" from info_ge_resref r where a.RES_ID = r.RES_ID) "count",
+		a.bytes_content "bytesContent"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.commondata.po.ResManagePo">
+	   <include refid="resultProjectResObj"/>
+	   ,c.dict_desc "infoTypeName"
+	   from info_ge_resource a 
+	   left join code_ge_restype b on a.type_id=b.type_id
+	   left join info_ge_dict c on a.info_type = c.dict_code and c.type_code = 'INFO_TYPE'
+		<where>
+			<if test="params.bo.infoType != null and params.bo.infoType != ''">
+		      a.info_type = #{params.bo.infoType}
+		     </if>
+		     <if test="params.bo.typeId != null and params.bo.typeId != ''">
+		      and a.type_id = #{params.bo.typeId}
+		     </if>
+		     <if test="params.bo.typeRoute != null and params.bo.typeRoute != ''">
+				and  b.type_route like '${params.bo.typeRoute}%'
+			</if>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				and a.res_desc like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		 group by a.res_id order by a.create_time desc  
+	</select>
+	
+	<!-- 生成id-->
+	<select id="createResId"  resultType="Integer">
+		select nextval('SEQ_INFO_GE_RESOURCE')
+	</select>
+
+	<!-- 新增技术等级 -->
+	<insert id="addProjectRes" parameterType="com.bn.gmodule.commondata.bo.ResManageBo">
+		insert into info_ge_resource
+		(
+		res_id,
+		info_type,
+		type_id,
+		res_desc,
+		res_file,
+		file_size,
+		mime_type,
+		is_pic,
+		create_by,
+		create_time,
+		modify_by,
+		modify_time,
+		bytes_content
+		) values (
+		#{resId},
+		#{infoType},
+		#{typeId},
+		#{resDesc},
+		#{resFile, jdbcType=VARCHAR},
+		#{fileSize, jdbcType=NUMERIC},
+		#{mimeType, jdbcType=VARCHAR},
+		#{isPic},
+		#{createBy},
+		str_to_date('${createTime}', '%Y-%m-%d %T'),
+		#{modifyBy},
+		str_to_date('${modifyTime}', '%Y-%m-%d %T'),
+		#{bytesContent,jdbcType=BLOB}
+		)
+	</insert>
+
+	<!-- 根据技术等级编号修改信息 -->
+	<update id="modifyProjectRes" parameterType="com.bn.gmodule.commondata.bo.ResManageBo">
+		update info_ge_resource
+		set
+		res_desc = #{resDesc, jdbcType=VARCHAR},
+		res_file = #{resFile, jdbcType=VARCHAR},
+		file_size = #{fileSize, jdbcType=INTEGER},
+		mime_type = #{mimeType, jdbcType=VARCHAR},
+		is_pic = #{isPic, jdbcType=INTEGER},
+		create_by = #{createBy, jdbcType=VARCHAR},
+		create_time = str_to_date('${createTime}','%Y-%m-%d %T'),
+		modify_by = #{modifyBy, jdbcType=VARCHAR},
+		modify_time = str_to_date('${modifyTime}','%Y-%m-%d %T'),
+		bytes_content=#{bytesContent,jdbcType=BLOB},
+		type_id=#{typeId, jdbcType=INTEGER},
+		info_type=#{infoType, jdbcType=INTEGER},
+		ref_nums=#{refNums, jdbcType=INTEGER}
+		where res_id = #{resId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据技术等级编号修改信息 -->
+	<update id="modifyProjectDesc" parameterType="com.bn.gmodule.commondata.bo.ResManageBo">
+		update info_ge_resource
+		set
+		res_desc = #{resDesc},
+		is_pic = #{isPic}
+		where res_id = #{resId}
+	</update>
+
+	<!-- 根据技术等级编号删除信息 -->
+	<delete id="removeProjectRes" parameterType="Integer">
+		delete
+		from info_ge_resource
+		where res_id = #{id}
+	</delete>
+	
+	<!-- 根据技术等级编号删除信息 -->
+	<select id="findById" parameterType="Integer" resultType="com.bn.gmodule.commondata.po.ResManagePo">
+		<include refid="resultProjectResObj"/>
+		from info_ge_resource  a left join code_ge_restype b on a.type_id=b.type_id
+		where a.res_id = #{id}
+	</select>
+
+	<!-- 根据技术等级编号删除信息 -->
+	<select id="findBlob" parameterType="java.lang.String" resultType="java.util.Map">
+		<include refid="resultProjectResObj"/>
+		from info_ge_resource  a left join code_ge_restype b on a.type_id=b.type_id
+		where a.res_id = #{id}
+	</select>
+
+	<!-- 验证等级描述是否存在 -->
+	<select id="validateProjectResDesc" parameterType="com.bn.gmodule.commondata.bo.ResManageBo"
+		resultType="Integer">
+		select
+		count(*)
+		from info_ge_resource
+		<where>
+		  res_desc = #{resDesc}
+		</where>
+	</select>
+
+
+	<!-- 根据数据类型主键查询信息 -->
+	<select id="findAll" resultType="map">
+		select
+		direct_code,lvl_desc
+		from code_tech_lvl 
+	</select>
+	
+	<!-- 根据项目id查询数据 -->
+	<select id="findByProId" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.commondata.po.ResManagePo">
+	   select a.res_id "resId",
+		a.project_id "projectId",
+		a.type_id "typeId",
+		a.res_desc "resDesc",
+		a.res_file "resFile",
+		a.file_size "fileSize",
+		a.mime_type "mimeType",
+		a.is_pic "isPic",
+		a.create_by "createBy",
+		a.create_time "createTime",
+		a.modify_by "modifyBy",
+		a.modify_time "modifyTime",
+		b.project_name "projectName",
+		c.type_name "typeName"
+	   from info_ge_resource a left join info_project b on a.project_id=b.project_id left join code_ge_restype c on a.type_id=c.type_id
+		<where>
+		     a.project_id = #{params.bo.projectId}
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				and a.res_desc like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		 group by a.res_id
+	</select>
+	
+	<!-- 资源引用加1 -->
+	<update id="refAdd" parameterType="Integer">
+		update info_ge_resource
+		set ref_nums = ifnull(ref_nums,0)+1 
+		where res_id = #{resId}
+	</update>
+	
+		<!-- 资源引用减一 -->
+	<update id="refDelete" parameterType="Integer">
+		update info_ge_resource
+		set ref_nums = ref_nums-1 
+		where res_id = #{resId}
+	</update>
+	
+	<!-- 新增一个资源引用 -->
+	<insert id="addRef" parameterType="Map">
+		insert into info_ge_resref (
+			res_id,
+			info_id,
+			info_type
+		) values (
+			#{resId},
+			#{infoId},
+			#{infoType}
+		)
+	</insert>
+	
+	<!-- 删除一个资源引用 -->
+	<delete id="removeRef" parameterType="Map">
+		delete from info_ge_resref
+		where 
+			res_id = #{resId} 
+			and info_id = #{infoId}
+			and info_type = #{infoType}
+	</delete>
+	
+	<!-- 根据技术等级编号删除信息 -->
+	<select id="findCount" parameterType="Integer" resultType="com.bn.gmodule.commondata.po.ResManagePo">
+		<include refid="resultProjectResObj"/>
+		from info_ge_resource  a 
+		left join code_ge_restype b on a.type_id=b.type_id
+		where a.type_id = #{typeId} group by a.res_id
+	</select>
+</mapper>

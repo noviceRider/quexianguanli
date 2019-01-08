@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>商品典当</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="../../gmodule/js/pageStacker.js"></script>
+    	<script type="text/javascript" src="../busiPawn/js/payTheBill.js"></script>
+	</head>
+  
+	<body>
+		<div id="detailsPage" style="width: 100%;padding:0;margin:0;background:white;border:0px solid rgba(204, 204, 204, 1);float:left">
+		    	
+		    	<!-- 详情 -->
+		    	<div style="width:100%;float:left;padding:0;margin:0;border-top:0px solid rgba(204, 204, 204, 1);font-size: 14px;">
+		    	
+		    		<table style="width:100%;height:100%">
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="客户资料"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="memberInfo_form" class="easyui-form" method="post">
+	                					<table id="memberDetails_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    					<tr>
+					    						<td style="width:35%;text-align: right;">
+					    							会员编号:
+					    						</td>
+					    						<td>
+					    							<input id="memberId" name="memberId"  style="padding:0;margin:0;">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							会员姓名:
+					    						</td>
+					    						<td>
+					    							<input id="memberName" name="memberName"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td  style="width:25%;text-align: right;">
+					    							手机号码:
+					    						</td>
+					    						<td>
+					    							<input id="mobile"  type="text" name="mobile"  style="padding:0;margin:0;">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							证件号码:
+					    						</td>
+					    						<td>
+					    							<input  id="certNo" name="certNo"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							账户名称:
+					    						</td>
+					    						<td>
+					    							<input id="accountName" name="accountName" style="padding:0;margin:0;">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							开户银行:
+					    						</td>
+					    						<td>
+					    							<input id="bankName" name="bankName"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							银行卡号:
+					    						</td>
+					    						<td>
+					    							<input id="account" name="account"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr>
+				    					</table>
+			    					</form>
+                				</div>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="商品资料"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="assessForm" class="easyui-form" method="post">
+		    							<table style="width: 100%;margin-top: 5px">
+		    								<tr>
+	    										<td style="width:25%;text-align: right">商品编号:</td>
+	    										<td><span id="goodsIdPP"></span></td>
+	    									
+	    										<td style="width:25%;text-align: right">商品名称:</td>
+	    										<td><span  id="goodsNamePP"></span></td>
+	    									</tr>
+	    									
+	    									<tr>
+	    										<td style="width:25%;text-align: right">官方价:</td>
+	    										<td ><span  id="officialPricePP"></span>元</td>
+	    									
+	    										<td style="width:25%;text-align: right">评估价:</td>
+	    										<td colspan=""><span id="valuationPricePP"></span>元</td>
+	    									</tr>
+	    									<tr>
+	    										<td style="width:25%;text-align: right">典当价:</td>
+	    										<td ><span id="pawnPricePP"></span>元</td>
+	    									
+	    										<td style="width:25%;text-align: right">客户首买价:</td>
+	    										<td><span id="firstPricePP"></span>元</td>
+	    									</tr>
+	    								</table>
+		    						</form>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="典当协议"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="gathpawnForm" class="easyui-form" enctype="multipart/form-data" method="post">
+		    							<table style="width: 100%;margin-top: 5px">
+		    								<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							协议编号:
+					    						</td>
+					    						<td>
+					    							<input id="pawnId" name="pawnId"  style="padding:0;margin:0;">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							当票编号:
+					    						</td>
+					    						<td>
+					    							<input id="pawnTicket" name="pawnTicketCode"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td  style="width:25%;text-align: right;">
+					    							放款方式:
+					    						</td>
+					    						<td >
+					    							<input id="payType"   style="width:60px">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							放款金额:
+					    						</td>
+					    						<td>
+					    							<input id="loanAmount"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							利息:
+					    						</td>
+					    						<td>
+					    							<input id="loanInterest" style="padding:0;margin:0;width:auto">
+					    						</td>
+					    					
+					    						<td style="width:25%;text-align: right;">
+					    							贷款时长:
+					    						</td>
+					    						<td>
+					    							<input id="loanTerm"  style="padding:0;margin:0;">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							还款日期:
+					    						</td>
+					    						<td>
+					    							<input id="repaymentDate" readonly="readonly" name="repaymentDate"  style="padding:0;margin:0;">
+					    						</td>
+					    						
+					    						
+					    					</tr>
+					    					<tr id="zhuanzhangDiv">
+					    						<td style="width:25%;text-align: right;" valign="top">
+					    							转账凭证:
+					    						</td>
+					    						<td>
+					    							<img style="width: 120px;height: 120px" id="showTransferImg" src="../busiIdentifyAppraise/images/def.png"><p style="font-size: 7px;color: #aaa;width: 120px;text-align: center">点击图片进行上传</p>
+					    							<span><input  onchange="ImgPreview(this)" name="uploadFile"  type="file" id="zhuanzhang"  hidden="hidden" accept="image/jpg, image/bmp, image/jpeg, image/gif, image/png"></span>
+					    						</td>
+					    					</tr>
+	    								</table>
+		    						</form>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="操作记录"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+		    							
+		    							<div id="ShowHistoryIdentifyItems" >
+		    								<table id="showhistoryIdentifyTable" class="easyui-datagrid" style="width:100%;margin-top: 5px;height:auto"></table>
+		    							</div>
+   									</div>
+                				</div>
+                			</td>
+		    			</tr>
+		    		</table>
+		    	</div>
+			</div>
+			<!-- form表单按钮 -->
+		<div id="gath_form">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="gath()">放款</a>
+			<a id="cancel" class="easyui-linkbutton" data-options="iconCls:'icon-no'" onclick="cancelStartProcess()">取消</a>
+		</div>
+
+	</body>
+</html>

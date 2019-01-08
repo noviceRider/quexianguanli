@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="updPanelOne" style="overflow-x:hidden;padding-top:5px;" class="easyui-dialog" data-options="buttons:'#sc_add',modal:true" >
+		<form method="post" class="easyui-form" id="updIssueBaseInfoPoForm" enctype="multipart/form-data">
+			<table style="border-collapse: separate;border-spacing: 10px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">缺陷编号&nbsp;</td>
+	  				<td colspan="3"><input id="updIssueId" name="issueId" class="easyui-textbox" readonly="readonly"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">项目名称&nbsp;</td>
+	  				<td colspan="3"><input id="updProjectName" name="projectName" class="easyui-textbox" data-options=" icons:[{iconCls:'icon-search',handler:searchProject}],editable:false">
+	  					<input id="updProjectId" name="projectId" type="hidden" >
+	  				</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">上级缺陷&nbsp;</td>
+	  				<td colspan="3"><input id="updParentIssueId" name="parentIssueId" class="easyui-textbox" data-options=" icons:[{iconCls:'icon-search',handler:searchDefect}],editable:false">
+	  					
+	  				</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">缺陷名称&nbsp;</td>
+	  				<td colspan="3"><input id="updIssueName" name="issueName" class="easyui-textbox"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">缺陷描述&nbsp;</td>
+	  				<td colspan="3"><input id="updIssueDesc" name="issueDesc" class="easyui-textbox"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">完成要求&nbsp;</td>
+	  				<td colspan="3"><input id="updDoneCondition" name="doneCondition" class="easyui-textbox"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">缺陷分类&nbsp;</td>
+	  				<td ><select id="updTypeDesc" name="typeDesc" class="easyui-combobox" data-options="editable:false">
+	  					<option value="B">功能</option>   
+    					<option value="C">设计</option>   
+    					<option value="D">界面</option>  
+	  				</select></td>
+	  				<td style="text-align: right;width: 65px;">严重程度&nbsp;</td>
+	  				<td ><select id="updIssueSeverity" name="issueSeverity" class="easyui-combobox" data-options="editable:false">
+	  					<option value="1">普通</option>   
+    					<option value="2">严重</option> 
+	  				</select></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">优先级&nbsp;</td>
+	  				<td ><select id="updIssuePriority" name="issuePriority" class="easyui-combobox" data-options="editable:false">
+	  					<option value="1">低</option>   
+    					<option value="2">中</option> 
+	  					<option value="3">急</option>   
+    					<option value="4">特急</option> 
+	  				</select></td>
+	  				<td style="text-align: right;width: 65px;">预计工时&nbsp;</td>
+	  				<td ><input id="updPlanWorkHours" name="planWorkHours" class="easyui-textbox"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">计划开始&nbsp;</td>
+	  				<td ><input id="updPlanStartTime" name="planStartTime" class="easyui-datetimebox" data-options="editable:false"></td>
+	  				<td style="text-align: right;width: 65px;">计划完成&nbsp;</td>
+	  				<td ><input id="updPlanEndTime" name="planEndTime" class="easyui-datetimebox" data-options="editable:false"></td>
+	  			</tr>
+	  			<tr>
+		    		<td style="text-align: right;width: 65px;">上传附件&nbsp;</td>
+		    		<td colspan="3"><input type="text" name="file" id="updDefectListattachFile" /></td>
+		    	</tr>
+	  		</table>
+	  	</form>
+	  </div>
+	  
+	  <div id="sc_add">
+		<a id="updFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" >保存</a>
+		<a id="closeFormBtnOne" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+	</div>
+</body>
+</html>

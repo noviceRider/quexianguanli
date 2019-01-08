@@ -1,0 +1,197 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>categorydemo.html</title>
+	<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/common/main.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/icon.css">
+<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.jqprint.js"
+	charset="UTF-8"></script>
+<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../../js/common.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../../../js/jquery-migrate-1.1.0.js"
+	charset="UTF-8"></script>
+<script type="text/javascript" src="../../../js/jquery.jqprint.js"
+	charset="UTF-8"></script>
+<script type="text/javascript" src="../js/prettify.js"></script>
+<script type="text/javascript" src="js/categorydemo.js" charset="UTF-8"></script>
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<style type="text/css">
+ td{
+   font-size:15px
+ }
+</style>
+
+</head>
+
+<body>
+	<!-- 标题以及各种功能按钮 -->
+	<table style="width:100%;padding:5px;">
+		<tr>
+			<td style="width:25%"><img
+				src='../../../images/common/title.gif'
+				style="vertical-align:middle;">分类访问演示</td>
+		</tr>
+	</table>
+	<!--  
+	<table class="btbForm">
+		<tr>
+			<td style="text-align:left;">
+				<form id="form_add" class="easyui-form"
+					enctype="multipart/form-data" method="POST">
+					分类编号&nbsp;<input id="typeId" name="typeId" value="1060"
+						class="easyui-textbox"
+						data-options="prompt:'请输入分类编号',required:'true'" />&nbsp;&nbsp;&nbsp;
+					文件描述&nbsp;<input id="resDesc" name="resDesc" class="easyui-textbox"
+						data-options="prompt:'请输入文件描述',required:'true'" />&nbsp;&nbsp;&nbsp;
+					文件选择&nbsp;<input id="picLogo" name="picLogo" class="easyui-filebox"
+						data-options="prompt:'请选择文件',buttonText:'文件选择',required:'true'" />
+					<a class="easyui-linkbutton" id="add_button"
+						data-options="iconCls:'icon-add'" onclick="fileUpload()">&nbsp;上&nbsp;&nbsp;传&nbsp;</a>
+					<input type="hidden" name="infoType" value="1001">
+				</form>
+			</td>
+			<td style="text-align:left;">
+				<form id="form_search">
+					<div style="float:right">
+						分类编号&nbsp;<input id="infoTypeSearch" name="keyWord"
+							class="easyui-textbox" data-options="prompt:'请输入分类编号'" /> &nbsp;<a
+							class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+							onclick="doSearch()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					</div>
+				</form>
+			</td>
+		</tr>
+	</table>
+-->
+	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+	<!-- 
+	<div style="padding:10px">
+		<span style="font-size:20px">资源上传说明:&nbsp;&nbsp;</span><span
+			style="font-size:15px">为了对所有资源实现统一的管理，以信息类型将所有资源区分，在同一信息类型下再以资源类别进行细分。信息类型用以区分不同事物，列如：人员信息和车辆信息;资源类别，列如：图片资源和文档资源。</span>
+		<br>
+		<br> <span style="font-size:20px">资源上传参数:&nbsp;&nbsp;</span><span
+			style="font-size:15px">资源上传时必须包含信息类型，分类编号，文件描述和文件四个参数</span>
+	</div>
+	 -->
+	<!-- 资源分类panel -->
+	<div style="padding:5px">
+		<div id="p" class="easyui-panel" title="资源分类访问演示demo"
+			style="width:100%;padding:10px;background:#fafafa;"
+			data-options="collapsible:true">
+			<table width="100%">
+				<tr>
+					<td style="text-align:left;">
+					信息类型&nbsp;<input id="infoType" class="easyui-textbox" name="infoType"data-options="" value="1001">
+					<a class="easyui-linkbutton" id="add_button"data-options="iconCls:'icon-search'" onclick="loadResData()">加载资源分类数据</a>
+					资源分类&nbsp;<input id="resType" class="easyui-combobox" name="dept" data-options="valueField:'typeId',textField:'typeName',editable:false,panelHeight:'auto'">
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>第一步:页面引入数据访问commom.js文件,其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="editCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>第二步：页面放两个输入框，和一个查询按钮，其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="secondCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>第三步:查询按钮绑定loadResData方法，方法中调用公共的loadCombobox方法，其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="editJsCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- 定义外边距 -->
+		<div style="margin-top:20px"></div>
+
+
+		<!-- 多级分类panel -->
+	    <div style="padding:5px">
+		<div id="p" class="easyui-panel" title="多级分类访问演示demo"
+			style="width:100%;padding:10px;background:#fafafa;"
+			data-options="collapsible:true">
+			<table width="100%">
+				<tr>
+					<td style="text-align:left;">
+						信息类型&nbsp;<input id="infoTypeM" class="easyui-textbox" name="infoTypeM" data-options="" value="1001">
+						<a class="easyui-linkbutton" id="add_button" data-options="iconCls:'icon-search'" onclick="loadMulData()">加载多级分类数据</a>
+						资源分类&nbsp;<select id="mulType" class="easyui-combotree" style="width:300px;" data-options="editable:false,panelHeight:'auto'">
+</select>
+						</form>
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>页面引入数据访问commom.js文件,其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="searchFormCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>页面放两个输入框，和一个查询按钮，其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="searchDgCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+				<tr style="height:50px">
+					<td>第三步：查询按钮绑定loadMulData方法，方法中调用公共的loadCombotree方法，其代码如下：</td>
+				</tr>
+				<tr>
+					<td>
+					<div style="padding:30 0px;background-color:#eee;">
+					<pre id="searchJsCode" class="prettyprint" style="text-align: left">
+					</pre>
+					</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	    
+	</div>
+	<!-- 预览图片 -->
+	<div id="showPics"></div>
+
+</body>
+</html>

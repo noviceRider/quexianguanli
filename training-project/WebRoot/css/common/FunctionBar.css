@@ -1,0 +1,44 @@
+TABLE{font-size: 9pt;BORDER-RIGHT:1px;BORDER-TOP:1px;}
+TD{font-size: 9pt;BORDER-LEFT:1px;BORDER-BOTTOM:1px}
+
+.group {
+	font-size: 9pt;
+	font-weight: bold;
+	vertical-align: middle;
+	background-color: #D3DDEF;
+	cursor: pointer;
+}
+
+.groupHover {
+	font-size: 9pt;
+	font-weight: bold;
+	Color: #E75C00;
+	vertical-align: middle;
+	background-color: #D3DDEF;
+	cursor: pointer;
+        TEXT-DECORATION: none
+}
+
+.item {
+	font-size: 9pt;
+	COLOR: #00000;
+	TEXT-DECORATION: none;
+	cursor: pointer;
+}
+
+.itemHover
+{
+	font-size: 9pt;
+	COLOR: #14485D;
+	background-color:#FFFFFF;
+	TEXT-DECORATION: underline;
+	cursor: pointer;
+}
+
+.itemSelect
+{
+	font-size: 9pt;
+	COLOR: #FFFFFF;
+	BACKGROUND-COLOR: #00008C;
+	cursor: pointer;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>businesslogic_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+  </head>
+  
+  <body>
+    <div id="businesslogic_detail_div" style="width:800px;height:480px;" data-options="buttons:'#businesslogic_detail_div_btns',maximizable:true">
+			<table id="content" style="border-spacing: 8px;width:768px;">
+				<tr>
+					<td style="text-align: right;width:14%;" >业务逻辑编号:</td>
+					<td  style="width:36%;">
+						<span name="logicCode"></span>
+					</td>
+					<td style="text-align: right;width:14%;" >业务逻辑名称:</td>
+					<td  style="width:36%;">
+						<span name="logicName"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:;">业务逻辑描述:</td>
+					<td colspan="3">
+						<span name="logicDesc" style="width:;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:;" >业务逻辑分类:</td>
+					<td>
+						<span name="typeName" style="width:;"></span>
+					</td>
+					<td style="text-align: right;width:;">是否预定义:</td>
+					<td>
+						<span name="isPreDefin" style="width:;"></span>
+					</td>
+				</tr>
+				<tr>
+	  				<td colspan="4" >
+	  					 <div id="panelOne" class="easyui-panel" style="width:100%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="参数描述">
+							<table id="detail_param_dg" class="easyui-datagrid" title=""  style="width:100%;" >
+								<thead>
+									<tr>
+										<th data-options="field:'paramName',align:'left',halign:'center'" style="width:25%;">参数名</th>
+										<th data-options="field:'paramDesc',align:'left',halign:'center'" style="width:30%">参数描述</th>
+										<th data-options="field:'paramType',align:'center',halign:'center',formatter:paramTypeFormartter" style="width:15%">类型</th>
+										<th data-options="field:'paramTestValue',align:'left',halign:'center'" style="width:23%" >参考值</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</td>
+	  			</tr>
+	   			<tr>
+	  				<td colspan="4" align="">
+	  					 <div id="panelTwo" class="easyui-panel" style="width:100%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="返回值描述">
+							<table id="detail_back_dg" class="easyui-datagrid" title="" style="width:100%;" >
+								<thead>
+									<tr>
+										<th data-options="field:'backName',align:'left',halign:'center'" style="width:25%;">返回值名</th>
+										<th data-options="field:'backDesc',align:'left',halign:'center'" style="width:30%">返回值描述</th>
+										<th data-options="field:'backType',align:'center',halign:'center',formatter:backTypeFormartter" style="width:15%">类型</th>
+										<th data-options="field:'backTestValue',align:'left',halign:'center'" style="width:23%" >参考值</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</td>
+	  			</tr>
+				<tr>
+					<td colspan="4">
+						<div id="showJs" style="width: 745px;overflow:auto">
+							<span id="logicScriptSpan" ></span>
+						</div>
+					</td>
+				</tr>
+				<tr style="display:none">
+					<td style="text-align: right;width:90px;" >访问地址:</td>
+					<td colspan="3">
+						<span name="url" style="width:610px;"></span>
+					</td>
+				</tr>
+				<tr style="display:none">
+					<td style="text-align: right;width:90px;">是否有效:</td>
+					<td>
+						<span name="isUsed" style="width:;height:"></span>
+					</td>
+				</tr>
+			</table>
+	</div>
+	
+	<div id="businesslogic_detail_div_btns">
+		<a style="float:left" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="changeToModify('xq')">修改</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#businesslogic_detail_div').dialog('close');">关闭</a>
+  	</div>
+  </body>
+</html>

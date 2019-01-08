@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>moduleconfig_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="module_add_modify_div" style="width: 420px" data-options="buttons:'#module_add_modify_div_btns'">
+		<form id="module_add_modify_form" class="easyui-form" enctype="multipart/form-data" method="POST">
+			<table style="width:100%;margin:0px 0px 15px 0px;border-spacing: 10px;">
+				<tr>
+					<td style="text-align: right;width:80px;" >模块编号</td>
+					<td>
+						<input id="moduleCodeId" name="moduleCode"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">模块名称</td>
+					<td>
+						<input id="moduleNameId" name="moduleName" class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:80px;" >对应的模板</td>
+					<td>
+						<input id="templateNameId" name="templateName"  class="easyui-textbox" data-options="editable:false,panelHeight:'auto'" style="width:252px;"></input><input id="templateCodeId" name="templateCode" type="hidden"></input>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTemplate()"></a>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">模块分类</td>
+					<td>
+						<input id="moduleCatId" name="moduleCat" class="easyui-combotree" data-options="editable:false,panelHeight:'auto'" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:80px;" >模块描述</td>
+					<td>
+						<input id="moduleDescId" name="moduleDesc"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr style="display: none;">
+					<td style="text-align: right;" valign="top">配置参数</td>
+					<td colspan="3">
+						<input id="configParamId" name="configParam" class="easyui-textbox" data-options="multiline:true" style="width:605px;height: 80px"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">是否有效</td>
+					<td>
+						<input id="isUsedYesId" name="isUsed" type="radio" value="1" class="" data-options="" checked="checked" style="width:;height:">
+						<label for="isUsedYesId">是</label>
+						<input id="isUsedNoId" name="isUsed" type="radio" value="0" class="" data-options="" style="width:;height:">
+						<label for="isUsedNoId">否</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;display: none;">版本号</td>
+					<td style="display: none;">
+						<input id="verId" name="ver" class="easyui-numberbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<div id="module_add_modify_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancel()">取消</a>
+  	</div>
+  </body>
+</html>

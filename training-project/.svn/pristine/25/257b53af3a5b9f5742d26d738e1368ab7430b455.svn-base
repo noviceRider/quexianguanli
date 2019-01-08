@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="modifyMemberPanel">
+	<div style="margin:15px 0;"></div>
+		<div style='text-align: right;'>
+			&nbsp;&nbsp;<a id="addMemberUserFormBtn"></a>
+			&nbsp;&nbsp;<a id="removeMemberUserFormBtn"></a>
+		</div>
+	<div style="margin:15px 0;"></div>
+	<table id="showUserTable" style="width: 100%; height: 240px">
+	
+	</table>
+	</div>
+	
+</body>
+</html>

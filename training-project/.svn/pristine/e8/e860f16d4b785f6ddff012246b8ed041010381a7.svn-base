@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>queryconditions_am.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+  	<div id="queryConditions_dlg" data-options="buttons:'#queryconditons_btns',resizable:true" style="width: 520px;">
+	    <form id="queryConditions_fm">
+	    	<table style="border-collapse:separate; border-spacing:0px 10px; width: 100%;">
+	    		<tr>
+	    			<td style="text-align: right;width: 60px;">名称</td>
+	    			<td><input class="easyui-textbox" id="name" name="name" style="width: 150px;" data-options="required: true, missingMessage: '请输入名称'"></td>
+	    			<td style="text-align: right;width:80px;">类型</td>
+	    			<td><input class="easyui-combobox" id="conditionType" name="type" style="width: 150px;" editable="false"></td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">标题</td>
+	    			<td><input class="easyui-textbox" id="label" name="label" style="width: 150px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+	    			<td style="text-align: right;">数据来源</td>
+	    			<td><input class="easyui-combobox" id="dataSrc" name="dataSrc" style="width: 150px;" editable="false"></td>
+	    		</tr>
+	    		<tr id="typeCodeTr">
+	    			<td style="text-align: right;">代码类型</td>
+	    			<td>
+	    				<input type="hidden" id="typeCode" name="typeCode">
+	    				<input class="easyui-textbox" id="typeDesc" name="typeDesc" editable="false" style="width: 150px;">
+	    				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTypeCode();"></a>
+	    			</td>
+	    		</tr>
+	    		<tr id="enumerationTr">
+	    			<td colspan="4">
+					  <table style="width:100%;border-spacing: 10px;">
+					   <tr>
+					    <td style="text-align: right;width:69px;" >枚举信息</td>
+						<td colspan="3" style="padding-left: 0px">
+							<table style="padding-left: 0px">
+								<tr>
+									<td style="padding-left: 0px">
+										<select name="columnEnum" id="columnEnumId" class="" multiple="multiple"  style="width:300px;height:85px" size="13"></select>
+									</td>
+									<td>
+										<table>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEnum()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyEnum()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeEnum()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					   </tr>
+					  </table>
+					</td>
+	    		</tr>
+	    	</table>
+	    </form>
+  	</div>
+  	<div id="queryconditons_btns" style="text-align: right;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveQueryConditions()">确定</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeQueryConditions()">关闭</a>
+  	</div>
+  </body>
+</html>

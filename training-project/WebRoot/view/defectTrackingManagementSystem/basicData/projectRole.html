@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here - projectRole</title>
+		<meta name="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css" />
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="js/projectRole.js"></script>
+</head>
+<body>
+	
+	<!-- 增删改查 菜单区域 -->
+	<table class="btbHead">
+		<tr>
+			<td style='width: 25%;'>
+				<img src='../../../images/common/title.gif' align='absmiddle'/>项目角色
+			</td>
+			<td style="text-align: right;">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onClick="queryProjectRole()"> &nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'"    onClick="addProjectRole()">   &nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'"   onClick="modifyProjectRole()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeProjectRole()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+			</td>
+		</tr>
+	</table>
+	
+	<!-- 搜索表单区域 -->
+	<form id="queryForm">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'请输入状态编号或描述'" style="width:150px;"/>
+						<!-- &nbsp;&nbsp;&nbsp;&nbsp;缺陷状态&nbsp; -->
+						<!-- <select id="searchIUsed" name="isUsed" class="easyui-combobox" data-options="panelHeight:'auto',editable:false" style="width:150px;">
+							<option value=""> 全部状态</option>
+							<option value="1">有效状态</option>
+							<option value="0">禁用状态</option>
+						</select> -->
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+
+	<!-- 缺陷状态表格区域 -->
+	<table class="easyui-datagrid" id="projectRoleTable"
+	data-options="
+	fitColumns:true,
+	striped:true,
+	loadMsg:'正在加载数据中，请等一等~',
+	pageList:[5,10,15,20],
+	pageSize:10,
+	pagination:true"
+	style="width:100%;padding:10px;">
+	<thead>
+		<tr>
+			<!-- <th data-options="field:'stateCode',checkbox:true"></th> -->
+			<th data-options="field:'roleCode',align:'center',sortable:true,alias:'role.ROLE_CODE'" width="10%">角色组编号</th>
+			<th data-options="field:'roleName',align:'center',sortable:true,alias:'role.ROLE_NAME'" width="10%">项目角色名</th>
+			<th data-options="field:'moduleState',align:'center',sortable:true" width="10%">当前状态</th>
+			<th data-options="field:'stateDesc',align:'center',sortable:false" width="10%">可操作状态(状态描述)</th>
+			<!-- <th data-options="field:'moduleStateDesc',align:'center',sortable:true,alias:'dict.DICT_DESC'" width="10%">当前状态码</th> -->
+		<!-- moduleStateDesc -->
+			<th data-options="field:'createBy',align:'center',sortable:true,alias:'role.CREATE_BY'" width="8%">创建人</th>
+			<th data-options="field:'createTime',align:'center',sortable:true,alias:'role.CREATE_TIME'" width="15%">创建时间</th>
+			<th data-options="field:'modifyBy',align:'center',sortable:true,alias:'role.MODIFY_BY'" width="8%">修改人</th>
+			<th data-options="field:'modifyTime',align:'center',sortable:true,alias:'role.MODIFY_TIME'" width="15%">修改时间</th>
+			<th data-options="field:'detail',align:'center',width:60,formatter:formatterDo">操作</th> 
+		</tr>	
+	</thead>
+	</table>
+	
+	<!-- 增加项目角色信息容器 -->
+	<div id="role_add_modify_div" style="display:none;">
+	</div>
+
+
+</body>
+</html>

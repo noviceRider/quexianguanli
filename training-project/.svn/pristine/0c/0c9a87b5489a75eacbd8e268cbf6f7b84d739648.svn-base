@@ -1,0 +1,163 @@
+package com.huibo.issue.controller;
+
+import java.util.HashMap;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import com.huibo.issue.bo.IssueStateBo;
+import com.huibo.issue.service.IssueStateService;
+
+/**
+ * <p>
+ * Title: 缺陷管理 - IssueStateController
+ * </p>
+ *
+ * <p>
+ * Description:控制层 - IssueState
+ * </p>
+ *
+ * <p>
+ * Copyright: Copyright HBRC(c) 2018
+ * </p>
+ *
+ * <p>
+ * Company: 汇博人才
+ * </p>
+ *
+ * @author 王杰
+ * @version 1.0
+ */
+@Controller
+public class IssueStateController {
+
+	@Autowired
+	private IssueStateService issueStateService;
+
+	/**
+	 * 新增
+	 * @param bo
+	 * @return
+	 */
+	@RequestMapping("/addIssueState")
+	public Map<String, Object> addIssueState(IssueStateBo bo) {
+
+		Map<String, Object> map = null;
+		try {
+			map = issueStateService.addIssueState(bo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 删除
+	 * 
+	 * @param bo
+	 * @return
+	 */
+	@RequestMapping("/romoveStateById")
+	public Map<String, Object> romoveStateById(String stateCodes) {
+		
+		Map<String, Object> map = null;
+		try {
+			map = issueStateService.romoveStateById(stateCodes);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 修改
+	 * @param bo
+	 * @return
+	 */
+	@RequestMapping("/modifyIssueState")
+	public Map<String, Object> modifyIssueState(IssueStateBo bo){
+			Map<String, Object> map = null;
+		try {
+			map = issueStateService.modifyIssueState(bo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 按条件查询
+	 * @param bo
+	 * @return
+	 */
+	@RequestMapping("/queryIssueState")
+	public Map<String, Object> queryIssueState(IssueStateBo bo) {
+		Map<String, Object> map = null;
+		try {
+			map = new HashMap<String, Object>();
+
+			map = issueStateService.queryIssueState(bo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	/**
+	 * 单条查询
+	 */
+	@RequestMapping("/queryStateById")
+	public Map<String, Object> queryStateById(String stateCode) {
+		
+		Map<String, Object> map = null;
+		try {
+			map = issueStateService.queryStateById(stateCode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 禁用、启用
+	 */
+	@RequestMapping("/switchM")
+	public Map<String, Object> switchM(IssueStateBo bo){
+		
+		Map<String,Object> map = null;
+		try {
+			map = issueStateService.switchM(bo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 验证
+	 */
+	@RequestMapping("/validateState")
+	public Map<String, Object> validateState(IssueStateBo bo){
+		
+		Map<String, Object> map = null;
+		try {
+			map = issueStateService.validateState(bo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>岗位维护</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script src="../../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/prettify.js"></script>
+		<script type="text/javascript" src="../../gmodule/dataaccess/js/jquery.format.js"></script>
+		<script type="text/javascript" src="js/postmanage.js"></script>
+	</head>
+
+	<body>
+		<div data-options="region:'north',border:false" style="height: 80px;">
+			<table class="btbHead">
+				<tr>
+					<td style='width: 25%;'>
+						<img src='../../../images/common/title.gif' align='absmiddle'/>岗位维护
+					</td>
+					<td style="text-align: right;">
+						<a href="#" onclick="searchPost()" id="searchButton" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+						<a href="#" onclick="add()" id="addButton" class="easyui-linkbutton" iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+						<a href="#" onclick="modify()" id="modifyButton" class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+						<a href="#" onclick="deletePost()" id="removeButton" class="easyui-linkbutton" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+			<form id="selectPostForm" class="easyui-form">
+				<!-- 查询 -->
+				<table class="btbForm">
+					<tr>
+						<td colspan="2">
+							关键字&nbsp;<input class="easyui-textbox" id="keyWord" name="keyWord"  data-options="prompt:'请输入岗位名称等关键字'" style="width: 220px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							是否有效&nbsp;<select panelHeight="80px" class="easyui-combobox" name="isUsed" id="postisUsed">
+								<option value="">所有岗位</option>
+								<option value=1>有效岗位</option>
+								<option value=0>无效岗位</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div >
+		<table checkOnSelect="true" selectOnCheck="false" id="showPostTable" class="easyui-datagrid" style="width:100%" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true, onClickRow: onClickRow">
+			<thead>
+				<tr>
+					<th data-options="field:'cb1',checkbox:true,align:'center'" ></th>
+					<th data-options="field:'postId',align:'left',halign:'center',sortable:'true',hidden:true" style="width:5%;">岗位ID</th>
+					<th data-options="field:'postCode',align:'left',halign:'center',sortable:'true',alias:'post_code'" style="width:8%"> 岗位编号</th>
+					<th data-options="field:'postName',align:'left',halign:'center',sortable:'true',alias:'post_name'" style="width:15%"> 岗位名称</th>
+					<th data-options="field:'postDesc',align:'left',halign:'center'" style="width:19%" >岗位描述</th>
+					<th data-options="field:'postDuty',align:'left',halign:'center'" style="width:19%">岗位职责</th>
+					<th data-options="field:'postNeed',halign:'center',align:'left'" style="width:19%" >任职要求</th>
+					<th data-options="field:'empNums',halign:'center',align:'right'" style="width:7%" >岗位人数</th>
+					<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isUsedFormatter" style="width:11%" >是否有效</th>
+					<th data-options="field:'sortNo',halign:'center',align:'center',sortable:'true',hidden:true" style="width:11%" >排序号</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+		
+		<!-- 新增和修改弹窗 -->
+		<div id="addAndSubmitDiv"   style="text-align: center;" class="easyui-dialog" data-options="closed:true,buttons:'#updateOrAddPostButtons',modal:true,width:'600',height:'480',align:'center'" >
+		<form id="addAndSubmitForm" class="easyui-form" method="POST">
+			<table style="height:550px;width:550;margin-left: 20px;margin-top:10px">
+				<tr>
+					<td style="text-align:right;">岗位编号</td><td valign="center" style="text-align:left">&nbsp;<input class="easyui-textbox" style="width:220px" id="postCode" name="postCode" data-options="prompt:'请输入岗位编号'"><p id="postIsUsedP" style="display: inline;border:0px solid red;" valign="center">&nbsp;&nbsp;&nbsp;&nbsp;有效否<input style="top: 2px;position: relative;" id="postIsUsed" name="isUsed" value=1  type="checkbox"></p></td>
+				</tr>
+				<tr>
+					<td style="text-align:right">岗位名称</td><td style="text-align:left">&nbsp;<input class="easyui-textbox" style="width:220px" id="postName" name="postName" data-options="prompt:'请输入岗位名称'"></td>
+				</tr>
+				<tr>
+					<td valign="top" style="text-align:right">岗位描述</td>
+					<td valign="top">&nbsp;<textarea id="postDesc" name="postDesc" style="height:60px;width:400px;border-color: skyblue;border-radius:5px;resize:none"></textarea> </td>
+				</tr>
+				<tr>
+					<td valign="top" style="text-align:right">岗位职责</td>
+					<td valign="top">&nbsp;<textarea id="postDuty" name="postDuty" style="height:60px;width:400px;border-color: skyblue;border-radius:5px;resize:none"></textarea></td>
+				</tr>
+				<tr>
+					<td valign="top" style="text-align:right">岗位需求</td>
+					<td valign="top">&nbsp;<textarea id="postNeed" name="postNeed" style="height:60px;width:400px;border-color: skyblue;border-radius:5px;resize:none"></textarea></td>
+				</tr>
+				<tr>
+					<td valign="top" colspan="1" style="text-align:right">应用于选中部门</td>
+					<td valign="top" style="text-align:left"><ul id="deptTree"   class="easyui-tree"></ul></td>
+				</tr>
+				
+			</table>
+			<!-- 保存和关闭按钮 -->
+			<div id="updateOrAddPostButtons" style="text-align:right">
+				<a  class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+				<a  class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closePostDialog()">关闭</a>
+			</div>
+		</form>
+	</div>
+  </body>
+</html>

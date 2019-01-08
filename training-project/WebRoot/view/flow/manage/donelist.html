@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+   <head>
+	<title>已办事宜</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/prettify.js"></script>
+		<script type="text/javascript" src="../../gmodule/dataaccess/js/jquery.format.js"></script>
+		<script type="text/javascript" src="js/donelist.js"></script>
+	</head>
+
+	<body style="margin-right:5px;overflow: hidden;">
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../../images/common/title.gif' align='absmiddle'/>已办事宜
+				</td>
+				<td style="text-align: right;">
+					<a href="#" onclick="doSearch()"  class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<form id="selectPostForm" class="easyui-form">
+			<!-- 查询 -->
+			<table class="btbForm">
+				<tr>
+					<td colspan="2">
+						关键字&nbsp;<input class="easyui-textbox" id="keyWord" name="keyWord"  data-options="prompt:'请输入标题、任务名称'" style="width: 220px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						所属流程&nbsp;&nbsp;<input id="procNameQuery" name="procName" class="easyui-combobox" data-options="valueField:'procName',textField:'procName',editable:false,panelHeight:'auto'"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div style="margin:5px;"></div>
+
+		<table id="showTaskTable" class="easyui-datagrid" style="width:100%" data-options="nowrap:false,pagination:true,pageSize:20,rownumbers:true,striped:true,autoRowHeight:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'wfTitle',align:'left',halign:'center',sortable:'true'" style="width:37%;">标题</th>
+					<th data-options="field:'name',halign:'center',align:'left',sortable:'true'" style="width:10%" >任务名称</th>
+					<th data-options="field:'procName',halign:'center',align:'left',sortable:'true'" style="width:9%" >所属流程</th>
+					<th data-options="field:'claimTime',halign:'center',align:'center'" style="width:12%" >任务声明时间</th>
+					<th data-options="field:'startTime',align:'center',halign:'center'" style="width:12%">开始时间</th>
+					<th data-options="field:'endTime',align:'center',halign:'center'" style="width:12%">结束时间</th>
+					<th data-options="field:'opr',align:'center',halign:'center',formatter:opFormatter" style="width:6%"> 操作</th>
+				</tr>
+			</thead>
+		</table>
+
+		<!-- 详情页面 -->
+		<div id="dialog_detail" style="display: none;"></div>
+  </body>
+</html>

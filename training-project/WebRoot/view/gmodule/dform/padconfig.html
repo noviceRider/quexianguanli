@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>padconfig.html</title>
+	
+   	<meta charset="UTF-8">
+	<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	
+	<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script src="../../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	
+	<script type="text/javascript" src="js/padconfig.js" charset="UTF-8"></script>
+
+  </head>
+  
+  <body>
+    <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">PAD表单配置
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryPadconfig()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addPadconfig()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyPadconfig()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removePadconfig()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+
+  	<!-- 选择不同获取不同的信息 -->
+	<table class="btbForm">
+		<tr>
+			<td>关键字&nbsp; <input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'输入表单名称...'" style="height:20px;">&nbsp;
+			</td>
+		</tr>
+	</table>
+  	
+  	
+  	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+  	
+  	<!-- 定义datagrid数据网格 -->
+	<div id="padconfig_div">
+		<table id="padconfig_dg" style="width:100%;" class="easyui-datagrid" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,rownumbers:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true',hidden:true"></th>
+					
+					<th data-options="field:'configId',alias:'a.config_id',align:'left',halign:'center',sortable:'true'" style="width:8%">配置序号</th>
+					<th data-options="field:'formName',alias:'a.form_name',align:'left',halign:'center',sortable:'true'" style="width:16%">表单名称</th>
+					<th data-options="field:'tableName',alias:'a.table_name',align:'left',halign:'center',sortable:'true'" style="width:18%">对应表名</th>
+					<th data-options="field:'menuName',alias:'c.menu_name',align:'left',halign:'center',sortable:'true',formatter:menuFormatter" style="width:25%">菜单名称(编号)</th>
+					<th data-options="field:'apiType',alias:'a.api_type',align:'center',halign:'center'," style="width:18%">api_type</th>
+					<th data-options="field:'accessName',alias:'b.access_name',align:'left',halign:'center',sortable:'true',formatter:accessFormatter" style="width:20%">API名称</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter" style="width:10%">是否有效</th>
+
+					<th data-options="field:'uiConfig',alias:'a.ui_config',align:'left',halign:'center',sortable:'true',hidden:true" style="">UI配置</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	<!-- 新增、修改页面 -->
+	<div id="dialog_add_modify" style="display: none;"></div>
+
+	<!-- 访问数据页面 -->
+	<div id="dialog_dataaccess" style="display: none;"></div>
+
+	<!-- 业务逻辑页面 -->
+	<div id="dialog_businesslogic" style="display: none;"></div>
+
+	<!-- 对应表名页面 -->
+	<div id="dialog_table" style="display: none;"></div>
+	
+	<!-- UI配置界面 -->
+	<div id="dialog_uiconfig" style="display: none;"></div>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="searchDefectPanel" data-options="buttons:'#sc_add'">
+		<form id="formsearchDefect">
+			<table class="btbForm">
+				<tr>
+	    			<td style="text-align:left;">
+	    				关键字<input id="searchDefectId" name="projectId" class="easyui-combobox" />
+					</td>
+					<td style="text-align:left;">
+	    				<a id="formsearchDefectAbutton" style="color:blue" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDefectAbutton()">查询</a>
+					</td>
+    			</tr>
+			</table>
+		</form>
+		
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!-- 类型数据 -->
+	  	<div style="width:100%;" id="searchDefectIssueBaseInfoPo">
+			<table id="searchDefectlistTable" class="easyui-datagrid" border="1" style="width:580px" data-options="striped:true,fitColumns:true,pagination:true,loadMsg:'正在加载数据中，请等待！',singleSelect:true">   
+	   			<thead>   
+	        		<tr>   
+	           		 	<th data-options="field:'issueId',width:240,align:'center',halign:'center'" >缺陷编号</th>   
+	            		<th data-options="field:'issueName',width:240,align:'center',halign:'center'">缺陷名称</th>   
+	        		</tr>   
+	    		</thead>   
+			</table> 
+		</div>
+	</div>
+	
+	<div id="sc_add">
+		<a id="searehDefectFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="color:blue">确定</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<form name="inputForm" id="inputForm">
+	<input type="hidden" name="opType" id="opType"/>
+	
+	<!--表格区域-->
+	<table id="deptShow" class="btb" style="margin-top: 5px;">
+		<tr>
+			<td width="20%" align="right">
+				部门编号：
+			</td>
+			<td>
+				<span id="show_pDeptId"></span>
+				<input type="text" name="deptId" id="input_deptId" />
+				<span class="alertTipNormal" id="show_limitLen">*输入<span id="limitLen"></span>位数字</span>
+				<span type="validMsg" id="valid_deptId"></span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				部门名称：
+			</td>
+			<td>
+				<input type="text" name="deptName" id="input_deptName"/>
+				<span class="alertTipNormal">*</span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				上级部门：
+			</td>
+			<td>
+				<input type="hidden" name="pDeptId" id="input_pDeptId"/>
+				<span id="input_pDeptName"></span>
+			</td>
+		</tr>
+		<tr style="display: none">
+			<td align="right">
+				部门经理：
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				排序号：
+			</td>
+			<td>
+				<input type="text" name="sortNo" id="input_sortNo"/>
+				<span class="alertTipNormal">*</span>
+			</td>
+		</tr>
+	</table>
+	
+	<table class='btbForm' style='border: 0px;'>
+		<tr>
+			<td id="resultDesc" style="width:45%;">
+				&nbsp;
+			</td>
+			<td>
+				<a href="#" id="saveBtn" class="easyui-linkbutton" onclick="doSave();">&nbsp;&nbsp;保存&nbsp;&nbsp;</a>
+			</td>
+		</tr>
+	</table>
+</form>

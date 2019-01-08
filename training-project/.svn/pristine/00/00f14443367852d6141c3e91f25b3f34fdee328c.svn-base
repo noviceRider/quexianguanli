@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script src="../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/util/dict.js"></script>
+	<script type="text/javascript">
+		/**
+		 * 显示combobox
+		 */
+		 function showCombobox() {
+				
+			var params = {
+			
+				// 装combobox的div的id，普通调用方式需要，jquery方式不需要
+				id :  'seleDictCode',
+			
+				// 需要创建的combox 的id dictTypeId：数据类型   dictCodeId： 字典编码
+				dictTypeId : 'dictTypeCode',
+				dictCodeId : 'dictCode',
+			
+				// 加载的数据类型范围 
+				//类型编码在括号内以逗号隔开，如："('HR_EMP_TYPE','HR_NATIONAL')"，默认不加载任何分类数据，空表示加载所有
+				dictTypeSope : '',
+			
+				// 默认加载的数据字典类型
+				defaultDictType : 'GENDER',
+			
+				// 默认加载的数据字典明细的编码 
+				defaultDictCode : 'M',
+			
+				//是否显示 数据类型combox 
+				showDictType : 1,
+				
+				//类型选择combox的款段
+				dictTypeWidth: '180px',	
+				
+				//数据字典编码combox的宽度
+    	        dictCodeWidth: '150px',	
+    	        
+    	        //是否必须选择数据字典编码
+    	        required: true,
+    	        
+    	        missingMessage: '请从数据字典中选择一个数据项',
+			
+				// 回调函数 当用户选择了某个数据字典代码后后调用
+				onChange : function(dictCode){   	
+				},
+				
+				
+				//对加载成功的数据字典数据进行二次处理，处理完毕返回
+				onLoadData: function(data) {
+					data.unshift({dictCode: "", dictDesc: "请选择..."});
+					
+					return data;					
+				},
+				
+				//对类型加载成功的数据字典数据进行二次处理，处理完毕返回
+				onLoadTypeData: function(data) {
+					data.unshift({typeCode: "", typeDesc: "请选择类型..."});
+					
+					return data;					
+				}
+				
+			};
+			
+			//普通调用方式
+			//selectDictCode(params);
+			
+			//jquery调用方式
+			$("#seleDictCode").selectDictCodePlugin(params);
+			
+		}
+		
+		//获取选择的数据字典值
+		function getDictCode() {
+			alert($("#seleDictCode").selectDictCodePlugin("getValue"));
+		}
+		
+		//获取选择的数据字典名称
+		function getDictDesc() {
+			alert($("#seleDictCode").selectDictCodePlugin("getText"));
+		}
+		
+		//设置数据字典值
+		function setDictCode() {
+			$("#seleDictCode").selectDictCodePlugin("setValue", "F");
+		}
+		
+		//设置数据字典名称
+		function setDictDesc() {
+			$("#seleDictCode").selectDictCodePlugin("setText", "女");
+		}
+		
+		//获取选择的数据字典类型值
+		function getDictTypeCode() {
+			alert($("#seleDictCode").selectDictCodePlugin("getTypeValue"));
+		}
+
+		//设置数据字典类型值
+		function setDictTypeCode() {
+			$("#seleDictCode").selectDictCodePlugin("setTypeValue", "GENDER");
+		}
+
+		//获取选择的数据字典类型描述
+		function getDictTypeDesc() {
+			alert($("#seleDictCode").selectDictCodePlugin("getTypeDesc"));
+		}
+
+		//设置数据字典类型描述
+		function setDictTypeDesc() {
+			$("#seleDictCode").selectDictCodePlugin("setTypeDesc", "HR管理--性别");
+		}
+	</script>
+</head>
+<body onload="showCombobox();">
+    <div id="seleDictCode"></div>
+    
+	
+	<br>
+	<a href="javascript:getDictTypeCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">获取类型值</a>	
+	<a href="javascript:setDictTypeCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">设置类型值</a>	
+	<a href="javascript:getDictTypeDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">获取类型描述</a>	
+	<a href="javascript:setDictTypeDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">设置类型描述</a>	
+    
+    <br>
+	<a href="javascript:getDictCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">获取值</a>	
+	<a href="javascript:setDictCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">设置值</a>	
+	<a href="javascript:getDictDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">获取名称</a>	
+	<a href="javascript:setDictDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">设置名称</a>	
+</body>
+</html>

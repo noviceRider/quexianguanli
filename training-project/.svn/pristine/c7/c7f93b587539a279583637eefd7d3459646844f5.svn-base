@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dform.dao.PadconfigDao">
+
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultPadconfigObj">
+		select
+			a.config_id "configId",
+			a.form_name "formName",
+			a.table_name "tableName",
+			a.menu_id "menuId",
+			c.menu_name "menuName",
+			a.access_code "accessCode",
+			b.access_name "accessName",
+			b.access_desc "accessDesc",
+			a.api_type "apiType",
+			a.ui_config "uiConfig",
+			a.is_used "isUsed"
+	</sql>
+	
+	<!-- 分页获取数据 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dform.po.PadconfigPo">
+		<include refid="resultPadconfigObj"/>
+		from info_pad_dform_config a 
+		left join INFO_DATA_ACCESS b on a.access_code=b.access_code
+		left join SYS_MENU c on a.menu_id=c.menu_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				a.config_id like '%${params.bo.keyWord}%'
+				or
+				a.form_name like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.config_id
+		</if>
+	</select>
+
+	<!-- 查询所有数据 -->
+	<select id="findAll" resultType="com.bn.gmodule.dform.po.PadconfigPo">
+		<include refid="resultPadconfigObj"/>
+		from info_pad_dform_config a 
+		left join INFO_DATA_ACCESS b on a.access_code=b.access_code
+		left join SYS_MENU c on a.menu_id=c.menu_id
+	</select>
+	
+	<!-- 根据主键获取数据 -->
+	<select id="findById" parameterType="Integer" resultType="com.bn.gmodule.dform.po.PadconfigPo">
+		<include refid="resultPadconfigObj"/>
+		from info_pad_dform_config a 
+		left join INFO_DATA_ACCESS b on a.access_code=b.access_code
+		left join SYS_MENU c on a.menu_id=c.menu_id
+		where a.config_id = #{configId}
+	</select>
+
+	<!-- 查询最大的ID -->
+	<select id="findMaxId" resultType="Integer">
+		<!-- select Max(config_id) from info_pad_dform_config -->
+		select nextval(SEQ_INFO_PAD_DFORM_CONFIG)
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="addPadconfig" parameterType="com.bn.gmodule.dform.bo.PadconfigBo">
+		insert into info_pad_dform_config
+		(
+			config_id,
+			form_name,
+			table_name,
+			menu_id,
+			access_code,
+			api_type,
+			ui_config,
+			is_used
+		)
+		values
+		(
+			#{configId},
+			#{formName},
+			#{tableName},
+			#{menuId},
+			#{accessCode},
+			#{apiType},
+			#{uiConfig},
+			#{isUsed}
+		)
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="modifyPadconfig" parameterType="com.bn.gmodule.dform.bo.PadconfigBo">
+		update info_pad_dform_config
+		set
+			form_name = #{formName},
+			table_name = #{tableName},
+			menu_id = #{menuId},
+			access_code = #{accessCode},
+			api_type = #{apiType},
+			ui_config = #{uiConfig},
+			is_used = #{isUsed}
+		where config_id = #{configId}
+	</update>
+	
+	<!-- 根据tableName删除数据 -->
+	<delete id="removePadconfig" parameterType="Integer">
+		delete from info_pad_dform_config 
+		where config_id = #{configId}
+	</delete>
+	
+	<!-- 验证名称是否存在 -->
+	<select id="validateFormName" parameterType="com.bn.gmodule.dform.bo.PadconfigBo" resultType="Integer">
+		select count(*)
+		from info_pad_dform_config
+		where form_name = #{formName}
+	</select>
+	
+</mapper>

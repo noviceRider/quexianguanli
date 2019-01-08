@@ -1,0 +1,577 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理系统</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/AdminLTE.min.css">
+        <link rel="stylesheet" href="fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="fonts/ionicons.min.css">
+        <link rel="stylesheet" href="css/index.css">
+        <script src="../../js/jquery.min.js"></script>
+
+        <script src="js/highcharts/highcharts.js"></script>
+        <script src="js/highcharts/highcharts-more.js"></script>
+        <script src="js/highcharts/modules/exporting.js"></script>
+        <script src="js/highcharts/modules/series-label.js"></script>
+        <script src="js/highcharts/modules/oldie.js"></script>
+        <script src="js/highcharts/modules/funnel.js"></script>
+        <script src="js/highcharts/highcharts-zh_CN.js"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-lg-3 col-xs-3">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <small>新用户</small>
+                        <h3>10</h3>
+                        <p style="margin:0px">日: 10</p>
+                        <p style="margin:0px">周: 90</p>
+                        <p style="margin:0px">月: 310</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">新用户统计 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-3">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <small>收入合计</small>
+                        <h3>100000<sup style="font-size: 20px">元</sup></h3>
+
+                        <p style="margin:0px">日: 1000</p>
+                        <p style="margin:0px">周: 90000</p>
+                        <p style="margin:0px">月: 300010</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">收入合计 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-3">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <small>收款统计</small>
+                        <h3>100000<sup style="font-size: 20px">元</sup></h3>
+
+                        <p style="margin:0px">日: 1000</p>
+                        <p style="margin:0px">周: 90000</p>
+                        <p style="margin:0px">月: 300010</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-social-yen"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">收款统计 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-3">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <small>支出统计</small>
+                        <h3>100000<sup style="font-size: 20px">元</sup></h3>
+
+                        <p style="margin:0px">日: 1000</p>
+                        <p style="margin:0px">周: 90000</p>
+                        <p style="margin:0px">月: 300010</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">支出统计 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+
+        <div id="areascontent">
+            <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
+                <div style="float: left; width: 69.2%; border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>近七天收入合计（单位：万）</div>
+                        <div class="panel-body">
+                            <div id="container5" style="width:100%;height:300px"></div>
+
+                            <script language="JavaScript" type="text/javascript">
+                                $(function () {
+                                    $('#container5').highcharts({
+                                        chart: {
+                                            type: 'line'
+                                        },
+                                        title: {
+                                            text: ''
+                                        },
+                                        subtitle: {
+                                            text: ''
+                                        },
+                                        xAxis: {
+                                            categories: ['10-16', '10-17', '10-18', '10-19', '10-20', '10-21', '10-22']
+                                        },
+                                        yAxis: {
+                                            title: {
+                                                text: ''
+                                            }
+                                        },
+                                        plotOptions: {
+                                            line: {
+                                                dataLabels: {
+                                                    enabled: true          // 开启数据标签
+                                                },
+                                                enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                                            }
+                                        },
+                                        series: [{
+                                            name: '收入合计',
+                                            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2]
+                                        }]
+                                    });
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+                <div style="float: right; width: 30%;">
+                    <div style="border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>最近7天收入构成</div>
+                            <div class="panel-body">
+                                <div id="container4" style="width:100%;height:300px"></div>
+
+                                <script language="JavaScript" type="text/javascript">
+                                    $(function () {
+                                        $('#container4').highcharts({
+                                            chart: {
+                                                plotBackgroundColor: null,
+                                                plotBorderWidth: null,
+                                                plotShadow: false
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            tooltip: {
+                                                headerFormat: '{series.name}<br>',
+                                                pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                                            },
+                                            plotOptions: {
+                                                pie: {
+                                                    allowPointSelect: true,
+                                                    cursor: 'pointer',
+                                                    dataLabels: {
+                                                        enabled: false
+                                                    },
+                                                    showInLegend: true
+                                                }
+                                            },
+                                            series: [{
+                                                type: 'pie',
+                                                name: '占比',
+                                                data: [
+                                                    ['售卖', 35],
+                                                    {
+                                                        name: '典当',
+                                                        y: 20,
+                                                        sliced: true,
+                                                        selected: true
+                                                    },
+                                                    ['寄卖差价', 18],
+                                                    ['租金', 17],
+                                                    ['保养', 10]
+                                                ]
+                                            }]
+                                        });
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
+                <div style="float: left; width: 69.2%;">
+                    <div style="height: 360px; border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>最近7天商品交易</div>
+                            <div class="panel-body">
+
+                                <div id="container3" style="width:100%;height:300px"></div>
+                                <script language="JavaScript" type="text/javascript">
+                                    $(function () {
+                                        $('#container3').highcharts({
+                                            chart: {
+                                                type: 'area'
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                allowDecimals: false,
+                                                labels: {
+                                                    formatter: function () {
+                                                        return this.value; // clean, unformatted number for year
+                                                    }
+                                                }
+                                            },
+                                            yAxis: {
+                                                title: {
+                                                    text: ''
+                                                },
+                                                labels: {
+                                                    formatter: function () {
+                                                        return this.value / 1000 + 'k';
+                                                    }
+                                                }
+                                            },
+                                            tooltip: {
+                                                pointFormat: '{series.name} 统计 <b>{point.y:,.0f}</b>元'
+                                            },
+                                            plotOptions: {
+                                                area: {
+                                                    pointStart: 10,
+                                                    marker: {
+                                                        enabled: false,
+                                                        symbol: 'circle',
+                                                        radius: 2,
+                                                        states: {
+                                                            hover: {
+                                                                enabled: true
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            series: [{
+                                                name: '鉴定数量',
+                                                data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+                                                    1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                                                    27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                                                    26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                                                    24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                                                    22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                                                    10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+                                            }, {
+                                                name: '成交数量',
+                                                data: [null, null, null, null, null, null, null, null, null, null,
+                                                    5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+                                                    4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+                                                    15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+                                                    33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                                                    35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                                                    21000, 20000, 19000, 18000, 18000, 17000, 16000]
+                                            }]
+                                        });
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="float: right; width: 30%;">
+                    <div style="border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>最近7天商品转化率</div>
+                            <div class="panel-body">
+                                <!--<canvas id="Canvas5" style="height: 180px; width: 100%; margin-top: 10px;"></canvas> -->
+                                <div id="container2" style="width:100%; height: 308px; margin: 0 auto"></div>
+
+                                <script>
+                                    $(function () {
+                                        $('#container2').highcharts({
+                                            chart: {
+                                                type: 'funnel',
+                                                marginRight: 20
+                                            },
+                                            title: {
+                                                text: '',
+                                                x: -50
+                                            },
+                                            plotOptions: {
+                                                series: {
+                                                    dataLabels: {
+                                                        enabled: true,
+                                                        format: '<b>{point.name}</b> ({point.y:,.0f})',
+                                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                                                        softConnector: true
+                                                    },
+                                                    neckWidth: '0%',
+                                                    neckHeight: '15%'
+                                                    //-- Other available options
+                                                    // height: pixels or percent
+                                                    // width: pixels or percent
+                                                }
+                                            },
+                                            legend: {
+                                                enabled: false
+                                            },
+                                            series: [{
+                                                name: '用户',
+                                                data: [
+                                                    ['鉴定数量', 5654],
+                                                    ['成交数量', 4846]
+                                                ]
+                                            }]
+                                        });
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="rows" style="margin-bottom: 0.8%;overflow: hidden;">
+                <div style="float: left; width: 100%; margin-right: 0.8%;">
+                    <div style="border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>最近7天门店收入TOP5（单位：万）</div>
+                            <div class="panel-body">
+                                <!--<canvas id="Canvas3" style="height: 230px; width: 100%;"></canvas> -->
+                                <div id="container1" style="width:100%;height:400px"></div>
+
+                                <script>
+                                    $(function () {
+                                        $('#container1').highcharts({
+                                            chart: {
+                                                type: 'bar'
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                                categories: ['鹅岭店', '大坪店', '加州店', '新牌坊店', '人和店']
+                                            },
+                                            yAxis: {
+                                                min: 0,
+                                                title: {
+                                                    text: ''
+                                                }
+                                            },
+                                            legend: {
+                                                reversed: true
+                                            },
+                                            plotOptions: {
+                                                series: {
+                                                    stacking: 'normal'
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'TOP5',
+                                                data: [5, 3, 4, 7, 2]
+                                            }]
+                                        });
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rows" style="overflow: hidden;">
+                <div style="float: left; width: 100%; margin-right: 0.8%;">
+                    <div style="border: 1px solid #e6e6e6; border-radius: 4px; background-color: #fff;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>门店业绩对比图</div>
+                            <div class="panel-body">
+                                <div id="container" style="width:100%;height:400px"></div>
+                                <script>
+                                    var chart = Highcharts.chart('container', {
+                                        title: {
+                                            text: ''
+                                        },
+                                        subtitle: {
+                                            text: '门店业绩对比'
+                                        },
+                                        yAxis: {
+                                            title: {
+                                                text: ''
+                                            }
+                                        },
+                                        legend: {
+                                            layout: 'vertical',
+                                            align: 'right',
+                                            verticalAlign: 'middle'
+                                        },
+                                        plotOptions: {
+                                            series: {
+                                                label: {
+                                                    connectorAllowed: false
+                                                },
+                                                pointStart: 2
+                                            }
+                                        },
+                                        series: [{
+                                            name: '人和店',
+                                            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+                                        }, {
+                                            name: '新牌坊店',
+                                            data: [24916, 24064, 29742, 29851, 62490, 30282, 38121, 40434]
+                                        }, {
+                                            name: '加州店',
+                                            data: [43934, 17722, 16005, 19771, 20185, 54377, 32147, 69387]
+                                        }, {
+                                            name: '大坪店',
+                                            data: [17722, 43934, 67177, 12169, 45112, 62452, 34400, 44227]
+                                        }, {
+                                            name: '鹅岭店',
+                                            data: [12908, 5948, 8105, 11248, 34989, 11816, 78274, 78111]
+                                        }],
+                                        responsive: {
+                                            rules: [{
+                                                condition: {
+                                                    maxWidth: 500
+                                                },
+                                                chartOptions: {
+                                                    legend: {
+                                                        layout: 'horizontal',
+                                                        align: 'center',
+                                                        verticalAlign: 'bottom'
+                                                    }
+                                                }
+                                            }]
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            #copyrightcontent {
+                height: 30px;
+                line-height: 29px;
+                overflow: hidden;
+                position: absolute;
+                top: 100%;
+                margin-top: -30px;
+                width: 100%;
+                background-color: #fff;
+                border: 1px solid #e6e6e6;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .dashboard-stats {
+                float: left;
+                width: 25%;
+            }
+
+            .dashboard-stats-item {
+                position: relative;
+                overflow: hidden;
+                color: #fff;
+                cursor: pointer;
+                height: 105px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding-left: 15px;
+                padding-top: 20px;
+            }
+
+            .dashboard-stats-item .m-top-none {
+                margin-top: 5px;
+            }
+
+            .dashboard-stats-item h2 {
+                font-size: 28px;
+                font-family: inherit;
+                line-height: 1.1;
+                font-weight: 500;
+                padding-left: 70px;
+            }
+
+            .dashboard-stats-item h2 span {
+                font-size: 12px;
+                padding-left: 5px;
+            }
+
+            .dashboard-stats-item h5 {
+                font-size: 12px;
+                font-family: inherit;
+                margin-top: 1px;
+                line-height: 1.1;
+                padding-left: 70px;
+            }
+
+            .dashboard-stats-item .stat-icon {
+                position: absolute;
+                top: 18px;
+                font-size: 50px;
+                opacity: .3;
+            }
+
+            .dashboard-stats i.fa.stats-icon {
+                width: 50px;
+                padding: 20px;
+                font-size: 50px;
+                text-align: center;
+                color: #fff;
+                height: 50px;
+                border-radius: 10px;
+            }
+
+            .panel-default {
+                border: none;
+                border-radius: 0px;
+                margin-bottom: 0px;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+            .panel-default > .panel-heading {
+                color: #777;
+                background-color: #fff;
+                border-color: #e6e6e6;
+                padding: 10px 10px;
+            }
+
+            .panel-default > .panel-body {
+                padding: 10px;
+                padding-bottom: 0px;
+            }
+
+            .panel-default > .panel-body ul {
+                overflow: hidden;
+                padding: 0;
+                margin: 0px;
+                margin-top: -5px;
+            }
+
+            .panel-default > .panel-body ul li {
+                line-height: 27px;
+                list-style-type: none;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .panel-default > .panel-body ul li .time {
+                color: #a1a1a1;
+                float: right;
+                padding-right: 5px;
+            }
+        </style>
+
+    </body>
+</html>

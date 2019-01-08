@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dform.dao.ApptemplateDao">
+
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultApptemplateObj">
+		select
+			a.template_code "templateCode",
+			a.template_name "templateName",
+			a.template_desc "templateDesc",
+			a.template_cat "templateCat",
+			b.type_name "typeName",
+			a.module_config_url "moduleConfigURL",
+			a.ver "ver",
+			a.is_used "isUsed"
+	</sql>
+	
+	<!-- 分页获取数据 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dform.po.ApptemplatePo">
+		<include refid="resultApptemplateObj"/>
+		from info_app_template a
+		left join CODE_GE_MULTILEVEL b on a.template_cat = b.type_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				(
+				a.template_code like '%${params.bo.keyWord}%'
+				or
+				a.template_name like '%${params.bo.keyWord}%'
+				)and
+			</if>
+			b.info_type = '1001'
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.template_code
+		</if>
+	</select>
+
+	<!-- 查询所有数据 -->
+	<select id="findAll" resultType="com.bn.gmodule.dform.po.ApptemplatePo">
+		<include refid="resultApptemplateObj"/>
+		from info_app_template a
+		left join CODE_GE_MULTILEVEL b on a.template_cat = b.type_id
+		where b.info_type = '1001'
+	</select>
+
+	<!-- 查询出最大的版本号 -->
+	<select id="findMaxVer" resultType="Integer">
+		select Max(ver)
+		from info_app_template
+	</select>
+	
+	<!-- 根据主键获取数据 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.dform.po.ApptemplatePo">
+		<include refid="resultApptemplateObj"/>
+		from info_app_template a
+		left join CODE_GE_MULTILEVEL b on a.template_cat = b.type_id
+		where a.template_code = #{templateCode}
+		and b.info_type = '1001'
+	</select>
+
+	<!-- 新增数据 -->
+	<insert id="addTemplate" parameterType="com.bn.gmodule.dform.bo.ApptemplateBo">
+		insert into info_app_template
+		(
+			template_code,
+			template_name,
+			template_desc,
+			template_cat,
+			module_config_url,
+			ver,
+			is_used
+		)
+		values
+		(
+			#{templateCode},
+			#{templateName},
+			#{templateDesc},
+			#{templateCat},
+			#{moduleConfigURL},
+			#{ver},
+			#{isUsed}
+		)
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="modifyTemplate" parameterType="com.bn.gmodule.dform.bo.ApptemplateBo">
+		update info_app_template
+		set
+			template_name = #{templateName},
+			template_desc = #{templateDesc},
+			template_cat = #{templateCat},
+			module_config_url = #{moduleConfigURL},
+			ver = #{ver},
+			is_used = #{isUsed}
+		where template_code = #{templateCode}
+	</update>
+	
+	<!-- 删除数据 -->
+	<delete id="removeTemplate" parameterType="String">
+		delete from info_app_template 
+		where template_code = #{templateCode}
+	</delete>
+	
+	<!-- 验证名称是否存在 -->
+	<select id="validateTemplateName" parameterType="com.bn.gmodule.dform.bo.ApptemplateBo" resultType="Integer">
+		select count(*)
+		from info_app_template
+		where template_name = #{templateName}
+	</select>
+	
+</mapper>

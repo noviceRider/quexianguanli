@@ -1,0 +1,139 @@
+package com.huibo.issue.service;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bn.frame.util.CommonFunction;
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssueStateBo;
+import com.huibo.issue.dao.IssueStateDao;
+import com.huibo.issue.po.IssueState;
+
+
+
+/**
+* <p>Title: 缺陷管理 - IssueStateService </p>
+*
+* <p>Description:业务逻辑层的service</p>
+*
+* <p>Copyright: Copyright HBRC(c) 2018</p>
+*
+* <p>Company: 汇博人才</p>
+*
+* @author 王杰  
+* @version 1.0
+*/
+@Service
+public class IssueStateService {
+
+	@Autowired
+	private IssueStateDao issueStateDao;
+
+	/**
+	 * 新增
+	 * @param bo
+	 * @return
+	 */
+	public Map<String, Object> addIssueState(IssueStateBo bo) {
+		int resultCode = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		bo.setCreateBy(CommonFunction.getUserFromSession().getUserId());//获取当前登录用户的ID
+		bo.setModifyBy(CommonFunction.getUserFromSession().getUserId());
+		issueStateDao.addIssueState(bo);
+		resultCode = 1;
+		map.put("resultCode", resultCode);
+		return map;
+	}
+	
+	/**
+	 * 删除
+	 * @param stateCodes
+	 * @return
+	 */
+	public Map<String, Object> romoveStateById(String stateCodes){
+		int resultCode = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		issueStateDao.removeStateById(stateCodes);
+		resultCode = 1;
+		map.put("resultCode", resultCode);
+		return map;
+	}
+
+	/**
+	 * 修改
+	 * @param bo
+	 * @return
+	 */
+	public Map<String, Object> modifyIssueState(IssueStateBo bo) {
+		int resultCode = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		bo.setModifyBy(CommonFunction.getUserFromSession().getUserId());
+		issueStateDao.modifyIssueState(bo);
+		resultCode = 1;
+		map.put("resultCode", resultCode);
+		return map;
+	}
+	
+	/**
+	 * 分页查询
+	 * @param bo
+	 * @return
+	 */
+	public Map<String, Object> queryIssueState(IssueStateBo bo) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page page = new Page(bo);
+		List<IssueState> list = new ArrayList<IssueState>();
+		list = issueStateDao.queryIssueState(page);
+		map.put("rows", list);
+		map.put("total", page.getTotalRecord());
+		return map;
+	}
+
+	/**
+	 * 单条查询
+	 * @param stateCode
+	 * @return
+	 */
+	public Map<String, Object> queryStateById(String stateCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		IssueState po = issueStateDao.queryStateById(stateCode);
+		map.put("row", po);
+		return map;
+	}
+
+	/**
+	 * 禁用、启用转换
+	 * @param bo
+	 * @return
+	 */
+	public Map<String,Object> switchM(IssueStateBo bo) {
+		Map<String,Object> map = new HashMap<String,Object>();	
+		int row = 0;
+		issueStateDao.switchM(bo);
+		row = 1;
+		map.put("result", row);
+		return map;
+	}
+	
+	/**
+	 * 不重复验证
+	 * @param bo
+	 * @return
+	 */
+	public Map<String, Object> validateState(IssueStateBo bo) {
+		int resultCode = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer count = issueStateDao.validateState(bo);
+		if (count == 0) {
+			resultCode = 1;
+		}
+		map.put("resultCode", resultCode);
+		return map;
+	}	
+}

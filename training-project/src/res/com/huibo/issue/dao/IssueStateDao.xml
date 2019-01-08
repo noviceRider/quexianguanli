@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.IssueStateDao">
+
+	<!-- 新增 -->
+	<insert id="addIssueState" parameterType="com.huibo.issue.bo.IssueStateBo">
+		insert into i_issue_state
+		(
+			STATE_CODE,
+			STATE_DESC,	
+			MODULE_STATE,
+			CREATE_BY,
+			CREATE_TIME,
+			MODIFY_BY,
+			MODIFY_TIME
+		)
+		values
+		(
+			#{stateCode},
+			#{stateDesc},
+			#{moduleState},
+			#{createBy},
+			now(),
+			#{modifyBy},
+			now()
+		)
+	</insert>
+	
+	<!-- 根据id删除数据 -->
+	<delete id="removeStateById" parameterType="String">
+		delete 
+			from i_issue_state
+		where 
+			STATE_CODE in (${stateCodes})
+	</delete>
+	
+	<!-- 修改数据 -->
+	<update id="modifyIssueState" parameterType="com.huibo.issue.bo.IssueStateBo">
+		update i_issue_state
+		set
+			STATE_DESC=#{stateDesc},
+			MODULE_STATE=#{moduleState},
+			MODIFY_BY=#{modifyBy},
+			MODIFY_TIME=now()
+		where 
+			STATE_CODE=#{stateCode}
+	</update>
+	
+	<!-- 单条查询 -->
+	<select id="queryStateById" resultType="com.huibo.issue.po.IssueState" parameterType="String">
+		SELECT
+			state.STATE_CODE 		stateCode,
+			state.STATE_DESC 		stateDesc,
+			state.MODULE_STATE 	moduleState,
+			dict.DICT_DESC		moduleStateDesc,
+			state.CREATE_BY 		createBy,
+			USER1.USER_NAME 	createByName,
+			state.CREATE_TIME 	createTime,
+			state.MODIFY_BY 		modifyBy,
+			USER2.USER_NAME 	modifyByNmae,
+			state.MODIFY_TIME 	modifyTime
+		FROM
+			i_issue_state state
+		LEFT JOIN 
+			info_ge_dict dict ON state.MODULE_STATE = dict.DICT_CODE
+			AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		LEFT JOIN 
+			sys_user USER1 ON state.CREATE_BY = USER1.user_id
+		LEFT JOIN 
+			sys_user USER2 ON state.MODIFY_BY = USER2.user_id
+		where
+			state.STATE_CODE = #{stateCode}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="queryIssueState" resultType="com.huibo.issue.po.IssueState" parameterType="com.bn.javax.dao.Page">
+	SELECT
+		state.STATE_CODE 	stateCode,
+		state.STATE_DESC 	stateDesc,
+		dict.DICT_DESC 	moduleState,
+		state.CREATE_BY 	createBy,
+		USER1.USER_NAME 	createByName,
+		state.CREATE_TIME 	createTime,
+		state.MODIFY_BY 	modifyBy,
+		USER2.USER_NAME 	modifyByName,
+		state.MODIFY_TIME 	modifyTime
+	FROM
+		i_issue_state state
+	LEFT JOIN 
+		info_ge_dict dict ON state.MODULE_STATE = dict.DICT_CODE
+		AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+	LEFT JOIN 
+		sys_user USER1 ON state.CREATE_BY = USER1.user_id
+	LEFT JOIN 
+		sys_user USER2 ON state.MODIFY_BY = USER2.user_id
+	<where>
+		<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+			and state.STATE_DESC  like '%${params.bo.keyWord}%'
+		</if>
+	</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+				<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+				</if>
+		</if>
+	<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by state.CREATE_TIME desc
+		</if>
+	</select>
+	
+	<!-- 禁用、启用转换 -->
+	<update id="switchM" parameterType="com.huibo.issue.bo.IssueStateBo">
+		update i_issue_state
+		set
+			MODULE_STATE=#{moduleState},
+			MODIFY_TIME=now()
+		where 
+			STATE_CODE=#{stateCode}
+	</update>
+	
+	<!-- 验证 -->
+	<select id="validateState" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM i_issue_state state
+		<where>
+			<if test="stateCode != null and stateCode != ''">
+				and state.STATE_CODE = #{stateCode}
+			</if>
+			<if test="stateDesc != null and stateDesc != ''">
+				and state.STATE_DESC = #{stateDesc}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,37 @@
+package com.huibo.issue.dao;
+
+import java.util.List;
+
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssuePriorityBo;
+import com.huibo.issue.po.IssuePriorityPo;
+
+
+/**
+* <p>Title: 缺陷管理系统 - IssuePriorityDao</p>
+*
+* <p>Description:Dao层</p>
+*
+* <p>Copyright: Copyright bnkj(c) 2016</p>
+*
+* <p>Company: 重庆汇博有限公司</p>
+*
+* @author 彭忠义 
+* @version 1.0
+*/
+public interface IssuePriorityDao {
+
+	public Integer addPriorityPo(IssuePriorityPo priorityPo);
+
+	public List<IssuePriorityPo> getIssuePriority(Page page);
+
+	public Integer delPriorityPo(String[] delIds);
+
+	public IssuePriorityPo getIssuePriorityId(String id);
+
+	public void updPriorityPo(IssuePriorityPo priorityPo);
+
+	public Integer validatePriorityCode(IssuePriorityPo po);
+	
+
+}

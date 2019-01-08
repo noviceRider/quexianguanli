@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.MetaTableDao">
+	
+<!-- 维护表数据 -->
+
+	<!-- 返回分页查询数据的结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.commondata.po.MetaTablePo">
+		select
+			a.table_name "tableName",
+			a.table_type "tableType",
+			b.dict_desc "tableTypeDesc",
+			a.table_desc "tableDesc",
+			a.entity_name "entityName",
+			a.entity_desc "entityDesc",
+			a.is_used "isUsed",
+			a.sort_no "sortNo"
+		from
+			info_meta_table a
+		left join info_ge_dict b on a.table_type = b.dict_code
+		where b.type_code = 'GMODULE_TABLE_TYPE'
+		<if test="params.bo.tableType != null and params.bo.tableType != ''">
+			and a.table_type = ${params.bo.tableType}
+		</if>
+		<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+		and(
+			a.table_name like '%${params.bo.keyWord}%'
+			or
+			a.entity_name like '%${params.bo.keyWord}%'
+			or
+			a.table_desc like '%${params.bo.keyWord}%'
+			)
+		</if>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.table_name
+		</if>
+	</select>
+
+	<!-- 根据tableName查询数据返回一条具体的数据 -->
+	<select id="findByTableName" parameterType="String" resultType="com.bn.gmodule.commondata.po.MetaTablePo">
+		select
+			a.table_name "tableName",
+			a.table_type "tableType",
+			b.dict_desc "tableTypeDesc",
+			a.table_desc "tableDesc",
+			a.entity_name "entityName",
+			a.entity_desc "entityDesc",
+			a.is_used "isUsed",
+			a.sort_no "sortNo"
+		from
+			info_meta_table a
+		left join info_ge_dict b on a.table_type = b.dict_code
+		where
+			table_name = #{tableName} and TYPE_CODE='GMODULE_TABLE_TYPE'
+	</select>
+	
+	<!-- 根据tableType查询数据 -->
+	<select id="findByTableType" parameterType="String" resultType="com.bn.gmodule.commondata.po.MetaTablePo">
+		select
+			a.table_name "tableName",
+			a.table_type "tableType",
+			b.dict_desc "tableTypeDesc",
+			a.table_desc "tableDesc",
+			a.entity_name "entityName",
+			a.entity_desc "entityDesc",
+			a.is_used "isUsed",
+			a.sort_no "sortNo"
+		from
+			info_meta_table a
+		left join info_ge_dict b on a.table_type = b.dict_code
+		where
+			table_type = #{tableType} and b.TYPE_CODE = 'GMODULE_TABLE_TYPE'
+	</select>
+
+	<!-- 返回当前数据库中最大的sortNo -->
+	<select id="findMaxSortNo" resultType="String">
+		select max(sort_no)
+			from info_meta_table
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="addMetaTable" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo">
+		insert into info_meta_table
+		(
+			table_name,
+			table_type,
+			table_desc,
+			entity_name,
+			entity_desc,
+			is_used,
+			sort_no
+		)
+		values
+		(
+			#{tableName},
+			#{tableType},
+			#{tableDesc},
+			#{entityName},
+			#{entityDesc},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="modifyMetaTable" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo">
+		update info_meta_table
+		set
+			table_type = #{tableType},
+			table_desc = #{tableDesc},
+			entity_name = #{entityName},
+			entity_desc = #{entityDesc},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where table_name = #{tableName}
+	</update>
+	
+	<!-- 根据tableName删除数据 -->
+	<delete id="removeMetaTable" parameterType="String">
+		delete from info_meta_table 
+		where table_name = #{tableName}
+	</delete>
+	
+	<!-- 根据type删除数据 -->
+	<delete id="deleteByTableType" parameterType="String">
+		delete from info_meta_table 
+		where table_type = #{tableType}
+	</delete>
+	
+	<!-- 验证表名是否存在 -->
+	<select id="validateTableName" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo" resultType="Integer">
+		select
+			count(*)
+		from info_meta_table 
+		where table_name = #{tableName}
+	</select>
+
+	<!-- 验证实体名是否存在 -->
+	<select id="validateEntityName" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo" resultType="Integer">
+		select
+			count(*)
+		from info_meta_table 
+		where entity_name = #{entityName}
+	</select>
+	
+	<!-- 生成表 -->
+	<update id="createTable" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo">
+		create table ${tableName}(
+			<foreach collection="columnList" item="bo" index="index">
+				<if test="bo.notNull=='1'">
+					${bo.columnName} ${bo.columnTypeDesc}(${bo.columnLength}) not null,
+				</if>
+				<if test="bo.notNull=='0'">
+					${bo.columnName} ${bo.columnTypeDesc}(${bo.columnLength}),
+				</if>
+			</foreach>
+			<foreach collection="columnList" item="bo" index="index">
+				<if test="bo.isPrimaryKey=='1'">
+					primary key (${bo.columnName})
+				</if>
+			</foreach>
+		)
+	</update>
+	
+	<!-- 删除表 -->
+	<update id="dropTable" parameterType="String">  
+        {call proc_dropifexists(#{tableName})}   
+    </update>
+	
+</mapper>

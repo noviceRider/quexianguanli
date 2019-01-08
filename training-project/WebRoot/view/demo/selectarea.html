@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>城市-区域-片区三级联动</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script src="../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/house/plugin/selectarea.js"></script>
+	<script>
+		function showCombox(){
+			//获取主页面查询 新增、修改时地区
+			$("#selectArea").selectAreaPlugin({
+				// 装 combobox的div的id
+				id :  'selectArea',
+				// 需要创建的combox 的id cityId:城市combox的id areaId：区域combox的id subAreaId:片区combox的id
+				cityId: 'cityId',
+				areaId : 'areaId',
+				subAreaId : 'subAreaId',
+				// 默认加载的城市区域
+				defaultCityName : '01',
+				// 默认加载的区域的片区id
+				defaultAreaId : '',
+				
+				defaultSubAreaId:'',
+				
+				// 是否显示城市combox 
+				showCityCbb : 1,
+				
+				//是否显示 城市类型combox 
+				showCityAreaCbb : 1,
+				
+				//城市、区域、片区 选择combox的宽度
+				cityWidth: '100px',
+				areaWidth: '100px',
+				subAreaWidth: '100px',
+				
+				onChange : function (data){
+					var alldata = $("#selectArea").selectAreaPlugin("getAllDescValue");
+				},
+				
+				//对加载成功的城市数据进行二次处理，处理完毕返回
+				onLoadCityData: function(data) {
+					data.unshift({dictCode: "", dictDesc: "全部城市"});
+					return data;					
+				},	
+				//对加载成功的区域数据进行二次处理，处理完毕返回
+				onLoadAreaData: function(data) {
+					data.unshift({areaId: "", areaName: "全部区域"});
+					return data;					
+				},
+				//对加载成功的片区数据进行二次处理，处理完毕返回
+				onLoadSubAreaData: function(data) {
+					data.unshift({areaId: "", areaName: "全部片区"});
+					return data;					
+				}
+			});
+		}
+		
+		// 获取城市编码
+		function getCityCode(){
+			alert($("#selectArea").selectAreaPlugin("getCityValue"));
+		}
+		
+		// 设置城市编码 
+		function setCityCode(){
+			$("#selectArea").selectAreaPlugin("setCityValue","01");
+		}
+		
+		// 获取城市描述
+		function getCityDesc(){
+			alert($("#selectArea").selectAreaPlugin("getCityDesc"));
+		}
+		
+		// 设置城市描述
+		function setCityDesc(){
+			$("#selectArea").selectAreaPlugin("setCityDesc","重庆");
+		}
+		
+		// 获取区域编码 
+		function getAreaCode(){
+			alert($("#selectArea").selectAreaPlugin("getAreaValue"));
+		}
+		
+		// 设置区域编码
+		function setAreaCode(){
+			$("#selectArea").selectAreaPlugin("setAreaValue",{
+				cityVal:"01",
+				areaVal:"2"
+			});
+		}
+		
+		// 获取区域描述
+		function getAreaDesc(){
+			alert($("#selectArea").selectAreaPlugin("getAreaDesc"));
+		}
+		
+		// 设置区域描述
+		function setAreaDesc(){
+			$("#selectArea").selectAreaPlugin("setAreaDesc","江北区");
+		}
+		
+		// 获取片区编码
+		function getSubAreaCode(){
+			alert($("#selectArea").selectAreaPlugin("getValue"));
+		}
+		
+		// 设置片区编码
+		function setSubAreaCode(){
+			$("#selectArea").selectAreaPlugin("setValue","4");
+		}
+		
+		// 获取片区描述
+		function getSubAreaDesc(){
+			alert($("#selectArea").selectAreaPlugin("getText"));
+		}
+		
+		// 设置片区描述 
+		function setSubAreaDesc(){
+			$("#selectArea").selectAreaPlugin("setText","大坪");
+		}
+		
+		
+		// 获取所有编码 
+		function getAllCode(){
+			alert($("#selectArea").selectAreaPlugin("getAllCodeValue"));
+		}		
+		
+		// 设置所有编码 
+		 function setAllCode(){
+			$("#selectArea").selectAreaPlugin("setAllCodeValue",{
+				cityVal:"01",
+				areaVal:"1",
+				subAreaVal:"4" 
+			});
+		}	 
+		
+		// 获取所有描述  
+		function getAllDesc(){
+			alert($("#selectArea").selectAreaPlugin("getAllDescValue"));
+		}	
+		
+		// 设置所有描述  
+		function setAllDesc(){
+			$("#selectArea").selectAreaPlugin("setAllDescValue",{
+			    cityVal:"重庆",
+				areaVal:"渝中区",
+				subAreaVal:"大坪" 
+			});
+		} 
+		
+		
+	</script>
+</head>
+<body onload="showCombox()">
+	<div id="selectArea"></div>
+	
+	<div style="margin-top:10px;">
+		<a href="javascript:getCityCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getCityValue 获取城市编码</a>	
+		<a href="javascript:setCityCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setCityValue 设置城市编码</a>	
+		<a href="javascript:getCityDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getCityDesc 获取城市描述</a>	
+		<a href="javascript:setCityDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setCityDesc 设置城市描述</a>	
+		   
+		<br>
+		<a href="javascript:getAreaCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAreaValue 获取区域编码</a>	
+		<a href="javascript:setAreaCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAreaValue 设置区域编码</a>	
+		<a href="javascript:getAreaDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAreaDesc 获取区域名称</a>	
+		<a href="javascript:setAreaDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAreaDesc 设置区域名称</a>	
+		
+		<br>
+		<a href="javascript:getSubAreaCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getValue 获取片区编码</a>	
+		<a href="javascript:setSubAreaCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setValue 设置片区编码</a>	
+		<a href="javascript:getSubAreaDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getText 获取片区名称</a>	
+		<a href="javascript:setSubAreaDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setText 设置片区名称</a>	
+		
+		<br>
+		<a href="javascript:getAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllCodeValue 获取所有值的编码</a>	
+		<a href="javascript:setAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllCodeValue 设置所有值的编码</a>	
+		<a href="javascript:getAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllDescValue 获取所有描述</a>	
+		<a href="javascript:setAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllDescValue 设置所有描述</a>	
+	</div>
+</body>
+</html>

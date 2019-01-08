@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>resourcemanage.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/common/main.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/icon.css">
+<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/common.js"></script>
+<script type="text/javascript" src="js/resourcemanage.js"></script>
+<style type=text/css>
+.tree-title {
+	font-size: 13px;
+}
+/* 改变datagrid标题的高度，使datagrid内部不出现滚动条 */
+.datagrid-header-row{
+	height:24px;
+}
+</style>
+</head>
+<body class="easyui-layout" style="margin-left:5px;margin-right:5px;">
+	<div data-options="region:'north',border:false" style="height:80px">
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'><img
+					src='../../../images/common/title.gif'
+					align='absmiddle' />资源管理</td>
+				<td style="text-align: right;"><a class="easyui-linkbutton"
+					data-options="iconCls:'icon-search'" onclick="queryResManage()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="javascript:doAddProjectRes()" id="addBtn"
+					class="easyui-linkbutton" iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a href="javascript:doModify()" id="modifyBtn"
+					class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="javascript:doDelete()" id="deleteBtn"
+					class="easyui-linkbutton" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+
+		<table class="btbForm">
+			<tbody>
+				<tr>
+					<td>所属资源大类&nbsp;&nbsp; <input id="searchresForm_dictCode"
+						name="modifyTypeForm_projectId" type="hidden" /> <input
+						id="searchresForm_dictDesc" name="modifyTypeForm_projectName"
+						class="easyui-textbox"
+						data-options="prompt:'请选择所属资源大类',width:230," readonly="readonly" />
+						<a id="selectBtn_res" class="easyui-linkbutton"
+						data-options="iconCls:'icon-add',plain:true" onclick="selectPro()"></a></a>
+						&nbsp;&nbsp;&nbsp;关键字&nbsp;<input id="resDesc_keyword"
+						class="easyui-textbox" name="keyWord"
+						data-options="prompt:'请输入资源描述'">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div data-options="region:'west',split:true" style="width:250px;">
+		<!-- 树形菜单，数据由js动态加载 -->
+		<ul id="tt" class="easyui-tree"></ul>
+	</div>
+
+	<!-- 功能列表 -->
+	<div data-options="region:'center'" style="width:99%;padding:0px;border:0px;overflow:hidden;">
+		<table id="dg" class="easyui-datagrid" style="width:100%;overflow-x:hidden;" data-options="pagination:true,pageSize:20,striped:true,onDblClickRow:onDblClickRow,onClickRow:onClickRow,selectOnCheck:false,singleSelect:true">
+			<thead>
+				<tr>
+					<th style="display:none;width:7%;" data-options="field:'resId',halign:'center',hidden:'true'">资源序号</th>
+					<th style="display:none;width:8%;" data-options="field:'projectId',halign:'center',hidden:'true'">所属项目</th>
+					<th style="display:none;width:7%;" data-options="field:'typeId',halign:'center',hidden:'true'">分类序号</th>
+					<th style="width:19%;" data-options="field:'resDesc',align:'left',halign:'center'">资源描述</th>
+					<th style="width:12%;" data-options="field:'infoTypeName',halign:'center'" >资源大类</th>
+					<th style="width:9%;" data-options="field:'typeName',halign:'center'" >所属分类</th>
+					<th style="width:14%;" data-options="field:'resFile',align:'left',halign:'center'">资源文件名</th>
+					<th style="width:8%;" data-options="field:'fileSize',align:'right',halign:'center',formatter:fileSizeFormatter">文件大小</th>
+					<th style="width:10%;" data-options="field:'mimeType',align:'left',halign:'center'">文件类型</th>
+					<th style="width:15%;" data-options="field:'isPic',align:'left',halign:'center',hidden:'true'">图片</th>
+					<th style="width:13%;" data-options="field:'modifyTime',align:'center',halign:'center',formatter:uploadTimeFormatter">上传时间</th>
+					<th style="width:8%;" data-options="field:'count',align:'center',halign:'center',formatter:countFormatter">引用次数</th>
+					<th style="width:8%;" data-options="field:'detail',align:'center',halign:'center',formatter:detailFormatter">操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	<!-- 预览图片 -->
+	<div id="showPics"></div>
+
+	<!-- 项目信息页面 -->
+	<div id="detaile" class="easyui-dialog" data-options="closed:true"></div>
+
+	<!-- 项目类型页面 -->
+	<div id="dictType" style="display: none;"></div>
+	
+	<!-- 查看资源引用页面 -->
+	<div id="showResDiv" style="display: none;">
+		<!-- 定义datagrid数据网格 -->
+		<div id="info_Div"  >
+			<!-- 选择不同获取不同的信息 -->
+			<!--<table class="btbForm" border="0">
+				 <tr>
+					<td>资源大类名称&nbsp; <input id="keyWord" name="keyWord"
+						class="easyui-textbox" data-options="prompt:'输入资源大类名称'"
+						style="width:200px;height:20px;">&nbsp;
+					</td>
+					<td style="text-align: right;width:80px;"><a class="easyui-linkbutton"
+						data-options="iconCls:'icon-search'" onclick="queryInfoType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+		
+			
+			<div style="margin-top:5px"></div> -->
+			
+			<table id="refTable" class="easyui-datagrid" style="float:center;width:100%;height:315px;" data-options="pagination:true,striped:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'resId',align:'left',halign:'center'" style="width:160px;">资源id</th>
+					<th data-options="field:'infoTypeName',align:'left',halign:'center'" style="width:160px;">信息类型</th>
+					<th data-options="field:'infoId',align:'left',halign:'center'" style="width:150px;">信息id</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+	
+	<div id="show_res_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#showResDiv').dialog('close');">关闭</a>
+  	</div>
+</body>
+</html>

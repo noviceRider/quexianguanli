@@ -1,0 +1,602 @@
+<head>
+	<script type="text/javascript" src="js/padconfig_uiconfig.js"></script>
+	<style type="text/css">
+		.item_widget {
+			text-align: left;
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+			font-weight: bold;
+			background-color: #eaf2ff;
+			border: 1px solid #ccc;
+			border-width: 0 0 1px 0;
+			cursor: pointer;
+		}
+		.item_widget img{
+			vertical-align:middle;
+			margin-left: 10px;
+			margin-right: 5px;
+		}
+		
+		.item_widget:hover {
+			background-color: #ffe48d;
+		}
+		
+		.form_preview{
+			border:1px solid #bbb;
+		}
+		
+		.catagory_preview{
+			border:1px solid #bbb;
+		}
+		
+		.groups_preview{
+			border:1px solid #bbb;
+		}
+		
+		.items_preview{
+			border:1px solid #bbb;
+		}
+		
+		.items_items_preview{
+			border:1px solid #bbb;
+		}
+		
+		.options_preview{
+			border:1px solid #bbb;
+		}
+		
+		.bg_click{
+			border: 1px solid red;
+		}
+		
+		#previewImg{
+			text-align: center;
+			height: 40%;
+		}
+		
+		#container_preview .item_preview {
+			min-height: 32px;
+			border: 1px dotted #ccc;
+			display: block;
+			margin: 5px 5px 5px 5px;
+		}
+		
+		#container_preview .item_preview:hover {
+			background-color: #ffe48d;
+		}
+		#container_preview .item_preview.selected {
+			border-color: #f00;
+		}
+	</style>
+</head>
+<body>
+	<div id="padconfig_uiconfig_div" style="width:1000px;height:600px;">
+		<div id="cc" class="easyui-layout" style="width:100%;height:100%;">
+		    <div data-options="region:'west',title:'控件',split:true" style="width:250px;">
+		    	<div id="widgetList">
+		    		
+		    	</div>
+		    </div>
+		    <div data-options="region:'center',title:'预览',tools:'#panelButtons'" style="padding:5px;background:#eee;">
+		    	<div id="container_preview" style="width:100%;height:100%;">
+		    		
+		    	</div>
+		    </div>
+		    <!-- 生成最终字符串按钮 -->
+		    <div id="panelButtons">
+				<a href="javascript:void(0)" class="icon-add" onclick="produceJson()"></a>
+			</div>
+			
+		    <div data-options="region:'east',title:'属性',split:true,tools:'#eastButtons'" style="width:260px;">
+		    	<table id="pg_widget" class="easyui-propertygrid" style="width:100%;" data-options="showGroup:false,scrollbarSize:0,onClickRow:pgClick,columns: mycolumns"></table>
+		    	<img id="previewImg" style="width:250px;height:120px;display:none;margin-left: auto;margin-right: auto;">
+		    </div>
+		    <!-- 东区按钮 -->
+		    <div id="eastButtons">
+				<a href="javascript:void(0)" class="icon-add" onclick="addPreview()"></a>
+				<a href="javascript:void(0)" class="icon-edit" onclick="editPreview()"></a>
+				<a href="javascript:void(0)" class="icon-remove" onclick="removePreview()"></a>
+			</div>
+		</div>
+	</div>
+	
+	<!-- optionsTn属性对话框 -->
+	<div id="optionsTnAdd" class="easyui-dialog" data-options="closed:true,buttons:'#optionsTnAddButtons',title:'检查项列表'" style="width:550px;height: 300px;overflow: auto;">
+		<div class="easyui-panel" style="width:100%;height:30px"data-options="style:{borderWidth:2}">
+			<table>
+				<tr>
+					<td>显示文本：</td>
+					<td><input id="addTextTn"></td>
+					<td>保存值：</td>
+					<td><input id="addNameTn"></td>
+				</tr>
+			</table>
+		</div>
+		<table id="optionsTn_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'text'" style="width:68%">显示文本</th>
+					<th data-options="field:'name'" style="width:28%">保存值</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- optionsTn属性对话框 的按钮 -->
+	<div id="optionsTnAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddOptionsTn()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveOptionsTn()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveOptionsTn()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelOptionsTn()">取消</a>
+	</div>
+	
+	<!-- optionsVt属性对话框 -->
+	<div id="optionsVtAdd" class="easyui-dialog" data-options="closed:true,buttons:'#optionsVtAddButtons',title:'选项'" style="width:550px;height: 300px;overflow: auto;">
+		<table>
+			<tr>
+				<td>保存值：</td>
+				<td><input id="addValueVt"></td>
+				<td>显示文本：</td>
+				<td><input id="addTextVt"></td>
+			</tr>
+		</table>
+		<table id="optionsVt_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'value'" style="width:48%">保存值</th>
+					<th data-options="field:'text'" style="width:48%">显示文本</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- optionsVt属性对话框 的按钮 -->
+	<div id="optionsVtAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddOptionsVt()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveOptionsVt()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveOptionsVt()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelOptionsVt()">取消</a>
+	</div>
+	
+	<!-- select属性对话框 -->
+	<div id="selectAdd" class="easyui-dialog" data-options="closed:true,buttons:'#selectAddButtons',title:'单选内容'" style="width:550px;height: 300px;overflow: auto;">
+		<table>
+			<tr>
+				<td>选项名称：</td>
+				<td><input id="addSelectName"></td>
+				<td>默认选中项：</td>
+				<td><input id="addSelectDefault"></td>
+			</tr>
+			<tr>
+				<td>按钮值：</td>
+				<td><input id="addSelectValue"></td>
+				<td>按钮显示文本：</td>
+				<td><input id="addSelectText"></td>
+			</tr>
+		</table>
+		<table id="select_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'value'" style="width:48%">按钮值</th>
+					<th data-options="field:'text'" style="width:48%">按钮显示文本</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- select属性对话框 的按钮 -->
+	<div id="selectAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddSelect()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveSelect()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveSelect()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelSelect()">取消</a>
+	</div>
+	
+	<!-- descList属性对话框 -->
+	<div id="descListAdd" class="easyui-dialog" data-options="closed:true,buttons:'#descListAddButtons',title:'关联下拉框内容'" style="width:650px;height: 500px;overflow: auto;">
+		<div class="easyui-panel" style="width:100%;"data-options="style:{borderWidth:2}">
+			paveDamage关联的下拉框对应下拉框的值:<br>
+			<table>
+				<tr>
+					<td>对应值：</td>
+					<td><input id="addPaveDamageValue"></td>
+					<td>显示内容：</td>
+					<td><input id="addPaveDamageText"></td>
+					<td>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddPaveDamage()">添加</a>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemovePaveDamage()">删除</a>
+					</td>
+				</tr>
+			</table>
+			<table id="paveDamage_datagrid" class="easyui-datagrid" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'value'" style="width:48%">对应值</th>
+						<th data-options="field:'text'" style="width:48%">显示内容</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="easyui-panel" style="width:100%;margin-top: 10px;"data-options="style:{borderWidth:2}">
+			apronDevice关联的下拉框对应下拉框的值:<br>
+			<table>
+				<tr>
+					<td>对应值：</td>
+					<td><input id="addApronDeviceValue"></td>
+					<td>显示内容：</td>
+					<td><input id="addApronDeviceText"></td>
+					<td>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddApronDevice()">添加</a>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveApronDevice()">删除</a>
+					</td>
+				</tr>
+			</table>
+			<table id="apronDevice_datagrid" class="easyui-datagrid" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'value'" style="width:48%">对应值</th>
+						<th data-options="field:'text'" style="width:48%">显示内容</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<!-- descList属性对话框 的按钮 -->
+	<div id="descListAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveDescList()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelDescList()">取消</a>
+	</div>
+	
+	<!-- checks属性对话框 -->
+	<div id="checksAdd" class="easyui-dialog" data-options="closed:true,buttons:'#checksAddButtons',title:'单选按钮和备注的集合'" style="width:550px;height: 400px;overflow: auto;">
+		<table>
+			<tr>
+				<td>单选标签：</td>
+				<td><input id="addChecksCheckLabel"></td>
+				<td>备注标签：</td>
+				<td><input id="addChecksNoteLabel"></td>
+			</tr>
+			<tr>
+				<td>单选名称：</td>
+				<td><input id="addChecksCheckName"></td>
+				<td>备注名称：</td>
+				<td><input id="addChecksNoteName"></td>
+			</tr>
+			<tr>
+				<td>默认值：</td>
+				<td><input id="addChecksDefault"></td>
+			</tr>
+		</table>
+		<table id="checks_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'checkLabel'" style="width:19%">单选标签</th>
+					<th data-options="field:'noteLabel'" style="width:19%">备注标签</th>
+					<th data-options="field:'checkName'" style="width:19%">单选名称</th>
+					<th data-options="field:'noteName'" style="width:19%">备注名称</th>
+					<th data-options="field:'default'" style="width:14%">默认值</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- checks属性对话框 的按钮 -->
+	<div id="checksAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddChecks()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveChecks()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveChecks()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelChecks()">取消</a>
+	</div>
+	
+	<!-- useInfo属性对话框 -->
+	<div id="useInfoAdd" class="easyui-dialog" data-options="closed:true,buttons:'#useInfoAddButtons',title:'第一行单选信息'" style="width:550px;height: 400px;overflow: auto;">
+		<table>
+			<tr>
+				<td>第一行名称：</td>
+				<td><input id="addUseInfoName"></td>
+				<td>默认值：</td>
+				<td><input id="addUseInfoDefault"></td>
+			</tr>
+			<tr>
+				<td>按钮的值：</td>
+				<td><input id="addUseInfoOpValue"></td>
+				<td>按钮显示内容：</td>
+				<td><input id="addUseInfoOpText"></td>
+			</tr>
+			<tr>
+				<td>1显示/0隐藏：</td>
+				<td><input id="addUseInfoOpVisible"></td>
+				<td>按钮名称：</td>
+				<td><input id="addUseInfoOpName"></td>
+			</tr>
+			<tr>
+				<td>按钮关联控件：</td>
+				<td><input id="addUseInfoOpLinkedName"></td>
+			</tr>
+		</table>
+		<!-- name：<input id="addUseInfoName">default：<input id="addUseInfoDefault"><br><hr>
+		optionsValue：<input id="addUseInfoOpValue">optionsText：<input id="addUseInfoOpText">
+		optionsVisible：<input id="addUseInfoOpVisible">optionsName：<input id="addUseInfoOpName">
+		optionsLinkedName：<input id="addUseInfoOpLinkedName"> -->
+		<table id="useInfo_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'value'" style="width:18%">按钮的值</th>
+					<th data-options="field:'text'" style="width:18%">按钮显示内容</th>
+					<th data-options="field:'visible'" style="width:18%">1显示/0隐藏</th>
+					<th data-options="field:'name'" style="width:18%">按钮名称</th>
+					<th data-options="field:'linkedName'" style="width:18%">按钮关联控件</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- useInfo属性对话框 的按钮 -->
+	<div id="useInfoAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddUseInfo()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveUseInfo()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveUseInfo()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelUseInfo()">取消</a>
+	</div>
+	
+	<!-- deviceInfo属性对话框 -->
+	<div id="deviceInfoAdd" class="easyui-dialog" data-options="closed:true,buttons:'#deviceInfoAddButtons',title:'第二行多选的信息'" style="width:550px;height: 400px;overflow: auto;">
+		<table>
+			<tr>
+				<td>第二行名称：</td>
+				<td><input id="addDeviceInfoName"></td>
+			</tr>
+			<tr>
+				<td>默认是否选中：</td>
+				<td><input id="addDeviceInfoOpDefault"></td>
+				<td>按钮的值：</td>
+				<td><input id="addDeviceInfoOpValue"></td>
+			</tr>
+			<tr>
+				<td>按钮显示内容：</td>
+				<td><input id="addDeviceInfoOpText"></td>
+				<td>按钮名称：</td>
+				<td><input id="addDeviceInfoOpName"></td>
+			</tr>
+			<tr>
+				<td>按钮关联控件</td>
+				<td><input id="addDeviceInfoOpLinkedName"></td>
+			</tr>
+		</table>
+		<!-- name：<input id="addDeviceInfoName"><br><hr>
+		optionsDefault：<input id="addDeviceInfoOpDefault">
+		optionsValue：<input id="addDeviceInfoOpValue">optionsText：<input id="addDeviceInfoOpText">
+		optionsName：<input id="addDeviceInfoOpName">
+		optionsLinkedName：<input id="addDeviceInfoOpLinkedName"> -->
+		<table id="deviceInfo_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'default'" style="width:18%">1选中0不选中</th>
+					<th data-options="field:'value'" style="width:18%">按钮的值</th>
+					<th data-options="field:'text'" style="width:18%">按钮显示内容</th>
+					<th data-options="field:'name'" style="width:18%">按钮名称</th>
+					<th data-options="field:'linkedName'" style="width:18%">按钮关联控件</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- deviceInfo属性对话框 的按钮 -->
+	<div id="deviceInfoAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddDeviceInfo()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveDeviceInfo()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveDeviceInfo()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelDeviceInfo()">取消</a>
+	</div>
+	
+	<!-- apuInfo属性对话框 -->
+	<div id="apuInfoAdd" class="easyui-dialog" data-options="closed:true,buttons:'#apuInfoAddButtons',title:'第三行单选信息'" style="width:550px;height: 400px;overflow: auto;">
+		<table>
+			<tr>
+				<td>第三行名称：</td>
+				<td><input id="addApuInfoName"></td>
+				<td>默认选中值：</td>
+				<td><input id="addApuInfoDefault"></td>
+			</tr>
+			<tr>
+				<td>按钮值：</td>
+				<td><input id="addApuInfoOpValue"></td>
+				<td>按钮显示内容：</td>
+				<td><input id="addApuInfoOpText"></td>
+			</tr>
+			<tr>
+				<td>按钮关联控件：</td>
+				<td><input id="addApuInfoOpLinkedName"></td>
+			</tr>
+		</table>
+		<!-- name：<input id="addApuInfoName">default：<input id="addApuInfoDefault"><br><hr>
+		optionsValue：<input id="addApuInfoOpValue">optionsText：<input id="addApuInfoOpText">
+		optionsLinkedName：<input id="addApuInfoOpLinkedName"> -->
+		<table id="apuInfo_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'value'" style="width:30%">按钮值</th>
+					<th data-options="field:'text'" style="width:32%">按钮显示内容</th>
+					<th data-options="field:'linkedName'" style="width:32%">按钮关联控件</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- apuInfo属性对话框 的按钮 -->
+	<div id="apuInfoAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddApuInfo()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveApuInfo()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveApuInfo()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelApuInfo()">取消</a>
+	</div>
+	
+	<!-- optionsTtp属性对话框 -->
+	<div id="optionsTtpAdd" class="easyui-dialog" data-options="closed:true,buttons:'#optionsTtpAddButtons',title:'按钮集合'" style="width:550px;height: 300px;overflow: auto;">
+		<table>
+			<tr>
+				<td>按钮显示内容：</td>
+				<td><input id="addTextTtp"></td>
+				<td>文字名称：</td>
+				<td><input id="addTextNameTtp"></td>
+			</tr>
+			<tr>
+				<td>图片名称：</td>
+				<td><input id="addPicNameTtp"></td>
+			</tr>
+		</table>
+		<!-- text：<input id="addTextTtp">textName：<input id="addTextNameTtp"><br>
+		picName:<input id="addPicNameTtp"> -->
+		<table id="optionsTtp_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'text'" style="width:32%">按钮显示内容</th>
+					<th data-options="field:'textName'" style="width:30%">文字名称</th>
+					<th data-options="field:'picName'" style="width:32%">图片名称</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- optionsTtp属性对话框 的按钮 -->
+	<div id="optionsTtpAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddOptionsTtp()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveOptionsTtp()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveOptionsTtp()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelOptionsTtp()">取消</a>
+	</div>
+	
+	<!-- header属性对话框 -->
+	<div id="headerAdd" class="easyui-dialog" data-options="closed:true,buttons:'#headerAddButtons',title:'列明集合'" style="width:550px;height: 300px;overflow: auto;">
+		<table>
+			<tr>
+				<td>显示内容：</td>
+				<td><input id="addHeaderLabel"></td>
+				<td>宽度（百分比）：</td>
+				<td><input id="addHeaderWidth"></td>
+			</tr>
+			<tr>
+				<td>位置：</td>
+				<td><input id="addHeaderAlign"></td>
+			</tr>
+		</table>
+		<!-- label：<input id="addHeaderLabel">width：<input id="addHeaderWidth"><br>
+		align:<input id="addHeaderAlign"> -->
+		<table id="header_datagrid" class="easyui-datagrid" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'label'" style="width:32%">显示内容</th>
+					<th data-options="field:'width'" style="width:30%">宽度（百分比）</th>
+					<th data-options="field:'align'" style="width:32%">位置</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- header属性对话框 的按钮 -->
+	<div id="headerAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddHeader()">添加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveHeader()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveHeader()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelHeader()">取消</a>
+	</div>
+	
+	<!-- columns属性对话框 -->
+	<div id="columnsAdd" class="easyui-dialog" data-options="closed:true,buttons:'#columnsAddButtons',title:'列的集合'" style="width:650px;height: 500px;overflow: auto;">
+		<div class="easyui-panel" style="width:100%;"data-options="style:{borderWidth:2}">
+			显示文本:<br>
+			<table>
+				<tr>
+					<td>列名称：</td>
+					<td><input id="addColumnsCheckItemName"></td>
+					<td>列类型：</td>
+					<td><input id="addColumnsCheckItemType"></td>
+				</tr>
+				<tr>
+					<td>文本内容：</td>
+					<td><input id="addColumnsCheckItemDataLabel"></td>
+					<td>对应值：</td>
+					<td><input id="addColumnsCheckItemDataValue"></td>
+					<td style="text-align: right">
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddCheckItemData()">添加</a>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveCheckItemData()">删除</a>
+					</td>
+				</tr>
+			</table>
+			<!-- name：<input id="addColumnsCheckItemName">type：<input id="addColumnsCheckItemType"><br>
+			lable:<input id="addColumnsCheckItemDataLabel">value:<input id="addColumnsCheckItemDataValue">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddCheckItemData()">添加</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveCheckItemData()">删除</a> -->
+			<table id="checkItemData_datagrid" class="easyui-datagrid" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'label'" style="width:48%">文本内容</th>
+						<th data-options="field:'value'" style="width:48%">对应值</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="easyui-panel" style="width:100%;margin-top: 10px;"data-options="style:{borderWidth:2}">
+			选择时间:<br>
+			<table>
+				<tr>
+					<td>列名称：</td>
+					<td><input id="addColumnsArriveTimeName"></td>
+					<td>列类型：</td>
+					<td><input id="addColumnsArriveTimeType"></td>
+				</tr>
+				<tr>
+					<td>默认值：</td>
+					<td><input id="addArriveTimeDefaultValue"></td>
+					<td></td>
+					<td></td>
+					<td style="text-align: right">
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddArriveTimeDefault()">添加</a>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveArriveTimeDefault()">删除</a>
+					</td>
+				</tr>
+			</table>
+			<!-- name：<input id="addColumnsArriveTimeName">type：<input id="addColumnsArriveTimeType"><br>
+			value：<input id="addArriveTimeDefaultValue">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddArriveTimeDefault()">添加</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveArriveTimeDefault()">删除</a> -->
+			<table id="arriveTimeDefault_datagrid" class="easyui-datagrid" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'value'" style="width:96%">默认值</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="easyui-panel" style="width:100%;margin-top: 10px;"data-options="style:{borderWidth:2}">
+			单选:<br>
+			<table>
+				<tr>
+					<td>列名称：</td>
+					<td><input id="addColumnsCheckFlagName"></td>
+					<td>列类型：</td>
+					<td><input id="addColumnsCheckFlagType"></td>
+				</tr>
+				<tr>
+					<td>默认值：</td>
+					<td><input id="addCheckFlagDefaultValue"></td>
+					<td></td>
+					<td></td>
+					<td style="text-align: right">
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddCheckFlagDefault()">添加</a>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveCheckFlagDefault()">删除</a>
+					</td>
+				</tr>
+			</table>
+			<!-- name：<input id="addColumnsCheckFlagName">type：<input id="addColumnsCheckFlagType"><br>
+			value：<input id="addCheckFlagDefaultValue">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="doAddCheckFlagDefault()">添加</a>
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doRemoveCheckFlagDefault()">删除</a> -->
+			<table id="checkFlagDefault_datagrid" class="easyui-datagrid" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'value'"  style="width:96%">默认值</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<!-- columns属性对话框 的按钮 -->
+	<div id="columnsAddButtons" style="text-align:right">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveColumns()">保存</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelColumns()">取消</a>
+	</div>
+	
+</body>

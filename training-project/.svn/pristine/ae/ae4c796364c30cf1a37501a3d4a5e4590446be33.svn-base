@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>用户登录日志</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+</head>
+<body>
+	<form name="searchForm" id="searchForm">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../images/common/title.gif' align='absmiddle'/> 登录日志  
+				</td>
+				<td style='text-align: right;'>
+					<a href="#" id="queryBtn" class="easyui-linkbutton" onclick="doSearch();" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="#" id="forceOfflineBtn" class="easyui-linkbutton" onclick="doForceOffline();" iconCls="icon-shutdown">&nbsp;下&nbsp;&nbsp;线&nbsp;</a>
+					<a href="#" id="clearSelectedBtn" class="easyui-linkbutton" onclick="doDeleteLog();" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a href="#" id="clearAllBtn" class="easyui-linkbutton" onclick="doClearAll();" iconCls="icon-trash-can">&nbsp;清&nbsp;&nbsp;空&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!--查询条件区域-->
+		<table class="btbForm">
+			<tr>
+			  <td>
+			      关键字&nbsp;
+			  <input class="easyui-textbox" id="keyWord" data-options="prompt:'请输入登录账号或姓名'" name="keyWord" size="20"/>&nbsp;
+			    &nbsp;&nbsp;&nbsp;状态&nbsp;
+			      <select id="status" name="status" class="easyui-combobox" data-options="panelHeight:'auto'" style="width:100px;">
+			      	<option value="" selected>所有状态</option>
+			      	<option value="1">在线</option>
+			      	<option value="0">下线</option>
+			      </select>
+				&nbsp;&nbsp;&nbsp;
+					在线时间自&nbsp;
+		  			<input readonly="readonly" type="text" id="beginDate" name="beginTime" style="width: 140px; " onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endDate\')}'});" 
+								class="Wdate"  align="left" value=""/>	  		
+			  		&nbsp;至&nbsp;
+			  		<input readonly="readonly" type="text" id="endDate" name="endTime" style="width: 140px; " onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'beginDate\')}'});" 
+								class="Wdate"  align="left" value="" />
+		  	</td>
+			</tr>
+		</table>
+	</form>
+	
+	<div style="margin:5px 0;"></div>
+	
+	<table id="tt" class="easyui-datagrid" style="width:100%;padding:10px;"
+			pagination="true" striped="true" checkOnSelect="true" selectOnCheck="false"
+			data-options="pageSize:15,pageList:[15,20,30,40,50],singleSelect:true,method:'post'">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:true"></th>
+					<th data-options="field:'logId',alias:'log_id',halign:'center'" width="11%" sortable="true">日志编号</th>
+					<th data-options="field:'userId',alias:'s.user_id',halign:'center'" width="12%" sortable="true">登录账号</th>
+					<th data-options="field:'userName',alias:'u.user_name',halign:'center'" width="18%" sortable="true">用户姓名</th>
+					<th data-options="field:'loginTime',alias:'login_time',halign:'center',align:'center'" width="17%" sortable="true" formatter="Common.DateTimeFormatter">进入时间</th>
+					<th data-options="field:'logoutTime',alias:'logout_time',halign:'center',align:'center'" width="17%" sortable="true" formatter="Common.DateTimeFormatter">退出时间</th>
+					<th data-options="field:'ip',alias:'ip',halign:'center'" width="13%" sortable="true">IP地址 </th>
+					<th data-options="field:'status',alias:'status',halign:'center',align:'center'" width="10%" sortable="true" formatter="statusFormatter">状态</th>
+				</tr>
+			</thead>
+	</table>
+	
+</body>
+
+<script>
+	//初始化datagrid动态加载数据的url
+	//$("#tt").datagrid(Common.createDatagridOptionsExt(basePath, "/dataaccess.json"));
+	$("#tt").datagrid(Common.createDatagridOptionsParams(basePath, "/dataaccess.json", 135, {accessId:"9201"}));
+	/**
+	* 对状态列进行格式化，1表示在线，0表示下线
+	**/
+	function statusFormatter(value, row, index) {
+		if(value == '1')
+			return '<font color="red">在线</font>';
+		else
+			return '下线';
+	}
+
+	/**
+	* 根据输入的查询条件执行查询操作
+	**/
+	function doSearch(){
+		var formData = $('#searchForm').serializeObject();
+		formData.accessId = "9201";
+		$('#tt').datagrid('load', formData); 
+	}
+
+	/**
+	* 强制选定的登录账号下线
+	**/
+	function doForceOffline() {
+		var selectedIds = Common.getSelectedIds('#tt', 'logId', 'logIds');
+		var ids = [];
+		for(var i in selectedIds){
+			ids.push(selectedIds[i].value);
+		}
+		var params = {logIds: ids.join(","), accessId: "9204"};
+		
+		if(selectedIds.length > 0) {
+			$.ajax({  
+				url: basePath + '/dataaccess.json',  
+				data: params,  
+				type: 'post',  
+				dataType: 'json',  
+				success:function(data) {
+					if(data.resultCode == 1) {
+						//处理成功，重新加载数据
+						$('#tt').datagrid('reload');
+						
+						$.messager.alert('提示','选定的登录账号已经成功下线!','info');
+					}
+					else
+						$.messager.alert('错误','处理过程中出现问题!','error');
+				},  
+				error : function() {
+					$.messager.alert('错误','服务器内部错误!','error');
+				}
+			});		
+		}else{
+			$.messager.alert('提示','请选择需要强制下线的账号!','info');
+		}
+	}
+
+	/**
+	* 清除选定的登录日志
+	**/
+	function doDeleteLog() {
+		var selectedIds = Common.getSelectedIds('#tt', 'logId', 'logIds');
+		var ids = [];
+		for(var i in selectedIds){
+			ids.push(selectedIds[i].value);
+		}
+		var params = {logIds: ids.join(","), accessId: "9203"};
+		if(selectedIds.length > 0) {
+			$.ajax({  
+				url: basePath + '/dataaccess.json',  
+				data: params,  
+				type: 'post',  
+				dataType: 'json',  
+				success:function(data) {
+					if(data.resultCode == 1) {
+						//处理成功，重新加载数据
+						$('#tt').datagrid('reload');
+						
+						$.messager.alert('提示','成功清除选定的登录日志!','info');
+					}
+					else
+						$.messager.alert('错误','处理过程中出现问题!','error');
+				},  
+				error : function() {
+					$.messager.alert('错误','服务器内部错误!','error');
+				}
+			});		
+		}else{
+			$.messager.alert('提示','请选择要清除的登录日志!','info');
+		}
+	}
+
+	/**
+	* 清空所有的登录日志
+	**/
+	function doClearAll() {
+		$.messager.confirm('提示信息', '清空日志操作将会把所有的登录日志从系统中彻底删除，该操作是不可恢复的，请确认是否继续？', function(r){
+			if (r){
+				$.ajax({  
+					url: basePath + '/dataaccess.json',  
+					type: 'post',  
+					data: {accessId: "9202"},
+					dataType: 'json',  
+					success:function(data) {
+						if(data.resultCode == 1) {
+							//处理成功，重新加载数据
+							$('#tt').datagrid('reload');
+							
+							$.messager.alert('提示','成功清空所有的登录日志!','info');
+						}
+						else
+							$.messager.alert('错误','处理过程中出现问题!','error');
+					},  
+					error : function() {
+						$.messager.alert('错误','服务器内部错误!','error');
+					}
+				});		
+			}
+		});
+	}
+</script>
+
+</html>

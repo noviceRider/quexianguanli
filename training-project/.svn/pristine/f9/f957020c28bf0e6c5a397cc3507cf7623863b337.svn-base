@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据字典管理模块配置</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../js/ejs_production.js"></script>
+	<script type="text/javascript" src="../../../js/dictSingleSelect.js"></script>
+	<script type="text/javascript" src="js/parsehtml2.js"></script>
+	<script type="text/javascript" src="js/template_1003.js"></script>
+  </head>
+  <body>
+  	  <!-- 标题-->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">数据字典管理模块配置
+    		</td>
+    		<td>
+    			<!-- 保存所有数据的按钮 -->
+				<div id="button" style="text-align: right;width: 99%;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="SaveAllData()">保存</a>
+				</div>
+    		</td>
+    	</tr>
+    </table>
+    
+    <form id="fm">
+    <div style="display: none;">
+    	<table style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+	   			<tr>
+	   				<td style="text-align: right;width: 70px;">模板编码</td>
+	   				<td ><input id="moudleCode" name="moudleCode"  class="easyui-textbox"  style="width: 160px;" data-options="required: true, missingMessage: '请输入模板编码'" ></td>
+	   			</tr>
+    	</table>
+    </div>
+    
+    <table style="width:99%;">
+     <tr>
+      	<td>
+      		<div class="easyui-panel" title="列表页面配置" data-options="buttons:'#button',collapsible:true" style="width: 100%;">
+		   		<table style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+		   			<tr>
+		   				<td style="text-align: right;width: ;">标题&nbsp;</td>
+		   				<td colspan=""><input id="title" name="title" class="easyui-textbox"  style="width: 300px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+		   				
+		   				<td>数据类型</td>
+		   				<td colspan=""><input class="easyui-textbox" id="dict_typeCode"></td>
+		   				
+		   			</tr>
+		   			<tr>
+		   				<td style="text-align: right;width: ;">查询&nbsp;</td>
+		   				<td>
+		   					<input type="hidden" id="searchUrl" name="searchUrl" value="dataaccess" data-options=""></input>
+		   					<select id="searchTypeId" name="searchType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'" style="width:100px;">
+								<option value=0>数据访问</option>
+								<option value=1>业务逻辑</option>
+							</select>
+		   					<input type="hidden" id="searchAccessCodeId" name="searchAccessCode" data-options="required: true, missingMessage: ''"></input>
+		   					<input class="easyui-textbox" id="searchAccessDescId" name="searchAccessDesc" data-options="required: true, missingMessage: '',editable:false,width:300"></input>
+		   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAccess('1001','search')"></a>
+		   				</td>
+		   				<td style="text-align: right;width: ;">新增&nbsp;</td>
+		   				<td>
+		   					<input type="hidden" id="addUrl" name="addUrl" value="dataaccess" data-options=""></input>
+		   					<select id="addTypeId" name="addType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto',onChange: function (newValue,oldValue) {changeValue('add');}" style="width:100px;">
+								<option value=0>数据访问</option>
+								<option value=1>业务逻辑</option>
+							</select>
+		   					<input type="hidden" id="addAccessCodeId" name="addAccessCode" data-options="required: true, missingMessage: ''"></input>
+		   					<input class="easyui-textbox" id="addAccessDescId" name="addAccessDesc" data-options="required: true, missingMessage: '',editable:false,width:300"></input>
+		   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAccess('1002','add')"></a>
+		   				</td>
+		   			</tr>
+		   			<tr>
+		   				<td style="text-align: right;width: ;">修改&nbsp;</td>
+		   				<td>
+		   					<input type="hidden" id="modifyUrl" name="modifyUrl" value="dataaccess" data-options=""></input>
+		   					<select id="modifyTypeId" name="modifyType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto',onChange: function (newValue,oldValue) {changeValue('modify');}" style="width:100px;">
+								<option value=0>数据访问</option>
+								<option value=1>业务逻辑</option>
+							</select>
+		   					<input type="hidden" id="modifyAccessCodeId" name="modifyAccessCode" data-options="required: true, missingMessage: ''"></input>
+		   					<input class="easyui-textbox" id="modifyAccessDescId" name="modifyAccessDesc" data-options="required: true, missingMessage: '',editable:false,width:300"></input>
+		   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAccess('1004','modify')"></a>
+		   				</td>
+		   				<td style="text-align: right;width: ;">删除&nbsp;</td>
+		   				<td>
+		   					<input type="hidden" id="deleteUrl" name="deleteUrl" value="dataaccess" data-options=""></input>
+		   					<select id="deleteTypeId" name="deleteType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto',onChange: function (newValue,oldValue) {changeValue('delete');}" style="width:100px;">
+								<option value=0>数据访问</option>
+								<option value=1>业务逻辑</option>
+							</select>
+		   					<input type="hidden" id="deleteAccessCodeId" name="deleteAccessCode" data-options="required: true, missingMessage: ''"></input>
+		   					<input class="easyui-textbox" id="deleteAccessDescId" name="deleteAccessDesc" data-options="required: true, missingMessage: '',editable:false,width:300"></input>
+		   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAccess('1003','delete')"></a>
+		   				</td>
+		   			</tr>
+		   			<tr>
+		   				<td colspan="8">
+		   					<div class="easyui-panel" title="查询条件" style="width: 100%;">
+			   					<table id="conditionTable" class="easyui-datagrid" style="height: 200px;" data-options="toolbar:'#query_btns',singleSelect:true" onDblClickRow="dblClickCondition()">
+			   						<thead>
+			   							<tr>
+			   								<th data-options="field:'name',align:'left',halign:'center',width:'25%'">名称</th>
+			   								<th data-options="field:'type',align:'left',halign:'center',width:'25%',hidden:true">类型</th>
+			   								<th data-options="field:'typeName',align:'left',halign:'center',width:'25%'">类型</th>
+			   								<th data-options="field:'label',align:'left',halign:'center',width:'25%'">标题</th>
+			   								<th data-options="field:'c',align:'center',halign:'center',width:'25%',formatter:conditionHandle">操作</th>
+			   							</tr>
+			   						</thead>
+			   					</table>
+		   					</div>
+		   				</td>
+		   			</tr>
+		   			<tr>
+		   				<td colspan="8">
+		   					<div class="easyui-panel" title="数据网格参数" style="width: 100%;">
+		   						<table>
+		   							<tr>
+		   								<td style="text-align: right;width: 80px;">表格ID&nbsp;</td>
+		   								<td><input class="easyui-textbox" id="id" name="id" data-options="required: true, missingMessage: '请输入表格ID'"></td>
+			   						</tr>
+		   						</table>
+			   					<table id="dgTable" class="easyui-datagrid" style="height: 212px;" data-options="toolbar:'#option_btns',pagination:true,pageSize:5,pageList:[5,10,20],singleSelect:true">
+			   						<thead>
+			   							<tr>
+			   								<th data-options="field:'field',align:'left',halign:'center',width:'15%'">列名</th>
+			   								<th data-options="field:'title',align:'left',halign:'center',width:'19%'">数据属性</th>
+			   								<th data-options="field:'align',align:'left',halign:'center',width:'12%'">对其方式</th>
+			   								<th data-options="field:'width',align:'left',halign:'center',width:'12%'">宽度</th>
+			   								<th data-options="field:'isFormatter',align:'center',width:'15%',halign:'center',formatter:isFormartter">是否格式化</th>
+			   								<th data-options="field:'d',align:'center',width:'12%',halign:'center',formatter:rowIsUsed">是否启用</th>
+			   								<th data-options="field:'c',align:'center',width:'15%',halign:'center',formatter:optionHandle">操作</th>
+			   								
+			   							</tr>
+			   						</thead>
+			   					</table>
+		   					</div>
+		   				</td>
+		   			</tr>
+		   		</table> 
+   			</div>
+     	</td>
+     </tr>
+     <tr>
+      <td>
+      <div class="easyui-panel" title="新增页面配置" style="width: 100%;" data-options="collapsible:true">
+    	<table style="width:100%;">
+			<tr>
+				<td style="text-align: right;width: 80px;">宽度&nbsp;</td>
+				<td><input class="easyui-textbox" id="width" name="width"  data-options="required: true, missingMessage: '请输入宽度',width:100"></td>
+				<td style="text-align: right;width: 80px;">高度&nbsp;</td>
+				<td><input class="easyui-textbox" id="height" name="height"  data-options="required: true, missingMessage: '请输入高度',width:100"></td>
+				<td style="text-align: right;width: 80px;">标题&nbsp;</td>
+				<td><input class="easyui-textbox" id="amTitle" name="amTitle"  data-options="required: true, missingMessage: '请输入标题'"></td>
+				<td style="text-align: right;width: 80px;">主键&nbsp;</td>
+				<td><input class="easyui-textbox" id="keyId" name="keyId"  data-options="required: true, missingMessage: '请输入主键'"></td>
+			</tr>
+		</table>
+    	<table id="addTable" class="easyui-datagrid" style="height: 200px;" data-options="toolbar:'#addhtml_handel_btns',singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'name',align:'left',halign:'center',width:'16%'">名称</th>
+					<th data-options="field:'title',align:'left',halign:'center',width:'17%'">标题</th>
+					<th data-options="field:'type',align:'center',halign:'center',width:'15%',hidden:true">类型</th>
+					<th data-options="field:'typeName',align:'center',halign:'center',width:'15%'">类型</th>
+					<th data-options="field:'validEmpty',align:'center',halign:'center',width:'16%',formatter:setValide">是否空验证</th>
+					<th data-options="field:'repeatUrl',align:'center',halign:'center',width:'20%',hidden:true">重复验证URL</th>
+					<th data-options="field:'repeatLogicId',align:'center',halign:'center',width:'20%',formatter:isRepeat">重复验证</th>
+					<th data-options="field:'isSingleLine',align:'center',halign:'center',width:'16%',formatter:setValide">是否单行</th>
+				</tr>
+			</thead>
+		</table>
+    </div>
+      </td>
+     </tr>
+    </table>
+    </form>
+    
+    <!-- 操作查询条件数据网格的按钮 -->
+   <div id="query_btns" style="text-align: right;">
+    	<a class="easyui-linkbutton" data-options="iconCls:'icon-add'"    onclick="addCondition()">增加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeCondition()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'"   onclick="modifyCondition()">修改</a>
+    </div>
+    
+    <!-- 查询条件新增、修改界面 -->
+    <div id="queryConditions_html" style="display: none;"></div>
+    <div id="queryConditions_dlg" class="easyui-dialog" data-options="buttons:'#queryconditons_btns',resizable:true,closed:true,modal:true," style="width: 520px;">
+	    <form id="queryConditions_fm">
+	    	<table style="border-collapse:separate; border-spacing:0px 10px; width: 100%;">
+	    		<tr>
+	    			<td style="text-align: right;width: 60px;">名称</td>
+	    			<td><select class="easyui-combobox" id="queryInputname" name="name" style="width: 150px;"  data-options="required: true, missingMessage: '请输入名称',editable:false"></select></td>
+	    			<td style="text-align: right;">标题</td>
+	    			<td><input class="easyui-textbox" id="label" name="label" style="width: 150px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+	    		</tr>
+	    	</table>
+	    </form>
+  	</div>
+  	
+  	<!-- 按钮 -->
+    <div id="queryconditons_btns" style="text-align: right;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveQueryConditions()">确定</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeQueryConditions()">关闭</a>
+  	</div>
+    
+    
+     <!-- 数据网格参数新增、修改界面 -->
+    <div id="dataoptions_html" style="display: none;"></div>
+    <!-- 数据网格参数操作按钮 -->
+    <div id="option_btns" style="text-align: right;">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyDataOption()">修改</a>
+    </div>
+    
+    <!-- 新增、修改界面操作按钮 -->
+    <div id="addhtml_handel_btns" style="text-align: right;">
+    	<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAmhtml()">增加</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeAmhtml()">删除</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyAmhtml()">修改</a>
+    </div>
+    
+    <!-- 选择代码类型界面 -->
+    <div id="typecode_html" style="display: none;"></div>
+    
+    <!-- 查询条件枚举新增、修改界面 -->
+    <div id="enum_am_html" style="display: none;"></div>
+    
+    <!-- 新增界面的新增、修改弹框 -->
+     <div id="add_html" style="display: none;"></div>
+     <div id="addhtml_dlg" class='easyui-dialog' data-options="buttons:'#amhtml_btns',closed:true" style="width:550px;">
+	    <form id="addhtml_fm">
+	    	<table style="border-collapse:separate; border-spacing:0px 10px;">
+	    		<tr>
+	    			<td style="text-align: right;width: 100px;">标题</td>
+	    			<td style="width: 190px;"><input class="easyui-textbox" id="title" name="title" style="width: 140px;" data-options="required: true, missingMessage: '请输入标题'"></td>
+	    			<td style="text-align: right;width: 80px;">名称</td>
+	    			<td><select class="easyui-combobox" id="fieldName" name="name" style="width: 140px;" data-options="required: true, missingMessage: '请输入名称',editable:false"></select></td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">类型</td>
+	    			<td><input class="easyui-textbox" id="type" name="type" style="width: 140px;" editable="false" data-options="required: true, missingMessage: '请输入类型'"></td>
+	    			<td style="text-align: right;">是否单行</td>
+	    			<td>
+	    				<input type="radio" value="1" name="isSingleLine">是
+    					<input type="radio" value="0" name="isSingleLine" checked="checked">否
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">重复验证</td>
+	    			<td>
+	    				<input type="hidden" id="repeatUrl" name="repeatUrl" style="width: 140px;" ></input>
+	    				<input type="hidden" id="addLogicAccessCodeId" name="repeatUrlLogicCode"></input>
+	    				<input class="easyui-textbox" id="addLogicAccessDescId" name="repeatUrlLogicDesc" style="width: 140px;" data-options=""></input>
+	   					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addLogic()"></a>
+	    			</td>
+    				<td style="text-align: right;">是否空验证</td>
+    				<td>
+    					<input type="radio" value="1" name="validEmpty" checked="checked">是
+    					<input type="radio" value="0" name="validEmpty">否
+    				</td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">数据来源</td>
+	    			<td><input class="easyui-combobox" id="dataSrc" name="dataSrc" style="width: 140px;" editable="false"></td>
+	    			<td class="editTypeCodeTd" style="text-align: right;">代码类型</td>
+	    			<td class="editTypeCodeTd" style="width: 190px;">
+	    				<input type="hidden" id="typeCode" name="typeCode">
+	    				<input class="easyui-textbox" id="typeDesc" name="typeDesc" editable="false" style="width: 140px;">
+	    				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEditTypeCode();"></a>
+	    			</td>
+	    		</tr>
+	    		<tr id="editEnumerationTr">
+	    			<td colspan="4">
+					  <table style="width:100%;border-spacing: 10px;">
+					   <tr>
+					    <td style="text-align: right;width:69px;" >枚举信息</td>
+						<td colspan="3" style="padding-left: 0px">
+							<table style="padding-left: 0px">
+								<tr>
+									<td style="padding-left: 0px">
+										<select name="columnEditEnum" id="columnEditEnum" class="" multiple="multiple"  style="width:300px;height:85px" size="13"></select>
+									</td>
+									<td>
+										<table>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEditEnum()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyEditEnum()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeEditEnum()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					   </tr>
+					  </table>
+					</td>
+	    		</tr>
+	    	</table>
+	    </form>
+  	</div>
+  	<div id="amhtml_btns" style="text-align: right;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveAmhtml()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeAmhtml()">关闭</a>
+  	</div>
+     
+     
+     
+     
+     <!-- 编辑页面枚举新增、修改界面 -->
+    <div id="editenum_am_html" style="display: none;"></div>
+
+     <!-- 数据访问选择界面 -->
+    <div id="template_dataaccess" style="display: none;"></div>
+
+     <!-- 业务逻辑选择界面 -->
+    <div id="template_businesslogic" style="display: none;"></div>
+
+  </body>
+</html>
+

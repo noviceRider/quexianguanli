@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>padconfig_table.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="padconfig_table_div" style="width: 680px;height: 350px" data-options="buttons:'#padconfig_table_div_btns'">
+   		<!-- 查询输入框及按钮 -->
+   	<form id="table_form">
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="tableNameKeyWord" class="easyui-textbox" data-options="prompt:'请输入名称或描述'" style="width:200px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchTableName()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!--我的数据访问 -->
+  		<div style="width:100%;">
+		<table style="width:100%;" id="padconfig_table_dg" class="easyui-datagrid"  data-options="pagination:true,striped:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'tableName',alias:'a.table_name',align:'left',halign:'center',sortable:'true'" style="width:30%">表名</th>
+					<th data-options="field:'tableDesc',alias:'a.table_desc',align:'left',halign:'center',sortable:'true'" style="width:35%">表描述</th>
+					<th data-options="field:'tableTypeDesc',alias:'a.table_type',align:'left',halign:'center',sortable:'true'" style="width:15%">分类</th>
+					<th data-options="field:'entityName',alias:'a.entity_name',align:'left',halign:'center',sortable:'true'" style="width:18%">实体名</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+	
+    <div id="padconfig_table_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectTableName()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelselectTableName()">取消</a>
+	</div>
+  </body>
+</html>

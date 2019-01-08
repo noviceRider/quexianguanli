@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dicttype_export.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<div id="selectDictType_export" style="width: 680px;height: 440px" data-options="buttons:'#dictManage_export_btns'">
+
+		<!-- 查询输入框及按钮 -->
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="dictKeyWord_export" class="easyui-textbox" data-options="prompt:'请输入编号或名称'" style="width:120px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDictTypeExport()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+
+		<!-- 数据网格 -->
+		<div style="width:100%;" >
+		<table id="dictType_export_dg"  class="easyui-datagrid" data-options="pageSize:10,pageList:[10,20,30],pagination:true,striped:true" style="width: 100%;">
+			<thead>
+				<tr style="text-align: right;">
+					<th data-options="field:'cb1',align:'center',checkbox:true," style="width:5%"></th>
+					<th data-options="field:'typeCode',alias:'type_code',align:'left',halign:'center',sortable:'true'" style="width: 21%;">类别编码</th>
+					<th data-options="field:'typeDesc',alias:'type_desc',align:'left',halign:'center',sortable:'true'" style="width: 35%;">类别名称</th>
+					<th data-options="field:'sortNo',alias:'sort_no',align:'center',halign:'center',sortable:'true'" style="width: 21%;">排序号</th>
+					<th data-options="field:'isUsed',alias:'is_used',align:'center',halign:'center',sortable:'true',formatter:setIsUsed" style="width: 19%;">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+
+	<div id="dictManage_export_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-export'"onclick="exportData()">导出</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#selectDictType_export').dialog('close')">关闭</a>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>queryconditions_am.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+  	<div id="dataoptions_dlg" data-options="buttons:'#dataoptions_btns'" style="width:540px;height: 190px;">
+	    <form id="dataoptions_fm">
+	    	<table style="border-collapse:separate; border-spacing:0px 10px;">
+	    		<tr>
+	    			<td style="text-align: right;width: 80px;">列名</td>
+	    			<td><input class="easyui-textbox" id="field" name="field" style="width: 160px;" data-options="required: true, missingMessage: '请输入列名'"></td>
+	    			<td style="text-align: right;width: 80px;">数据属性</td>
+	    			<td><input class="easyui-textbox" id="title" name="title" style="width: 160px;" data-options="required: true, missingMessage: '请输入数据属性'"></td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">对齐方式</td>
+	    			<td><input class="easyui-combobox" id="align" name="align" style="width: 160px;" editable="false"></td>
+	    			<td style="text-align: right;">宽度</td>
+	    			<td><input class="easyui-textbox" id="width" name="width" style="width: 160px;" data-options="required: true, missingMessage: '请输入宽度'"></td>
+	    		</tr>
+	    		<tr>
+	    			<td style="text-align: right;">是否格式化</td>
+	    			<td>
+	    				是<input type="radio" value="1" name="isFormatter">
+	    				否<input type="radio" value="0" name="isFormatter" checked="checked">
+	    			</td>
+	    			<td class="optionTypeCodeTd" style="text-align: right;">代码类型</td>
+	    			<td class="optionTypeCodeTd">
+	    				<input type="hidden" id="typeCode" name="typeCode">
+	    				<input class="easyui-textbox" id="typeDesc" name="typeDesc" editable="false" style="width: 160px;">
+	    				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDataOPtionTypeCode()"></a>
+	    			</td>
+	    		</tr>
+	    	</table>
+	    </form>
+  	</div>
+  	<div id="dataoptions_btns" style="text-align: right;">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveDataOption()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeDataOption()">关闭</a>
+  	</div>
+  </body>
+</html>

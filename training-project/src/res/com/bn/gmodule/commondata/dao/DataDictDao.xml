@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.DataDictDao">
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultDataDictObj">
+		select
+			dict_code "dictCode",
+			type_code "typeCode",
+			dict_desc "dictDesc",
+			is_used "isUsed",
+			sort_no "sortNo"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.commondata.po.DataDictPo">
+		select	
+			a.dict_code "dictCode",
+			a.type_code "typeCode",
+			a.dict_desc "dictDesc",
+			a.is_used "isUsed",
+			a.sort_no "sortNo",
+			b.type_desc "typeDesc"
+		from info_ge_dict a
+		left join code_ge_dicttype b on a.type_code = b.type_code
+		<where>
+			a.type_code = #{params.bo.typeCode}
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				and (dict_code like '%${params.bo.keyWord}%' or 
+				 	dict_desc like '%${params.bo.keyWord}%')
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.sort_no
+		</if>		
+	</select>
+	
+	<!-- 根据数据类型编码查找所有数据 -->
+	<select id="findByTypeCode" parameterType="String" resultType="com.bn.gmodule.commondata.po.DataDictPo">
+		<include refid="resultDataDictObj"/>
+		from info_ge_dict
+		where type_code = #{typeCode}
+		order by sort_no	
+	</select>
+	
+	<!-- 根据数据字典类型编号删除数据字典信息 -->
+	<delete id="deleteByTypeCode" parameterType="String">
+		delete from info_ge_dict where type_code = #{typeCode}
+	</delete>
+	
+		<!-- 根据数据类型编码查找所有数据 -->
+	<select id="findByName" parameterType="String" resultType="String">
+        select dict_code
+		from info_ge_dict
+		where dict_desc = #{dictDesc}	
+	</select>
+	
+	<!-- 根据数据类型主键查询信息 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.commondata.po.DataDictPo">
+		<include refid="resultDataDictObj"/>
+		from info_ge_dict
+		where dict_code = #{dictCode} and type_code = #{typeCode}
+	</select>
+	
+	<!-- 新增数据类型管理 -->
+	<insert id="addDataDict" parameterType="com.bn.gmodule.commondata.bo.DataDictBo">
+		insert into info_ge_dict (
+			dict_code,
+			type_code,
+			dict_desc,
+			is_used,
+			sort_no
+		) values (
+			#{dictCode},
+			#{typeCode},
+			#{dictDesc},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 根据数据类型管理编号修改信息 -->
+	<update id="modifyDataDict" parameterType="com.bn.gmodule.commondata.bo.DataDictBo">
+		update info_ge_dict
+		set
+			dict_desc = #{dictDesc},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where dict_code = #{dictCode} and type_code = #{typeCode}
+	</update>
+	
+	<!-- 根据数据类型管理编号删除信息 -->
+	<delete id="removeDataDict" parameterType="com.bn.gmodule.commondata.bo.DataDictBo">
+		delete from info_ge_dict where dict_code = #{dictCode} and type_code = #{typeCode}
+	</delete>
+	
+	<!-- 验证数据类型管理中文描述、英文描述是否存在 -->
+	<select id="validateDataDictDesc" parameterType="com.bn.gmodule.commondata.bo.DataDictBo" resultType="Integer">
+		select
+			count(*)
+		from info_ge_dict 
+		<where>
+			<if test="dictDesc != null and dictDesc != ''">
+				dict_desc = #{dictDesc}
+			</if>
+			<if test="typeCode != null and typeCode != ''">
+				and type_code = #{typeCode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查找数据库中最大的字典编码 -->
+	<select id="findMaxDictCode" parameterType="String" resultType="String">
+		select 
+			max(dict_code) dictCode
+		from info_ge_dict
+		where type_code = #{typeCode}	
+	</select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.frame.dao.SysParamDao">
+	<!-- 返回系统参数的(PO)数据对象 -->
+	<sql id="resultSysParamObj">
+		select
+			s.param_value "paramValue"
+	</sql>
+
+	<!-- 返回查询出的数据 -->
+	<select id="findById" parameterType="String" resultType="com.bn.frame.po.SysParamPo">
+		<include refid="resultSysParamObj"/>
+			from sys_param s 
+			where s.param_id = #{paramId}
+	</select>
+	
+	<!-- 查询全部的系统参数 -->
+	<select id="findAll" resultType="com.bn.frame.po.SysParamPo">
+		select
+			param_id "paramId",
+			param_value "paramValue",
+			param_desc "paramDesc"
+		from sys_param 
+	</select>	
+	
+	<!-- 修改版本号 -->
+	<update id="update" parameterType="com.bn.frame.po.SysParamPo">
+		update sys_param set param_value = #{paramValue} where param_id = #{paramId}
+	</update>
+</mapper>

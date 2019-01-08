@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="searchProjectPanel" data-options="buttons:'#sc_add'">
+		<form id="formsearchProject">
+			<table class="btbForm">
+				<tr>
+	    			<td style="text-align:left;">
+	    				关键字<input id="searchProjectId" name="projectId" class="easyui-datatext" />
+					</td>
+					<td style="text-align:left;">
+	    				<a id="formsearchProjectAbutton" style="color:blue" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchProjectAbutton()">查询</a>
+					</td>
+    			</tr>
+			</table>
+		</form>
+	
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!-- 类型数据 -->
+	  	<div style="width:100%;" id="searchTypeIssueBaseInfoPo">
+			<table id="searchlistTable" class="easyui-datagrid" border="1" style="width:580px" data-options="striped:true,fitColumns:true,autoRowHeight:true,pagination:true,loadMsg:'正在加载数据中，请等待！',singleSelect:true,pageList:[5,10,15,20],pageSize:5">   
+	   			<thead>   
+	        		<tr> 
+	        			<th data-options="field:'ck',checkbox:true"style="width:5%;" hidden></th>  
+	           		 	<th data-options="field:'projectId',width:240,align:'center',halign:'center'">项目编号</th>   
+	            		<th data-options="field:'projectName',width:240,align:'center',halign:'center'">项目名称</th>   
+	        		</tr>   
+	    		</thead>   
+			</table> 
+		</div>
+	</div>	
+	
+	<div id="sc_add">
+		<a id="searehFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="color:blue">确定</a>
+	</div>
+</body>
+</html>

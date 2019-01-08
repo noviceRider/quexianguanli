@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="showProjectDialog">
+    	<div id="pbase" data-options="title:'详细信息',selected:true">
+    		<br>
+    		项目名称&nbsp;&nbsp;<span id="showprojectName"></span>
+    		<br>
+    		<br>
+    		项目编号&nbsp;&nbsp;<span id="showprojectId"></span>
+    		<br>
+    		<br>
+    		项目简介&nbsp;&nbsp;<span id="showprojectIntro"></span>
+    		<br>
+    		<br>
+    		项目描述&nbsp;&nbsp;<span id="showprojectDsc"></span>
+    		<br>
+    		<br>
+    		上级项目名称&nbsp;&nbsp;<span id="showtopProjectName"></span>
+    		<br>
+    		<br>
+    		当前状态&nbsp;&nbsp;<span id="showdictCode"></span>
+    		<br>
+    		<br>
+    		创建人&nbsp;&nbsp;<span id="showcreateByName"></span>
+    		<br>
+    		<br>
+    		创建时间&nbsp;&nbsp;<span id="showcreateTime"></span>
+    		<br>
+    		<br>
+    		修改人&nbsp;&nbsp;<span id="showmodifyByName"></span>
+    		<br>
+    		<br>
+    		修改时间&nbsp;&nbsp;<span id="showmodifyTime"></span>
+    		<br>
+	     </div> 
+	 </div>
+</body>
+</html>

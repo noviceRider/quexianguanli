@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>resourcemanage.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../../css/common/main.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../../css/themes/icon.css">
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="js/menushortcut.js"></script>
+<style type=text/css>
+.tree-title {
+	font-size: 13px;
+}
+</style>
+</head>
+<body class="easyui-layout" style="margin-left:5px;margin-right:5px;">
+	<div data-options="region:'north',border:false" style="height:40px">
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'><img
+					src='../../images/common/title.gif'
+					align='absmiddle' />菜单维护</td>
+					<td style="text-align: right;"> 
+						<a id="selectBtn_res" class="easyui-linkbutton"
+						data-options="iconCls:'icon-add'" onclick="addMenu()">添加菜单</a>
+				</td>
+			</tr>
+		</table>
+
+
+	</div>
+
+	<div data-options="region:'west',split:true" style="width:250px;">
+		<!-- 树形菜单，数据由js动态加载 -->
+		<ul id="tt" class="easyui-tree"></ul>
+	</div>
+
+	<!-- 功能列表 -->
+	<div data-options="region:'center'">
+		<table id="dg" class="easyui-datagrid" style="width:100%"
+			data-options="striped:true,singleSelect:true">
+					<thead>
+			<tr>
+				<th data-options="field:'menuName',halign:'center',align:'left'" width="16%">菜单名称</th>
+				<th data-options="field:'menuId',halign:'center',align:'left'" width="14%">菜单编号</th>
+				<th data-options="field:'url',halign:'center',align:'left'" width="47%">URL</th>
+				<th data-options="field:'sortNo',halign:'center',align:'center'" width="9%" >排序号</th>
+				<th data-options="field:'isUsed',halign:'center',align:'center'" width="15%" formatter="opFormatter">操作</th>
+			</tr>
+		</thead>
+		</table>
+	</div>
+
+	<!-- 预览图片 -->
+	<div id="showPics"></div>
+
+	<!-- 项目信息页面 -->
+	<div id="detaile" class="easyui-dialog" data-options="closed:true"></div>
+
+	<!-- 项目类型页面 -->
+	<div id="dictType" style="display: none;"></div>
+</body>
+</html>

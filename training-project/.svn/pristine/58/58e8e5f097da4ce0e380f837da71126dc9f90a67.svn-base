@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>businesslogic.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script src="../../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../js/prettify.js"></script>
+	<script type="text/javascript" src="../../../js/jquery-migrate-1.1.0.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../js/common.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/businesslogic.js" charset="UTF-8"></script>
+
+  </head>
+  
+  <body>
+    <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">业务逻辑管理
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryBusinesslogic()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addBusinesslogic()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyBusinesslogic()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeBusinesslogic()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    			<a href="javascript:exportLogic()" id="searchBtn" class="easyui-linkbutton" iconCls="icon-export">&nbsp;导&nbsp;&nbsp;出&nbsp;</a>
+				<a href="javascript:importLogic()" id="searchBtn" class="easyui-linkbutton" iconCls="icon-import">&nbsp;导&nbsp;&nbsp;入&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+
+  	<!-- 选择不同获取不同的信息 -->
+	<table class="btbForm">
+		<tr>
+			<td>
+				关键字&nbsp; <input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'输入编号或名称'" style="height:24px;">
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				业务逻辑分类&nbsp; <input id="logicTypeKeyWord" name="logicTypeKeyWord" class="easyui-combotree" data-options="editable:false,prompt:'请选择业务逻辑分类'" style="height:24px;width: 250px;">&nbsp;&nbsp;&nbsp;&nbsp;
+				api访问方式&nbsp; <input id="apiCalltypeQuery" name="apiCallType" class="easyui-combotree" data-options="editable:false,panelHeight:'auto'" style="height:24px;">
+			</td>
+		</tr>
+	</table>
+  	
+  	
+  	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+  	
+  	<!-- 定义datagrid数据网格 -->
+	<div id="businesslogic_div">
+		<form method="post" class="easyui-form" id="ff" style="display:none">
+				
+		</form>
+		<table id="businesslogic_dg" style="width:100%;" class="easyui-datagrid" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,rownumbers:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true',hidden:true"></th>
+					
+					<th data-options="field:'inParams',alias:'in_params',align:'center',halign:'center',sortable:'true',hidden:true">输入参数</th>
+					<th data-options="field:'retInfo',alias:'ret_info',align:'center',halign:'center',sortable:'true',hidden:true">返回信息</th>
+					<th data-options="field:'logicScript',alias:'logic_script',align:'center',halign:'center',sortable:'true',hidden:true">业务逻辑脚本</th>
+					<th data-options="field:'url',alias:'url',align:'center',halign:'center',sortable:'true',hidden:true">访问地址</th>
+					<th data-options="field:'logicType',alias:'a.logic_type',align:'left',halign:'center',sortable:'true',hidden:true">业务逻辑分类</th>
+					
+					<th data-options="field:'logicCode',alias:'a.logic_code',align:'left',halign:'center',sortable:'true'" style="width: 15%">业务逻辑编号</th>
+					<th data-options="field:'logicName',alias:'a.logic_name',align:'left',halign:'center',sortable:'true'" style="width: 17%">业务逻辑名称</th>
+					<th data-options="field:'logicDesc',alias:'a.logic_desc',align:'left',halign:'center',sortable:'true'" style="width: 36%">业务逻辑描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'left',halign:'center',sortable:'true'" style="width: 15%">业务逻辑分类</th>
+					<th data-options="field:'isPreDefin',alias:'a.is_pre_define',align:'center',halign:'center',sortable:'true',formatter:isPreDefinFormatter" style="width: 7%">是否预定义</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter,hidden:true" style="width: 7%">是否有效</th>
+					<th data-options="field:'detail',halign:'center',align:'center',formatter:detailFormmater" style="width:8%" >操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+			<!-- 修改dialog对应按钮 -->
+	<div id="sc_detailtest" style="text-align:right;">
+		<a style="float:left" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="changeToModify('test')">修改</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeDialog()">关闭</a>
+	</div>
+		<!-- 数据访问测试页面 -->
+	<div id="AccessTest" style="overflow-x:hidden;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_detailtest',width:'800',height: '480',inline:true,title: '业务逻辑测试',modal:true,onOpen:beforeOpen,maximizable:true" >
+		<form method="post" class="easyui-form" id="Access_detail_form" >
+			<div id="content_test" style="width:768px">
+			<table id="testTab" style="border-collapse: separate;border-spacing: 8px;width:770px;">
+	  			<tr>
+	  				<td style="text-align: right;width: 14%;">业务逻辑编号：&nbsp;</td>
+	  				<td style="text-align: left;width: 36%;"><span id="te_accessCode" name="logicCode" ></span></td>
+	  				<td style="text-align: right;width: 14%;">业务逻辑名称：&nbsp;</td>
+	  				<td style="text-align: left;width: 36%;"><span id="de_accessName" name="logicName" ></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: ;">业务逻辑描述：&nbsp;</td>
+	  				<td colspan="3"><span id="de_accessDesc" name="logicDesc"></span></td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="4">
+	  				  <div id="panelone_test" class="easyui-panel" style="width:100%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="参数描述">
+		  				<table id="detail_param_table" class="easyui-datagrid" style="width:100%;" title="" >
+							<thead>
+								<tr>
+									<th data-options="field:'paramName',align:'left',halign:'center'" style="width:25%;">参数名</th>
+									<th data-options="field:'paramDesc',align:'left',halign:'center'" style="width:30%">参数描述</th>
+									<th data-options="field:'paramType',align:'center',halign:'center',formatter:paramTypeFormartter" style="width:20%">类型</th>
+									<th data-options="field:'paramTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+								</tr>
+							</thead>
+						</table>
+					  </div>
+					</td>
+	  			</tr>
+	   			<tr>
+	  				<td colspan="4">
+	  				  <div id="paneltwo_test" class="easyui-panel" style="width:100%;background:#fafafa;" data-options="collapsible:true,collapsed:false" title="返回值描述">
+		  				<table id="detail_back_table" class="easyui-datagrid" style="width:100%;" title="" >
+							<thead>
+								<tr>
+									<th data-options="field:'backName',align:'left',halign:'center'" style="width:25%;">返回值名</th>
+									<th data-options="field:'backDesc',align:'left',halign:'center'" style="width:30%">返回值描述</th>
+									<th data-options="field:'backType',align:'center',halign:'center',formatter:backTypeFormartter" style="width:20%">类型</th>
+									<th data-options="field:'backTestValue',align:'left',halign:'center'" style="width:25%" >参考值</th>
+								</tr>
+							</thead>
+						</table>
+					  </div>
+					</td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="4">
+	  					输入参数&nbsp;
+	  					<a style="float: right;margin-bottom: 5px;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="createParam()">生成参数</a><br>
+	  					<input id="inParamsId" name="params" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"></input>
+	  				</td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: ;" valign="top"></td>
+	  				<td colspan="3">
+	  				<a style="float:right" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" onclick="$('#json-target').html('');">清除</a>
+	  				<a style="float:right;margin-right:10px" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doTest()">执行</a></td>
+	  			</tr>
+	  			<tr style="display:none">
+	  				<td style="text-align: right;width: 90px;" valign="top">返回信息&nbsp;</td>
+	  				<td colspan="3"><input id="backInfo" name="inParams" class="easyui-textbox" data-options="multiline:true" style="width:613px;height:120px"></input></td>
+	  			</tr>
+	  				<tr style="display:none">
+	  				<td style="text-align: right;width: 90px;" valign="top"></td>
+	  				<td colspan="3"><a style="float:right;margin-right:40px" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" onclick="$('#backInfo').textbox('setValue','')">清除</a></td>
+	  			</tr>
+  			</table>
+  			</div>
+  			<div class="ro" id="json-target" style="padding:0px 25px;"></div>
+		</form>
+	</div>
+	<!-- 新增、修改页面 -->
+	<div id="dialog_add_modify" style="display: none;"></div>
+
+	<!-- 详情页面 -->
+	<div id="dialog_detail" style="display: none;"></div>
+
+	<!-- 参数描述新增、修改页面 -->
+	<div id="dialog_param_add_modify" style="display: none;"></div>
+
+	<!-- 返回值描述新增、修改页面 -->
+	<div id="dialog_back_add_modify" style="display: none;"></div>
+	
+	<!-- 参数复制页面 -->
+	<div id="dialog_param_copy" style="display: none;"></div>
+
+	<!-- 参数导入页面 -->
+	<div id="dialog_param_into" style="display: none;"></div>
+	
+	<!-- 返回值复制页面 -->
+	<div id="dialog_back_copy" style="display: none;"></div>
+	
+		<div id="exportDg"  class="easyui-dialog" data-options="title:'业务逻辑导出',closed:true,buttons:'#sc_export',width:'560',height: '350',inline:true,modal:true">
+		<h3>选择业务逻辑分类导出：</h3>
+		<div id="posthtml"></div>
+	</div>
+	
+	<!-- 导出dialog对应按钮 -->
+	<div id="sc_export" style="text-align:right;">
+		<a id="save_button" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="exportData()">导出</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#exportDg').dialog('close');">关闭</a>
+	</div>
+	
+	<!-- 导入对话框 -->
+	<div id="dlg_importExcel" style="display: none;width:320px;padding: 10px;"
+		data-options="buttons:'#btn_dlg_importExcel'">
+		<form id="form_import" enctype="multipart/form-data" method="post">
+			<table style="font-size: 16px;overflow: hidden;">
+				<tr>
+					<td style="line-height: 35px;">
+						请选择要导入的xml文件：
+					</td>
+				</tr>
+				<tr>
+					<td style="line-height: 35px;">
+						<input type="file" name="file" accept=".xml">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- 导入信息弹出框内按钮 -->
+		<div id="btn_dlg_importExcel" style="display:none;padding:5px;text-align: center;">
+			<a class="easyui-linkbutton" iconCls="icon-import"
+				onclick="doImportExcel()">导 入</a> <a class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="$('#dlg_importExcel').dialog('close');">关闭</a>
+		</div>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css" />
+		<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../../js/common.js"></script>
+		<script type="text/javascript" src="js/user_management.js"></script>
+		<script type="text/javascript" src="../../../../js/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<!-- 刷新+修改+增加功能-->
+
+<table style="width:100%;padding:5px;">
+			<tr>
+				<td  style="width:25%">
+				
+					<img src="../../../../images/common/title.gif"/>
+					用户管理
+					</td >
+				<td style="text-align: right;">
+					<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchIssue()">&nbsp;搜&nbsp;&nbsp;索&nbsp;</a> 
+					<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="showAddTable(1)">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="delUserTable();">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="showAddTable(0);">&nbsp;修&nbsp;&nbsp;改
+
+&nbsp;</a>
+				</td></tr></table>
+				
+			<form>	
+		<table class="btbForm">
+			<tr>
+				
+				<td><!-- 搜索栏 -->
+					
+						搜索：<input 
+						id="searchIssue" 
+						class="easyui-textbox" 
+						type="text" 
+						data-options="
+						prompt:'请输入要搜索的用户名',
+						width:'170',
+						iconAlign:'left',
+						icons: [{
+							iconCls:'icon-search',
+							handler:searchIssue
+						}]
+					" name="keyWords"/>
+				</td>
+				</tr>
+		</table>
+		</form>
+
+	
+<!-- 缺陷分配数据表格 -->
+	<table id="userTable" style="width:500;" class="easyui-datagrid" data-options="fitColumns:true,
+	autoRowHeight:true,
+	striped:true,
+	loadMsg:'正在加载数据中，请等一等~',
+	pagination:true,
+	pageList:[5,10,15,20],
+	pageSize:5"
+	style="width:500px;">
+	<thead>
+		<tr>
+			<th style="width:15%" data-options="field:'userId',align:'center'">登陆账号</th>
+			<th style="width:15%" data-options="field:'userName',align:'center'">用户姓名</th>
+			<th style="width:13%" data-options="field:'gendor',align:'center'">用户性别</th>
+			<th style="width:13%" data-options="field:'dept',align:'center'">用户部门</th>
+			<th style="width:15%" data-options="field:'mobile',align:'center'">联系方式</th>
+			<th style="width:15%" data-options="field:'email',align:'center'">电子邮箱</th>
+			<th style="width:14%" data-options="field:'dic',align:'center',formatter:searchInfo">详情</th>
+		</tr>	
+	</thead>
+
+	</table>
+	<!-- <hr/> -->
+			<!-- 显示用户详细信息容器 -->
+			<div id="infoUserContainer">
+				
+			</div>
+			<!-- 添加用户或修改用户信息容器 -->
+			<div id="addOrModifyContainer">
+				
+			</div>
+			
+
+	
+
+</body>
+</html>

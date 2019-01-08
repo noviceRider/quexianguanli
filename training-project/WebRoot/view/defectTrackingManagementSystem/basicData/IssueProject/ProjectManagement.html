@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>项目管理</title>
+	<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../../js/common.js"></script>
+		<script type="text/javascript" src="js/projectManagementPo.js"></script>
+		<style type="text/css">
+			.datagrid-btable .datagrid-cell{padding:4px 4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;} 
+			a{
+				color: blue;
+			}
+		</style>
+  </head>
+  <body style='margin: 0;'>
+	<table class='btbHead'>
+		<tr>
+			<td style='width: 25%;'>
+				<img src='../../../../images/common/title.gif' align='absmiddle'/> 项目管理
+			</td>
+			<td style='text-align: right;'>
+				<a class="easyui-linkbutton" iconCls="icon-add"  onclick="addFirstProject();">&nbsp;增加第一级&nbsp;</a>
+				<a class="easyui-linkbutton" iconCls="icon-add" onclick="addNextProject();">&nbsp;增加下一级&nbsp;</a>
+				<a class="easyui-linkbutton" iconCls="icon-edit" onclick="modifyProject();">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+			</td>
+		</tr>
+	</table>
+	<!-- 查询条件 -->
+	<form name="searchForm" id="searchForm">
+	<table class="btbForm">
+		<tr>
+			<td style="text-align: right;">
+				<input id="showNoUsedMenu" type="checkbox" style="vertical-align: middle;" onchange="showNoProject()">
+				<label for="showNoUsedMenu">显示无效的项目</label>
+				&nbsp;&nbsp;
+				<a href="javascript:doRefresh()" class="easyui-linkbutton" iconCls="icon-reload" plain="true"></a>
+			</td>
+		</tr>
+	</table>
+	</form>
+	  <div style="margin:5px 0;"></div>
+		<!-- 项目列表 -->	
+		<table id="projectTable" class="easyui-treegrid" data-options="idField:'projectId',
+	    treeField:'projectName',autoRowHeight:true," style="width:100%">   
+		  <thead>
+		  	<tr>
+		  		<th align="left" data-options="field:'projectName',align:'center',width:'20%'">项目名称</th>
+		  		<th data-options="field:'projectId',align:'center',width:'10%'">项目编号</th>
+		  		<th data-options="field:'projectIntro',align:'center',width:'20%'">项目简介</th>
+		  		<th data-options="field:'dictCode',align:'center',width:'10%',formatter:isUsedFormatter">状态</th>
+		  		<th data-options="field:'createByName',align:'center',width:'10%'">创建人</th>
+		  		<th data-options="field:'createTime',align:'center',width:'15%'">创建时间</th>
+		  		<th data-options="field:'projectDo',align:'center',width:'15%' ,formatter:function(value,row){
+		  		if(row.projectState=='01'){
+					return '<a href=javascript:viewTheDetails('+row.projectId+');>查看详情</a> | <a onClick=jump(event) id='+row.projectId+'>成员管理</a> | <a href=# onClick=conversion(event) value='+row.projectState+' id='+row.projectId+'>禁用</a>';
+		  		}else{
+					return '<a href=javascript:viewTheDetails('+row.projectId+');>查看详情</a> | <a onClick=jump(event) id='+row.projectId+'>成员管理</a> | <a href=# onClick=conversion(event) value='+row.projectState+' id='+row.projectId+'>启用</a>';
+		  		}
+				}">操作</th>
+		  	</tr>
+		  </thead>
+		</table>  
+		<!-- 增加的容器 -->
+		<div id="addProjectContainer"></div>
+		<!-- 修改的容器 -->
+		<div id="modifyProjectContainer"></div>
+		<!-- 详细信息的容器 -->
+		<div id="viewTheDetailsContainer"></div>
+	</body>
+</html>

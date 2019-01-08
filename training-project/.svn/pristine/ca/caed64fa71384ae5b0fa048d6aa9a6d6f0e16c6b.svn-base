@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="addIssuePanel">
+
+		<form id="addIssueForm" method="post">
+		缺陷编号：<input type="text" name="typeCode" id="addTypeCode" data-options="required:true,validType:'NotEmpty'"><br>
+		缺陷名称：<input type="text" name="typeDesc" id="addTypeDesc" data-options="required:true,validType:'NotEmpty'"><br>
+		<a  id="addFormSubmit"></a>
+			</form>
+</div>
+</body>
+</html>

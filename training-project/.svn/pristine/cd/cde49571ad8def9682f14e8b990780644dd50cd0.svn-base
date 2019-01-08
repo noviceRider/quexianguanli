@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dataaccess.dao.DataAccessDao">
+	<!-- 返回数据访问信息的(PO)数据对象 -->
+	<sql id="resultObj">
+		select       
+			a.access_code		"accessCode",
+			a.access_name		"accessName",
+			a.access_desc		"accessDesc",
+			a.type_code			"typeCode",
+			a.db_type			"dbType",
+			d.dict_desc			"dbTypeDesc",
+			b.type_name			"typeName",
+			a.category_code		"categoryCode",
+			c.category_name		"categoryName",
+			a.parameter_desc	"parameterDesc",
+			a.returned_desc		"returnedDesc",
+			a.access_sql		"accessSQL",
+			a.is_used			"isUsed",
+			a.sort_no			"sortNo",
+			a.access_url		"accessUrl",
+			a.java_method		"javaMethod",
+			a.api_call_type		"apiCallType"
+	</sql>
+	
+	<!-- 根据查询条件查询数据访问数据集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+			from info_data_access a 
+			left join code_data_access_type b on a.type_code = b.type_code 
+			left join code_data_access_category c on a.category_code = c.category_code
+			left join info_ge_dict d on a.db_type=d.dict_code
+		<where>
+			<if test="params.bo.keyWord!= null and params.bo.keyWord != ''">
+				a.access_name like '%${params.bo.keyWord}%' or
+				a.access_desc like '%${params.bo.keyWord}%' or 
+				a.access_code  = ${params.bo.keyWord}
+			</if>
+			<if test="params.bo.apiCallType!= null and params.bo.apiCallType!= ''">
+				and a.api_call_type = '${params.bo.apiCallType}'
+			</if>
+		</where>
+		<!-- 排序方式 -->
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>		
+		<!-- 默认排序方式 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.sort_no
+		</if>
+	</select>
+	
+		<!-- 根据查询条件查询数据访问数据集 -->
+	<select id="findPageByCategoryCode" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+			from info_data_access a 
+			left join code_data_access_type b on a.type_code = b.type_code 
+			left join code_data_access_category c on a.category_code = c.category_code
+			left join info_ge_dict d on a.db_type=d.dict_code
+		<where>
+		1=1
+			<if test="params.bo.categoryCode!= null and params.bo.categoryCode != ''">
+			and a.category_code in (select category_code from code_data_access_category where category_path like
+			CONCAT((select category_path from code_data_access_category where category_code= #{params.bo.categoryCode}),'%'))
+			</if>
+			<if test="params.bo.keyWord!= null and params.bo.keyWord != ''">
+				and (a.access_name like '%${params.bo.keyWord}%' or
+				a.access_desc like '%${params.bo.keyWord}%' or 
+				a.access_code like '${params.bo.keyWord}%')
+			</if>
+			<if test="params.bo.dbType!= null and params.bo.dbType != ''">
+				and a.db_type='${params.bo.dbType}'
+			</if>
+			<if test="params.bo.apiCallType!= null and params.bo.apiCallType!= ''">
+				and a.api_call_type = '${params.bo.apiCallType}'
+			</if>
+			<if test="params.bo.typeCode!= null and params.bo.typeCode != ''">
+				and a.type_code=${params.bo.typeCode}
+			</if>
+		</where>
+		<!-- 排序方式 -->
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>		
+		<!-- 默认排序方式 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.sort_no
+		</if>
+	</select>
+	
+	<!-- 根据条件查询数据访问数据集 -->
+	<select id="findAccess" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+			from info_data_access a 
+			left join code_data_access_type b on a.type_code = b.type_code 
+			left join code_data_access_category c on a.category_code = c.category_code
+			left join info_ge_dict d on a.db_type=d.dict_code
+		<where>
+		1=1
+			<if test="params.bo.categoryCode!= null and params.bo.categoryCode != ''">
+			and a.category_code in (select category_code from code_data_access_category where category_path like (select category_path from code_data_access_category where category_code= ${params.bo.categoryCode})||'%')
+			</if>
+			<if test="params.bo.keyWord!= null and params.bo.keyWord != ''">
+				and (a.access_name like '%${params.bo.keyWord}%' or
+				a.access_desc like '%${params.bo.keyWord}%')
+			</if>
+			<if test="params.bo.typeCode!= null and params.bo.typeCode != ''">
+				and a.type_code=${params.bo.typeCode}
+			</if>
+		</where>
+		<!-- 排序方式 -->
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>		
+		<!-- 默认排序方式 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by a.sort_no
+		</if>
+	</select>
+	
+	<!-- 根据查询条件查询数据访问数据集 -->
+	<select id="findAllInfo" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+	select       
+      a.access_code   "accessCode",
+      a.db_type 	  "dbType",
+      a.access_name   "accessName",
+      a.access_desc   "accessDesc",
+      a.type_code     "typeCode", 
+      b.type_name     "typeName",
+      a.category_code   "categoryCode",
+      c.category_name   "categoryName",
+      c.package_name    "packageName",
+      a.parameter_desc  "parameterDesc",
+      a.returned_desc   "returnedDesc",
+      a.access_sql    "accessSQL",
+      a.is_used     "isUsed",
+      a.sort_no     "sortNo",
+      a.access_url    "accessUrl",
+      a.java_method   "javaMethod",
+      a.api_call_type		"apiCallType"
+      from info_data_access a 
+      left join code_data_access_type b on a.type_code = b.type_code 
+      left join code_data_access_category c on a.category_code = c.category_code where a.category_code=#{categoryCode} and a.db_type=#{dbType}
+	</select>
+	
+		<!-- 根据查询条件查询数据访问数据集 -->
+	<select id="findByBo" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+			from info_data_access a 
+			left join code_data_access_type b on a.type_code = b.type_code 
+			left join code_data_access_category c on a.category_code = c.category_code
+			left join info_ge_dict d on a.db_type=d.dict_code
+		<where>
+			a.access_code=#{accessCode} and a.db_type=#{dbType}
+		</where>
+	</select>
+	
+		<!-- 根据查询条件查询数据访问数据集 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+			from info_data_access a 
+			left join code_data_access_type b on a.type_code = b.type_code 
+			left join code_data_access_category c on a.category_code = c.category_code
+			left join info_ge_dict d on a.db_type=d.dict_code
+		<where>
+			a.access_code=#{accessId}
+		</where>
+	</select>
+	
+	<!-- 用于验证编码 -->
+	<select id="valideCode" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+		from info_data_access a 
+		left join code_data_access_type b on a.type_code = b.type_code 
+		left join code_data_access_category c on a.category_code = c.category_code
+		left join info_ge_dict d on a.db_type=d.dict_code
+		where a.access_code =  #{accessCode}
+	</select>
+
+	<!-- 根据访问分类查询数据 -->
+	<select id="findByCategoryCode" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+		from info_data_access a 
+		left join code_data_access_type b on a.type_code = b.type_code 
+		left join code_data_access_category c on a.category_code = c.category_code
+		left join info_ge_dict d on a.db_type=d.dict_code
+		where a.category_code =  #{categoryCode}
+	</select>
+	
+		<!-- 根据访问分类查询数据 -->
+	<select id="findByRoot" parameterType="String" resultType="com.bn.gmodule.dataaccess.po.DataAccessPo">
+		<include refid="resultObj"/>
+		from info_data_access a 
+		left join code_data_access_type b on a.type_code = b.type_code 
+		left join code_data_access_category c on a.category_code = c.category_code
+		left join info_ge_dict d on a.db_type=d.dict_code
+		where c.CATEGORY_PATH like  '${categoryCode}%'
+	</select>
+	
+	<!-- 新增数据访问信息 -->
+	<insert id="add" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" >
+		insert into info_data_access 
+		(
+			access_code	,
+			db_type,
+			access_name,
+			access_desc,
+			type_code	,
+			category_code	,
+			parameter_desc,
+			returned_desc	,
+			access_sql	,
+			is_used		,
+			sort_no		,
+			api_call_type
+		)
+		values
+		(
+			#{accessCode},
+			#{dbType},
+			#{accessName},
+			#{accessDesc},
+			#{typeCode},
+			#{categoryCode},
+			#{parameterDesc,jdbcType=VARCHAR},
+			#{returnedDesc,jdbcType=VARCHAR},
+			#{accessSQL},
+			1,
+			#{sortNo},
+			#{apiCallType}
+		)
+	</insert>
+	
+	<!-- 修改数据访问信息 -->
+	<update id="modify" parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" >
+		update info_data_access
+		set
+			access_code		= #{accessCode},
+			access_name	 	= #{accessName},
+			access_desc 	= #{accessDesc},
+			<if test="typeCode != null and typeCode != ''">
+				type_code		= #{typeCode},
+			</if>
+			<if test="categoryCode != null and categoryCode != ''">
+				category_code	= #{categoryCode},
+			</if>
+			parameter_desc	= #{parameterDesc,jdbcType=VARCHAR},
+			returned_desc	= #{returnedDesc,jdbcType=VARCHAR},
+			access_sql		= #{accessSQL},
+			api_call_type	= #{apiCallType},
+			is_used			= #{isUsed},
+			sort_no			= #{sortNo,jdbcType=VARCHAR}	
+		where access_code = #{modifyCode} and db_type=#{modifyDbType}
+	</update>
+	
+	<!-- 删除数据访问信息 -->
+	<delete id="remove"  parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" >
+		delete from info_data_access
+		where access_code = #{accessCode} and db_type=#{dbType}
+	</delete>
+	
+	<!-- 删除根节点下所有数据访问信息 -->
+	<delete id="deleteByCategoryCodeRoot"  parameterType="com.bn.gmodule.dataaccess.bo.DataAccessBo" >
+				delete from info_data_access
+				where access_code in (
+				select a.access_code from(
+				select access_code
+				from info_data_access a, code_data_access_category b
+				where a.category_code = b.category_code and
+				b.category_path like '${categoryCode}%'
+			)a
+			)
+	</delete>
+	
+</mapper>

@@ -1,0 +1,256 @@
+/* @import url(MainFrame.css); */
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	background-color: #FFFFFF;
+	left: 0px;
+	top: 0px;
+	margin-bottom: 0px;
+	font-family: "Trebuchet MS", Trebuchet, Verdana, Helvetica, Arial, sans-serif;
+}
+h1 {
+   margin: 1em 0 1.5em;
+   font-size: 18px;
+   }
+h2 {
+   margin: 2em 0 1.5em;
+   font-size: 16px;
+   }
+p {
+  margin: 0;
+  }
+pre, pre+p, p+p {
+   margin: 1em 0 0;
+   }
+code {
+   font-family: "Courier New", Courier, monospace;
+     }
+           
+a {
+	color: #4588BA;
+	text-decoration: none;
+}
+a:hover {
+	color: #34668B;
+	text-decoration: none;
+}
+.tables{
+width:225px;
+table-layout:fixed;
+}
+.tds{
+width:100%;
+word-break:keep-all;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+#link_img {
+	text-decoration: none;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.blueWord {
+	font-size: 12px;
+	color: #ACCEF0;
+	text-decoration: none;
+}
+
+.divHead {
+	height: 65px;
+	width: 100%;
+}
+.divHead_title {
+	position: relative;
+	height: 57px;
+	width: 301px;
+	left: 15px;
+	top: 4px;
+	float: left;
+	font-size: 15px;
+	font-family: Microsoft YaHei;
+	color: #00388C;
+}
+.divHead_menu {
+	float: right;
+	height: 57px;
+	width: 350px;
+	position: relative;
+	top: 6px;
+	right: 2px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	text-align: right;
+}
+.divHead_menu_1 {
+	float: right;
+	height: 22px;
+	width: 100px;
+	left: 200px;
+	text-align: center;
+	vertical-align: middle;
+	color: #4588BA;
+}
+.divHead_menu_every {
+	float: right;
+	height: 22px;
+	width: 60px;
+	left: 200px;
+	text-align: center;
+	vertical-align: middle;
+	color: #386F96;
+}
+.divHead_selectC {
+	height: 22px;
+	width: 320px;
+	position: relative;
+	right: 0px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	text-align: right;
+	float: right;
+	top: 8px;
+}
+
+
+.divSearch {
+	height: 22px;
+	width: 700px;
+	position: relative;
+	top: 20px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	float: right;
+}
+.divSearch_inner {
+	position: relative;
+	width: 300px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333333;
+	text-decoration: none;
+	height: 22px;
+	float: right;
+	clear: both;
+	top: -10px;
+}
+
+
+.divNav {
+	height: 26px;
+	width: 100%;
+	background-image: url(../../../images/frame/sc/topbar/nav.jpg);
+	background-repeat: repeat-x;
+	left: 50px;
+	font-size: 12px;
+	line-height: 25px;
+	color: #386F96;
+}
+.divNav_inner {
+	position: relative;
+	height: 24px;
+	left: 2%;
+	width: 98%;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #D5E5F4;
+	top: 2px;
+}
+
+.divNav_every {
+	float: left;
+	height: 24px;
+	text-align:center;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #D5E5F4;
+	font-size: 12px;
+	line-height: 26px;
+	color: #386F96;
+	font-weight: lighter;
+	overflow: hidden;
+	cursor: pointer;
+	vertical-align: bottom;
+	padding-right: 10px;
+}
+.divNav_everyHover {
+	float: left;
+	height: 24px;
+	text-align:center;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #D5E5F4;
+	font-size: 12px;
+	line-height: 26px;
+	color: #2C5574;
+	font-weight: lighter;
+	overflow: hidden;
+	cursor: pointer;
+	background-color: #F7FAFD;
+	padding-right: 10px;
+}
+.divNav_word {
+	position: relative;
+	height: 28px;
+	left: 8px;
+	right: 8px;
+}
+.line {
+	height:8px;
+	background-image: url(../../../images/frame/sc/topbar/line_metal.jpg);
+	background-repeat: repeat-x;
+	width: 100%;
+	font-size: 8px;
+	line-height: 8px;
+}
+
+.divNote {
+	height: 23px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #ABC3D7;
+	background-color: #F4F9FC;
+	font-size: 12px;
+	line-height: 23px;
+	color: #386F96;
+	width: 100%;
+}
+
+#taskRemind {
+	display: none;
+	cursor: pointer;
+}
+
+.task-remind {
+	width: 20px;
+	height: 20px;
+}
+
+.task-remind-text {
+	margin:-18px 0 0 23px;
+	color: red;
+	height:20px;
+	font-size:14px;
+	text-decoration: underline;
+}
+
+.task-remind-bg {
+	background: url(../../../images/frame/sc/topbar/task.gif) -80px 0 no-repeat transparent;
+}
+
+.task-remind-mouseover-bg {
+	background: url(../../../images/frame/sc/topbar/task.gif) -110px 0 no-repeat transparent;
+}
+
+.task-temind-mousedown-bg {
+	background: url(../../../images/frame/sc/topbar/task.gif) -110px -20px no-repeat transparent;
+}

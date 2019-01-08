@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>资源管理</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../../Font-Awesome-master/css/font-awesome.min.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="js/resourcemanage.js"></script>
+		
+		<style type="text/css">
+			form table td{padding:5px;}
+			
+			.datagrid-btable .datagrid-cell{
+		    	overflow: hidden;text-overflow:ellipsis;white-space: nowrap;
+		 	} 
+		</style>
+	</head>
+	
+	<body>
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'>
+					<img src='/apron_punish/themes/default/images/common/title.gif' style="vertical-align:middle;"/>资源管理 
+				</td>
+				<td style="text-align: right;">
+					<a href="javascript:doSearch()" id="searchBtn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="javascript:showResType()" id="showResTypeBtn" class="easyui-linkbutton" data-options="iconCls:'icon-large-clipart'">资源类型</a>
+					<a href="javascript:showResAuth()" id="showResAuthBtn" class="easyui-linkbutton" data-options="iconCls:'icon-audit'">资源权限</a>
+					
+					<a href="javascript:doAdd()" id="addBtn" class="easyui-linkbutton" data-options="iconCls:'icon-add'">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a href="javascript:doModify()" id="modifyBtn" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="javascript:doImport()" id="importBtn" class="easyui-linkbutton" data-options="iconCls:'icon-import'">批量导入</a>
+					<a href="javascript:doDelete()" id="deleteBtn" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<form id="form_searchres">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input name="keyWord" placeholder="请输入资源名称、编码或描述" style="width:180px;"/>
+						
+						&nbsp;&nbsp;&nbsp;&nbsp;资源类型&nbsp;
+						<input type="hidden" name="typeCode"/>
+						<input type="text" name="typeDesc" style="width:180px;background:lightgray;" readonly="readonly"/>
+						<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="selectType()"></a>
+						
+						&nbsp;&nbsp;&nbsp;&nbsp;授权资源否&nbsp;
+						<select name="isAuthRes">
+							<option value="">所有资源</option>
+							<option value="1">授权资源</option>
+							<option value="0">非授权资源</option>
+						</select>
+						
+						&nbsp;&nbsp;&nbsp;&nbsp;有效否&nbsp;
+						<select name="isUsed">
+							<option value="">所有资源</option>
+							<option value="1">有效资源</option>
+							<option value="0">无效资源</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="padding:5px;"></div>
+		
+		<!-- 资源 ------------------------------------------------------ -->
+		<!-- 资源列表 -->
+		<table id="tg_res" class="easyui-treegrid" data-options="" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'resName',halign:'center',align:'left'" style="width:20%;">资源名称</th>
+					<th data-options="field:'resCode',halign:'center',align:'left'" style="width:15%;">资源编码</th>
+					<th data-options="field:'resDesc',halign:'center',align:'left',formatter:resDescFormatter" style="width:30%;">资源描述</th>
+					<th data-options="field:'typeDesc',halign:'center',align:'left'" style="width:15%;">资源类型</th>
+					<th data-options="field:'isAuthRes',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:7%;">授权资源否</th>
+					<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:7%;">有效否</th>
+					<th data-options="field:'sortNo',halign:'center',align:'center'" style="width:6%;">排序号</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<!-- 保存资源对话框 -->
+		<div id="dlg_saveres" style="display:none;width:500px;height:auto;" data-options="buttons:'#btn_dlg_saveres',modal:true">
+			<form id="form_saveres">
+				<table class="btbForm">
+					<tr><td></td></tr>
+					<tr>
+						<td style="text-align:right;width:25%;">
+							资源编码：
+						</td>
+						<td colspan="2">
+							<span id="pResCode"></span>
+							<input type="text" name="resCode" style="width:180px;" oninput="sortNoAutoFill('#form_saveres','resCode')"/>
+							<span id="resCode" style="display:none;"></span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							资源名称：
+						</td>
+						<td colspan="2">
+							<input type="text" name="resName" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">资源描述：</td>
+						<td>
+							<input id="addResDesc" name="resDesc" class="easyui-textbox" data-options="multiline:true"  style="width: 250px;height:70px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							资源类型：
+						</td>
+						<td colspan="2">
+							<input type="hidden" name="typeCode"/>
+							<input type="text" name="typeDesc" style="width:250px;background:lightgray;" readonly="readonly"/>
+							<a id="selectBtn_res" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="selectType()"></a>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							上级资源：
+						</td>
+						<td colspan="2">
+							<input type="text" name="pResName" style="width:250px;background:lightgray;" readonly="readonly"/>
+							<a id="removeBtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="removeParentRes()"></a>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							授权资源：
+						</td>
+						<td>
+							<input type="radio" name="isAuthRes" value="1" checked="checked"/>是
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="isAuthRes" value="0"/>否
+						</td>
+					</tr>
+					<tr id="res_isUsed">
+						<td style="text-align:right;">
+							是否有效：
+						</td>
+						<td>
+							<input type="radio" name="isUsed" value="1" checked="checked"/>有效
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="isUsed" value="0"/>无效
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							顺序号：
+						</td>
+						<td colspan="2">
+							<input type="text" name="sortNo" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr><td></td></tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 保存资源对话框按钮 -->
+		<div id="btn_dlg_saveres" style="text-align:center;display:none;">
+			<a onclick="saveRes()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+			<a onclick="doCancel('#dlg_saveres')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+		
+		<!-- 资源完 -------------------------------------------------------- -->
+		
+		<!-- 类型 --------------------------------------------------------- -->
+		<!-- 资源类型列表 -->
+		<div id="dlg_restype" style="display:none;width:800px;height:400px;" data-options="title:'资源类型',singleSelect:true,modal:true">
+			<table id="dg_restype" data-options="pagination:true,toolbar:'#tb_restype',singleSelect:true,onDblClickRow: onDblClickRow">
+				<thead>
+					<tr>
+						<th data-options="field:'typeCode',halign:'center',align:'left'" style="width:100px;">类型编号</th>
+						<th data-options="field:'typeDesc',halign:'center',align:'left'" style="width:390px;">类型名称</th>
+						<th data-options="field:'isPreDef',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:90px;">系统保留否</th>
+						<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:90px;">有效否</th>
+						<th data-options="field:'sortNo',halign:'center',align:'center'" style="width:90px;">顺序号</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<!-- 资源类型工具条 -->
+		<div id="tb_restype" style="display:none;">
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<a onclick="showAddTypeDlg()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"></a>
+						<a onclick="showModifyTypeDlg()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
+						<a onclick="delType()" class="easyui-linkbutton" data-options="iconCls:'icon-trash-can',plain:true"></a>
+					</td>
+					<td style="text-align:right;">
+						<form id="form_searchtype">
+							<input type="text" name="keyWord" placeholder="请输入类型编号或名称" style="width:220px;"/>
+							<a onclick="searchType()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true"></a>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- 保存资源类型对话框 -->
+		<div id="dlg_savetype" style="display:none;width:500px;height:auto;" data-options="buttons:'#btn_dlg_savetype',modal:true">
+			<form id="form_savetype">
+				<table class="btbForm">
+					<tr><td></td></tr>
+					<tr>
+						<td style="text-align:right;width:30%;">
+							资源类型编码：
+						</td>
+						<td colspan="2">
+							<span id="typeCode_type"></span>
+							<input type="text" name="typeCode" style="width:250px;" oninput="sortNoAutoFill('#form_savetype','typeCode')"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							资源类型名称：
+						</td>
+						<td colspan="2">
+							<input type="text" name="typeDesc" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							顺序号：
+						</td>
+						<td colspan="2">
+							<input type="text" name="sortNo" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							系统保留：
+						</td>
+						<td style="width:20%;">
+							<input type="checkbox" name="isPreDef" value="1" style="vertical-align:middle;" checked="checked"/>
+						</td>
+						<td id="type_isUsed" style="display: none;">
+							有效否：
+							<input type="checkbox" name="isUsed" value="1" style="vertical-align:middle;" checked="checked"/>
+						</td>
+					</tr>
+					<tr><td></td></tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 保存类型对话框按钮 -->
+		<div id="btn_dlg_savetype" style="text-align:center;display:none;">
+			<a onclick="saveType()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+			<a onclick="doCancel('#dlg_savetype')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+		<!-- 类型完 --------------------------------------------------------- -->
+		
+		<!-- 权限 --------------------------------------------------------- -->
+		<!-- 资源权限列表 -->
+		<div id="dlg_resauth" style="display:none;width:800px;height:400px;" data-options="title:'资源权限',singleSelect:true,modal:true">
+			<table id="dg_resauth" data-options="pagination:true,toolbar:'#tb_resauth',singleSelect:true,onDblClickRow: onDblClickRow" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'opCode',halign:'center',align:'left'" style="width:100px;">权限编号</th>
+						<th data-options="field:'opDesc',halign:'center',align:'left'" style="width:360px;">权限描述</th>
+						<th data-options="field:'typeDesc',halign:'center',align:'left'" style="width:120px;">资源类型</th>
+						<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:90px;">有效否</th>
+						<th data-options="field:'sortNo',halign:'center',align:'center'" style="width:90px;">顺序号</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<!-- 资源权限工具条 -->
+		<div id="tb_resauth" style="display:none;">
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<a onclick="showAddAuthDlg()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"></a>
+						<a onclick="showModifyAuthDlg()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
+						<a onclick="delAuth()" class="easyui-linkbutton" data-options="iconCls:'icon-trash-can',plain:true"></a>
+					</td>
+					<td style="text-align:right;">
+						<form id="form_searchauth">
+							<input type="text" name="keyWord" placeholder="请输入权限编号、名称或资源分类" style="width:220px;"/>
+							<a onclick="searchAuth()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true"></a>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- 保存资源权限对话框 -->
+		<div id="dlg_saveauth" style="display:none;width:500px;height:auto;" data-options="buttons:'#btn_dlg_saveauth',modal:true">
+			<form id="form_saveauth">
+				<table class="btbForm">
+					<tr><td></td></tr>
+					<tr>
+						<td style="text-align:right;width:30%;">
+							权限编码：
+						</td>
+						<td colspan="2">
+							<span id="opCode_auth"></span>
+							<input type="text" name="opCode" style="width:250px;" oninput="sortNoAutoFill('#form_saveauth','opCode')"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							权限描述：
+						</td>
+						<td colspan="2">
+							<input type="text" name="opDesc" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;width:30%;">
+							资源类型：
+						</td>
+						<td colspan="2">
+							<input type="hidden" name="typeCode"/>
+							<input type="text" name="typeDesc" style="width:250px;background:lightgray;" readonly="readonly"/>
+							<a id="selectBtn_auth" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="selectType()"></a>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							顺序号：
+						</td>
+						<td colspan="2">
+							<input type="text" name="sortNo" style="width:250px;"/>
+						</td>
+					</tr>
+					<tr id="auth_isUsed" style="display: none;">
+						<td style="text-align:right;">
+							有效否：
+						</td>
+						<td>
+							<input type="checkbox" name="isUsed" value="1" style="vertical-align:middle;" checked="checked"/>
+						</td>
+					</tr>
+					<tr><td></td></tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 保存资源权限对话框按钮 -->
+		<div id="btn_dlg_saveauth" style="text-align:center;display:none;">
+			<a onclick="saveAuth()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+			<a onclick="doCancel('#dlg_saveauth')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+		<!-- 权限完 --------------------------------------------------------- -->
+		
+		<!-- 选择资源类型对话框 --------------------------------------------------------- -->
+		<div id="dlg_select" style="display:none;width:800px;height:500px;padding:5px;" data-options="title:'选择资源类型',modal:true,buttons:'#btn_dlg_select'">
+			<span style="color:	#EEC591;font-size: 18px;">双击选择指定资源类型</span>
+			<table id="dg_select" class="easyui-datagrid" data-options="singleSelect:true,pagination:true,onDblClickRow:doSelectType" style="width:100%;">
+				<thead>
+					<tr>
+						<th data-options="field:'typeCode',halign:'center',align:'left'" style="width:30%;">类型编号</th>
+						<th data-options="field:'typeDesc',halign:'center',align:'left'" style="width:40%;">类型名称</th>
+						<th data-options="field:'isPreDef',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:10%;">系统保留否</th>
+						<th data-options="field:'isUsed',halign:'center',align:'center',formatter:isOrNotFormatter" style="width:10%;">有效否</th>
+						<th data-options="field:'sortNo',halign:'center',align:'center'" style="width:9%;">顺序号</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div id="btn_dlg_select" style="text-align: center;display:none;">
+			<a onclick="doSelectType()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确认</a>
+			<a onclick="cancelSelect()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">清除</a>
+			<a onclick="doCancel('#dlg_select')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+		<!-- 选择资源类型对话框完 --------------------------------------------------------- -->
+		
+		<!-- 批量导入对话框 -->
+		<div id="dlg_import" style="display:none;width:460px;height:auto;padding:10px;" data-options="title:'批量导入',modal:true,buttons:'#btn_dlg_import'">
+			<form id="form_import" enctype="multipart/form-data" method="post">
+				<table>
+					<tr><td></td></tr>
+					<tr>
+						<td style="width:25%;text-align:right;">
+							资源类型：
+						</td>
+						<td>
+							<input type="hidden" name="typeCode"/>
+							<input type="text" name="typeDesc" readonly="readonly" style="width:250px;background:lightgray;"/>
+							<a class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="selectType()"></a>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">
+							资源文件：
+						</td>
+						<td>
+							<input type="file" name="excelFile" readonly="readonly" style="width:250px;background:lightgray;"/>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td style="padding-top: 10px;">
+							<a href="/apron_punish/template/sysres_template.xls" class="easyui-linkbutton" data-options="plain:true">
+								<i class="fa fa-download fa-lg" style="color:green"></i>
+								点击下载资源文件模板
+							</a>
+						</td>
+					</tr>
+					<tr><td></td></tr>
+				</table>
+			</form>
+		</div>
+		<!-- 批量导入对话框上的按钮 -->
+		<div id="btn_dlg_import" style="text-align: center;display:none;">
+			<a onclick="startImport()" class="easyui-linkbutton" data-options="iconCls:'icon-import'">开始导入</a>
+			<a onclick="doCancel('#dlg_import')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+		
+		<!-- 鼠标右键编辑事件 -->
+		<div id="mm" class="easyui-menu" style="width:120px;">
+			<div  data-options="iconCls:'icon-add'" onclick="doAdd()">增加下级资源</div>
+			<div class="menu-sep"></div>
+			<div  data-options="iconCls:'icon-edit'" onclick="doModify()">修改资源</div>
+		</div>
+	</body>
+</html>

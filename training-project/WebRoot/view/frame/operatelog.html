@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>操作日志</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../Font-Awesome-master/css/font-awesome.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/highcharts/highcharts.js"></script>	
+	<script type="text/javascript" src="../../js/highcharts/exporting.js"></script>
+	<script type="text/javascript" src="js/operatelog.js"></script>
+	<style type="text/css">
+			.datagrid-btable .datagrid-cell{text-overflow:ellipsis;} 
+	</style>
+</head>
+<body>
+	<form name="searchForm" id="searchForm">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../images/common/title.gif' align='absmiddle'/> 操作日志  
+				</td>
+				<td style='text-align: right;'>
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSearch();">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="#" id="analysisBtn" class="easyui-menubutton" data-options="menu:'#mm',iconCls:'icon-large-chart',plain:false" >&nbsp;分&nbsp;&nbsp;析&nbsp;</a>
+					<a href="#" id="clearSelectedBtn" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="doDeleteLog();">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a href="#" id="clearAllBtn" class="easyui-linkbutton" data-options="iconCls:'icon-trash-can'" onclick="doClearAll();">&nbsp;清&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!--查询条件区域-->
+		<table class="btbForm" style="width: 100%;">
+			<tr>
+			  <td>
+			      关键字&nbsp;
+			  <input class="easyui-textbox" id="keyWord" name="keyWord" style="width: 150px;" data-options="prompt:'请输入用户编号或姓名'" onblur="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')" onafterpaste="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')"/>&nbsp;
+			    &nbsp;&nbsp;&nbsp;模块名称&nbsp;
+			      <input class="easyui-textbox" id="moduleName" name="moduleName" data-options="prompt:'请输入模块名称'" style="width: 150px;" onblur="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')" onafterpaste="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')"/>&nbsp;
+			      &nbsp;&nbsp;&nbsp;功能点&nbsp;
+			      <input class="easyui-textbox" id="funcName" name="funcName" data-options="prompt:'请输入功能点名称'" style="width: 150px;" onblur="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')" onafterpaste="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')"/>&nbsp;
+				&nbsp;&nbsp;&nbsp;
+					操作时间&nbsp;
+		  			<input readonly="readonly" type="text" id="startTime" name="startTime" style="width: 150px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endTime\')}'});" 
+								class="Wdate"  align="left" value=""/>	  		
+			  		&nbsp;至&nbsp;
+			  		<input readonly="readonly" type="text" id="endTime" name="endTime" style="width: 13%;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startTime\')}'});" 
+								class="Wdate"  align="left" value="" />
+		  	</td>
+			</tr>
+		</table>
+	</form>
+	
+	<div style="margin:5px 0;"></div>
+	
+	<table id="ol" class="easyui-datagrid" class="easyui-datagrid" style="width:100%;"
+  		pagination="true" striped="true"  checkOnSelect="true" selectOnCheck="false"
+  		data-options="pageSize:15,pageList:[15,20,30,40,50],singleSelect:true,method:'post',
+  		onClickRow:onClickRow">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:true"></th>
+					<th data-options="field:'logId',alias:'log_id',halign:'center'" width="12%" sortable="true">日志编号</th>
+					<th data-options="field:'userId',alias:'user_id',halign:'center'" width="12%" sortable="true">用户编号</th>
+					<th data-options="field:'userName',alias:'user_name',halign:'center'" width="12%" sortable="true">姓名</th>
+					<th data-options="field:'moduleName',alias:'module_name',halign:'center'" width="16%" sortable="true">模块名称</th>
+					<th data-options="field:'funcName',alias:'func_name',halign:'center'" width="16%" sortable="true">功能点</th>
+					<th data-options="field:'operateTime',alias:'operate_time',halign:'center',align:'center'" width="17%" sortable="true" formatter="Common.DateTimeFormatter">操作时间</th>
+					<th data-options="field:'ip',alias:'ip',halign:'center'" width="13%" sortable="true">IP地址 </th>
+				</tr>
+			</thead>
+		</thead>
+	</table>
+	
+	<!-- 分析下拉选择框 -->
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div   onclick="openModuleSortWindow()">模块使用排名</div>
+		<div   onclick="openUserSortWindow()">活跃用户排名</div>
+	</div>
+	
+	<!-- 模块使用分析弹窗 -->
+	<div id="analysisOfUsed" style="display: none;width: 860px;height: 580px;padding: 10px;">
+		<table style="width: 100%;">
+			<tr>
+				<td style="width: 600px;">
+					<form id="searchForm">
+						统计时间：
+						<input readonly="readonly" type="text" id="startT" name="startTime" style="width: 120px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endT\')}'});" 
+								class="Wdate"  align="left" value=""/>	  		
+			  			至
+			  			<input readonly="readonly" type="text" id="endT" name="endTime" style="width: 120px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startT\')}'});" 
+								class="Wdate"  align="left" value="" />
+						<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doAnalysisByRangeTime();">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					</form>
+				</td>
+				<td style="text-align: right;">
+					<a href="javascript:changeChartShape()" id="chartShape" class="easyui-linkbutton" data-options="plain:'true'">
+    					<i class='fa fa-pie-chart' aria-hidden='true' style='font-size:24px;color:pink;vertical-align: middle;'></i>
+    				</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" >
+					快捷选择：
+					<a href="javascript:setChartParam(1)" style="color: black;text-decoration: none;font-size: 14px;margin-right: 10px;">当天</a>
+					<a href="javascript:setChartParam(2)" style="color: black;text-decoration: none;font-size: 14px;margin-right: 10px;">最近7天</a>
+					<a href="javascript:setChartParam(3)" style="color: black;text-decoration: none;font-size: 14px;margin-right: 10px;">最近30天</a>
+					<a href="javascript:setChartParam(4)" style="color: black;text-decoration: none;font-size: 14px;margin-right: 10px;">最近90天</a>
+					<a href="javascript:setChartParam(5)" style="color: black;text-decoration: none;font-size: 14px;">今年</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="width: 100%;text-align: center;">
+					<div id="mv"></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+</body>
+
+</html>

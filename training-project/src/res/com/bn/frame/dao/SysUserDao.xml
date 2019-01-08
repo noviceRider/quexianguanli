@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.frame.dao.SysUserDao">
+	<!-- 返回角色信息以及角色成员的(Po)数据对象 -->
+	<sql id="resultSysUserObj">
+		select
+			su.USER_ID as "userId",
+			su.USER_NAME as "userName",
+			su.PASSWORD as "password",
+			su.GENDER_ID as "genderId",
+			scg.GENDER_DESC as "genderDesc",
+			su.DEPT_ID as "deptId",
+			cgm.TYPE_NAME as "deptName",
+			su.MOBILE as "mobile",
+			su.HOME_TEL as "homeTel",
+			su.OFFICE_TEL as "officeTel",
+			su.CREATE_TIME as "createTime",
+			su.MODI_PWD_TIME as "modiPwdTime",
+			su.RECENT_ACCESS as "recentAccess",
+			su.MOD_PWD_SOMEDAYS as "modPwdSomedays",
+			su.MOD_DEFAULT_PWD as "modDefaultPwd",
+			su.IS_DEFAULT_PWD as "isDefaultPwd",
+			su.IS_ADMIN as "isAdmin",
+			su.IS_LOCK as "isLock",
+			su.IS_PRE_DEFINE as "isPreDefine",
+			su.EMAIL as "email",
+			su.REMARK as "remark",
+			su.ERROR_LOGIN_TIMES as "errorLoginTimes",
+			su.IS_USED as "isUsed",
+			su.SORT_NO as "sortNo"
+			
+	</sql>
+	
+	<!-- 返回查询出的结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.frame.po.SysUserPo">
+		<include refid="resultSysUserObj"/>
+		from sys_user su
+		left join (select * from CODE_GE_MULTILEVEL where info_type = '1004') cgm on cgm.type_id = su.DEPT_ID
+		left join sys_code_gender scg on su.GENDER_ID = scg.GENDER_ID
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				(su.USER_ID like '%${params.bo.keyWord}%' or
+				su.USER_NAME like '%${params.bo.keyWord}%') 
+			</if>
+			<if test="params.bo.isUsed != null and params.bo.isUsed!=''">
+				 and su.IS_USED = #{params.bo.isUsed}
+			</if>
+		</where>
+		<!-- 默认排序方式 -->
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by su.USER_ID 
+		</if>
+	</select>
+	
+	<!-- 计算当前输入用户编号存在数量 -->
+	<select id="countSysUserByUserId" parameterType="String" resultType="Integer">
+		select
+			count(*)
+		from sys_user 
+		where USER_ID = #{userId}
+	</select>
+	
+	
+	<!-- 根据系统用户ID查询系统用户信息 -->
+	<select id="findById" parameterType="String" resultType="com.bn.frame.po.SysUserPo">
+		<include refid="resultSysUserObj"/>
+		from sys_user su
+		left join (select * from CODE_GE_MULTILEVEL where info_type = '1004') cgm on cgm.type_id = su.DEPT_ID
+		left join sys_code_gender scg on su.GENDER_ID = scg.GENDER_ID
+		where user_id = #{userId}
+	</select>
+		
+	<!-- 根据关键字匹配查询用户信息,若没有关键字则查询全部 -->
+	<select id="findKeyWord" parameterType="com.bn.frame.bo.SysUserBo" resultType="com.bn.frame.po.SysUserPo">
+		select
+			user_id "userId",
+			user_name "userName",
+			gender_id "genderId",
+			password "password"
+		from sys_user 
+		<where>
+			<if test="keyWord != null and keyWord != ''">
+				user_id like '%${keyWord}%' or 
+				user_name like '%${keyWord}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 登录时判断用户名密码是否正确 -->
+	<select id="isTrueUser" parameterType="com.bn.frame.bo.SysUserBo" resultType="Integer">
+		select
+			count(*)
+		from sys_user 
+		where user_id = #{userId}
+			and password = #{password}
+	</select>
+	
+	<!-- 查询全部的用户信息 -->
+	<select id="findAllUser"  resultType="com.bn.frame.po.SysUserPo">
+		select
+			user_id "userId",
+			user_name "userName",
+			gender_id "genderId",
+			password "password",
+			dept_id "deptId",
+			mobile "mobile",
+			home_tel "homeTel",
+			office_tel "officeTel",
+			create_time "createTime",
+			modi_pwd_time "modiPwdTime",
+			recent_access "recentAccess",
+			mod_pwd_somedays "modPwdSomedays",
+			mod_default_pwd "modDefaultPwd",
+			is_default_pwd "isDefaultPwd",
+			is_admin "isAdmin",
+			is_lock "isLock",
+			is_pre_define "isPreDefine",
+			email "email",
+			remark "remark",
+			error_login_times "errorLoginTimes",
+			is_used "isUsed",
+			sort_no "sortNo"
+		from sys_user
+	</select>
+	
+	<!-- 新增系统用户 -->
+	<insert id="addSysUser" parameterType="com.bn.frame.bo.SysUserBo">
+		insert into sys_user(
+			USER_ID,
+			USER_NAME,
+			PASSWORD,
+			GENDER_ID,
+			DEPT_ID,
+			MOBILE,
+			OFFICE_TEL,
+			CREATE_TIME,
+			MOD_PWD_SOMEDAYS,
+			MOD_DEFAULT_PWD,
+			IS_DEFAULT_PWD,
+			IS_ADMIN,
+			IS_LOCK,
+			EMAIL,
+			REMARK,
+			ERROR_LOGIN_TIMES,
+			IS_PRE_DEFINE,
+			IS_USED,
+			SORT_NO
+		)
+		values(
+			#{userId},
+			#{userName},
+			#{password},
+			#{genderId},
+			#{deptId},
+			#{mobile},
+			#{officeTel},
+			str_to_date('${createTime}', '%Y-%m-%d %T'),
+			#{modPwdSomedays},
+			#{modDefaultPwd},
+			#{isDefaultPwd},
+			#{isAdmin},
+			#{isLock},
+			#{email},
+			#{remark},
+			#{errorLoginTimes},
+			#{isPreDefine},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 根据ID删除对应ID所属角色记录 -->
+	<delete id="removeRoleMemberById" parameterType="String">
+		delete from sys_role_member where USER_ID = #{userId}
+	</delete>
+	
+	<!-- 添加对应ID所属角色记录 -->
+	<insert id="addRoleMember" parameterType="com.bn.frame.bo.SysRoleMemberBo">
+		insert into sys_role_member(
+			ROLE_ID,
+			USER_ID
+		)
+		values(
+			#{roleId},
+			#{userId}
+		)
+	</insert>
+		
+	<!-- 修改用户密码 -->
+	<update id="modifyPwd" parameterType="com.bn.frame.bo.SysUserBo">
+		update sys_user 
+		set
+			password = #{password}
+		where user_id = #{userId}
+	</update>
+	
+	<!-- 修改系统用户 -->
+	<update id="modifySysUser" parameterType="com.bn.frame.bo.SysUserBo">
+		update sys_user
+		set
+			user_name = #{userName},
+			<if test="password != '%%password%%'">
+			password = #{password},
+			modi_pwd_time = str_to_date('${modiPwdTime}', '%Y-%m-%d %T'),
+			is_default_pwd = #{isDefaultPwd},
+			</if>
+			gender_id = #{genderId},
+			dept_id = #{deptId},
+			mobile = #{mobile},
+			office_tel = #{officeTel},
+			email = #{email},
+			is_lock = #{isLock},
+			mod_pwd_somedays = #{modPwdSomedays},
+			mod_default_pwd = #{modDefaultPwd},
+			remark = #{remark},
+			is_admin = #{isAdmin},
+			is_used = #{isUsed}
+		where user_id = #{userId}
+	</update>
+	
+	<!-- 修改系统用户基本信息 -->
+	<update id="modifyBaseUser" parameterType="com.bn.frame.bo.SysUserBo">
+		update sys_user
+		set
+			user_name = #{userName},
+			password = #{password},
+			gender_id = #{genderId},
+			dept_id = #{deptId},
+			mobile = #{mobile},
+			office_tel = #{officeTel},
+			email = #{email}
+		where user_id = #{userId}
+	</update>
+	
+	<!-- 登录验证时根据用户账号密码修改用户登录失败次数，锁定状态，是否定期修改密码,最后登录时间等信息 -->
+	<update id="modifyUser" parameterType="com.bn.frame.bo.SysUserBo">
+		update sys_user
+		set
+			<if test="errorLoginTimes != null">
+				error_login_times = #{errorLoginTimes},
+			</if>
+			<if test="isLock != null and isLock != ''">
+				is_lock = #{isLock},
+			</if>
+			<if test="modPwdSomedays != null and modPwdSomedays != ''">
+				mod_pwd_somedays = #{modPwdSomedays},
+			</if>
+			<if test="recentAccess != null and recentAccess != ''">
+				recent_access = str_to_date('${recentAccess}', '%Y-%m-%d %T') 
+			</if>
+		where user_id = #{userId}
+	</update>
+	
+	<!-- 根据ID删除对应系统用户 -->
+	<delete id="removeUserById" parameterType="String">
+		delete from sys_user where USER_ID = #{userId}
+	</delete>
+	
+	<!-- 查询最大的排序号 -->
+	<select id="getMaxSortNo"  resultType="String">
+		select 
+			max(SORT_NO) "sortNo"
+		from sys_user 
+	</select>
+	
+	<!-- 查询角分类下面的用户 -->
+	<select id="findUserByRoleType" parameterType="String" resultType="com.bn.frame.po.SysUserPo">
+		select 
+			su.user_id as "userId",
+			su.user_name as "userName",
+			su.password as "password",
+			su.gender_id as "genderId",
+			su.dept_id as "deptId",
+			su.mobile as "mobile",
+			su.home_tel as "homeTel",
+			su.office_tel as "officeTel",
+			su.create_time as "createTime",
+			su.modi_pwd_time as "modiPwdTime",
+			su.recent_access as "recentAccess",
+			su.mod_pwd_somedays as "modPwdSomedays",
+			su.mod_default_pwd as "modDefaultPwd",
+			su.is_default_pwd as "isDefaultPwd",
+			su.is_admin as "isAdmin",
+			su.is_lock as "isLock",
+			su.is_pre_define as "isPreDefine",
+			su.email as "email",
+			su.remark as "remark",
+			su.error_login_times as "errorLoginTimes",
+			su.is_used as "isUsed",
+			su.sort_no as "sortNo"
+		from sys_user su
+		where user_id in(select user_id from sys_role_member where role_id in (
+							select role_id from info_role_ex where role_type=#{roleType}))
+	</select>
+</mapper>

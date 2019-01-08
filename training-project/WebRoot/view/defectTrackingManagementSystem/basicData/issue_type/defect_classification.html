@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css" />
+		<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../../js/common.js"></script>
+		<script type="text/javascript" src="js/defect_classification.js"></script>
+</head>
+<body>
+
+
+<!-- 刷新+修改+增加功能-->
+
+		
+
+
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="font-size: 14px">
+					<img src="../../../../images/common/title.gif"/>
+					缺陷分类
+				</td>
+				<td style="text-align: right;">
+							<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchIssue()">&nbsp;搜&nbsp;&nbsp;索&nbsp;</a> 
+							<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addIssueTable()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+							<a id="btn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="delIssueTable();">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+							<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editIssueTable();">&nbsp;修&nbsp;&nbsp;改
+		
+		&nbsp;</a>
+						</td>
+				</tr>
+		</table >
+		<form id="form_search">
+					<table class="btbForm"><tr>
+					<td><!-- 搜索栏 -->搜索：<input id="searchIssue" class="easyui-textbox" 
+						type="text" 
+						data-options="
+						prompt:'请输入要搜索的用户名',
+						width:'170',
+						iconAlign:'left',
+						icons: [{
+							iconCls:'icon-search',
+							handler:searchIssue
+						}]
+					" name="keyWords"/>
+				</td>
+						
+						</tr></table>
+				</form>
+
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+	
+<!-- 缺陷分配数据表格 -->
+<div style="width:100%;" id="typeIssueTypePo">
+	<table id="issueTypeTable" style="width:500;" class="easyui-datagrid" data-options="fitColumns:true,
+	autoRowHeight:true,
+	striped:true,
+	loadMsg:'正在加载数据中，请等一等~',
+	pagination:true,
+	pageList:[5,10,15,20],
+	pageSize:5"
+	style="width:500px;">
+	<thead>
+		<tr>
+			<th style="width:20%" data-options="field:'typeCode',align:'center'">缺陷编号</th>
+			<th style="width:35%" data-options="field:'typeDesc',align:'center'">缺陷分类</th>
+			<th style="width:15%" data-options="field:'dictCode',align:'center',formatter:iconStatu">当前状态</th>
+			<th style="width:15%" data-options="field:'createByName',align:'center'">创建人</th>
+			<th style="width:15%" data-options="field:'dic',align:'center',formatter:changeStatue">操作</th>
+		</tr>	
+	</thead>
+
+	</table>
+	</div>
+	<!-- <hr/> -->
+			<!-- 显示用户详细信息容器 -->
+			<div id="infoIssueContainer">
+				
+			</div>
+			<!-- 添加用户信息容器 -->
+			<div id="addIssueContainer">
+				
+			</div>
+			<!--修改用户信息容器-->
+			<div id="modifyIssueContainer">
+				
+			</div>
+
+	
+</body>
+</html>

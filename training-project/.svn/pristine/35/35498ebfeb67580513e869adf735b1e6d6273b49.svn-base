@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>人事档案</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css" />
+		<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../../js/common.js"></script>
+		<script type="text/javascript" src="js/issue_list.js"></script>
+		<style>
+		/* 改变datagrid标题的高度，使datagrid内部不出现滚动条 */
+		 .datagrid-header-row{
+		 	height:24px;
+		 }
+		</style>
+	</head>
+
+	<body class="easyui-layout" style="">
+		<div data-options="region:'north',border:false" style="height: 80px;">
+			<table class="btbHead">
+				<tr>
+					<td style='width: 25%;'>
+						<img src='../../../../images/common/title.gif' align='absmiddle'/>缺陷列表
+					</td>
+					<td style="text-align: right;">
+						<a href="#" onclick="Search()" id="searchButton" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+						<a href="#" onclick="add()" id="addButton" class="easyui-linkbutton" iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+						<a href="#" onclick="modify()" id="modifyButton" class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+						<a href="#" onclick="remove()" id="removeButton" class="easyui-linkbutton" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+			<form id="selectEmployeeForm" class="easyui-form">
+				<!-- 查询 -->
+				<table class="btbForm">
+					<tr>
+						<td colspan="2">
+							模糊查询&nbsp;<input class="easyui-textbox" id="" name=""  data-options="prompt:'输入关键字'" style="width: 160px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							登记时间&nbsp;<input  name="" id="" class="easyui-datetimebox" style="width:125px;" data-options=" panelHeight:'auto'"/>
+							&nbsp;~&nbsp;<input  name="" id="" class="easyui-datetimebox" style="width:125px;" data-options="panelHeight:'auto'"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							项目&nbsp;<input name="" id="" class="easyui-combobox" style="width:80px;" data-options="panelHeight:'auto'" value="全部项目"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							状态&nbsp;<input name="" id="" class="easyui-combobox" style="width:80px;" data-options="panelHeight:'auto'" value="全部状态"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div style="margin-top:82px">
+		<table id="showEmployeeTable" class="easyui-datagrid" style="width:100%" data-options="pagination:true,pageSize:20,striped:true">
+			<thead>
+				<tr>
+					<th data-options="field:'11',checkbox:true,align:'center'" ></th>
+					<th data-options="field:'11',align:'left',halign:'center',sortable:'true'" style="width:8%;">编号</th>
+					<th data-options="field:'11',align:'left',halign:'center',sortable:'true'" style="width:8%">项目名称</th>
+					<th data-options="field:'11',align:'left',halign:'center',sortable:'true'" style="width:8%">任务名称</th>
+					<th data-options="field:'11',align:'left',halign:'center'" style="width:10%">父任务</th>
+					<th data-options="field:'11',align:'left',halign:'center'" style="width:10%" >缺陷分类</th>
+					<th data-options="field:'11',halign:'center',align:'left'" style="width:12%" >优先级</th>
+					<th data-options="field:'11',halign:'center',align:'left'" style="width:8%" >严重程度</th>
+					<th data-options="field:'11',halign:'center',align:'left'" style="width:8%" >状态</th>
+					<th data-options="field:'11',halign:'center',align:'center'" style="width:10%" >指派</th>
+					<th data-options="field:'11',halign:'center',align:'left'" style="width:10%" >计划完成时间</th>
+					<th data-options="field:'11',halign:'center',align:'left'" style="width:8%" >操作</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+		
+  </body>
+</html>

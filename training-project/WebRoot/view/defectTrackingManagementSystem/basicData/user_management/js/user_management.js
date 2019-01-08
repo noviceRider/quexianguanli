@@ -1,0 +1,353 @@
+/**
+ * 页面加载数据
+
+ * 初始化表格面板
+ * 初始化表单域各项以及表单
+ * 初始化easyUI样式
+ * 加载新增修改页面
+ */
+var url;//定义一个全局变量来标识增加或是修改
+
+$(function(){
+	//密码重复判断
+	$.extend($.fn.validatebox.defaults.rules, {    
+	    equals: {    
+	        validator: function(value,param){    
+	            return value == $(param[0]).val();    
+	        },    
+	        message: '前后密码不一致'   
+	    }    
+	});  
+
+	searchIssue();
+	//加载修改和增加的面板
+	$("#addOrModifyContainer").load("user_add_or_modify.html",null,function(){
+		$("#AOFOrModifyPanel").dialog({
+			title:"新增用户信息",
+			iconCls:"icon-save",
+			width:240,
+			height:300,
+			closed:true,
+			modal:true,
+			buttons:"#saveOrMpdify",
+			onBeforeClose:function () { 
+			//调用easyUI方法清空增加面板的数据
+				resetForm();
+		        }
+			});
+		
+		//复选框初始化
+		$.ajax({
+			url:basePath+"/searchDept.json",
+			type : 'post',
+			dataType : "json",
+			success : function(data) {
+				$("#AOFdeptId").combobox({
+					textField:"dept",valueField:"deptId",width:80,
+					data:data.result,
+					loadFilter:function(data){
+				    	
+					  	   data.unshift({dept:'',deptId:'--请选择--'});
+					  	   return data;
+					  	}
+				});
+				
+			}
+		});
+		$.ajax({
+			url:basePath+"/searchSex.json",
+			type : 'post',
+			dataType : "json",
+			success : function(data) {
+				$("#AOFgenderId").combobox({
+					textField:"gendor",valueField:"genderId",width:80,
+					data:data.result,
+					loadFilter:function(data){
+				    	
+					  	   data.unshift({gendor:'',deptId:'--genderId--'});
+					  	   return data;
+					  	}
+				});
+			}
+		});
+		
+		$("#AOFuserId").textbox({
+			iconCls:"icon-man",
+			width:120
+		});
+		$("#AOFuserName").textbox({
+			iconCls:"icon-man",
+			width:120
+		});
+
+		$("#AOFrole").textbox({
+			iconCls:"icon-man",
+			width:120
+		});
+		$("#AOFmobile").textbox({
+			iconCls:"icon-man",
+			width:120
+		});
+		$("#AOFemail").textbox({
+			iconCls:"icon-man",
+			width:120
+		}); 
+		$("#AOFpasswordAga").textbox({ 
+			 type:"password",
+		     prompt: 'Password', 
+		     width:120,
+		     showEye: true,
+		     validType:"equals['#AOFpassword']"
+		     
+		    });
+		$('#AOFpassword').textbox({ 
+			type:"password",
+		    prompt: 'Password', 
+		    width:120,
+		    showEye: true
+		    }); 
+		
+		//初始化页面提交按钮
+		$("#AOFFormSubmit").linkbutton({
+		text:"保存",
+		iconCls:"icon-save",
+		onClick:function(){
+		
+			validateMetamanage();
+			if($("#AOFIssueForm").form("validate")){
+			$("#AOFIssueForm").form({
+				url:url,
+				novalidate:false,
+				success:function(data){
+					if(JSON.parse(data).result=="1"){
+						$.messager.alert("提示","保存成功");
+						$("#AOFOrModifyPanel").dialog("close");
+						resetForm();
+						searchIssue();
+						$("#AOFOrModifyPanel").dialog({closed:true});
+					}
+					else{
+						$.messager.alert("警告","保存失败");
+						resetForm();
+						}
+					}
+			
+				})
+			$("#AOFIssueForm").submit();
+			}
+		}
+	})	
+		$("#AOFFormCancel").linkbutton({
+			text:"取消",
+			iconCls:"icon-cancel",
+			onClick:function(){
+				resetForm()
+				$("#AOFOrModifyPanel").dialog({closed:true});
+			}
+		})	
+	})
+	
+	
+//初始化详情表单,并且再页面初始化加载
+	
+		$("#infoUserContainer").load("user_info.html",null,function(){
+			$("#InfoPanel").dialog({
+				title:"用户信息",
+				iconCls:"icon-save",
+				width:220,
+				height:220,
+				modal:true,
+				closed:true,
+				buttons:"#btnClose",
+				onBeforeClose:function () { 
+				//调用easyUI方法清空增加面板的数据
+					$("#infoForm").form("reset");
+			        }
+				});
+			$("#cancelBtns").linkbutton({
+				text:"退出",
+				iconCls:"icon-cancel",
+				onClick:function(){
+					closeInfoPanel()
+				}
+			})	
+			$("#closeBtn").linkbutton({
+				text:"退出",
+				iconCls:"icon-cancel",
+				onClick:function(){
+					closeInfoPanel()
+				}
+			})	
+		})
+	
+})
+
+
+
+//模糊查询并且加载数据
+		function searchIssue(){
+			$("#userTable").datagrid( Common.createDatagridOptionsParams(basePath, "/UserManager.json",135,{"keyWords":$("#searchIssue").val()}));
+			//每次查询后都自动清空搜索框内的数据
+			$("#searchIssue").textbox("setValue","");
+		
+		}
+
+//清空表单的数据
+		function resetForm(){
+			$("#AOFIssueForm").form("reset");
+		}
+		
+/**封装一个方法判断面板的功能是添加还是修改
+ * 页面触发按钮：新增或修改，根据参数来确定调用的url并且发送请求
+ * 如果是增加则不再发送请求，如果是修改则发送一个请求得到数据来显示
+ * 得到响应后再通过loadDataMySelves方法给表单域各项赋值
+ * @param data
+ * @returns
+ */				
+		function showAddTable(num){
+			//num的值决定了此面板的功能是增加还是修改
+			if (num == 1){
+				$("#userIdHI").attr("name","aaa");
+				$("#AOFuserId").textbox("enable")
+				url=basePath+"/addUser.json";
+				$("#AOFOrModifyPanel").dialog("open");
+				validateMetamanage();
+			}else{
+				$("#userIdHI").attr("name","userId");
+				$("#AOFuserId").textbox("disable");
+				url=basePath+"/modifyUser.json";
+				var rows =$("#userTable").datagrid("getSelections");
+				$("#AOFOrModifyPanel").dialog({open:true,title:"修改用户信息"});
+				if(rows.length < 1){
+					$.messager.alert('警告','请选择需要修改的数据');
+					return;
+					}
+				else if(rows.length > 1){
+					$.messager.alert('警告','一次修改一条数据');
+					return;
+					}
+				else{
+				$("#AOFOrModifyPanel").dialog("open");
+				 var userId=rows[0].userId;
+				 var role=rows[0].role;
+				 $.ajax({
+						url : basePath+"/showUser.json",
+						type : 'post',
+						data : {"userId":userId,"role":role},
+						dataType : "json",
+						success : function(data) {
+							//调用共有的js文件方法加载数据到表单中
+							loadDataMySelves(data.result);
+							$("#AOFdeptId").combobox("setValue",data.result.deptId);
+							
+							$("#AOFgenderId").combobox("setValue",data.result.genderId);
+							
+						},
+						error : function() {
+							$.messager.alert('错误', '服务器内部错误!', 'error');
+						}
+					});
+				}		
+			}
+		}
+		
+		
+/**封装一个方法给表单域内的表单项赋值
+ * 直接遍历得到数据的属性
+ * 通过属性作为变量进行字符串拼接找到对应属性的属性id
+ * 再通过setValue方法赋值
+ * @param data
+ * @returns
+ */
+		function loadDataMySelves (data){
+			
+			 for (var key in data) {
+				 
+		            if ($('#AOF'+key+'').length > 0)
+		                $('#AOF'+key+'').textbox("setValue",data[key]);
+		            if($('#'+key+'HI').length>0){
+		            	$('#'+key+'HI').val(data[key])
+		            }
+		        }
+			
+		};
+		
+		
+/**封装一个方法删除表格数据
+ * 直接通过数据表格的getSelections得到对应选中行的对应编号属性
+ * 放入数组传入后台
+ * @param data
+ * @returns
+ */
+		function delUserTable(){
+			var rows =$("#userTable").datagrid("getSelections");
+			if(rows.length == 0){
+				$.messager.alert('警告','请先选中要删除的记录');
+				return;
+			}$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+			    if (r){    
+			    	var delIds=[];
+			    	rows.forEach(obj=>{
+			    		delIds.push(obj.userId);
+			    	});
+			    	$.ajax({
+			    		url:basePath+"/DelUserByCode.json",
+			    		type:"post",
+			    		data:{"delIds":delIds},
+			    		dataType:"json",
+			    		success:function(data){
+			    			searchIssue();
+			    			$.messager.alert('信息','删除成功');
+			    		}
+			    	});  
+			    }else{
+			alert("删除失败");
+		};
+			})
+			}
+		
+		//格式化数据表格的td构建一个超链接
+		function searchInfo(value,row,index){
+			return "<a href='#' style='color:blue;' onclick='showInfo(this)'>&nbsp;详情&nbsp;<a/>";
+		}
+		//超链接带的方法
+		function showInfo(dom){
+			var rows =$("#userTable").datagrid("getSelections");
+			var userId =$(dom).parents("tr").find("[field='userId']").text();
+			var role =$(dom).parents("tr").find("[field='role']").text();
+				$("#InfoPanel").dialog("open");
+				
+				 $.ajax({
+				        url: basePath + "/showUser.json",
+				        data:{"userId":userId},
+				        type: 'post',
+				        async: false,
+				        dataType: "json",
+				        success: function (data) {
+				        	for (var key in data.result) {
+				        		
+					            if ($("#info"+key+"").length > 0){
+					                $('#info'+key+'').text(data.result[key]);
+					            }
+					            
+					        }
+				        }
+				    });
+		}
+		//表单非重验证
+		function validateMetamanage() {
+			$("#AOFuserId").textbox({
+				required:true,
+				missingMessage:"编号不能为空",
+				invalidMessage:"编号已存在",
+				validType:"remoteValid['"+basePath+"/zvalidateState.json','userId']"
+			});
+		}
+		
+		
+		function closeInfoPanel(){
+			$("#InfoPanel").dialog("close");
+		}
+		
+		
+		

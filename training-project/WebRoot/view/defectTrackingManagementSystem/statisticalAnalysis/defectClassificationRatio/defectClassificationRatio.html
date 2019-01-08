@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据访问类型</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../../js/jquery-migrate-1.1.0.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="../../../../js/jquery.jqprint.js" charset="UTF-8" ></script>
+	<script type="text/javascript" src="js/defectClassificationRatio.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../../js/highcharts/highcharts.js" charset="UTF-8"></script>
+  </head>
+  
+  <body>
+   <!-- 标题以及各种功能按钮 -->
+   <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../../images/common/title.gif' style="vertical-align:middle;">缺陷分类占比
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton"  data-options="iconCls:'icon-search'" onclick="defectClassificationRatio();">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+    
+    <!-- 查询条件 -->
+	<form id="defectClassificationRatioSearch">
+		<table class="btbForm">
+			<tr>
+				<td style="text-align:left;">
+	    			项目&nbsp;<input id="ificationProjectId" name="projectId" class="easyui-combobox" data-options="editable:false"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					登记时间&nbsp;<input id="ificationStartTime" name="startTime" class="easyui-datebox"  data-options="prompt:'请输入日期',editable:false" />
+	    			~&nbsp;<input id="ificationEndTime" name="endTime" class="easyui-datebox"  data-options="prompt:'请输入日期',editable:false" />
+				</td>
+    		</tr>
+		</table>
+	</form>
+    
+	<!-- 饼图 -->
+	<div id="showdefectClassificationRatio"></div>
+	
+  </body>
+</html>

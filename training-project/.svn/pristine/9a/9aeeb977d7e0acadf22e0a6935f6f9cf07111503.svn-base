@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="InfoPanel">
+		<form action="" id="infoForm">
+		<table>
+			<tr><td>账号：</td><td><input type="text" name="userId" id="userId" ><br></td></tr>
+			<tr><td>用户姓名：</td><td><input type="text" name="userName" id="userName"><br></td></tr>
+			<tr><td>用户性别：</td><td><input type="text" name="genderId" id="genderId"><br></td></tr>
+			<tr><td>用户部门：</td><td><input type="text" name="deptId" id="deptId" ><br></td></tr>
+			<tr><td>角色：</td><td><input type="text" name="role" id="role" ><br></td></tr>
+			<tr><td>联系方式：</td><td><input type="text" name="mobile" id="mobile"><br></td></tr>
+			<tr><td>家庭电话：</td><td><input type="text" name="homeTel" id="homeTel"><br></td></tr>
+			<tr><td>电子邮箱：</td><td><input type="text" name="email" id="email"><br></td></tr>
+			</table>
+		</form>
+		</div>
+</body>
+</html>

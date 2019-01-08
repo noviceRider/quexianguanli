@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.MetaColumnDao">
+	
+<!-- 维护字段数据 -->
+
+	<!-- 根据tableName查询所有对应的MetaColumnPo数据 -->
+	<select id="findColumnByTableName" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo" resultType="com.bn.gmodule.commondata.po.MetaColumnPo">
+		select
+			a.table_name "tableName",
+			a.column_name "columnName",
+			a.column_desc "columnDesc",
+			a.attribute_name "attributeName",
+			a.attribute_desc "attributeDesc",
+			a.column_type "columnType",
+			b.dict_desc "columnTypeDesc",
+			a.column_length "columnLength",
+			a.column_input_type "columnInputType",
+			c.dict_desc "columnInputTypeDesc",
+			a.options_source "optionsSource",
+			a.dict_type "dictType",
+			e.type_desc "dictTypeDesc",
+			a.column_enum "columnEnum",
+			a.column_validate_type "columnValidateType",
+			d.dict_desc "columnValidateTypeDesc",
+			a.column_validate_regex "columnValidateRegex",
+			a.value_range "valueRange",
+			a.is_primarykey "isPrimaryKey",
+			a.not_null "notNull",
+			a.is_used "isUsed",
+			a.sort_no "sortNo",
+			 (a.sort_no+0) as sortNo1
+		from
+			info_meta_column a
+		left join info_ge_dict b on a.column_type = b.dict_code
+		left join info_ge_dict c on a.column_input_type = c.dict_code
+		left join info_ge_dict d on a.column_validate_type = d.dict_code
+		left join code_ge_dicttype e on a.dict_type = e.type_code
+		where
+			a.table_name = #{tableName}
+		order by
+			sortNo1
+	</select>
+
+	<!-- 根据tableName和columnName查询对应MetaColumnPo数据 -->
+	<select id="findByColumnName" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo" resultType="com.bn.gmodule.commondata.po.MetaColumnPo">
+		select
+			a.table_name "tableName",
+			a.column_name "columnName",
+			a.column_desc "columnDesc",
+			a.attribute_name "attributeName",
+			a.attribute_desc "attributeDesc",
+			a.column_type "columnType",
+			b.dict_desc "columnTypeDesc",
+			a.column_length "columnLength",
+			a.column_input_type "columnInputType",
+			c.dict_desc "columnInputTypeDesc",
+			a.options_source "optionsSource",
+			a.dict_type "dictType",
+			e.type_desc "dictTypeDesc",
+			a.column_enum "columnEnum",
+			a.column_validate_type "columnValidateType",
+			d.dict_desc "columnValidateTypeDesc",
+			a.column_validate_regex "columnValidateRegex",
+			a.value_range "valueRange",
+			a.is_primarykey "isPrimaryKey",
+			a.not_null "notNull",
+			a.is_used "isUsed",
+			a.sort_no "sortNo"
+		from
+			info_meta_column a
+		left join info_ge_dict b on a.column_type = b.dict_code
+		left join info_ge_dict c on a.column_input_type = c.dict_code
+		left join info_ge_dict d on a.column_validate_type = d.dict_code
+		left join code_ge_dicttype e on a.dict_type = e.type_code
+		where
+			a.table_name = #{tableName}
+		and
+			a.column_name = #{columnName}
+	</select>
+	
+	<!-- 根据tableName查询对应所有字段中最大的sortNo -->
+	<select id="findColumnMaxSortNoByTableName" resultType="String">
+		select max(sort_no)
+			from info_meta_column
+		where
+			table_name = #{tableName}
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="addMetaColumn" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo">
+		insert into info_meta_column
+		(
+			table_name,
+			column_name,
+			column_desc,
+			attribute_name,
+			attribute_desc,
+			column_type,
+			column_length,
+			column_input_type,
+			options_source,
+			dict_type,
+			column_enum,
+			column_validate_type,
+			column_validate_regex,
+			value_range,
+			is_primarykey,
+			not_null,
+			is_used,
+			sort_no
+		)
+		values
+		(
+			#{tableName},
+			#{columnName},
+			#{columnDesc},
+			#{attributeName},
+			#{attributeDesc},
+			#{columnType},
+			#{columnLength},
+			#{columnInputType},
+			#{optionsSource},
+			#{dictType},
+			#{columnEnum},
+			#{columnValidateType},
+			#{columnValidateRegex},
+			#{valueRange},
+			#{isPrimaryKey},
+			#{notNull},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="modifyMetaColumn" parameterType="com.bn.gmodule.commondata.bo.MetaTableBo">
+		update info_meta_column
+		set
+			column_desc = #{columnDesc},
+			attribute_name = #{attributeName},
+			attribute_desc = #{attributeDesc},
+			column_type = #{columnType},
+			column_length = #{columnLength},
+			column_input_type = #{columnInputType},
+			options_source = #{optionsSource},
+			dict_type = #{dictType},
+			column_enum = #{columnEnum},
+			column_validate_type = #{columnValidateType},
+			column_validate_regex = #{columnValidateRegex},
+			value_range = #{valueRange},
+			is_primarykey = #{isPrimaryKey},
+			not_null = #{notNull},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where
+			table_name = #{tableName}
+		and
+			column_name = #{columnName}
+	</update>
+	
+	<!-- 根据tableName删除数据 -->
+	<delete id="removeMetaColumnByTableName" parameterType="String">
+		delete from info_meta_column 
+		where
+			table_name = #{tableName}
+	</delete>
+
+</mapper>

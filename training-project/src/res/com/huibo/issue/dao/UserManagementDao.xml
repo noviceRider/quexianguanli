@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.UserManagementDao">
+
+<!-- 查询全部缺陷种类 -->
+
+		<select id="getAllUsers"  parameterType="com.bn.javax.dao.Page" resultType="com.huibo.issue.po.UserManagementPo" >
+		select
+		
+		user.USER_ID	userId	,
+		user.COMPANY_ID	companyId	,
+		user.USER_NAME	userName	,
+		user.PASSWORD	password	,
+		user.GENDER_ID	genderId	,
+		user.DEPT_ID	deptId	,
+		user.MOBILE	mobile	,
+		user.HOME_TEL	homeTel	,
+		user.OFFICE_TEL	officeTel	,
+		user.CREATE_TIME	createTime	,
+		user.MODI_PWD_TIME	modiPwdTime	,
+		user.RECENT_ACCESS	recentAccess	,
+		user.MOD_PWD_SOMEDAYS	modPwdSomedays	,
+		user.MOD_DEFAULT_PWD	modDefaultPwd	,
+		user.IS_DEFAULT_PWD	isDefaultPwd	,
+		user.IS_ADMIN	isAdmin	,
+		user.IS_LOCK	isLock	,
+		user.IS_PRE_DEFINE	isPreDefine	,
+		user.EMAIL	email	,
+		user.REMARK	remark,
+		user.ERROR_LOGIN_TIMES	errorLoginTimes	,
+		user.IS_USED	isUsed,
+		user.SORT_NO	sortNo,
+		dict.DICT_DESC  gendor,
+		dept.DEPT_NAME dept
+		<!-- role.ROLE_NAME role,
+		srm.ROLE_ID roleId -->
+		
+		from
+		
+		sys_user user 
+		left join info_ge_dict dict on user.GENDER_ID = dict.DICT_CODE 
+		AND dict.TYPE_CODE = 'GENDER'
+		left join i_hr_dept dept  on user.DEPT_ID = dept.DEPT_ID 
+		<!-- left join sys_role_member srm  on user.USER_ID = srm.USER_ID
+		left join sys_role role  on  role.ROLE_ID = srm.ROLE_ID -->
+		<where>
+				<if test="params.bo.keyWords !=null and params.bo.keyWords !=''">
+				user.USER_ID like '%${params.bo.keyWords}%'
+				or
+				user.USER_NAME like '%${params.bo.keyWords}%'
+				</if>
+				<if test="params.bo.userId != null and params.bo.userId != ''">
+				or user.USER_ID = #{params.bo.userId}
+			</if>
+			</where>
+			<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by user.CREATE_TIME DESC
+		</if>		
+
+</select>
+<!-- 根据编号来查询用户信息 -->
+			<select id="getUserById" parameterType="com.huibo.issue.po.UserManagementPo" resultType="com.huibo.issue.po.UserManagementPo">
+			select
+			
+		user.USER_ID	userId	,
+		user.COMPANY_ID	companyId	,
+		user.USER_NAME	userName	,
+		user.GENDER_ID	genderId	,
+		user.DEPT_ID	deptId	,
+		user.MOBILE	mobile	,
+		user.HOME_TEL	homeTel	,
+		user.OFFICE_TEL	officeTel	,
+		user.CREATE_TIME	createTime	,
+		user.MODI_PWD_TIME	modiPwdTime	,
+		user.RECENT_ACCESS	recentAccess	,
+		user.MOD_PWD_SOMEDAYS	modPwdSomedays	,
+		user.MOD_DEFAULT_PWD	modDefaultPwd	,
+		user.IS_DEFAULT_PWD	isDefaultPwd	,
+		user.IS_ADMIN	isAdmin	,
+		user.IS_LOCK	isLock	,
+		user.IS_PRE_DEFINE	isPreDefine	,
+		user.EMAIL	email	,
+		user.REMARK	remark,
+		user.ERROR_LOGIN_TIMES	errorLoginTimes	,
+		user.IS_USED	isUsed,
+		user.SORT_NO	sortNo,
+		dict.DICT_DESC  gendor,
+		dept.DEPT_NAME dept
+		<!-- role.ROLE_NAME role,
+		srm.ROLE_ID roleId -->
+		
+		
+		from
+		
+		sys_user user 
+		left join info_ge_dict dict on user.GENDER_ID = dict.DICT_CODE 
+		AND dict.TYPE_CODE = 'GENDER'
+		left join i_hr_dept dept  on user.DEPT_ID = dept.DEPT_ID 
+		<!-- left join sys_role_member srm  on user.USER_ID = srm.USER_ID
+		left join sys_role role  on  role.ROLE_ID = srm.ROLE_ID -->
+		
+		<where>
+		user.USER_ID = #{userId}
+		<if test="role !=null and role !=''">
+		 and
+		role.ROLE_NAME=#{role}
+		</if>
+		</where>
+			</select>
+<!-- 查询所有部门信息 -->
+			<select id="searchDept" resultType="com.huibo.issue.po.UserDeptPo">
+				select
+				
+				DEPT_ID deptId,
+				DEPT_NAME dept 
+				
+				from
+				i_hr_dept
+			</select>
+<!-- 查询所有性别信息 -->
+			<select id="searchSex" resultType="com.huibo.issue.po.UserSexPo">
+				select
+				
+				DICT_DESC gendor,
+				DICT_CODE genderId
+				 
+				from
+				info_ge_dict
+				
+				where TYPE_CODE = 'GENDER'
+			</select>
+<!-- 查询所有角色信息 -->
+			<select id="searchRole" resultType="com.huibo.issue.po.UserRolePo">
+				select
+				
+				ROLE_ID roleId,
+				ROLE_NAME role
+				 
+				from
+				sys_role
+			</select>
+<!-- 删除语句 :删除用户信息-->
+
+			<delete id="delUserType">
+				delete
+				from
+					sys_user
+				where
+				USER_ID
+				in
+			<foreach collection="array" item="id" open="(" close=")" separator=",">
+				
+				#{id}
+				
+			</foreach>
+				</delete>
+				
+<!-- 增加语句:增加用户的基本信息 -->
+			<insert id="addUser">
+				insert 
+			into
+				sys_user
+
+		(USER_ID,USER_NAME,GENDER_ID,DEPT_ID,MOBILE,EMAIL,PASSWORD)
+values
+		(#{userId},#{userName},#{genderId},#{deptId},#{mobile},#{email},#{password})
+			</insert>
+			
+<!-- 增加语句:增加用户的角色信息 -->	
+
+			<!-- <insert id="addRole">
+				insert 
+			into
+				sys_role_member
+
+		(ROLE_ID,USER_ID)
+values
+		(#{userId},#{roleId})
+			</insert> -->
+<!-- 修改语句 :修改用户的基本信息-->
+			<update id="modifyUser">
+				update 
+			
+		sys_user user left join info_ge_dict dict on user.GENDER_ID = dict.DICT_CODE 
+		AND dict.TYPE_CODE = 'GENDER'
+		left join i_hr_dept dept  on user.DEPT_ID = dept.DEPT_ID 
+		<!-- left join sys_role_member srm  on user.USER_ID = srm.USER_ID
+		left join sys_role role  on  role.ROLE_ID = srm.ROLE_ID -->
+
+					SET
+		user.USER_NAME = #{userName},
+ 		user.GENDER_ID  =#{genderId},
+		user.MOBILE	=#{mobile},
+		user.EMAIL	=#{email},
+		user.DEPT_ID =#{deptId},
+		user.PASSWORD=#{password}
+		<where>
+		user.USER_ID = #{userId}
+		<!-- <if test="role !=null and role !=''">
+		 and
+		role.ROLE_NAME=#{role}
+		</if> -->
+		</where>
+
+			</update>
+			
+			<!-- 验证 -->
+	<select id="validatePriorityCode" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM sys_user user
+		<where>
+			<if test="userId != null and userId != ''">
+				user.USER_ID = #{userId}
+			</if>
+		</where>
+	</select>
+			
+</mapper>

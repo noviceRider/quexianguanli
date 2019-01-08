@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>权限设置</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script src="../../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/easyui-lang-zh_CN.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/prettify.js"></script>
+		<script type="text/javascript" src="../../gmodule/dataaccess/js/jquery.format.js"></script>
+		<script type="text/javascript" src="../../../js/common/DoubleListTransfer.js"></script>
+		<script type="text/javascript" src="js/empauth.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/empSingleSelect.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/radioGroup.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/checkBoxGroup.js"></script>
+	</head>
+
+	<body class="easyui-layout">
+		<div data-options="region:'north',border:false" style="height: 40px;border-bottom: 1px solid #ccc">
+			<table class="btbHead">
+				<tr>
+					<td style='width: 25%;'>
+						<img src='../../../images/common/title.gif' align='absmiddle'/>权限设置
+					</td>
+					<td style="text-align: right;border:0px solid red">
+						<a href="#" onclick="doSave()" id="saveButton" class="easyui-linkbutton" iconCls="icon-save">&nbsp;保&nbsp;&nbsp;存&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div style="margin-left: 5%">
+			<table style="margin-top: 50px;width:100%">
+				<tr>
+					<td>
+						<span style="font-size: 13px">员工姓名</span>
+						<div id="selectEmp" style="top: 0px;position: relative;display:inline-block"></div>
+					</td>
+				</tr>
+				
+			</table>
+			<table style="margin-top: 0px;width:100%">
+				<tr>
+					<td valign="top" style="width:80px"><span style="font-size: 13px">数据访问权限</span></td>
+					<td valign="top" >
+						<div  id="selectAuthority" style="border:0px solid #ccc;width:100%;height:0px;margin-top: -2px"></div>
+					</td>
+				</tr>
+			</table>
+			<div style="margin-top: 6px;width:90%;border:1px solid #ccc">
+				<div id="panel"   style="width:100%;background-color: #ccc;height:30px;line-height: 30px"><span style="color:white;font-weight: bolder;margin-left: 5px;font-size: 13px">员工对应的用户</span></div>
+					<table style="margin-top: 0px;width:100%">
+						<tr>
+							<td colspan="1" style="border:0px solid #ccc ">
+								<div style="width:45%;height:120%;float:left;">
+										<table style="width:100%;">
+											<tr>
+												<td>
+													<span style="font-size: 13px">可选用户</span>&nbsp;
+												</td>
+												<td style="text-align: right;">
+													<input type="text" class="easyui-textbox" name="keyWord" style="width: 100px" id="canSelectUserKeyWords">&nbsp;
+													<a href="#" id="queryBtn" class="easyui-linkbutton" style="margin-top: -3px;" data-options="iconCls:'icon-search'"  onclick="queryCanSelectUser()">查询</a>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<select name="canSelectUser" id="canSelectUser" multiple="multiple" style="width: 100%;height:200px;"size="13">
+													</select>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div style="width:10%;height:97%;float:left;">
+											<table style="width:100%;">
+													<tr>
+														<td style="height:60px;"></td>
+													</tr>
+													<tr>
+														<td style="text-align:center">
+															<a href="#" id="allToRight" style="width:80%;" class="easyui-linkbutton" >>></a>
+														</td>
+													</tr>
+													<tr>
+														<td style="padding-top:8px;text-align:center">
+															<a href="#" id="toRight" style="width:80%;" class="easyui-linkbutton" >></a>
+														</td>
+													</tr>
+													<tr>
+														<td style="padding-top:8px;text-align:center">
+															<a href="#" id="toLeft" style="width:80%;" class="easyui-linkbutton" ><</a>
+														</td>
+													</tr>
+													<tr>
+														<td style="padding-top:8px;text-align:center">
+															<a href="#" id="allToLeft" style="width:80%;" class="easyui-linkbutton" ><<</a>
+														</td>
+													</tr>
+												</table>
+									</div>
+									<div style="width:45%;height:97%;float:left;">
+										<table style="width:100%">
+											<tr>
+												<td><span style="font-size: 13px">已选用户</span>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select name="selectedUser" id="selectedUser" multiple="multiple" style="width: 100%;height:200px;margin-top:5px;" size="13">
+													</select>
+												</td>
+											</tr>
+										</table>
+									</div>
+							</td>
+						</tr>
+					</table>
+				
+			</div>
+		</div>
+  </body>
+</html>

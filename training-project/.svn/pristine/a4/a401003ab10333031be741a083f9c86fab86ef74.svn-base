@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>meta_column_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+  </head>
+  
+  <body>
+    <div id="meta_column_add_modify_div" data-options="buttons:'#meta_column_add_modify_div_btns'">
+		<table style="width: 100%">
+			<tr>
+				<td align="center">
+					<form id="meta_column_add_modify_form" class="easyui-form" enctype="multipart/form-data" method="POST">
+						<table style="width:100%;margin:0px 0px 15px 0px;border-spacing: 10px;">
+							<tr>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >字段名</td>
+								<td>
+									<input id="columnNameId" name="columnName" class="easyui-textbox" data-options="" style="width: 260px;"></input>
+								</td>
+								<td style="text-align: right;width:80px;white-space: nowrap;" valign="top">字段描述</td>
+								<td>
+									<input id="columnDescId" name="columnDesc" class="easyui-textbox" data-options="" style="width:260px;height:;"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >属性名</td>
+								<td>
+									<input id="attributeNameId" name="attributeName" class="easyui-textbox" data-options="" style="width:260px;"></input>
+								</td>
+								<td style="text-align: right;width:80px;white-space: nowrap;"  valign="top">属性描述</td>
+								<td >
+									<input id="attributeDescId" name="attributeDesc" class="easyui-textbox" data-options="" style="width:260px;height:;">
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >字段类型</td>
+								<td>
+									<input id="columnTypeId" name="columnType"  class="easyui-combobox" data-options="editable:false,valueField: 'dictCode',textField: 'dictDesc', panelHeight:'auto'" style="width: 260px;"></input>
+								</td>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >字段长度</td>
+								<td>
+									<input id="columnLengthId" name="columnLength" class="easyui-numberbox" data-options="" style="width:260px;"></input>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >输入类型</td>
+								<td>
+									<input id="columnInputTypeId" name="columnInputType" class="easyui-combobox" data-options="editable:false,valueField: 'dictCode',textField: 'dictDesc', panelHeight:'auto'" style="width: 260px;"></input>
+								</td>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >选项来源</td>
+								<td id="columnInputTypeTd" >
+									<select id="optionsSourceId" name="optionsSource" class="easyui-combobox" data-options="editable:false,valueField: 'dictCode',textField: 'dictDesc', panelHeight:'auto'" style="width:260px;">
+										<option value="0">数据字典</option>
+										<option value="1">枚举信息</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+							 <td colspan="4">
+							  <div id="dictTypeTr">
+							   <table style="width:100%;border-spacing: 10px;">
+							    <tr>
+							     	<td style="text-align: right;width:69px;white-space: nowrap;" >代码类型</td>
+									<td colspan="3">
+										<input id="dictTypeDescId" name="dictTypeDesc" class="easyui-textbox" data-options="editable:false,panelHeight:'auto'" style="width: 260px;"></input><input id="dictTypeId" name="dictType" type="hidden"></input>
+										<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDictTypeInfo()"></a>
+									</td>
+							    </tr>
+							   </table>
+							  </div>
+							 </td>
+							</tr>
+							<tr>
+							 <td colspan="4">
+							 <div id="columnEnumTr" style="display: none;">
+							  <table style="width:100%;border-spacing: 10px;">
+							   <tr>
+							    <td style="text-align: right;width:69px;white-space: nowrap;" >枚举信息</td>
+								<td colspan="3" style="padding-left: 0px">
+									<table style="padding-left: 0px">
+										<tr>
+											<td style="padding-left: 0px">
+												<select name="columnEnum" id="columnEnumId" class="" multiple="multiple"  style="width:520px;height:85px" size="13"></select>
+											</td>
+											<td>
+												<table>
+													<tr>
+														<td>
+															<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addEnum()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyEnum()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeEnum()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							   </tr>
+							  </table>
+							 </div>
+							 </td>
+							</tr>
+							<tr style="display: none;">
+								<td style="text-align: right;width:80px;white-space: nowrap;" >验证类型</td>
+								<td>
+									<input id="columnValidateTypeId" name="columnValidateType" class="easyui-combobox" data-options="editable:false,valueField: 'dictCode',textField: 'dictDesc', panelHeight:'auto'" style="width: 260px;"></input>
+								</td>
+								<td style="text-align: right;width:80px;white-space: nowrap;" >取值范围</td>
+								<td>
+									<input id="valueRangeId" name="valueRange" class="easyui-textbox" data-options="prompt:'范围格式:0-100'" style="width:260px;"></input>
+								</td>
+							</tr>
+							<tr style="display: none;">
+								<td style="text-align: right;width:80px;white-space: nowrap;"  valign="top">验证表达式</td>
+								<td colspan="3">
+									<input id="columnValidateRegexId" name="columnValidateRegex" class="easyui-textbox" data-options="" style="width:597px;height:;">
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;white-space: nowrap;"  valign="top">是否主键</td>
+								<td>
+									<input id="yesKeyId" name="isPrimaryKey" type="radio" value="1" class="" data-options="">
+									<label for="yesKeyId">是</label>
+									<input id="noKeyId" name="isPrimaryKey" type="radio" value="0" class="" data-options="" checked="checked">
+									<label for="noKeyId">否</label>
+								</td>
+								<td style="text-align: right;white-space: nowrap;"  valign="top">是否非空</td>
+								<td>
+									<input id="yesNotNullId" name="notNull" type="radio" value="1" class="" data-options="">
+									<label for="yesNotNullId">是</label>
+									<input id="noNotNullId" name="notNull" type="radio" value="0" class="" data-options="" checked="checked">
+									<label for="noNotNullId">否</label>
+								</td>
+							</tr>
+							<tr id="columnIsUsedRow">
+								<td style="text-align: right;width:80px;white-space: nowrap;"  valign="top">是否有效</td>
+								<td>
+									<input id="yesUsedId" name="isUsed" type="radio" value="1" class="" data-options="" checked="checked">
+									<label for="yesUsedId">是</label>
+									<input id="noUsedId" name="isUsed" type="radio" value="0" class="" data-options="">
+									<label for="noUsedId">否</label>
+								</td>
+								<td style="text-align: right;width:80px;display: none;white-space: nowrap;"  valign="top">顺序号</td>
+								<td style="display: none;">
+									<input id="sortNoId" name="sortNo" class="easyui-textbox" data-options="" style="width: 260px;">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="meta_column_add_modify_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="columnSave()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="columnCancel()">取消</a>
+  	</div>
+  </body>
+</html>

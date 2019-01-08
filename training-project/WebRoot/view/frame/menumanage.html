@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>菜单管理</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="js/menumanage.js"></script>
+ </head>
+  
+  <body>
+    	<form name="searchForm" id="searchForm">
+    		<!-- 查询表头部 -->
+    		<table class='btbHead'>
+    			<tr>
+    				<td style="width:25%;">
+    					<img src="../../images/common/title.gif" align="absmiddle">菜单管理
+    				</td>
+    				<td style="text-align:right;">
+  						<a href="#" id="queryBtn" class="easyui-linkbutton" onclick="addRootMenu()" iconCls="icon-add">增加第一级</a>
+  						<a href="#" id="queryBtn" class="easyui-linkbutton" onclick="addNextMenu()" iconCls="icon-add">增加下级</a>
+  						<a href="#" id="queryBtn" class="easyui-linkbutton" onclick="modifyMenu()" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+  					</td>
+    			</tr>
+    		</table>
+    		<!-- 查询条件 -->
+    		<table class="btbForm">
+    			<tr>
+    				<td style="text-align: right;">
+    					<input id="showNoUsedMenu" type="checkbox" style="vertical-align: middle;" onchange="showNoUsed()">
+    					<label for="showNoUsedMenu">显示无效的菜单</label>
+    					&nbsp;&nbsp;
+    					<a href="javascript:doRefresh()" class="easyui-linkbutton" iconCls="icon-reload" plain="true"></a>
+    				</td>
+    			</tr>
+    		</table>
+    	</form>
+    	<div style="margin:5px 0;"></div>
+    	<table id="menuTreeGrid" class="easyui-treegrid" style="width:100%;">
+		<thead>
+			<tr>
+				<th data-options="field:'menuName',halign:'center',align:'left'" width="14%">菜单名称</th>
+				<th data-options="field:'menuId',halign:'center',align:'left'" width="8%">菜单编号</th>
+				<th data-options="field:'isSpecFunction',halign:'center',align:'center'" width="8%" formatter="isSpecFunctionFormatter">是否特殊功能</th>
+				<th data-options="field:'isSysManage',halign:'center',align:'center'" width="8%" formatter="isSysManageFormatter">是否系统菜单</th>
+				<th data-options="field:'url',halign:'center',align:'left'" width="38%">URL</th>
+				<th data-options="field:'defaultImg',halign:'center',align:'left'" width="10%">默认图标</th>
+				<th data-options="field:'sortNo',halign:'center',align:'center'" width="7%" >排序号</th>
+				<th data-options="field:'isUsed',halign:'center',align:'center'" width="7%" formatter="isUsedFormatter">有效否</th>
+			</tr>
+		</thead>
+	</table>
+	
+	<!-- 鼠标右键编辑事件 -->
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div  data-options="iconCls:'icon-add'" onclick="addNextMenu()">增加下级</div>
+		<div class="menu-sep"></div>
+		<div  data-options="iconCls:'icon-edit'" onclick="modifyMenu()">修改菜单</div>
+	</div>
+	
+	<!-- 增加第一级弹窗 -->
+	<div id="addRootMenu" class="easyui-dialog" data-options="closed:true,width:'390',height:'230',title:'增加第一级菜单',iconCls:'icon-add'">
+		<form id="addRootMenuForm" method="post">
+			<table style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单编号：
+						<span id="addRootMenuForm_pMenuId" style="display: none;"></span>
+					</td>
+					<td><input id="addRootMenuForm_menuId" name="menuId" data-options="onChange:addRootMenuIdChange" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单名称：</td>
+					<td><input name="menuName" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td style="padding-left:40px" colspan="2">
+						<input type="checkbox" id="addRootMenuForm_isSpecFunc" name="isSpecFunction" style="vertical-align: middle;"/>
+						<label for="addRootMenuForm_isSpecFunc">特殊功能否</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="addRootMenuForm_isSysManage" name="isSysManage" style="vertical-align: middle;"/>
+						<label for="addRootMenuForm_isSysManage">系统菜单否</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">排序号：</td>
+					<td><input class="easyui-textbox" id="sortNo" name="sortNo" style="width:230px;"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- 增加下级弹窗 -->
+	<div id="addNextMenu" class="easyui-dialog" data-options="closed:true,width:'390',height:'260',title:'增加下级菜单',iconCls:'icon-add'">
+		<form id="addNextMenuForm">
+			<input type="hidden" name="pMenuId">
+			<table style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单编号：</td>
+					<td>
+						<span id="addNextMenuForm_pMenuId"></span>
+						<input  name="menuId" id="addNextMenuForm_menuId" data-options="onChange:addNextMenuSortNoAutoFill" style="width:150px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单名称：</td>
+					<td><input name="menuName" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">URL：</td>
+					<td><input class="easyui-textbox" name="url" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left:40px;">
+						<input type="checkbox" id="addNextMenuForm_isSpecFunc" name="isSpecFunction" style="vertical-align: middle;"/>
+						<label for="addNextMenuForm_isSpecFunc">特殊功能否</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="addNextMenuForm_isSysManage" name="isSysManage" style="vertical-align: middle;"/>
+						<label for="addNextMenuForm_isSysManage">系统菜单否</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">排序号：</td>
+					<td><input class="easyui-textbox" name="sortNo" id="sortNo" style="width:230px;"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- 修改菜单 -->
+	<div id="modifyMenu" class="easyui-dialog" data-options="closed:true,width:'390',height:'280',title:'修改菜单',iconCls:'icon-edit'">
+		<form id="modifyMenuForm">
+			<table style="width: 98%;border-collapse: separate;border-spacing:10px;">
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单编号：</td>
+					<td><span id="menuId"></span></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">菜单名称：</td>
+					<td><input id="menuName" name="menuName" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">URL：</td>
+					<td><input class="easyui-textbox" id="url" name="url" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-left: 40px;">
+						<input type="checkbox" id="isSpecFunction" name="isSpecFunction" checked="checked" style="vertical-align: middle;" />
+						<label for="isSpecFunction">特殊功能否</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="isSysManage" name="isSysManage" style="vertical-align: middle;" />
+						<label for="isSysManage">系统菜单否</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="checkbox" id="isUsed" name="isUsed" style="vertical-align: middle;" />
+						<label for="isUsed">有效否</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">默认图标：</td>
+					<td><input class="easyui-textbox" id="defaultImg" name="defaultImg" style="width:230px;"/></td>
+				</tr>
+				<tr>
+					<td style="width: 90px;text-align: right;">排序号：</td>
+					<td><input class="easyui-textbox" id="sortNo" name="sortNo" style="width:230px;"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+  </body>
+</html>

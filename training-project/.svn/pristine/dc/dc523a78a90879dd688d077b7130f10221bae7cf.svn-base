@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>功能管理</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="js/functionmanage.js"></script>
+	</head>
+	
+	<body class="easyui-layout" style="margin-left:5px;margin-right:5px;">
+		<div data-options="region:'north',border:false" style="height:40px;">
+			<table class="btbHead">
+				<tr>
+					<td style='width: 25%;'>
+						<img src='../../images/common/title.gif' align='absmiddle'/>功能管理 
+					</td>
+					<td style="text-align: right;">
+						<a href="javascript:doAddNode()" id="addBtn" class="easyui-linkbutton" iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+						<a href="javascript:doModify()" id="modifyBtn" class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+						<a href="javascript:doDelete()" id="deleteBtn" class="easyui-linkbutton" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div data-options="region:'west',split:true" style="width:250px;">
+			<!-- 树形菜单，数据由js动态加载 -->
+			<ul id="tt" class="easyui-tree"></ul>
+		</div>
+		
+		<!-- 功能列表 -->
+		<div data-options="region:'center'">
+			<table id="dg" class="easyui-datagrid" style="width:100%" data-options="onDblClickRow:onDblClickRow,onClickRow:onClickRow,selectOnCheck:false,singleSelect:true">
+				<thead>
+					<tr>
+						<th data-options="field:'cb',checkbox:true"></th>
+						<th data-options="field:'funcId',halign:'center'" width="15%">功能编号</th>
+						<th data-options="field:'funcName',halign:'center'" width="20%">功能名称</th>
+						<th data-options="field:'funcDesc',halign:'center'" width="37%">功能描述</th>
+						<th data-options="field:'sortNo',align:'center'" width="15%">排序号</th>
+						<th data-options="field:'isUsed',align:'center',halign:'center'" width="10%" formatter="isUsedFormatter">有效否</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<!-- 添加、修改界面弹窗 -->
+		<div id="dlg_save" style="display:none;overflow:hidden">
+			<form id="form_save">
+				<table cellpadding="2" style="padding:10px;">
+					<tr>
+						<td style="width:68px;text-align:right;">功能编号：</td>
+						<td style="width:200px;text-align:left;">
+							<span id="menuId" style="display:none;"></span>
+							<span id="funcIdText"></span>
+							<input type="text" id="funcId" name="funcId" oninput="autoFill()"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">功能名称：</td>
+						<td style="text-align:left;">
+							<input type="text" id="funcName" name="funcName" style="width: 220px"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">功能描述：</td>
+						<td style="text-align:left;">
+							<input type="text" name="funcDesc" style="width: 220px"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">所属模块：</td>
+						<td style="text-align:left;">
+							<input type="hidden" name="menuId"/>
+							<span id="pName"></span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<span id="hiddenOrShow" style="display:none;vertical-align: middle;">
+								<input type="checkbox" id="isUsed" name="isUsed" style="vertical-align: middle;"/>
+								<label for="isUsed">有效否</label>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right;">排序号：</td>
+						<td style="text-align:left;">
+							<input type="text" name="sortNo" style="width: 220px"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 弹出框底部的按钮 -->
+		<div id="btn_dlg" style="display:none;text-align: right;">
+			<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+			<a href="javascript:doCancel()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+		</div>
+	</body>
+</html>

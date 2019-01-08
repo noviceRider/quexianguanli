@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+
+
+html, body {
+	height: 100%;
+}
+
+table.btbHead {
+	border: 0px solid #d1d1d1;
+	width: 100%;
+	color: #407EAC;
+	padding: 3px;
+	margin: 0;
+}
+
+table.btbForm {
+	border: 1px solid #d1d1d1;
+	width: 100%;
+	color: #407EAC;
+	padding: 3px;
+	margin: 0;
+}
+
+table.btb {
+	font-family: "Helvetica Neue","Microsoft YaHei","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #d1d1d1;
+	border-collapse: collapse;
+	width: 100%
+}
+
+table.btb td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #d1d1d1;
+	background-color: #ffffff;
+}
+
+table th {
+	color: #FFFFFF;
+}
+
+a {
+	color: #FFFFFF;
+}
+
+body {
+	font-family: "Helvetica Neue","Microsoft YaHei","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,Arial,Helvetica,sans-serif;
+	font-size: 11px;
+	padding: 0px 5px 0px 5px;
+	margin: 0;
+}
+
+.alertTip {
+	font-size: 11px;
+	color: red;
+	font-weight: bold;
+	height:14px;
+}
+
+.alertTipNormal {
+	font-size: 11px;
+	color: red;
+	font-weight: normal;
+	height:14px;
+}
+
+.alertTipOrange {
+	font-size: 11px;
+	color: #FF7C25;
+	font-weight: bold;
+	height:14px;
+}
+
+/*验证通过的样式*/
+.validPass {
+	font-size: 11px;
+	color: green;
+	font-weight: normal;
+	height:14px;
+}
+
+/*验证未通过的样式*/
+.validError {
+	font-size: 11px;
+	color: #FF7C25;
+	font-weight: normal;
+	height:14px;
+}

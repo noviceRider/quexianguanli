@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>角色授权</title>
+	<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../../js/common.js"></script>
+		<script type="text/javascript" src="js/severity.js"></script>
+		<style type="text/css">
+			.datagrid-btable .datagrid-cell{padding:4px 4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;} 
+			a{
+				color: blue;
+			}
+		</style>
+  </head>
+  
+  <body style='margin: 0;'>
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../../../images/common/title.gif' align='absmiddle'/> 严重程度
+				</td>
+				<td style='text-align: right;'>
+					<a class="easyui-linkbutton" iconCls="icon-search"  onclick="querySeverity();">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a class="easyui-linkbutton" iconCls="icon-add" onclick="addSeverity();">&nbsp;增&nbsp;&nbsp;加&nbsp;</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" onclick="delSeverity();">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a class="easyui-linkbutton" iconCls="icon-edit" onclick="updSeverity();">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- 查询表单 -->
+		<form id="tb">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input name="keyWord" id="keyWord" class="easyui-textbox" data-options="prompt:'请输入严重程度编号、描述等关键字'" style="width:250px;"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="margin:5px 0;"></div>
+		
+		<!-- 程度列表 -->
+		<table class="easyui-datagrid" id="severityTable"
+		data-options="fitColumns:true,
+		autoRowHeight:true,
+		striped:true,
+		loadMsg:'正在加载数据中，请等待！',
+		toolbar:'#tb',
+		pagination:true,
+		sortName:'severityCode'"
+		style="width:100%;">
+		<thead>   
+        	<tr> 
+            	<th data-options="field:'severityCode',align:'center',width:80">编号</th>   
+            	<th data-options="field:'severityDesc',align:'center',width:100">严重程度</th>   
+            	<th data-options="field:'dictCode',align:'center',width:100">状态</th>
+            	<th data-options="field:'createTime',align:'center',width:100">创建时间</th>
+            	<th data-options="field:'modifyByName',align:'center',width:100">修改人</th>
+            	<th data-options="field:'SeverityDo',align:'center',width:120,formatter:function(value,row,index){
+					if(row.moduleState =='01'){
+						return'<a href=#  onClick=operation(event) value='+row.moduleState+' id='+row.severityCode+'>禁用</a>';
+					 }else{
+						return'<a href=#  onClick=operation(event) value='+row.moduleState+' id='+row.severityCode+'>启用</a>';
+					} 
+					}">操作</th> 
+        	</tr> 
+   		</thead>   
+	</table>
+		<!-- 新增页面的容器 -->
+		<div id="addSeverityContainer"></div>
+		<!-- 修改页面的容器 -->
+		<div id="updSeverityContainer"></div>
+	</body>
+</html>

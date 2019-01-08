@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dicttype.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	//加载新增和修改页面
+	$("#dlg_am").load("dicttype_add_modify.html",null,function(){
+		//进行解析
+		$.parser.parse(this);
+	});
+	//新增和修改url
+	var url;
+	//新增、修改标志
+	var isNew;
+	//修改的行
+	var modifyRow;
+	//回调函数
+	var callback;
+	
+	function showSelectDictType(callbackfun){
+		//将回调函数赋给全局变量
+		callback=callbackfun;
+		
+		//给数据网格加载数据
+		$("#dictType_dg").datagrid({
+			method:"post",
+			url:basePath+"/gmodule_dicttype_findpage.json",
+			onDblClickRow:function(index,row){
+				selectDictType();
+			}
+		});
+		//打开窗口
+		$("#selectDictType").dialog({
+			title:"选择数据类型",
+			modal:true
+		}).dialog("open").dialog("center");
+		
+	
+	}
+	
+	/**
+	 * 查询
+	 */
+	 function searchDictType(){
+		 $("#dictType_dg").datagrid("reload",{keyWord:$("#dictKeyWord").textbox("getValue")});
+	}
+	
+	/**
+	* 新增数据类型
+	*/
+	function addDictType(){
+		//设置新增标志
+		isNew=true;
+		//设置新增url
+		url=basePath+"/gmodule_dicttype_add.json";
+		//打开新增对话框
+		$("#dicttype_am").dialog({
+			modal:true,
+			shadow:false,
+			title:"新增字典类型",
+			onClose:function(){
+				//清空数据
+				$("#fm_dicttype_am").form("reset");
+			}
+		});
+		//启用编码
+		$("#typeCodeid").textbox('readonly',false);
+		$("#typeCodeid").textbox().next("span").find("input").css('background-color','');
+		//隐藏是否有效一行
+		$("#dicttype_isUsedRow").hide();
+		//进行验证
+		validate();
+	}
+	
+	/**
+	* 修改数据类型
+	*/
+	function modifyDictType(){
+		//设置修改标志
+		isNew=false;
+		//设置修改url
+		url=basePath+"/gmodule_dicttype_modify.json";
+		//获取修改的数据
+		var rows=$("#dictType_dg").datagrid("getSelections");
+
+		if(rows.length!=1){
+			$.messager.alert("提示信息","请选择要修改的数据");
+		}else{
+		    modifyRow=rows[0];
+			//数据回显
+			$("#fm_dicttype_am").form("load",modifyRow);
+			
+			//打开新增对话框
+			$("#dicttype_am").dialog({
+				modal:true,
+				shadow:false,
+				title:"修改字典类型",
+				onClose:function(){
+					//清空数据
+					$("#fm_dicttype_am").form("reset");
+				}
+			});
+			//禁用代码框
+			$("#typeCodeid").textbox("readonly",true);
+			$("#typeCodeid").textbox().next("span").find("input").css('background-color','#ccc');
+			//显示是否有效一行
+			$("#dicttype_isUsedRow").show();
+			//进行验证
+			validate();
+		}
+	}
+	
+	/**
+	* 保存数据类型
+	*/
+	function saveDictType(){
+		//获取表单数据
+		var data=$("#fm_dicttype_am").serializeObject();
+		if(isNew){
+			//新增时,给是否有效设置默认值
+			data.isUsed="1";
+		}else{
+			data.typeCode=modifyRow.typeCode;
+		}
+		//提交数据
+		if($("#fm_dicttype_am").form("validate")){
+			$.ajax({
+				url:url,
+				type:'post',
+				data:data,
+				success:function(data){
+					if(data.resultCode==1){
+						//关闭对话框
+						$("#dicttype_am").dialog("close");
+						//清空数据
+						$("#fm_dicttype_am").form("reset");
+						//刷新数据网格
+						$("#dictType_dg").datagrid("reload");
+					}else{
+						$.messager.alert("提示信息","操作失败！","info");
+					}
+				}
+			});
+		}
+	}
+	
+	/**
+	*新增、修改退出
+	*/
+	function cancelDictType(){
+		//关闭对话框
+		$("#dicttype_am").dialog("close");
+		//清空数据
+		$("#fm_dicttype_am").form("reset");
+	}
+	
+	/**
+	*删除数据类型
+	*/
+	function removeDictType(){
+		//获取修改的数据
+		var rows=$("#dictType_dg").datagrid("getSelections");
+		if(rows.length!=1){
+			$.messager.alert("提示信息","请选择要删除的数据");
+		}else{
+			$.messager.confirm("提示信息","你确定要删除这条数据吗？删除后将无法恢复！",function(r){
+				if(r){
+					$.ajax({
+						url:basePath+"/gmodule_dicttype_remove.json",
+						type:'post',
+						data:{typeCode:rows[0].typeCode},
+						success:function(data){
+							if(data.resultCode==1){
+								//刷新数据网格
+								$("#dictType_dg").datagrid("reload");
+							}else{
+								$.messager.alert("提示信息","删除失败！","info");
+							}
+						}
+					});
+				}
+			});
+		}
+	}
+	
+	/**
+	*类型编码输入框改变事件
+	*/
+	function fillSortNo(){
+		//获取类型编码值
+		var value = $("#typeCodeid").textbox("getValue");
+		//将值设置给顺序号
+		$("#sorNoid").textbox("setValue",value);
+	}
+	
+	/**
+	*选择的数据
+	*/
+	function selectDictType(){
+		if(callback!=null){
+			//获取选择的数据
+			var row=$("#dictType_dg").datagrid("getSelected");
+			//返回数据
+			callback(row);
+			//关闭对话框
+			$("#selectDictType").dialog("close");
+		}
+	}
+	
+	/**
+	*选择数据退出框
+	*/
+	function cancelselectDictType(){
+		//关闭对话框
+		$("#selectDictType").dialog("close");
+	}
+	
+	/**
+	 * 验证类型名称、编码，不能为空也不能重复
+	 */
+	function validate() {
+		if(isNew){
+			$("#typeDescid").textbox({
+				required:true,
+				missingMessage:"类型名称不能为空",
+				invalidMessage:"类型名称已经存在",
+				validType:"remoteValid['"+basePath+"/gmodule_dicttype_validatedicttypedesc.json','typeDesc']"
+			});
+			$("#typeCodeid").textbox({
+				required:true,
+				missingMessage:"类型编码不能为空",
+				validType:["myRemoteValid['"+basePath+"/gmodule_dicttype_validatedicttypecode.json','typeCode']","chinese"]
+			});
+		}else{
+			$("#typeCodeid").textbox('disableValidation');
+			$("#typeDescid").textbox({
+				required:true,
+				missingMessage:"类型名称不能为空",
+				invalidMessage:"类型名称已经存在",
+				validType:"remoteValid['"+basePath+"/gmodule_dicttype_validatedicttypedesc.json','typeDesc',{typeCode:'"+$("#typeCodeid").textbox("getValue")+"'}]"
+			});
+		}
+	}
+	
+	</script>
+</head>
+
+<body>
+	<div id="selectDictType" style="width: 680px;height: 440px" data-options="buttons:'#dictManage_btns'">
+
+		<!-- 查询输入框及按钮 -->
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="dictKeyWord" class="easyui-textbox" data-options="prompt:'请输入编号或名称'" style="width:120px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDictType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDictType()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyDictType()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeDictType()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+
+		<!-- 数据网格 -->
+		<div style="width:100%;" >
+		<table id="dictType_dg"  class="easyui-datagrid" data-options="pageSize:10,pageList:[10,20,30],pagination:true,striped:true,singleSelect:true" style="width: 100%;">
+			<thead>
+				<tr style="text-align: right;">
+					<th data-options="field:'cb1',align:'center',checkbox:true," style="width:5%"></th>
+					<th data-options="field:'typeCode',alias:'type_code',align:'left',halign:'center',sortable:'true'" style="width: 21%;">类别编码</th>
+					<th data-options="field:'typeDesc',alias:'type_desc',align:'left',halign:'center',sortable:'true'" style="width: 35%;">类别名称</th>
+					<th data-options="field:'sortNo',alias:'sort_no',align:'center',halign:'center',sortable:'true'" style="width: 21%;">排序号</th>
+					<th data-options="field:'isUsed',alias:'is_used',align:'center',halign:'center',sortable:'true',formatter:setIsUsed" style="width: 19%;">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+
+	<div id="dictManage_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'"
+			onclick="selectDictType()">选择</a> <a class="easyui-linkbutton"
+			data-options="iconCls:'icon-cancel'" onclick="cancelselectDictType()">关闭</a>
+	</div>
+
+	<!-- 新增和修改页面 -->
+	<div id="dlg_am" style="display: none;"></div>
+</body>
+</html>
+

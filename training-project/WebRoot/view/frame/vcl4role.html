@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>角色授权</title>
+	<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="js/vcl4role.js"></script>
+		<style type="text/css">
+			.datagrid-btable .datagrid-cell{padding:4px 4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;} 
+		</style>
+  </head>
+  
+  <body style='margin: 0;'>
+		
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../images/common/title.gif' align='absmiddle'/> 角色授权
+				</td>
+				<td style='text-align: right;'>
+					<a href="javascript:doSearch()" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<!-- <a href="javascript:doSelectRole()" class="easyui-linkbutton" iconCls="icon-audit">&nbsp;授&nbsp;&nbsp;权&nbsp;</a> -->
+					<a class="easyui-linkbutton" iconCls="icon-audit" onclick="doTreeAuth();">&nbsp;授&nbsp;&nbsp;权&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- 查询表单 -->
+		<form id="searchForm">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input name="keyWord" class="easyui-textbox" data-options="prompt:'请输入角色编号、名称、描述等关键字'" style="width:250px;"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="margin:5px 0;"></div>
+		
+		<!-- 角色列表 -->
+		<table id="dg" class="easyui-datagrid" data-options="pagination:true,singleSelect:true,onDblClickRow:onDblClickRow,onClickRow:onClickRow" style="width:100%;">
+			<thead>
+				<tr>
+					<th data-options="field:'rb',align:'center'" width="4%" formatter="rbFormatter"></th>
+					<th data-options="field:'roleId',halign:'center'" width="15%">角色编号</th>
+					<th data-options="field:'roleName',halign:'center'" width="15%">角色名称</th>
+					<th data-options="field:'roleDesc',halign:'center'" width="35%" formatter="roleContentFormatter">角色描述</th>
+					<th data-options="field:'roleMember',halign:'center'" width="31%" formatter="roleContentFormatter">角色成员</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<!-- 属性授权弹窗 -->
+		<div id="treeAuthDlg" style="display:none;overflow: auto;">
+			<!-- 树形菜单，数据由js动态加载 -->
+			<ul id="treeAuth" class="easyui-tree"></ul>
+		</div>
+		<!-- 弹出框底部的按钮 -->
+		<div id="btn_dlg" style="display:none;text-align:right;">
+			<a class="easyui-linkbutton" iconCls="icon-save" onclick="saveTreeAuth()">保存</a>
+			<a class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeTreeAuthDlg()">取消</a>
+		</div>
+	</body>
+</html>

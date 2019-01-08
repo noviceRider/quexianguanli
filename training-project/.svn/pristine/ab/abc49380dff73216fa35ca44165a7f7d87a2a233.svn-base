@@ -1,0 +1,41 @@
+package com.huibo.issue.dao;
+
+import java.util.List;
+
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.MemberBo;
+import com.huibo.issue.bo.UserBo;
+import com.huibo.issue.po.MemberPo;
+import com.huibo.issue.po.UserPo;
+/**
+ * <p>title:缺陷管理系统-MemberDao</p>
+ * 
+ * <p>Description:缺陷成员管理的dao</p>
+ * 
+ * <p>Copyright:Copyright hbrc(c) 2018</p>
+ * 
+ * <p>Company:重庆汇博人才</p>
+ * 
+ * @author 张浩
+ * @version 1.0
+ */
+public interface MemberDao {
+
+	public List<MemberPo> getMember(MemberBo bo);
+
+	public List<MemberPo> getRole(MemberBo bo);
+
+	public Integer addRole(MemberBo bo);
+
+	public List<UserPo> getUser(Page page);
+
+	public Integer removeRole(String[] delIds);
+
+	public List<UserPo> getMemberUser(UserBo bo);
+
+	public List<UserPo> getUserByRoleCode(UserBo bo);
+
+	public Integer deleteMemberUser(UserBo bo);
+
+
+}

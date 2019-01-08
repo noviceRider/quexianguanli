@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<!-- <meta name="viewport" content="width=divice-width,initial-scale=1.0,minimum-scale=1.0,maximum=1.0,user-scalable=no" /> -->
+	<meta http-equiv=X-UA-Compatible content=IE=8/>
+	<link rel="stylesheet" href="login/css/bootstrap.css"type="text/css"/>
+	<link rel="stylesheet" href="login/css/login.css" type="text/css" />
+	<script type="text/javascript" src="login/js/jquery.js"></script>
+	<script type="text/javascript" src="login/js/Particleground.js"></script>
+	
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script src='js/common/Cookie.js' type="text/javascript"></script>
+	<script src='js/frame/sc/Enter.js' type='text/javascript'></script>
+	
+	<script>
+		$(document).ready(function() {
+			 //粒子背景特效
+			 $('body').particleground({
+			dotColor: 'rgba(42,119,168,0.4)',
+			lineColor: 'rgba(37,103,144,0.7)'
+			 });
+		});
+	</script>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+		<div class="register-wrap" id="register-wrap">
+			<div class="pic" id="pic">
+				<img src="login/images/zhuce_400x300.png" alt="该链接已失效"/>
+			</div>
+			<div class="register"id="register">
+				<div class="register-top" id="reg-top">
+					<h2 class="normal" id="normal">登录</h2>
+					<a  id="qrcode" href="#"></a>
+				</div>
+
+				<!--普通登录-->
+				<div class="register-con" id="rc">
+					<form action="#">
+						<ul>
+							<li id="rc-inner-num">
+							<i></i>
+							<span>请输入用户名</span>
+							</li>
+							<li id="rc-inner-virity">
+								<i></i>
+								<span>请输入密码</span>
+							</li>
+							<li id="rc-innerError"style="width:300px;
+								height:32px;
+								padding:0 6px;
+								color:#ff1877;
+								border:1px solid #ffd797;
+								display:none;">
+								<i style="display:inline-block;
+									float:left;
+									width:20px;
+									height:20px;
+									margin:6px 10px;
+									border:none;
+									background:url(login/images/bz_16x16.png) no-repeat 0 0;"></i>
+								<span style="color:#ff1877;
+								display:inline-block;
+								float:left;
+								line-height:26px;">您输入的用户名或密码不正确</span>
+							</li>
+							<li class="form-group">
+								<input type="text" id="userId" name="userId" class="form-control" placeholder="登录用户名"/>
+								<span class="fa fa-check success" style="display:none;color:green;position:relative;left:-25px;top:5px;"></span>
+								
+							</li>
+							<li class="form-group">
+								<input type="password" name="password" id="password" class="form-control" placeholder="密码"/>
+								
+							</li>
+							<li class="read">
+								<input id="rememberLoginInfo" type="checkbox" class="ck" name="rememberLoginInfo"/>
+								<b>记住密码</b>
+							</li>
+							<li>
+								<input value="立即登录" type="button" class="submit"  id="login-btn" style="border-radius:5px;background-color: deepskyblue;border:none;color: white;text-align: center">
+							</li>
+							
+						</ul>
+					</form>	
+				</div>
+				<!--手机无密码登录-->
+				<div class="login-con" id="lc">
+					<form action="#">
+					<ul>
+						<li id="inner-num">
+							<i></i>
+							<span>请输入手机号码</span>
+						</li>
+						<li id="inner-virity">
+							<i></i>
+							<span>请输入验证码</span>
+						</li>
+						<li class="lg-num  form-group">
+							<input type="text"name="phone-num"class="form-control"placeholder="手机号码"/>	
+							<span class="fa fa-check success" style="display:none;color:green;position:relative;left:-25px;top:5px;"></span>
+						</li>
+						<li class="password form-group">
+							<input type="password" name="password" id="pass" class="form-control" placeholder="动态密码"/>
+							
+						</li>
+						<li>
+							<button class="getcode" id="getcode" style="border-radius:5px;">获取手机动态密码</button>
+						</li>
+						<li class="read">
+							<input type="checkbox" class="ck" name="check" value="1" checked="checked"/>
+							<b>2周内自动登录</b>
+							<a href="#">忘记密码？</a>
+						</li>
+						
+						<li>
+							<button class="submit" type="submit" id="login-btn1" style="border-radius:5px;">登录</button>
+						</li>
+						<li>
+							<a href="#" class="zhuce">新用户注册</a>
+						</li>
+						
+					</ul>
+				</form>	
+				</div>
+				<!-- 扫码登录 -->
+				<div class="saoma" id="sm">
+					<div class="screen-tu"id="screen"></div>
+					<div class="saoyisao"></div>
+					<div class="qr-code">
+						<img src="login/images/ereima_150x150.png" alt="">
+					</div>
+					<div class="link">
+						<a href="#">点击下载APPFRAME</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="footer-wrap">
+			<div class="footer-bottom">
+				©Copyright 2016-2017 重庆智信金服科技有限公司	
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

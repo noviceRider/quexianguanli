@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>resource_add_modify.html</title>
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div id="res_add_modify" style="width:350px;"
+		data-options="buttons:'#res_add_modify_btns'">
+		<form id="res_add_modify_fm" class="easyui-form"
+			enctype="multipart/form-data" method="POST">
+			<table style="width: 100%;border-spacing: 0px 10px;">
+				<tr style="display:none">
+					<td style="width: 30%;text-align: right;">资源序号&nbsp;&nbsp;&nbsp;</td>
+					<td><input id="resId" name="resId" class="easyui-textbox"
+						style="width: 210px;" data-options="prompt:'请输入代码'"></td>
+				</tr>
+				<tr style="display:none">
+					<td style="width: 30%;text-align: right;">所属项目&nbsp;&nbsp;&nbsp;</td>
+					<td><input id="infoType" name="infoType"
+						class="easyui-textbox" style="width: 210px;"
+						data-options="prompt:'请输入代码'"></td>
+				</tr>
+				<tr style="display:none">
+					<td style="width: 30%;text-align: right;">分类序号&nbsp;&nbsp;&nbsp;</td>
+					<td><input id="typeId" name="typeId" class="easyui-textbox"
+						style="width: 210px;" data-options="prompt:'请输入代码'"></td>
+				</tr>
+				<tr>
+					<td style="width: 30%;text-align: right;">资源描述&nbsp;&nbsp;&nbsp;</td>
+					<td><input id="resDesc" name="resDesc" class="easyui-textbox"
+						style="width: 210px;" data-options="prompt:'请输入资源描述信息'"></td>
+				</tr>
+				<tr>
+					<td style="width: 30%;text-align: right;">文件选择&nbsp;&nbsp;&nbsp;</td>
+					<td><input id="uploadFile" name="uploadFile" class="easyui-filebox"
+						style="width:210px;"
+						data-options="prompt:'请选择文件上传',buttonText:'上传文件'"></td>
+				</tr>
+				<!-- 
+				<tr>
+					<td style="width: 30%;text-align: right;">是否图片&nbsp;&nbsp;&nbsp;</td>
+					<td><input type="checkbox" id="is" name="is"
+						style="vertical-align: middle;" /></td>
+				</tr>
+				 -->
+			</table>
+		</form>
+	</div>
+
+	<div id="res_add_modify_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'"
+			onclick="doSave()">保存</a> <a class="easyui-linkbutton"
+			data-options="iconCls:'icon-cancel'" onclick="doCancel()">关闭</a>
+	</div>
+</body>
+</html>

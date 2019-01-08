@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>人事档案</title>
+        <meta charset="UTF-8">
+        <meta name="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../../Font-Awesome-master/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/common/my.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        <script src="../../js/jquery.json.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../js/jsonlint.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="../../js/easyui-lang-zh_CN.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../../js/common.js"></script>
+        <script type="text/javascript" src="../gmodule/js/prettify.js"></script>
+        <script type="text/javascript" src="../gmodule/js/checkBoxGroup.js"></script>
+        <script type="text/javascript" src="../gmodule/dataaccess/js/jquery.format.js"></script>
+        <script type="text/javascript" src="js/vcl4emp-shop.js"></script>
+    </head>
+
+    <body class="easyui-layout" style="">
+        <div data-options="region:'north',border:false" style="height: 80px;">
+            <table class="btbHead">
+                <tr>
+                    <td style='width: 25%;'>
+                        <img src='../../images/common/title.gif' align='absmiddle' />门店授权
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="#" onclick="Search()" id="searchButton" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+                    </td>
+                </tr>
+            </table>
+            <form id="selectEmployeeForm" class="easyui-form">
+                <!-- 查询 -->
+                <table class="btbForm">
+                    <tr>
+                        <td colspan="2">
+                            关键字&nbsp;<input class="easyui-textbox" id="keyWord" name="keyWord" data-options="prompt:'输入员工编号或姓名等关键字'" style="width: 160px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            职位&nbsp;<input name="jobPosition" id="jobPositionQuery" class="easyui-combobox" style="width:120px;" data-options="editable:false,valueField: 'dictDesc',textField: 'dictDesc', panelHeight:'auto'" value="全部职位">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div style="margin-top:82px">
+            <table id="showEmployeeTable" class="easyui-datagrid" style="width:100%" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,onClickRow:onClickRow,onDblClickRow:onDblClickRow">
+                <thead>
+                    <tr>
+                        <th data-options="field:'empCode',align:'left',halign:'center',sortable:'true'" style="width:8%;">员工编号</th>
+                        <th data-options="field:'empName',align:'left',halign:'center',sortable:'true'" style="width:8%">员工姓名</th>
+                        <th data-options="field:'gender',align:'left',halign:'center',sortable:'true'" style="width:5%">性别</th>
+                        <th data-options="field:'jobPosition',align:'left',halign:'center'" style="width:13%">职位</th>
+                        <th data-options="field:'deptName',align:'left',halign:'center'" style="width:13%">部门</th>
+                        <th data-options="field:'postName',halign:'center',align:'left'" style="width:13%">工作岗位</th>
+                        <th data-options="field:'authShopName',halign:'center',align:'center'" style="width:33%">关联门店</th>
+                        <th data-options="field:'opr',halign:'center',align:'center',sortable:'true',formatter:oprateFormatter" style="width:8%">权限</th>
+                        <th data-options="field:'authShopCode',hidden:true"></th>
+                        <th data-options="field:'empId',hidden:true"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <!-- 授权弹窗 -->
+        <div id="authDig" style="display: none;">
+            <div style="padding:15px;">
+                <form id="authForm" class="easyui-form" method="post">
+                    <div class="easyui-panel" title="员工信息" style="width:100%; padding: 15px; margin-bottom: 15px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 70px;">员工编号：</td>
+                                <td style="width: 160px;"><span id="empCodeP"></span><input type="hidden" id="empIdP"></td>
+                                <td style="width: 70px;">员工姓名：</td>
+                                <td style="width: 160px;"><span id="empNameP"></span></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 70px;">所属部门：</td>
+                                <td style="width: 160px;"><span id="deptNameP"></span></td>
+                                <td style="width: 70px;">工作岗位：</td>
+                                <td style="width: 160px;"><span id="postNameP"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="easyui-panel panel-shop-list" title="门店列表" style="width:100%; padding: 15px; margin-bottom: 15px;">
+                        <div id="shopCheckbox"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 操作 -->
+        <div id="authDigBtn" style="text-align:right; display: none;">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()">保存</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="closeDig()">关闭</a>
+        </div>
+    </body>
+</html>

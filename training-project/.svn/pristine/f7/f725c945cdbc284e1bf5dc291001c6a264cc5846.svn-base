@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- <div id="addPanel">
+		<form id="addIssuePriorityPoForm" method="post">
+			编号<input type="text" id="addPriorityCode" name="priorityCode" ><br><br>
+			描述<input type="text" id="addPriorityDesc" name="priorityDesc"><br><br>
+			<a id="addFormBtn" class="easyui-linkbutton"></a>
+			<a id="closeFormBtn" class="easyui-linkbutton"></a>
+		</form>
+	</div> -->
+	
+	
+	
+	<div id="addPanel" style="overflow-x:hidden;padding-top:5px;" class="easyui-dialog" data-options="closed:true,buttons:'#sc_add',width:'530',height: '260',modal:true" >
+		<form method="post" class="easyui-form" id="addIssuePriorityPoForm" >
+			<table style="border-collapse: separate;border-spacing: 10px;" >
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">编号&nbsp;</td>
+	  				<td ><input id="addPriorityCode" name="priorityCode" class="easyui-textbox"  style="width: 150px;"></td>
+	  			</tr>
+	  			<tr>
+	  				<td style="text-align: right;width: 65px;">描述&nbsp;</td>
+	  				<td ><input id="addPriorityDesc" name="priorityDesc" class="easyui-textbox" style="width: 410px;"></td>
+	  			</tr>
+	  		</table>
+	  	</form>
+	  </div>
+	  
+	  <div id="sc_add"">
+		<a id="addFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'" >保存</a>
+		<a id="closeFormBtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+	</div>
+</body>
+</html>

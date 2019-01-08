@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="infoIssuePanel">
+
+		<form id="infoIssueForm" method="post">
+		<table>
+		<tr><td>缺陷编号：</td><td><input type="text" name="typeCode" id="infoTypeCode" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>分类名称：</td><td><input type="text" name="typeDesc" id="infoTypeDesc" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>当前状态：</td><td><input type="text" name="moudleState" id="infoMoudleState" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>缺陷状态：</td><td><input type="text" name="dictDesc" id="infoDictDesc" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td> 创建人编号：</td><td><input type="text" name="createBy" id="infoCreateBy" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td> 创建人名字：</td><td><input type="text" name="createByName" id="infoCreateByName" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>创建时间：</td><td><input type="text" name="createTime" id="infoCreateTime" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td> 修改人编号：</td><td><input type="text" name="modifyBy" id="infoModifyBy" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>修改人名字：</td><td><input type="text" name="modifyByName" id="infoModifyByName" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><td>修改时间：</td><td><input type="text" name="modifyTime" id="infoModifyTime" data-options="required:true,validType:'NotEmpty'"></td></tr>
+		<tr><th colspan="2"><a id="infoFormSubmit"></a></th></tr>
+		</table>
+			</form>
+</div>
+</body>
+</html>

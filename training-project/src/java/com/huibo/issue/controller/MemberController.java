@@ -1,0 +1,138 @@
+package com.huibo.issue.controller;
+/**
+ * <p>title:缺陷管理系统-MemberController</p>
+ * 
+ * <p>Description:缺陷成员管理的Controller</p>
+ * 
+ * <p>Copyright:Copyright hbrc(c) 2018</p>
+ * 
+ * <p>Company:重庆汇博人才</p>
+ * 
+ * @author 张浩
+ * @version 1.0
+ */
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.huibo.issue.bo.MemberBo;
+import com.huibo.issue.bo.UserBo;
+import com.huibo.issue.service.MemberService;
+
+@Controller
+public class MemberController {
+	
+	@Autowired
+	private MemberService memberService ;
+	
+	/**
+	 * 	查询
+	 */
+	@RequestMapping("/getMember")
+	public Map<String, Object> getMember(MemberBo bo){
+
+		Map<String, Object> map = null ;
+		try {
+			map = new HashMap<String,Object>();
+			map.put("rows", memberService.getMember(bo));
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 	新增显示角色下拉框
+	 */
+	@RequestMapping("/getRole")
+	public Map<String, Object> getRole(MemberBo bo){
+		Map<String, Object> map = null ;
+		try {
+			map = new HashMap<String,Object>();
+			map.put("rows", memberService.getRole(bo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	/**
+	 * 	新增显示可选的姓名表格
+	 */
+	@RequestMapping("/getUser")
+	public Map<String, Object> getUser(UserBo bo){
+		return memberService.getUser(bo);
+	}
+	
+	/**
+	 * 	添加角色
+	 */
+	@RequestMapping("/addRole")
+	public Map<String,Object> addRole(MemberBo bo){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("result",memberService.addRole(bo));
+		return map ;
+	}
+	
+	/**
+	 * 	删除角色
+	 */
+	@RequestMapping("/removeRole")
+	public Map<String,Object> removeRole(@RequestParam("delIds[]") String[] delIds) {
+		Map<String, Object> result = null;
+		try {
+			result = new HashMap<String,Object>();
+			result.put("result", memberService.removeRole(delIds));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * 	根据角色编号，项目查所有的员工
+	 */
+	@RequestMapping("/getUserByRoleCode")
+	public Map<String, Object> getUserByRoleCode(UserBo bo){
+		Map<String, Object> map = null ;
+		try {
+			map = new HashMap<String,Object>();
+			map.put("rows", memberService.getUserByRoleCode(bo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 	根据角色编号，项目查可选的员工
+	 */
+	@RequestMapping("/getMemberUser")
+	public Map<String, Object> getMemberUser(UserBo bo){
+		Map<String, Object> map = null ;
+		try {
+			map = new HashMap<String,Object>();
+			map.put("rows", memberService.getMemberUser(bo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
+	/**
+	 * 	删除员工
+	 * @param bo
+	 * @return
+	 */
+	@RequestMapping("/deleteMemberUser")
+	public Map<String,Object> deleteMemberUser(UserBo bo) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("result",memberService.deleteMemberUser(bo));
+		return map ;
+	}
+}

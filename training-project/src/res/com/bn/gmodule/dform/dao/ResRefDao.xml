@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dform.dao.ResRefDao">
+	<!-- 新增数据 -->
+	<insert id="addResRef" parameterType="com.bn.gmodule.dform.po.ResRefPo">
+		insert into info_ge_resref
+		(
+			res_id,
+			info_id,
+			info_type
+		)
+		values
+		(
+			#{resID},
+			#{infoId},
+			#{infoType}
+		)
+	</insert>
+		
+	<!-- 通过信息id查询所有数据 -->
+	<select id="findByInfoId" parameterType="com.bn.gmodule.dform.po.ResRefPo" resultType="com.bn.gmodule.dform.po.ResRefPo">
+		select 	res_id "resId",
+			 	info_id "infoId",
+				info_type "infoType" from info_ge_resref
+				where info_id=#{infoId} and info_type=#{infoType}
+	</select>
+	
+		<!-- 删除引用 -->
+	<delete id="removeResRef" parameterType="com.bn.gmodule.dform.po.ResRefPo">
+		delete
+		from info_ge_resref
+		where info_id=#{infoId} and info_type=#{infoType}
+	</delete>
+</mapper>

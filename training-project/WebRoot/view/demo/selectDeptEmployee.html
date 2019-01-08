@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>部门人员联动选择</title>
+<link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+<link rel="stylesheet" type="text/css"
+	href="../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script src="../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/house/plugin/selectDeptEmployee.js"></script>
+<script>
+	function showCombox() {
+		
+		$("#selDeptEmployee").selectDeptEmployeePlugin({
+			// 装选择框的div的id 
+			id : "selDeptEmployee",
+			
+			// 部门下拉框的id 
+			selDepartmentId : "departmentId",
+			
+			// 员工下拉框的id 
+			selEmployeeId : "employeeId",
+			
+			// 默认加载的部门员工  
+			defaultDeptId : "",
+			
+			// 默认的员工编号 
+			defaultEmpId :"",
+			
+			// 部门 combotree 提示 
+			tipMessage:"请选择部门",
+			
+			// 是否是必选
+			required : true, 
+			// 必输的时候的提示 
+			deptMissingMessage : '请选择部门 ', 
+			empMissingMessage : '请选择员工 ',
+			
+			// 是否显示 部门下拉框  不显示时 defaultDeptId必须有值 
+			showDept : 1, 
+			
+			// 部门下拉框的宽度 
+			deptWidth : "120px",
+			
+			// 员工下拉框的宽度 
+			employeeWidth : '120px',
+			
+			onLoadEmpData: function(data) {
+				data.unshift({empId: "", empName: "全部员工"});
+				return data;					
+			},
+			onChange:function(data){
+			}
+		});
+	}
+	
+	// 获取部门编码 
+	function getDeptCode(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getDeptValue"));
+	}
+	
+	// 设置部门编码 
+	function setDeptCode(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setDeptValue","63")
+	}
+	
+	// 获取部门描述 
+	function getDeptDesc(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getDeptText"));
+	}
+	
+	// 设置部门描述 
+	function setDeptDesc(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setDeptText","IT部");
+	}
+	
+	// 获取员工编码
+	function getEmployeeCode(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getValue"));
+	}
+	
+	// 设置员工编码 
+	function setEmployeeCode(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setValue","1");
+	}
+	
+	// 获取员工描述 
+	function getEmployeeDesc(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getText"));
+	}
+	
+	// 设置员工描述 
+	function setEmployeeDesc(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setText","测试员工");
+	}
+	
+	// 获取所有编码 
+	function getAllCode(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getAllCodeValue"));
+	}		
+	
+	// 设置所有编码 
+	 function setAllCode(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setAllCodeValue",{
+			deptVal:"63",
+			empVal:"1"
+		});
+	}	 
+	
+	// 获取所有描述  
+	function getAllDesc(){
+		alert($("#selDeptEmployee").selectDeptEmployeePlugin("getAllDescValue"));
+	}	
+	
+	// 设置所有描述  
+	function setAllDesc(){
+		$("#selDeptEmployee").selectDeptEmployeePlugin("setAllDescValue",{
+			deptVal:"IT部",
+			empVal:"系统管理员"
+		});
+	} 
+	
+	
+	
+</script>
+</head>
+<body onload="showCombox()">
+	<div style="padding: 10px 0 10px 0; width:100%;">
+		<span style="float:left;">部门人员联动选择:&nbsp;&nbsp;</span>
+		<div id="selDeptEmployee" style="float:left;"></div>
+		<p></p>
+	</div>
+	
+	<div style="margin-top:10px;">
+		<a href="javascript:getDeptCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getDeptValue 获取部门编码</a>	
+		<a href="javascript:setDeptCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setDeptValue 设置部门编码</a>	
+		<a href="javascript:getDeptDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getDeptText 获取部门描述</a>	
+		<a href="javascript:setDeptDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setDeptText 设置部门描述</a>	
+		   
+		<br>
+		<a href="javascript:getEmployeeCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getValue 获取员工编码</a>	
+		<a href="javascript:setEmployeeCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setValue 设置员工编码</a>	
+		<a href="javascript:getEmployeeDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getText 获取员工名称</a>	
+		<a href="javascript:setEmployeeDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setText 设置员工名称</a>	
+		
+		<br>
+		<a href="javascript:getAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllCodeValue 获取所有值的编码</a>	
+		<a href="javascript:setAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllCodeValue 设置所有值的编码</a>	
+		<a href="javascript:getAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllDescValue 获取所有描述</a>	
+		<a href="javascript:setAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllDescValue 设置所有描述</a>	
+	</div>
+	
+
+</body>
+</html>

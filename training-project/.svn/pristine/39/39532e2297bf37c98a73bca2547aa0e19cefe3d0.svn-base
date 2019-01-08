@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.IssueSeverityDao">
+	
+	<!-- 查询所有缺陷严重程度信息 -->
+	<select id="getIssueSeverity" resultType="com.huibo.issue.po.IssueSeverityPo" parameterType="com.bn.javax.dao.Page">
+		select
+			severity.SEVERITY_CODE		severityCode,
+			severity.SEVERITY_DESC		severityDesc,
+			severity.MODULE_STATE		moduleState ,
+			dict.DICT_DESC 			dictCode ,
+			severity.CREATE_BY 			createBy ,
+			USER1.USER_NAME 		createByName,
+			severity.CREATE_TIME 		createTime ,
+			severity.MODIFY_BY			modifyBy ,
+			USER2.USER_NAME 		modifyByName,
+			severity.MODIFY_TIME		modifyTime
+		from
+			i_issue_severity severity
+			left join info_ge_dict dict
+		ON severity.MODULE_STATE = dict.DICT_CODE
+		AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		LEFT JOIN sys_user USER1 ON severity.CREATE_BY = USER1.user_id
+		LEFT JOIN sys_user USER2 ON severity.MODIFY_BY = USER2.user_id
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				severity.SEVERITY_DESC like '%${params.bo.keyWord}%'
+				or
+				severity.SEVERITY_CODE like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by severity.CREATE_TIME desc
+		</if>		
+	</select>
+	
+	<select id="getSeverityByCode" resultType="com.huibo.issue.po.IssueSeverityPo">
+		select
+			SEVERITY_CODE			severityCode ,
+			SEVERITY_DESC 			severityDesc ,
+			MODULE_STATE			moduleState ,
+			CREATE_BY				createBy ,
+			CREATE_TIME				createTime ,
+			MODIFY_BY				modifyBy ,
+			MODIFY_TIME				modifyTime
+		from
+			i_issue_severity
+		where
+			SEVERITY_CODE = #{severityCode}
+	</select>
+	
+	<insert id="addSeverity">
+		insert
+		into
+			i_issue_severity
+			(
+				SEVERITY_CODE ,
+				SEVERITY_DESC ,
+				MODULE_STATE ,
+				CREATE_BY,
+				CREATE_TIME ,
+				MODIFY_BY ,
+				MODIFY_TIME
+			)
+		values(
+			#{severityCode} ,
+			#{severityDesc} ,
+			#{moduleState} ,
+			#{createBy} ,
+			now() ,
+			#{modifyBy} ,
+			now()
+		)
+	</insert>
+	
+	<delete id="deleteSeverity">
+		delete
+		from
+			i_issue_severity
+		where
+			SEVERITY_CODE
+		in
+		<foreach collection="array" item="id"
+			open="(" close=")" separator=",">
+		  #{id}
+		</foreach>
+	</delete>
+	
+	<update id="operation">
+		update
+			i_issue_severity
+		set
+			MODULE_STATE = #{moduleState}
+		where
+			SEVERITY_CODE = #{severityCode}
+	</update>
+	
+	<update id="updateSeverity">
+		update
+			i_issue_severity
+		set
+			SEVERITY_DESC = #{severityDesc} ,
+			MODIFY_BY = #{modifyBy} ,
+			MODIFY_TIME = now()
+		where
+			SEVERITY_CODE = #{severityCode}
+	</update>
+	
+	
+	<select id="validatePriorityCode" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM i_issue_severity p
+		<where>
+			<if test="severityCode != null and severityCode != ''">
+				and p.SEVERITY_CODE = #{severityCode}
+			</if>
+		</where>
+	</select>
+</mapper>

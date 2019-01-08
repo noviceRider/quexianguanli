@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>businesslogic_access.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="padconfig_dataaccess_div" style="width: 680px;height: 350px" data-options="buttons:'#padconfig_dataaccess_div_btns'">
+   		<!-- 查询输入框及按钮 -->
+   	<form id="dataaccess_form">
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="dataTypeKeyWord" class="easyui-textbox" data-options="prompt:'请输入名称或描述'" style="width:200px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDictType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+  	
+  		<!--我的数据访问 -->
+  		<div style="width:100%;">
+		<table style="width:97%;" id="padconfig_dataaccess_dg" class="easyui-datagrid"  data-options="pagination:true,striped:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'accessCode',align:'left',halign:'center',sortable:'true'" style="width:12%;">访问编号</th>
+					<th data-options="field:'accessName',align:'left',halign:'center'" style="width:25%"> 访问名称</th>
+					<th data-options="field:'accessDesc',align:'left',halign:'center'" style="width:30%"> 访问描述</th>
+					<th data-options="field:'typeName',align:'left',halign:'center'" style="width:20%" >访问类型</th>
+					<th data-options="field:'categoryName',align:'left',halign:'center'" style="width:15%">访问分类</th>
+					
+					<th data-options="field:'sortNo',halign:'center',align:'left',alias:'a.sort_no',sortable:'true',hidden:true" style="" >顺序号</th>
+					<th data-options="field:'detail',halign:'center',align:'center',formatter:detailFormmater,hidden:true" style="" >操作</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+	
+    <div id="padconfig_dataaccess_div_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectDataAccess()">选择</a>
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelselectDataAccess()">取消</a>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录用户对话框选择</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../js/dialog/selectuser.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				var params = {
+					"id":"selUserId",  //普通方式需要用到，jquery方式不需要
+					onSelect : function(user){
+						console.log(user);
+						
+						$("#userName").textbox("setValue", user.userName);
+					},
+					onCancel:function(){
+						$("#form").form("clear");
+  					    $("#selUserId").dialog("close");
+					}
+				}
+				
+				//普通方式调用
+				//initSelUserDialog(params);
+				
+				//jquery方式调用
+				$("#selUserId").selUserDialog(params);
+			});
+			
+			
+			function openDialog() {
+				//普通方式调用
+				//openSelUserDialog();
+				
+				//jquery方式调用
+				$("#selUserId").selUserDialog("open");
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div>
+			<form id="userForm">
+				<span>登录用户名&nbsp;</span>
+				<input id="userName" type="text" class="easyui-textbox" data-options="prompt:'请选择登录用户'"/>
+				<a href="javascript:openDialog();" class="easyui-linkbutton" iconCls="icon-add"></a>
+			</form>
+		</div>
+		
+		<div id="selUserId"></div>
+		
+	</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<script src='js/jquery.min.js' type='text/javascript'></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<script src='js/common/Common.js' type='text/javascript' ></script>
+		<script type='text/javascript' src='js/common/Cookie.js'></script>
+		<script src='js/frame/sc/Enter.js' type='text/javascript'></script>
+		<link href='css/frame/sc/Enter.css' rel='stylesheet' type='text/css'  media='screen' />
+		<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css"/>
+		
+		<title>登录</title>
+		
+		<style type="text/css">
+			.divCenter {
+				background: url("images/icon/default/02.jpg") -10px;
+			}
+		</style>
+	</head>
+	
+	<body class="main">
+        <form name="form1" id="form1" method="post">
+            <div class="divMain">
+                <div class="divHead">
+                    <div align="right"><!-- <img src="${logPath}" width="156" height="94" /> --></div>
+                </div>
+                <div class="divCenter"></div>
+                <div class="divEnd">
+                    <div class="divEnd_inner">
+                        <div class="divEnd_inner_left">
+                            <li>Chongqing Airport Apron Punish Record Management Platform</li>
+                            <li> (c) Copyright brilliant, 2005-2016. All rights reserved.</li>
+                            <li>北京博能科技股份有限公司 (c)版权所有, 2005-2016</li>
+                            <li>警告：本软件受中华人民共和国《计算机软件保护条例》的保护，未经授权擅自传播本软件的部分或全部，将受到国家法律的制裁！</li>
+                        </div>
+                        <div class="divEnd_inner_right">
+                            <div class="divEnd_inner_right_input">
+                                <div class="msgTheme" style="display:none;">
+                                   <input type="hidden"  name ="themeName" id="themeName" value="${themeName}"/>
+                                 
+                                </div>
+                                    <div class="userName">
+                                    	<div class="input-l">用&nbsp;户&nbsp;名：</div>
+                                    	<div class="input-r"><input type="text" class="inputMsg" name="userId" id="userId"/></div>
+                                    </div>
+                                    <div class="pwd">
+                                    	<div class="input-l">密&nbsp;&nbsp;&nbsp;码：</div>
+                                    	<div class="input-r"><input type="password" class="inputMsg" name="password" id="password"/></div>
+                                    </div>
+                                   <div class="companyId">
+                                  	  	<!-- <s:if test='"1".equals(showFlag)'>
+                                  	  	 	<div class="input-l">公司编号：</div>
+                                     		<div class="input-r"><input type="text" class="inputMsg" name="companyId" id="companyId" value="${companyId}" /></div>
+	                                	 </s:if>
+	                                	  <s:else>
+	                                	  	&nbsp;
+	                                    	<input type="hidden" name="companyId" id="companyId" value="${companyId}" />
+	                                    	</s:else> -->
+                                   </div>
+                                   
+                                    <div class="divEnd_inner_right_input_sub">
+                                      <table width="314" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                          <td width="84" align="right"></td>
+                                          <td width="20"><input name="rememberLoginInfo" type="checkbox" id="rememberLoginInfo" /></td>
+                                          <td width="126">记住我的用户名和密码</td>
+                                          <td width="84"><input name="loginBtn" type="button" class="button_1" id="loginBtn" value="提交" /></td>
+                                        </tr>
+                                      </table>
+                                    </div>
+                              </div>
+                          </div>
+                      </div>
+                 </div>
+             </div>
+         </form>
+     </body>
+</html>

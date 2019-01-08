@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>选择员工对话框</title>
+	<meta name="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/dialog/selectemp.js"></script>
+	<script>
+		 $(function(){
+			var params={
+					id:"selEmpDialog",
+					onSelect:function(empInfo){
+						$("#empName").textbox("setValue",empInfo.empName);
+					},
+					onCancel:function(){
+						$("#selEmpDialog").dialog("close");
+					}
+			};
+			
+			//普通方式调用
+			//initSelEmpDialog(params);
+			
+			//jquery方式调用
+			$("#selEmpDialog").selEmpDialog(params);
+		}) ;
+
+		function openDialog(){
+			//普通方式调用
+			//openSelEmpDialog();
+			
+			//jquery方式调用
+			$("#selEmpDialog").selEmpDialog("open");
+		}
+	</script>
+</head>
+<body>
+	<!-- 查询表单 -->
+	<form id="form-search">
+		 选择员工&nbsp;<input id="empName" name="empName" class="easyui-textbox" data-options="prompt:'请选择员工'"readonly="readonly" />  
+		&nbsp;<a href="javascript:openDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'"></a>
+	</form>
+	
+	<!--对话框  -->
+	<div id="selEmpDialog"></div>
+		
+</body>
+</html>

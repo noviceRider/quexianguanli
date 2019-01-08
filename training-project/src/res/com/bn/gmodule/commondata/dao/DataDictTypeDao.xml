@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.DataDictTypeDao">
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultDataDictTypeObj">
+		select
+			type_code "typeCode",
+			type_desc "typeDesc",
+			is_used "isUsed",
+			sort_no "sortNo"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.commondata.po.DataDictTypePo">
+		<include refid="resultDataDictTypeObj"/>
+			from code_ge_dicttype
+		<where>
+			<if test="params.bo.keyWord != null and params.bo.keyWord != ''">
+				type_code like '%${params.bo.keyWord}%' or 
+				type_desc like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>	
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by sort_no
+		</if>
+	</select>
+	
+	<!-- 根据数据类型主键查询信息 -->
+	<select id="findById" parameterType="String" resultType="com.bn.gmodule.commondata.po.DataDictTypePo">
+		<include refid="resultDataDictTypeObj"/>
+		from code_ge_dicttype
+		where type_code = #{typeCode}
+	</select>
+	
+	<!-- 新增数据类型 -->
+	<insert id="addDictType" parameterType="com.bn.gmodule.commondata.bo.DataDictTypeBo">
+		insert into code_ge_dicttype (
+			type_code,
+			type_desc,
+			is_used,
+			sort_no
+		) values (
+			#{typeCode},
+			#{typeDesc},
+			#{isUsed},
+			#{sortNo}
+		)
+	</insert>
+	
+	<!-- 根据数据类型编号修改信息 -->
+	<update id="modifyDictType" parameterType="com.bn.gmodule.commondata.bo.DataDictTypeBo">
+		update code_ge_dicttype
+		set
+			type_desc = #{typeDesc},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where type_code = #{typeCode}
+	</update>
+	
+	<!-- 根据数据类型编号删除信息 -->
+	<delete id="removeDictType" parameterType="String">
+		delete from code_ge_dicttype where type_code = #{typeCode}
+	</delete>
+	
+	<!-- 验证数据类型编码是否存在 -->
+	<select id="validateDictTypeCode" parameterType="com.bn.gmodule.commondata.bo.DataDictTypeBo" resultType="Integer">
+		select
+			count(*)
+		from code_ge_dicttype 
+		where type_code = #{typeCode}
+	</select>
+	
+	<!-- 验证数据类型名称是否存在 -->
+	<select id="validateDictTypeDesc" parameterType="com.bn.gmodule.commondata.bo.DataDictTypeBo" resultType="Integer">
+		select
+			count(*)
+		from code_ge_dicttype 
+		<where>
+			<if test="typeDesc != null and typeDesc != ''">
+				type_desc = #{typeDesc}
+			</if>
+		</where>
+	</select>
+</mapper>

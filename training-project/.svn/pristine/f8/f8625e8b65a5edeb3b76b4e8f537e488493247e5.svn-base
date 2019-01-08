@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+ 	<meta charset="UTF-8">
+    <title>loadDictData.html</title>
+	
+    <link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script src="../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/util/dict.js"></script>
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+    <script>
+    	function loadDictData() {
+    		var typeCodes ="'HOUSE_TIME_SELECT','IS_USED','HOUSE_ADV_STAT'";
+    		loadDictDataByScope(typeCodes, function(data) {
+    			console.log(data);
+    		});
+    	}
+    </script>
+
+  </head>
+  
+  <body>
+  	<p>点击后通过console.log();将返回数据答应在控制台</p>
+  	<a href="javascript:loadDictData();"  class="easyui-linkbutton"  style="margin-bottom:5px;">按范围加载数据字典</a>
+  	
+  </body>
+</html>

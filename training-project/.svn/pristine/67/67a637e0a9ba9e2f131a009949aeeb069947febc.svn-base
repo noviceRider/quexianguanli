@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>房源选择组件</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/house/plugin/selectHouseResource.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var params={
+					onSelect:function(tagInfo){
+						$("#houseResourceName").textbox("setValue",tagInfo.houseResourceName);
+						$("#houseResourceId").val(tagInfo.houseResourceId);
+					},
+					onClose:function(){
+					}
+			};
+			//jquery方式调用
+			$("#selHouseResourceDialog").selHouseResourceDialog(params);
+		}) ;
+	
+		function openDialog(){
+			//打开对话框
+			$("#selHouseResourceDialog").selHouseResourceDialog("open");
+		}
+
+	</script>
+</head>
+<body>
+	<!-- 查询表单 -->
+	<form id="form_search" style="margin-top:15px">
+		 <input id="houseResourceName" class="easyui-textbox" data-options="prompt:'请选择房源'," readonly="readonly"/> 
+		 <input id="houseResourceId" type="hidden"/> 
+		 <a href="javascript:openDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'"></a>
+	</form>
+	
+	<!--房源    对话框  -->
+	<div id="selHouseResourceDialog"></div>
+</body>
+</html>

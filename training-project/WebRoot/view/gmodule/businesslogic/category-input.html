@@ -1,0 +1,65 @@
+<form name="inputForm" id="inputForm">
+	<!-- <input type="hidden" name="opType" id="opType"/> -->
+	
+	<!--琛ㄦ牸鍖哄煙-->
+	<table id="deptShow" class="btb" style="margin-top: 5px;">
+		<tr>
+			<td width="20%" align="right">
+				分类编号
+			</td>
+			<td>
+				<span id="show_categoryCode"></span>
+				<input class="easyui-validatebox" type="text" name="categoryCode" id="input_categoryCode" />
+				<span class="alertTipNormal" id="show_limitLen">*</span>
+				<span type="validMsg" id="valid_deptId"></span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				分类名称
+			</td>
+			<td>
+				<input type="text" name="CategoryName" id="input_CategoryName"/>
+				<span class="alertTipNormal">*</span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				父类名称
+			</td>
+			<td>
+				<input type="hidden" name="pCategoryCode" id="input_pCategoryCode"/>
+				<span id="input_pCategoryName"></span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				排序号
+			</td>
+			<td>
+				<input type="text" name="sortNo" id="input_sortNo"/>
+				<span class="alertTipNormal">*</span>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				是否有效
+			</td>
+			<td>
+				有效：<input type="radio" name="isUsed" value="1" checked="checked"/>
+				有效：<input type="radio" name="isUsed" value="0"/>
+			</td>
+		</tr>
+	</table>
+	
+	<table class='btbForm' style='border: 0px;'>
+		<tr>
+			<td id="resultDesc" style="width:45%;">
+				&nbsp;
+			</td>
+			<td>
+				<a href="#" id="saveBtn" class="easyui-linkbutton" onclick="doSave();">&nbsp;&nbsp;保存&nbsp;&nbsp;</a>
+			</td>
+		</tr>
+	</table>
+</form>

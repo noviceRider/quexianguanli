@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<meta charset="UTF-8">
+	<title>业务逻辑分类</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+	<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="js/category.js"></script>
+</head>
+
+<body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:40px;">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../../images/common/title.gif' align='absmiddle'/>业务逻辑分类 
+				</td>
+				<td style="text-align: right;">
+					<a href="#" id="addFirstLvlBtn" class="easyui-linkbutton" onclick="doAddNode(1);" iconCls="icon-add">加第一级</a>
+					<a href="#" id="addBtn" class="easyui-linkbutton" onclick="doAddNode(0);" iconCls="icon-add">增加下级</a>
+					<a href="#" id="modifyBtn" class="easyui-linkbutton" onclick="doModify();" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" id="deleteBtn" class="easyui-linkbutton" onclick="doDelete();" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					<a href="#" id="refreshBtn" class="easyui-linkbutton" onclick="doRefresh();" iconCls="icon-reload">&nbsp;刷&nbsp;&nbsp;新&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div data-options="region:'west',split:true" style="width:250px">
+		<ul id="tt" class="easyui-tree">
+		</ul>
+	</div>
+	
+	<div data-options="region:'center'">
+		<div id="pp1" class="easyui-panel"  data-options="border: false,href: 'category-show.html'"  style="padding:20px;display:none">
+		</div>
+		<div id="pp2" class="easyui-panel"  data-options="border: false,href: 'category-input.html'"  style="padding:20px;display:none">
+		</div>
+	</div>
+
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div onclick="doAddNode(0)" data-options="iconCls:'icon-add'">增加下级</div>
+		<div onclick="doDelete()" data-options="iconCls:'icon-remove'">删除分类</div>
+		<div class="menu-sep"></div>
+		<div onclick="doModify()">修改分类</div>
+	</div>
+	
+</body>
+</html>

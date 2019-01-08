@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>datadictionary.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../../css/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../../js/common.js"></script>
+<script type="text/javascript" src="js/datadictionary.js" charset="UTF-8"></script>
+</head>
+
+<body>
+	<!-- 标题以及各种功能按钮 -->
+	<table style="width:100%;padding:5px;">
+		<tr>
+			<td style="width:25%">
+				<img src='../../../images/common/title.gif' style="vertical-align:middle;">数据字典</td>
+			<td style="text-align: right;">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDictManage()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDictManage()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyDictManage()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeDictManage()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="exportDictManage()">&nbsp;导&nbsp;&nbsp;出&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-import'" onclick="importDictManage()">&nbsp;导&nbsp;&nbsp;入&nbsp;</a>
+			</td>
+		</tr>
+	</table>
+
+	<table class="btbForm" >
+		<tr>
+			<td>
+				 &nbsp;&nbsp;&nbsp;选择数据类型 &nbsp;<input id="codeType" class="easyui-textbox" style="height:20px;width:200px" data-options="prompt:'请选择数据类型',disabled:'disabled'"></input><input id="typeCode" type="hidden"></input>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDictTypeInfo()"></a>&nbsp;&nbsp;&nbsp;
+				
+				关键字&nbsp;<input id="dictManage_keyWord" class="easyui-textbox" name="keyWord" data-options="prompt:'请输入编号或描述'"></input>
+			</td>
+		</tr>
+	</table>
+	
+	<!-- 定义外边距 -->
+  	<div style="margin-top:5px"></div>
+	<form method="post" class="easyui-form" id="ff" style="display:none">
+				
+	</form>
+	<table id="dictTable" class="easyui-datagrid" data-options="pagination:true,striped:true,singleSelect:true">
+		<thead>
+			<tr>
+				<th data-options="field:'cb1',align:'center',checkbox:true," style="width:5%;"></th>
+				<th data-options="field:'dictCode',align:'left',halign:'center',sortable:'true',alias:'dict_code'" style="width:16%">字典编码</th>
+				<th data-options="field:'dictDesc',align:'left',halign:'center',sortable:'true',alias:'dict_desc'" style="width:32%">字典描述</th>
+				<th data-options="field:'typeDesc',align:'left',halign:'center',sortable:'true',alias:'type_desc'" style="width:22%">数据类型</th>
+				<th data-options="field:'sortNo',align:'center',halign:'center',sortable:'true',alias:'a.sort_no'" style="width:15%">顺序</th>
+				<th data-options="field:'isUsed',align:'center',halign:'center',sortable:'true',alias:'a.is_used',formatter:setIsUsed" style="width:13%">有效否</th>
+			</tr>
+		</thead>
+	</table>
+
+	<!-- 代码类型页面 -->
+	<div id="dictType" style="display: none;"></div>
+	
+	<!-- 代码类型页面 -->
+	<div id="dictType_export" style="display: none;"></div>
+
+	<!-- 代码管理新增、修改页面 -->
+	<div id="dictmanage_am" style="display: none;"></div>
+	
+		<!-- 导入对话框 -->
+	<div id="dlg_importExcel" style="display: none;width:320px;padding: 10px;"
+		data-options="buttons:'#btn_dlg_importExcel'">
+		<form id="form_import" enctype="multipart/form-data" method="post">
+			<table style="font-size: 16px;overflow: hidden;">
+				<tr>
+					<td style="line-height: 35px;">
+						请选择要导入的xml文件：
+					</td>
+				</tr>
+				<tr>
+					<td style="line-height: 35px;">
+						<input type="file" name="file" accept=".xml">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- 导入信息弹出框内按钮 -->
+		<div id="btn_dlg_importExcel" style="display:none;padding:5px;text-align: center;">
+			<a class="easyui-linkbutton" iconCls="icon-import"
+				onclick="doImportExcel()">导 入</a> <a class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="$('#dlg_importExcel').dialog('close');">关闭</a>
+		</div>
+	</div>
+</body>
+</html>
+

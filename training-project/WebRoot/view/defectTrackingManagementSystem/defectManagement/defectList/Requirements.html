@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="showRequirements" data-options="modal:true,buttons:'#sc_add'">
+		<div id="Requirements" data-options="title:'查看任务',selected:true">
+			<br>
+			项目名称:&nbsp;<span id="showprojectName"></span>
+			<br>
+			<br>
+			上级缺陷:&nbsp;<span id="showparentIssueName"></span>
+			<br>
+			<br>
+			缺陷名称:&nbsp;<span id="showissueName"></span>
+			<br>
+			<br>
+			缺陷分类:&nbsp;<span id="showtypeDesc"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			状态:&nbsp;<span id="showissueState"></span>
+			<br>
+			<br>
+			严重程度:&nbsp;<span id="showissueSeverityName"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			优先级:&nbsp;<span id="showissuePriorityName"></span>
+			<br>
+			<br>
+			预计工时:&nbsp;<span id="showplanWorkHours"></span>小时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			完成率:&nbsp;<span id="showdoneRatio"></span>%
+			<br>
+			<br>
+			计划开始时间:&nbsp;<span id="showplanStartTime"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<br>
+			<br>
+			计划完成时间:&nbsp;<span id="showplanEndTime"></span>
+			<br>
+			<br>
+			缺陷描述:&nbsp;<span id="showissueDesc"></span>
+			<br>
+			<br>
+			<br>
+			缺陷要求:&nbsp;<span id="showdoneCondition"></span>
+		</div>
+	</div>
+	
+	 <div id="sc_add">
+		<a id="closeRequirementsBtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" >关闭</a>
+	</div>
+</body>
+</html>

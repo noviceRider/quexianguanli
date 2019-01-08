@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="addProjectPanel">
+		<form action="post" id="addProjectForm">
+			<br>
+			<input type="hidden" value="" name="topProjectId">
+			项目编号&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="projectId" id="addProjectId"><br>
+			<br>
+			项目名字&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="projectName" id="addProjectName"><br>
+			<br>
+			项目简介&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="projectIntro" id="addProjectIntro"><br>
+			<br>
+			项目描述&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="projectDsc" id="addProjectDsc"><br>
+			<br>
+		</form>
+		<div>
+			&nbsp;&nbsp;<a id="addProjectFormBtn"></a>
+			&nbsp;&nbsp;<a id="cancelProjectFormBtn"></a>
+		</div>
+	</div>
+</body>
+</html>

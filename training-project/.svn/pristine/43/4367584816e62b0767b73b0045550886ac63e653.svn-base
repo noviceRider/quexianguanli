@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>宁波栎社国际机场机坪管理系统</title>
+	<meta charset="UTF-8">
+	<!-- easyui -->
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+	
+	<!-- 顶部 -->
+	<link rel="stylesheet" type="text/css" href="../../themes/default/css/frame/sc/TopBar.css">
+	<script type='text/javascript' src='../../js/common/BsstWindow.js'></script>
+	<script type="text/javascript" src="../../js/common/Cookie.js"></script>
+	<script type='text/javascript' src='../../themes/default/js/frame/sc/TopBar.js'></script>
+	
+	<!-- 底部 -->
+	<link rel="stylesheet" type="text/css" href="../../themes/default/css/frame/sc/StatusBar.css">
+	<script type='text/javascript' src='../../themes/default/js/frame/sc/StatusBar.js'></script>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/css/frame/sc/MainFrame.css">
+	
+	<!-- 左侧 -->
+	<link rel="stylesheet" type="text/css" href="../../themes/default/css/frame/sc/CallLeftMenu.css">
+	<script type="text/javascript" src="../../navigat/navigat.1.1.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	
+	<script type='text/javascript' src='../../js/common/Cookie.js'></script>
+	<script type="text/javascript" src="js/mainframe1.js"></script>
+	
+	<style type="text/css">
+		
+		form table td{
+			padding:5px
+		}
+		.icon-blue{
+			background:url('../../themes/default/images/frame/sc/topbar/colors_blue_icon.gif') no-repeat center center;
+		}
+		.icon-red{
+			background:url('../../themes/default/images/frame/sc/topbar/colors_red_icon.gif') no-repeat center center;
+		}
+		.icon-green{
+			background:url('../../themes/default/images/frame/sc/topbar/colors_green_icon.gif') no-repeat center center;
+		}
+		.icon-purple{
+			background:url('../../themes/default/images/frame/sc/topbar/colors_purple_icon.gif') no-repeat center center;
+		}
+	</style>
+
+</head>
+
+<body id="frame1" class="easyui-layout">
+	<!-- 顶部  --------------------------------------------------------------->
+	<div id="topBar" data-options="region:'north'" style="margin:0px;padding:0px;border:none;overflow:hidden;">
+		<div class="divHead" style="background-color:#fff">
+			<div class="divHead_title"></div>
+			<div class="divHead_menu">
+				<div class="divHead_menu_every"><a href="javascript:logout1();">退出系统</a></div>
+				<div class="divHead_menu_every"><a href="javascript:changePwd();">修改密码</a></div> 
+				<div class="divHead_selectC">
+					<a href="#" id="analysisBtn" class="easyui-menubutton" data-options="iconCls:'icon-theme',menu:'#menuStyle',width:'120'" >&nbsp;导航风格&nbsp;</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="divNav">
+			<div class="divNav_inner">
+				<!-- 这里是根目录 -->
+			</div>
+		</div>
+		
+		<div class="line"></div>
+		
+		<div class="divNote">
+			
+			&nbsp;<span id="welcome"></span>&nbsp;>
+			<img height="15" src="../../themes/default/images/frame/sc/topbar/Meetings.gif" width="15" align="absMiddle"/>
+			<u id="userName">用户名</u>
+			<img src="../../themes/default/images/frame/sc/topbar/Notes.gif" align="absMiddle"/>
+			 部门/角色：<span id="deptRole"></span>
+	          		
+		</div>
+	</div>
+	
+	<!-- 左侧  --------------------------------------------------------------->
+	<div id="left" data-options="region:'west',title:'导航菜单'" style="width:190px;">
+		<div id="leftMenu"></div>
+	</div>
+	
+	<!-- 中间  --------------------------------------------------------------->
+	<div id="main" data-options="region:'center'" style="border:none;">
+		<iframe id="content" style="width: 100%;height: 99.6%;border:none;">
+			
+		</iframe>
+	</div>
+	
+	<!-- 底部  --------------------------------------------------------------->
+	<div id="statusBar" data-options="region:'south'" style="height:20px;line-height:19px;background-color:#F4F9FC;text-align:center;overflow:hidden;border:none;border-top:2px; border-top-color:#ABC3D7; border-top-style:solid;">
+		
+        <span id="frameTitle" style="color:#407EAC;"></span>
+        &nbsp;&nbsp;
+        <span id="frameCopyright" style="color:#407EAC"></span>
+					
+	</div>
+	
+	<!-- 密码修改对话框 -->
+	<div id="changePwd" style="width:400px;height:auto;display:none;padding-top:10px;" buttons="#btns_dlg">
+		<form id="form_changePwd">
+			<input type="hidden" name="userId"/>
+			<table>
+				<tr>
+					<td style="text-align:right;width:35%;">用户名称：</td>
+					<td>
+						<span id="userName_form"></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">原密码：</td>
+					<td>
+						<input type="password" name="oldPassword" style="width: 200px;" />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">新密码：</td>
+					<td>
+						<input type="password" id="password" name="password" style="width: 200px;" />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">确认密码：</td>
+					<td>
+						<input type="password" name="surePassword" style="width: 200px;"/>
+					</td>
+				</tr>
+				<tr></tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- 对话框按钮 -->
+	<div id="btns_dlg" style="text-align: center;">
+		<a class="easyui-linkbutton" href="javascript:doSave()" iconCls="icon-save">保存</a>
+		<a class="easyui-linkbutton" href="javascript:doClose()" iconCls="icon-cancel">关闭</a>
+	</div>
+	<!-- 风格选择框 -->
+	<div id="menuStyle" class="easyui-menu" style="width:120px;">
+		
+	</div>
+</body>
+</html>

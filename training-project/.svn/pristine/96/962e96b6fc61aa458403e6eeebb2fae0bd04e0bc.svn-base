@@ -1,0 +1,19 @@
+package com.huibo.issue.bo;
+
+import com.huibo.issue.po.IssuePriorityPo;
+
+public class IssuePriorityBo extends IssuePriorityPo {
+	
+	private String keyWord;
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	
+	
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script src="../../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/house/plugin/selectshopuser.js"></script>
+	<script type="text/javascript">	
+		
+		function showCombox(){
+			$("#selShopUser").selectShopUserPlugin({
+				// 装 combobox的div的id
+				id :  'selShopUser',
+				
+				// 需要创建的combox 的id selShopId:门店combox的id selUserId：员工combox的id
+				selShopId: 'shopId',
+				selUserId : 'userId',
+				
+				// 默认加载的门店数据的typeCode
+				typeCode:'I_HOUSE_SHOP',
+				
+				// 默认加载的门店
+				defaultshopId:"",
+				
+				// 默认设置的员工值
+				defaultuserId:"",
+				
+				//是否显示门店combox 
+				showShopCbb : 1,
+				
+				required:"true",
+				missingMessage:"请选择员工",
+				
+				// 门店选择的宽度
+				shopWidth : '120px', 
+				
+				// 员工选择的宽度
+				userWidth : '120px',
+				
+				//对加载成功的门店数据进行二次处理，处理完毕返回
+				onLoadShopData: function(data) {
+					data.unshift({shopId: "", shopName: "全部门店"});
+					return data;					
+				},		
+				//对加载成功的员工数据进行二次处理，处理完毕返回
+				onLoadUserData: function(data) {
+					data.unshift({userId: "", userName: "全部员工"});
+					return data;					
+				},
+				onChange:function(data){
+					
+				}
+			});
+		}
+		
+		// 获取门店编码		
+		function getShopCode(){
+			alert($("#selShopUser").selectShopUserPlugin("getShopValue"));
+		}
+		
+		// 设置门店编码 
+		function setShopCode(){
+			$("#selShopUser").selectShopUserPlugin("setShopValue","1")
+		}
+		
+		// 获取门店描述 
+		function getShopDesc(){
+			alert($("#selShopUser").selectShopUserPlugin("getShopText"));
+		}
+		
+		// 设置门店描述 
+		function setShopDesc(){
+			$("#selShopUser").selectShopUserPlugin("setShopText","测试名称");
+		}
+		
+		// 获取员工编码 
+		function getUserCode(){
+			alert($("#selShopUser").selectShopUserPlugin("getValue"));
+		}		
+		
+		// 设置员工编码 
+		function setUserCode(){
+			$("#selShopUser").selectShopUserPlugin("setValue","admin");
+		}	
+		
+		// 获取员工名称 
+		function getUserDesc(){
+			alert($("#selShopUser").selectShopUserPlugin("getText"));
+		}	
+		
+		// 设置员工名称 
+		function setUserDesc(){
+			$("#selShopUser").selectShopUserPlugin("setText","系统任务");
+		}	
+		
+		// 获取所有编码 
+		function getAllCode(){
+			alert($("#selShopUser").selectShopUserPlugin("getAllCode"));
+		}		
+		
+		// 设置所有编码 
+		 function setAllCode(){
+			$("#selShopUser").selectShopUserPlugin("setAllCode",{
+				shopVal:"1",
+				userVal:"admin"
+			});
+		}	 
+		
+		// 获取所有描述  
+		function getAllDesc(){
+			alert($("#selShopUser").selectShopUserPlugin("getAllDesc"));
+		}	
+		
+		// 设置所有描述  
+		function setAllDesc(){
+			$("#selShopUser").selectShopUserPlugin("setAllDesc",{
+				shopVal:"测试名称",
+				userVal:"系统管理员"
+			});
+		} 
+		
+	</script>
+</head>
+
+<body onload="showCombox()">
+	<div style="padding:10px 0 10px 0;">
+		<div id="selShopUser" ></div>
+	</div>
+
+	<div>
+		<a href="javascript:getShopCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getShopValue 获取门店编码</a>	
+		<a href="javascript:setShopCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setShopValue 设置门店编码</a>	
+		<a href="javascript:getShopDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getShopText 获取门店描述</a>	
+		<a href="javascript:setShopDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setShopText 设置门店描述</a>	
+		   
+		<br>
+		<a href="javascript:getUserCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getValue 获取员工编码</a>	
+		<a href="javascript:setUserCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setValue 设置员工编码</a>	
+		<a href="javascript:getUserDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getText 获取员工名称</a>	
+		<a href="javascript:setUserDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setText 设置员工名称</a>	
+		
+		<br>
+		<a href="javascript:getAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllCode 获取所有值的编码</a>	
+		<a href="javascript:setAllCode();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllCode 设置所有值的编码</a>	
+		<a href="javascript:getAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">getAllDesc 获取所有描述</a>	
+		<a href="javascript:setAllDesc();"  class="easyui-linkbutton"  style="margin-bottom:5px;">setAllDesc 设置所有描述</a>	
+	</div>
+	
+</body>
+</html>

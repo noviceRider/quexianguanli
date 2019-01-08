@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/">
+  <process id="EmpRegisterFlow" name="员工入职流程" isExecutable="true">
+    <startEvent id="EmpRegister" name="员工入职准备" activiti:initiator="applyUserId" activiti:formKey="../empregister/empRegister.html">
+      <documentation>填写人员基本信息，启动流程</documentation>
+    </startEvent>
+    <userTask id="HrSpecialist" name="完善员工信息" activiti:candidateGroups="P_1010.01" activiti:formKey="../empregister/perfectEmpInfo.html">
+      <documentation>人事专员补充完善入职人员信息</documentation>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="EmpRegister" targetRef="HrSpecialist"></sequenceFlow>
+    <userTask id="ManagerAudit" name="员工资料审核" activiti:assignee="${applyUserId}" activiti:formKey="../empregister/empAudit.html"></userTask>
+    <sequenceFlow id="flow2" sourceRef="HrSpecialist" targetRef="ManagerAudit"></sequenceFlow>
+    <endEvent id="EmpRegisterEnd" name="员工入职办理完成"></endEvent>
+    <sequenceFlow id="flow5" name="通过" sourceRef="ManagerAudit" targetRef="EmpRegisterEnd">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditFlag==1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" name="审核不通过" sourceRef="ManagerAudit" targetRef="HrSpecialist">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditFlag==0}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_EmpRegisterFlow">
+    <bpmndi:BPMNPlane bpmnElement="EmpRegisterFlow" id="BPMNPlane_EmpRegisterFlow">
+      <bpmndi:BPMNShape bpmnElement="EmpRegister" id="BPMNShape_EmpRegister">
+        <omgdc:Bounds height="35.0" width="35.0" x="1.0" y="43.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="HrSpecialist" id="BPMNShape_HrSpecialist">
+        <omgdc:Bounds height="61.0" width="105.0" x="100.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ManagerAudit" id="BPMNShape_ManagerAudit">
+        <omgdc:Bounds height="61.0" width="105.0" x="280.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EmpRegisterEnd" id="BPMNShape_EmpRegisterEnd">
+        <omgdc:Bounds height="35.0" width="35.0" x="460.0" y="43.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="36.0" y="60.0"></omgdi:waypoint>
+        <omgdi:waypoint x="100.0" y="60.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="205.0" y="60.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="60.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="385.0" y="60.0"></omgdi:waypoint>
+        <omgdi:waypoint x="460.0" y="60.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="394.0" y="40.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="332.0" y="91.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="126.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="161.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="161.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="91.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="191.0" y="140.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>metamanage_dicttype.html</title>
+<meta charset="UTF-8">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	//新增和修改url
+	var url;
+	//新增、修改标志
+	var isNew;
+	//修改的行
+	var modifyRow;
+	//回调函数
+	var callback;
+	
+	function showSelectDictType(callbackfun){
+		//将回调函数赋给全局变量
+		callback=callbackfun;
+		
+		//给数据网格加载数据
+		$("#dictType_dg").datagrid({
+			method:"post",
+			url:basePath+"/gmodule_dicttype_findpage.json",
+			onDblClickRow:function(index,row){
+				selectDictType();
+			}
+		});
+		//打开窗口
+		$("#selectDictType").dialog({
+			title:"选择代码类型",
+			modal:true
+		}).dialog("open").dialog("center");
+		
+	
+	}
+	
+	/**
+	 * 查询
+	 */
+	 function searchDictType(){
+		 $("#dictType_dg").datagrid("reload",{keyWord:$("#dictKeyWord").textbox("getValue")});
+	}
+	
+	/**
+	*类型编码输入框改变事件
+	*/
+	function fillSortNo(){
+		//获取类型编码值
+		var value = $("#typeCodeid").textbox("getValue");
+		//将值设置给顺序号
+		$("#sorNoid").textbox("setValue",value);
+	}
+	
+	/**
+	*设置是否有效初始值
+	*/
+	function setIsUsed(value,row,index){
+		if(value==1){
+			return "<img src='../../../css/themes/icons/ok.png'/>";
+		}else{
+			return "—";
+		}
+	}
+	
+	/**
+	*选择的数据
+	*/
+	function selectDictType(){
+		if(callback!=null){
+			//获取选择的数据
+			var row=$("#dictType_dg").datagrid("getSelected");
+			//返回数据
+			callback(row);
+			//关闭对话框
+			$("#selectDictType").dialog("close");
+		}
+	}
+	
+	/**
+	*选择数据退出框
+	*/
+	function cancelselectDictType(){
+		//关闭对话框
+		$("#selectDictType").dialog("close");
+	}
+	
+	</script>
+</head>
+
+<body>
+	<div id="selectDictType" style="width: 680px;height: 310px" data-options="buttons:'#dictManage_btns'">
+
+		<!-- 查询输入框及按钮 -->
+		
+		<table style="width:100%;padding:5px;">
+			<tr>
+				<td style="width:30%">
+					关键字&nbsp;<input id="dictKeyWord" class="easyui-textbox" data-options="prompt:'请输入编号或名称'" style="width:120px;height:20px;">
+				</td>
+				<td style="text-align: right;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDictType()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<!-- 
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addDictType()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyDictType()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeDictType()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+					-->
+				</td>
+			</tr>
+		</table>
+		 
+		<!-- 定义外边距 -->
+  		<div style="margin-top:5px"></div>
+
+		<!-- 数据网格 -->
+		<div style="width:100%;" >
+		<table id="dictType_dg"  class="easyui-datagrid" data-options="pageSize:5,pageList:[5,10,15],pagination:true,striped:true,singleSelect:true" style="width: 100%;">
+			<thead>
+				<tr style="text-align: right;">
+					<th data-options="field:'cb1',align:'center',checkbox:true," style="width:5%"></th>
+					<th data-options="field:'typeCode',align:'left',halign:'center'" style="width: 21%;">类别编码</th>
+					<th data-options="field:'typeDesc',align:'left',halign:'center'" style="width: 35%;">类别名称</th>
+					<th data-options="field:'sortNo',align:'center',halign:'center'" style="width: 21%;">排序号</th>
+					<th data-options="field:'isUsed',align:'center',halign:'center',formatter:setIsUsed" style="width: 19%;">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+
+	<div id="dictManage_btns">
+		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'"
+			onclick="selectDictType()">选择</a> <a class="easyui-linkbutton"
+			data-options="iconCls:'icon-cancel'" onclick="cancelselectDictType()">关闭</a>
+	</div>
+
+	<!-- 新增和修改页面 -->
+	<div id="dlg_am" style="display: none;"></div>
+</body>
+</html>
+

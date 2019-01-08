@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>楼盘字典选择组件</title>
+        <link rel="stylesheet" type="text/css" href="../../css/common/main.css">
+        <link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="../../js/common.js"></script>
+        <script type="text/javascript" src="../../js/house/plugin/selectarea.js"></script>
+        <script type="text/javascript" src="../../js/house/plugin/selectEstateInfo.js"></script>
+        <script>
+            $(function () {
+                var params = {
+                    onSelect: function (data) {
+                        $('#result').text(JSON.stringify(data, null, 4));
+                    },
+                    onClose: function () {
+                    }
+                }
+
+                //jquery方式调用
+                $("#selEstInfDiaId").selEstateInfoDialog(params);
+            });
+
+            function openDialog() {
+
+                //jquery方式调用
+                $("#selEstInfDiaId").selEstateInfoDialog("open");
+            }
+
+        </script>
+    </head>
+    <body>
+        <div>
+            <form id="userForm">
+                <a href="javascript:openDialog();" class="easyui-linkbutton" iconCls="icon-add"></a>
+                <p>选中的结果：</p>
+                <pre id="result" style="width: 90%; border: 1px solid #efefef; padding: 15px;"></pre>
+            </form>
+        </div>
+
+        <div id="selEstInfDiaId"></div>
+    </body>
+</html>

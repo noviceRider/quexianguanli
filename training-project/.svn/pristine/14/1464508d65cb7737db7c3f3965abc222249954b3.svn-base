@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>emp_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+  		<!--右边用于存放员工头像照片-->
+ 		<!-- <div id="detailRight" style="float:right;text-align:center;width: 30%;height:80%;">
+		 	<div>
+		 		<span style="display:block;margin:10px;" align="left">员工头像:</span>
+		 		<img id="detailPhoto" style="width:100px;height:80px;background-color:gray;cursor: pointer;" />
+		 	</div>
+		</div> -->
+		
+		<!--左边用于存放员工基本信息-->
+		<div  id="detailLeft" style="width: 100%;">
+		<form class="easyui-form" id="deForm">
+			<table  style="width:98%;border-collapse:separate;border-spacing:10px;margin: 10px 0;">
+				<tr>
+					<td  style="text-align: right;width: 100px;">员工编号：</td>
+					<td style="width: 100px;">
+						<span name="empCode"></span>
+					</td>
+					<td  style="text-align: right;width: 100px;" >员工姓名：</td>
+					<td>
+						<span name="empName"></span>
+					</td>
+					
+					<td rowspan="5" colspan="2" style="text-align:center;">
+						<img id="detailPhoto" style="width:100px;height:90px;" />
+					</td>
+				</tr>
+				<tr>	
+					<td  style="text-align: right;" >性别：</td>
+					<td>
+						<span name="gender"></span>
+					</td>
+				
+					<td  style="text-align: right;" >身份证号：</td>
+					<td>
+						<span name="idNo"></span>
+					</td>
+				</tr>
+				<tr>	
+					<td  style="text-align: right;" >民族：</td>
+					<td>
+						<span name="national"></span>
+					</td>
+				
+					<td  style="text-align: right;" >员工状态：</td>
+					<td>
+						<span name="empState"></span>
+					</td>
+				</tr>
+				<!--  -->
+				<tr>
+					<td  style="text-align: right; " >技术方向：</td>
+					<td>
+						<span name="directCode"></span>
+					</td>
+					<td  style="text-align: right;">技术等级：</td>
+					<td >
+						<span name="lvlCode"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">手机号码：</td>
+					<td >
+						<span name="mobile"></span>
+					</td>
+				
+					<td  style="text-align: right;" >电子邮箱：</td>
+					<td >
+						<span name="email" style="height:50px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">微信：</td>
+					<td >
+						<span name="weiXin" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">qq：</td>
+					<td >
+						<span name="qq" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;width: 100px;">其他联系方式：</td>
+					<td >
+						<span name="otherContact" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">住址：</td>
+					<td >
+						<span name="address" style="height:200px;"></span>
+					</td>
+					
+					<td  style="text-align: right;">邮政编码：</td>
+					<td >
+						<span name="zipCode" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">最高学历：</td>
+					<td >
+						<span name="eduQualification" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">毕业时间：</td>
+					<td >
+						<span id="graduateTimede" name="graduateTime" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">毕业院校：</td>
+					<td >
+						<span name="graduateCollege" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">所学专业：</td>
+					<td >
+						<span name="studySubject" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">院校级别：</td>
+					<td >
+						<span name="collegeLvl" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">英语能力：</td>
+					<td >
+						<span name="engAbility" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">开始工作时间：</td>
+					<td >
+						<span id="workStartde" name="workStart" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">入职时间：</td>
+					<td >
+						<span id="joinTimede" name="joinTime" style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">职位：</td>
+					<td >
+						<span name="jobPosition" style="height:200px;"></span>
+					</td>
+					
+					<td  style="text-align: right;">员工类型：</td>
+					<td >
+						<span name="empType" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					<td  style="text-align: right;">所属部门：</td>
+					<td >
+						<span name="deptName"  style="height:200px;"></span>
+					</td>
+				
+					<td  style="text-align: right;">岗位职责：</td>
+					<td >
+						<span name="postName" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+					
+				
+					<td  style="text-align: right;">修改人：</td>
+					<td >
+						<span name="modifyBy" id="modifyByde" style="height:200px;"></span>
+					</td>
+					
+					<td  style="text-align: right;">修改时间：</td>
+					<td >
+						<span name="modifyTime"  id="modifyTimede" style="height:200px;"></span>
+					</td>
+				</tr>
+				<tr>
+				<td  style="text-align: right;">备注：</td>
+					<td colspan="5" style="width:490px;">
+						<span name="remark" id="remarkDetaile" style="height:200px;"></span>
+					</td>
+				</tr>														
+			</table>
+			</form>
+		</div>
+		
+		<!--   技能 -->
+	    <div id="deskillContent" style="margin-top:8px;width:100%;float:left;margin-bottom:3px;">
+	   		
+		   	<div id="deskillTable" style="margin-left:30px;width:100%;"></div>	
+		</div>
+		
+	    <div style="margin-top:8px;float:left;width:100%;height:20px;"></div>
+		
+		<!-- 工作经验 -->
+		<div style="width:97%; padding-left:15px;"  >
+			<table style="width:97%;" id="detailWorkTable" class="easyui-datagrid" title="工作经历" data-options="striped:true,singleSelect:true" >
+				<thead>
+					<tr>
+						<th data-options="field:'listId',align:'left',halign:'center',sortable:'true',hidden:'true'" ></th>
+						<th data-options="field:'startTime',align:'left',halign:'center',sortable:'true'" style="width:16%">开始时间</th>
+						<th data-options="field:'endTime',align:'left',halign:'center',sortable:'true'" style="width:16%">结束时间</th>
+						<th data-options="field:'unitName',align:'left',halign:'center',sortable:'true'" style="width:25%">公司名称</th>
+						<th data-options="field:'jobPosition',align:'left',halign:'center',sortable:'true'" style="width:16%">职位</th>
+						<th data-options="field:'workScope',align:'left',halign:'center',sortable:'true'" style="width:16%">工作职责</th>
+						<th data-options="field:'workArea',align:'left',halign:'center',sortable:'true'" style="width:14%">地点</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div style="width:100%;float:left;height:30px;"></div>
+		 <form id="detailForm" class="easyui-form" enctype="multipart/form-data"  method="POST" style="display:none">
+				<table style="border-collapse: separate;border-spacing: 5px;">
+				<tr>
+		  			 	<td style="text-align: right;width: 100px;">所属部门&nbsp;</td>
+		  			 	<td style="text-align: left;">
+		  					<select id="deptNameEditDt" data-options="required:true,missingMessage: '请选择员工部门'" name="deptNameStr" class="easyui-combotree" style="width: 170px;"></select>
+		  					<input id="deptIdEdit" type="hidden" name="deptId">
+		  				</td>
+		  			   	<td style="text-align: right;width: 100px;">工作岗位&nbsp;</td>
+		  				<td style="text-align: left;">
+		  					<input id="postNameEditDt" name="postId" class="easyui-combobox" data-options="required:true,missingMessage: '请选择员工岗位',editable:false,valueField: 'postId',textField: 'postName',multiple:true, panelHeight:'auto'"   style="width: 170px;">
+		  					<!-- <input id="postIdEdit" type="hidden" name="postId"> -->
+		  				</td>
+		  			</tr>
+		  			</table>
+		  		</form>
+		<div style="width:100%;float:left;height:30px;"></div>
+		<!-- 员工电子资料数据网格 -->
+		<div style="width:97%; padding-left:15px;">
+			<table id="filegrid" class="easyui-datagrid" title="电子资料"  style="width:97%;overflow-x:hidden;" data-options="selectOnCheck:false,singleSelect:true">
+				<thead>
+					<tr>
+					<th data-options="field:'resDesc',align:'left',halign:'center'" width="37%">资源描述</th>
+					<th data-options="field:'resFile',align:'left',halign:'center'" width="30%">资源文件名</th>
+					<th data-options="field:'fileSize',align:'right',halign:'center',formatter:fileSizeFormatter" width="23%">文件大小</th>
+					<th data-options="field:'detail',align:'center',halign:'center',formatter:downFormatter" width="13%">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<!-- 项目经验详情dialog -->
+	    <div id="de_pro_detail_dialog" class="easyui-dialog" data-options="title:'项目经验详情',closed:true,buttons:'#de_sc_pro_detail',modal:true,width:'390',height: '370'" style="top:90px;border-bottom:1px solid #D5E5F4;padding-right:25px;">
+	    	<form id="de_pro_detail_form">
+	    		<table  style="width:98%;border-collapse:separate;border-spacing:10px;margin: 10px 0;">
+					<tr>
+						<td  style="text-align: right;width: 60px;">项目名称：</td>
+						<td style="width: 100px;">
+							<span name="projectName"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">开始时间：</td>
+						<td style="width: 100px;">
+							<span name="startTime" id="pro_de_starttime"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">结束时间：</td>
+						<td style="width: 100px;">
+							<span  name="endTime"  id="pro_de_endtime"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">项目角色：</td>
+						<td style="width: 100px;">
+							<span name="roleInProject"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">所属公司：</td>
+						<td style="width: 100px;">
+							<span name="projectUnit"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">项目简介：</td>
+						<td style="width: 100px;height:40px;">
+							<span name="projectBrief"  ></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">工作职责：</td>
+						<td style="width: 100px;">
+							<span name="workScope"></span>
+						</td>
+					</tr>
+				</table>
+	    	</form>
+	    </div>
+		<!-- 项目经验详情dialog保存和关闭按钮 -->
+		<div id="de_sc_pro_detail">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#de_pro_detail_dialog').dialog('close');">关闭</a>
+		</div>
+		
+		<!-- 工作经历详情dialog -->
+	    <div id="de_work_detail_dialog" class="easyui-dialog" data-options="title:'工作经历详情',closed:true,buttons:'#de_sc_work_detail',modal:true,width:'280',height: '320'" style="top:150px;border-bottom:1px solid #D5E5F4;">
+	    	<form id="de_work_detail_form">
+	    			<table  style="width:98%;border-collapse:separate;border-spacing:10px;margin: 10px 0;">
+					<tr>
+						<td  style="text-align: right;width: 60px;">公司名称：</td>
+						<td style="width: 100px;">
+							<span name="unitName"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">开始时间：</td>
+						<td style="width: 100px;">
+							<span  name="startTime"  id="work_de_starttime"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">结束时间：</td>
+						<td style="width: 100px;">
+							<span  name="endTime"  id="work_de_endtime"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">职位：</td>
+						<td style="width: 100px;">
+							<span name="jobPosition"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">工作职责：</td>
+						<td style="width: 100px;">
+							<span name="workScope"></span>
+						</td>
+					</tr>
+					<tr>
+						<td  style="text-align: right;width: 60px;">地点：</td>
+						<td style="width: 100px;">
+							<span name="workArea" ></span>
+						</td>
+					</tr>
+				</table>
+	    	</form>
+	    </div>
+		<!-- 项目经验详情dialog保存和关闭按钮 -->
+		<div id="de_sc_work_detail">
+			<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#de_work_detail_dialog').dialog('close');">关闭</a>
+		</div>
+		
+  </body>
+</html>

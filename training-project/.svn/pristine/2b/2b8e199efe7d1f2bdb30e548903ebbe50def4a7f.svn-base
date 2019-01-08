@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>我的流程</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome-master/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/my.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+		<script type="text/javascript" src="../../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../../js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/common.js"></script>
+		<script type="text/javascript" src="../../gmodule/js/prettify.js"></script>
+		<script type="text/javascript" src="../../gmodule/dataaccess/js/jquery.format.js"></script>
+		<script type="text/javascript" src="js/myflow.js"></script>
+	</head>
+
+	<body style="margin-right: 5px;overflow: hidden;">
+	
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../../images/common/title.gif' align='absmiddle'/>我的流程
+				</td>
+				<td style="text-align: right;">
+					<a href="#" onclick="doSearch()"  class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<form id="selectPostForm" class="easyui-form">
+			<!-- 查询 -->
+			<table class="btbForm">
+				<tr>
+					<td colspan="2">
+						关键字&nbsp;<input class="easyui-textbox" id="keyWord" name="keyWord"  data-options="prompt:'请输入流程名称、流程描述'" style="width: 220px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						流程名称&nbsp;&nbsp;<input id="procNameQuery" name="procName" class="easyui-combobox" data-options="valueField:'procName',textField:'procName',editable:false,panelHeight:'auto'"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="margin:5px;"></div>
+		
+		<!--数据网格  -->
+		<table id="showFlowTable" class="easyui-datagrid" style="width:100%;" data-options="nowrap:false,autoRowHeight:true,pagination:true,pageSize:20,rownumbers:true,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'procKey',align:'left',halign:'center',sortable:'true'" style="width:17%;">流程编号</th>
+					<th data-options="field:'procName',align:'left',halign:'center',sortable:'true'" style="width:12%;">流程名称</th>
+					<th data-options="field:'wfTitle',align:'left',halign:'center',sortable:'true'" style="width:38%"> 流程描述</th>
+					<th data-options="field:'startTime',halign:'center',align:'center',sortable:'true'" style="width:12%" >发起时间</th>
+					<th data-options="field:'endTime',align:'center',halign:'center',sortable:'true',formatter:endFormatter" style="width:12%"> 结束时间</th>
+					<th data-options="field:'opr',align:'center',halign:'center',formatter:opFormatter" style="width:7%"> 操作</th>
+				</tr>
+			</thead>
+		</table>
+				
+		<!-- 详情页面 -->
+		<div id="dialog_detail" style="display: none;"></div>
+		
+		 <!-- 预览图片 -->
+    	<div id="showPics"></div>
+  </body>
+</html>

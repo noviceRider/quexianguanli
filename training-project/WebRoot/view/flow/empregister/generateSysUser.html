@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="content-type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="../empregister/js/generateSysUser.js"></script>
+    </head>
+
+    <body>
+        <!-- 员工详情 -->
+        <div id="emp_detail">
+
+            <div id="detailLeft" style="padding: 15px;">
+                <form class="easyui-form" id="deForm">
+                    <div class="easyui-panel" title="员工信息" style="width:100%; padding:30px 60px; margin-bottom: 15px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="text-align: right;width: 100px;">员工编号：</td>
+                                <td style="width: 100px;">
+                                    <span name="empCode"></span>
+                                </td>
+                                <td style="text-align: right;width: 100px;">员工姓名：</td>
+                                <td>
+                                    <span name="empName"></span>
+                                </td>
+                                <td rowspan="3" style="text-align:center;">
+                                    <img id="detailPhoto" style="width: 100px; height: 90px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">性别：</td>
+                                <td>
+                                    <span name="gender"></span>
+                                </td>
+
+                                <td style="text-align: right;">员工类型：</td>
+                                <td>
+                                    <span name="empType" style="height:200px;"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">所属部门：</td>
+                                <td>
+                                    <span name="deptName" style="height:200px;"></span>
+                                </td>
+                                <td style="text-align: right;">岗位职责：</td>
+                                <td>
+                                    <span name="postName" style="height:200px;"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="easyui-panel" title="帐号信息" style="width:100%; padding:30px 60px;">
+                        <table style="width: 100%;" cellpadding="5">
+                            <tr>
+                                <td style="width: 15%; text-align: right;">
+                                    用户编号
+                                </td>
+                                <td style="width:36%">
+                                    <input type="text" id="userId" name="userId" class="easyui-textbox" style="width:180px;" />
+                                </td>
+                                <td style="text-align: right;">
+                                    登录密码
+                                </td>
+                                <td>
+                                    <input type="password" name="password" class="easyui-textbox" style="width:180px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">密码策略</td>
+                                <td colspan="3">
+                                    <label><input type="checkbox" value="1" name="modDefaultPwd" checked />第一次登录修改密码</label>　　
+                                    <label><input type="checkbox" value="1" name="modPwdSomedays" checked />定期修改密码</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">
+                                    所属角色
+                                </td>
+                                <td colspan="3" id="sysUserRoles"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- form表单按钮 -->
+        <div id="sc_form">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="submit()">提交</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="cancelStartProcess()">取消</a>
+        </div>
+    </body>
+</html>

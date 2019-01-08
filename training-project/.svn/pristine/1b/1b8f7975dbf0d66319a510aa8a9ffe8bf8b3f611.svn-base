@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<title>角色管理</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../js/common/DoubleListTransfer.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="js/rolemanage.js"></script>
+	<style type="text/css">
+		.datagrid-btable .datagrid-cell{
+		    overflow: hidden;text-overflow:ellipsis;white-space: nowrap;
+		 } 
+	</style>
+ </head>
+  
+  <body>
+    <form name="searchForm" id="searchForm" >
+		<table class="btbHead">
+			<tr>
+				<td style='width:25%'>
+					<img src="../../images/common/title.gif" align="absmiddle" />角色管理
+				</td>
+				<td style="text-align:right;">
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="doSearch()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addSysRole()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifySysRole()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="#" id="queryBtn" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteSysRole()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<!-- 查询条件 -->
+		<table class="btbForm">
+			<tr>
+				<td style="align:left; ">
+					关键字&nbsp;<input name="keyWord" class="easyui-textbox" data-options="prompt:'请输入角色编号、名称查询'" style="width:150px;"/>
+					&nbsp;&nbsp;&nbsp;&nbsp;用户状态&nbsp;
+					<select name="isUsed" class="easyui-combobox" data-options="panelHeight:'auto',editable:false" style="width:150px;">
+						<option value="">所有角色
+						<option value="1">有效角色
+						<option value="0">无效角色
+					</select>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div style="margin:5px;"></div>
+	<table id="sr" class="easyui-datagrid" style="width:100%;padding:10px;"  
+		pagination="true" striped="true"   checkOnSelect="true" selectOnCheck="false" 
+		  data-options="pageList:[15,20,30,40,50],singleSelect:true,method:'post',
+		  onClickRow: onClickRow, onDblClickRow: onDblClickRow">
+		<thead>
+			<tr>
+				<th data-options="field:'ck',checkbox:true" ></th>
+				<th data-options="field:'roleId',alias:'r.role_id', halign:'center',align:'left'" width="12%" sortable="true">角色编号</th>
+				<th data-options="field:'roleName',alias:'r.role_name', halign:'center',align:'left'" width="10%" sortable="true">角色名称</th>
+				<th data-options="field:'roleDesc',alias:'r.role_desc', halign:'center',align:'left'" width="43%" formatter="roleDescFormatter" sortable="true">角色描述</th>
+				<th data-options="field:'roleMember',alias:'rm.role_member',halign:'center',align:'left'" width="20%" formatter="roleDescFormatter" sortable="true">角色成员</th>
+				<th data-options="field:'sortNo',alias:'r.sort_no',halign:'center',align:'center'" width="8%" sortable="true">排序号</th>
+				<th data-options="field:'isUsed',alias:'r.is_used',halign:'center',align:'center'" width="5%" formatter="isUsedFormatter" sortable="true">状态 </th>
+			</tr>
+		</thead>
+	</table>
+	
+	<!-- 新增或修改系统角色弹窗 -->
+	<div id="addSysRole" style="display:none;overflow: hidden;">
+		<form id="addSysRoleForm">
+			<table id="addSysRoleTable" style="width:98%;border-collapse:separate;border-spacing:10px;">
+				<tr>
+					<td style="text-align:right;width:12%;">角色编号：</td>
+					<td>
+						<input id="addRoleId" name="roleId" class="easyui-textbox" data-options="prompt:'请输入角色编号',required:true,missingMessage:'此项必填'" style="width: 98%;" />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">角色名称：</td>
+					<td>
+						<input id="addRoleName" name="roleName" class="easyui-textbox" data-options="prompt:'请输入角色名称',required:true,missingMessage:'此项必填'" style="width: 98%;"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">是否有效：</td>
+					<td>
+						 &nbsp; &nbsp; 
+						<input type="radio" id="addIsUsed" name="isUsed" value="1" checked="true";> &nbsp;有效 &nbsp; &nbsp; &nbsp;
+						<input type="radio" id="addIsUsed" name="isUsed" value="0"> &nbsp;无效
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">顺序号：</td>
+					<td>
+						<input id="addSortNo" name="sortNo" class="easyui-textbox"  style="width: 98%;"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">角色描述：</td>
+					<td>
+						<input id="addRoleDesc" name="roleDesc" class="easyui-textbox" data-options="multiline:true"  style="width: 98%;height:70px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">角色成员：</td>
+					<td style="height:220px;">
+						<div style="width:44%;height:97%;float:left;">
+							<table style="width:100%;">
+								<tr>
+									<td>
+										可选成员：&nbsp;
+										<input type="text" type="text" name="keyWord" style="width: 100px" onblur="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')" onafterpaste="this.value=this.value.replace(/(^\s*)|(\s*$)/g,'')"/>&nbsp;
+										<a href="#" id="queryBtn" class="easyui-linkbutton" style="margin-top: -3px;" data-options="iconCls:'icon-search'"  onclick="queryRoleLists()">查询</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<select name="canSelectUser" id="canSelectUser" multiple="multiple" style="width: 100%;height:200px;"size="13">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div style="width:10%;height:97%;float:left;">
+								<table style="width:100%;">
+										<tr>
+											<td style="height:60px;"></td>
+										</tr>
+										<tr>
+											<td style="text-align:center">
+												<a href="#" id="allToRight" style="width:80%;" class="easyui-linkbutton" >>></a>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding-top:8px;text-align:center">
+												<a href="#" id="toRight" style="width:80%;" class="easyui-linkbutton" >></a>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding-top:8px;text-align:center">
+												<a href="#" id="toLeft" style="width:80%;" class="easyui-linkbutton" ><</a>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding-top:8px;text-align:center">
+												<a href="#" id="allToLeft" style="width:80%;" class="easyui-linkbutton" ><<</a>
+											</td>
+										</tr>
+									</table>
+						</div>
+						<div style="width:44%;height:97%;float:left;">
+							<table style="width:100%">
+								<tr>
+									<td>已选成员</td>
+								</tr>
+								<tr>
+									<td>
+										<select name="selectedUser" id="selectedUser" multiple="multiple" style="width: 100%;height:200px;margin-top:5px;" size="13">
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<!-- 弹出框底部的按钮 -->
+	<div id="btn_dlg" style="display:none;text-align:right;">
+		<a href="javascript:saveAddSysRole()" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+		<a href="javascript:closeAddRoleWindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+	</div>
+  </body>
+</html>

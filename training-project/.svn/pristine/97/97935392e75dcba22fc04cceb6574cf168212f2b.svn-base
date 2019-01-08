@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>apptemplate_add_modify.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="apptemplate_add_modify_div" style="width:800px;height:350px" data-options="buttons:'#apptemplate_add_modify_div_btns'">
+		<form id="apptemplate_add_modify_form" class="easyui-form" enctype="multipart/form-data" method="POST">
+			<table style="float:left;width:50%;margin:0px 0px 15px 0px;border-spacing:20px;border-collapse:separate">
+				<tr>
+					<td style="text-align: right;width:60px;" >模板编号</td>
+					<td>
+						<input id="templateCodeId" name="templateCode"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">模板名称</td>
+					<td>
+						<input id="templateNameId" name="templateName" class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:;" >模板描述</td>
+					<td>
+						<input id="templateDescId" name="templateDesc"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">模板分类</td>
+					<td>
+						<input id="templateCatId" name="templateCat" class="easyui-combotree" data-options="editable:false,panelHeight:'auto'" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;width:;" >配置URL</td>
+					<td>
+						<input id="moduleConfigURLId" name="moduleConfigURL"  class="easyui-textbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">是否有效</td>
+					<td>
+						<input id="isUsedYesId" name="isUsed" type="radio" value="1" class="" data-options="" checked="checked" style="width:;height:">
+						<label for="isUsedYesId">是</label>
+						<input id="isUsedNoId" name="isUsed" type="radio" value="0" class="" data-options="" style="width:;height:">
+						<label for="isUsedNoId">否</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;display: none;">版本号</td>
+					<td style="display: none;">
+						<input id="verId" name="ver" class="easyui-numberbox" data-options="" style="width:252px;"></input>
+					</td>
+				</tr>
+			</table>
+			<div style="float:right;width:370px;height:216px;padding-right:20px">
+			<div style="width:100%;height:30px;padding-top: 10px;">
+			<div style="float:right"><a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="uploadPic()">上传快照</a>
+  			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="test()">选择快照</a></div>
+			</div>
+			<!--图片显示区域  -->
+			<div style="width:100%;border: 1px solid #F4F4F4;height:170px;margin-top:10px">
+			<img id="drivePhoto"  style="width: 100%;height: 100%" onclick="lookPic()">
+			</div>
+			<div style="padding-top:10px"><span id="picNum" style="padding-left:45%"></span></div>
+			</div>
+		</form>
+	</div>
+	
+	<div id="apptemplate_add_modify_div_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSaveApp()">保存</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="doCancelApp()">取消</a>
+  	</div>
+  	
+  		<!-- 图片选择 -->
+  	<div id="choisePic" style="width:870px;height:510px" data-options="buttons:'#choisePic_btns'">
+  	 <div id="imggrid">
+    </div>
+  	</div>
+  	
+  	<div id="choisePic_btns">
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="selectPic()">确定</a>
+  		<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#choisePic').dialog('close')">取消</a>
+  	</div>
+  </body>
+</html>

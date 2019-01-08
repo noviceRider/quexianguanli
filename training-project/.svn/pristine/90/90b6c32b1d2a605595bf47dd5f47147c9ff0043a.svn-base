@@ -1,0 +1,9 @@
+@import "jquery.ui.base.css";
+@import "jquery.ui.theme.css";
+.ui-widget-overlay{
+	z-index:9999990!important;
+	overflow:hidden !important;
+}
+.ui-dialog {
+	z-index:9999991!important;
+}

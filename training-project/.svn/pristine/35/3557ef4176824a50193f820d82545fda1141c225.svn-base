@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>用户管理</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="../gmodule/js/common.js"></script>
+		<script type="text/javascript" src="js/usermanage.js"></script>
+	</head>
+	
+	<body>
+		<table class="btbHead">
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../images/common/title.gif' align='absmiddle'/>用户管理 
+				</td>
+				<td style="text-align: right;">
+					<a href="javascript:doUserSearch()" id="searchBtn" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+					<a href="javascript:doAdd()" id="addBtn" class="easyui-linkbutton" iconCls="icon-add">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+					<a href="javascript:doModify()" id="modifyBtn" class="easyui-linkbutton" iconCls="icon-edit">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+					<a href="javascript:doDelete()" id="deleteBtn" class="easyui-linkbutton" iconCls="icon-remove">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		<form id="form_search">
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input name="keyWord" class="easyui-textbox" data-options="prompt:'请输入用户编号或姓名'" style="width:150px;"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;用户状态&nbsp;
+						<select name="isUsed" class="easyui-combobox" data-options="panelHeight:'auto',editable:false" style="width:150px;">
+							<option value="">全部用户</option>
+							<option value="1">有效用户</option>
+							<option value="0">无效用户</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<div style="margin:5px;"></div>
+		
+		<!-- 功能列表 -->
+		<table id="dg" class="easyui-datagrid" style="width:100%;padding:10px;" data-options="pagination:true,onDblClickRow:onDblClickRow,onClickRow:onClickRow,selectOnCheck:false,singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'cb',checkbox:true"></th>
+					<th data-options="field:'userId',halign:'center',sortable:true,alias:'su.user_id'" width="12%">用户编号</th>
+					<th data-options="field:'userName',halign:'center',sortable:true,alias:'su.user_name'" width="16%">用户姓名</th>
+					<th data-options="field:'genderId',align:'center',halign:'center',sortable:true,alias:'su.gender_id'" width="8%" formatter="genderFormatter">性别</th>
+					<th data-options="field:'officeTel',halign:'center',sortable:true,alias:'su.office_tel'" width="18%">工作电话</th>
+					<th data-options="field:'mobile',halign:'center',sortable:true,alias:'su.mobile'" width="18%">移动电话</th>
+					<th data-options="field:'deptName',halign:'center',sortable:true,alias:'cgm.type_name'" width="18%">所属部门</th>
+					<th data-options="field:'isUsed',align:'center',halign:'center',sortable:true,alias:'su.is_used'" width="8%" formatter="isUsedFormatter">是否有效</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<!-- 添加、修改界面弹窗 -->
+		<div id="dlg_save" style="display:none;overflow:hidden;padding:5px''">
+			<form id="form_save">
+				<table class="btbForm" cellpadding="2px" style="padding-top:10px;">
+					<tr>
+						<td style="width: 15%; text-align: right;">
+							用户编号：
+						</td>
+						<td style="width:36%">
+							<input type="text" id="userId" name="userId" style="width:180px;"/>
+						</td>
+						<td style="width: 17%; text-align: right;">
+							用户名称：
+						</td>
+						<td>
+							<input type="text" name="userName" style="width:180px;"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td style="text-align: right;">
+							性 别：
+						</td>
+						<td>
+							<select name="genderId" style="width:180px;">
+								<option value="">--请选择--</option>
+								<option value="M">男</option>
+								<option value="F">女</option>
+								<option value="O">保密</option>
+							</select>
+						</td>
+						<td style="text-align: right;">
+							所属部门：
+						</td>
+						<td>
+							<input id="deptId" class="easyui-combotree" type="text" name="deptId" style="width:180px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							工作电话：
+						</td>
+						<td>
+							<input type="text" name="officeTel" style="width:180px;"/>
+						</td>
+						<td style="text-align: right;">
+							移动电话：
+						</td>
+						<td>
+							<input type="text" name="mobile" style="width:180px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							电子邮件：
+						</td>
+						<td>
+							<input type="text" name="email" style="width:180px;"/>
+						</td>
+						<td style="text-align: right;">
+							是否管理员：
+						</td>
+						<td>
+							<input type="radio" name="isAdmin" value="Y" id="isAdminY"/> <label for="isAdminY">是</label>&nbsp;&nbsp;
+							<input type="radio" name="isAdmin" value="N" id="isAdminN" checked/> <label for="isAdminN">否</label>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							当前状态：
+						</td>
+						<td>
+							<input type="radio" name="isUsed" id="isUsedY" value="1" checked/> <label for="isUsedY">有效</label>&nbsp;&nbsp;
+							<input type="radio" name="isUsed" id="isUsedN" value="0" /> <label for="isUsedN">无效</label>
+						</td>
+						<td style="text-align: right;">
+							登录密码：
+						</td>
+						<td>
+							<input type="password" name="password" style="width:180px;"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;vertical-align: middle;">
+							备 注：
+						</td>
+						<td colspan="3">
+							<textarea name="remark" rows="5" style="width:94%;resize:none;"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							所属角色：
+						</td>
+						<td colspan="3" id="roles">
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="1" name="modDefaultPwd" id="modDefaultPwd" checked /> <label for="modDefaultPwd">第一次登录修改密码</label>&nbsp;&nbsp;
+							<input type="checkbox" value="1" name="modPwdSomedays" id="modPwdSomedays" checked /> <label for="modPwdSomedays">定期修改密码</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" id="row_isLock">
+							&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="1" name="isLock" id="isLockY" checked /> <label for="isLockY">锁定，不允许用户登录系统</label>&nbsp;&nbsp;
+							<input type="radio" value="0" name="isLock" id="isLockN" checked /> <label for="isLockN">解锁，允许用户正常登录系统</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!-- 弹出框底部的按钮 -->
+		<div id="btn_dlg" style="display:none;text-align: right;">
+			<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-save">保存</a>
+			<a href="javascript:doCancel()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+		</div>
+		
+		<!--选择作业单位 -->
+		<div id="workunit_choose" style="display:none;overflow:hidden;padding:5px''"></div>
+	</body>
+</html>

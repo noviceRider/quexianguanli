@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.commondata.dao.MultiLevelDao">
+	<!-- 返回新增数据主键 -->
+	<select id="findRoot" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo"
+		resultType="com.bn.gmodule.commondata.po.MultiLevelPo">
+		select type_id "typeId",
+		p_type_id "pTypeId",
+		type_name "typeName",
+		info_type "infoType",
+		type_route "typeRoute",
+		is_used "isUsed",
+		sort_no "sortNo" from CODE_GE_MULTILEVEL  where p_type_id=#{pTypeId} and info_type=#{infoType}
+		<if test="isUsed != null and isUsed != '' and isUsed != '-1'">
+				and is_used = #{isUsed}
+		</if>
+		order by sort_no
+	</select>
+
+	<select id="getCountChildNum" parameterType="com.bn.gmodule.commondata.po.MultiLevelPo" resultType="Integer">
+		select count(*) from CODE_GE_MULTILEVEL where p_type_id = #{typeId} and info_type=#{infoType}
+		<if test="isUsed != null and isUsed != '' and isUsed != '-1'">
+				and is_used = #{isUsed}
+		</if>
+	</select>
+
+	<select id="findByTypeId" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo" resultType="com.bn.gmodule.commondata.po.MultiLevelPo">
+		select type_id "typeId",
+		p_type_id "pTypeId",
+		type_name "typeName",
+		info_type "infoType",
+		type_route "typeRoute",
+		is_used "isUsed",
+		sort_no "sortNo" from CODE_GE_MULTILEVEL  where type_id=#{typeId} and info_type=#{infoType}
+	</select>
+	
+		<select id="findBypTypeId" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo" resultType="com.bn.gmodule.commondata.po.MultiLevelPo">
+		select type_id "typeId",
+		p_type_id "pTypeId",
+		type_name "typeName",
+		info_type "infoType",
+		type_route "typeRoute",
+		is_used "isUsed",
+		sort_no "sortNo" from CODE_GE_MULTILEVEL  where type_id=#{pTypeId} and info_type=#{infoType}
+	</select>
+	
+		<select id="validateTypeId" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo" resultType="com.bn.gmodule.commondata.po.MultiLevelPo">
+		select type_id "typeId",
+		p_type_id "pTypeId",
+		type_name "typeName",
+		info_type "infoType",
+		type_route "typeRoute",
+		is_used "isUsed",
+		sort_no "sortNo" from CODE_GE_MULTILEVEL  where type_id=#{typeId} and info_type=#{infoType}
+	</select>
+	
+	<!-- 添加资源分类 -->
+	<insert id="addMultiLevel" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo">
+		insert into CODE_GE_MULTILEVEL (
+			type_id,
+			type_name,
+			p_type_id,
+			info_type,
+			is_used,
+			type_route,
+			sort_no
+		) values (
+			#{typeId,jdbcType=VARCHAR},
+			#{typeName,jdbcType=VARCHAR},
+			#{pTypeId,jdbcType=VARCHAR},
+			#{infoType,jdbcType=VARCHAR},
+			#{isUsed,jdbcType=INTEGER},
+			#{typeRoute,jdbcType=VARCHAR},
+			#{sortNo,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+		<!-- 修改资源分类 -->
+	<update id="modifyMultiLevel" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo">
+		update CODE_GE_MULTILEVEL
+		set
+			type_name = #{typeName},
+			p_type_id = #{pTypeId},
+			is_used = #{isUsed},
+			sort_no = #{sortNo}
+		where type_id = #{typeId} and info_type=#{infoType}
+	</update>
+	
+	<!--通过根节点id删除 根节点及所有下级分类  -->
+	<delete id="deleteByRoot" parameterType="com.bn.gmodule.commondata.bo.MultiLevelBo">
+		delete
+		from CODE_GE_MULTILEVEL
+		where type_route like '${typeId}%' and info_type=#{infoType}
+	</delete>
+</mapper>

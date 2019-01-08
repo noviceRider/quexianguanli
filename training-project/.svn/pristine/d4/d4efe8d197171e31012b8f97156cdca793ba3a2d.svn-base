@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.DefectClassificationDao">
+
+<!-- 查询全部缺陷种类 -->
+
+		<select id="getIssueType"  parameterType="com.bn.javax.dao.Page" resultType="com.huibo.issue.po.IssueTypePo" >
+		select
+		
+		type.TYPE_CODE typeCode,
+		type.TYPE_DESC typeDesc,
+		type.MODULE_STATE moudleState,
+		dict.DICT_CODE dictCode,
+		type.CREATE_BY createBy,
+		user1.USER_NAME createByName,
+		type.CREATE_TIME createTime,
+		type.MODIFY_BY modifyBy,
+		user2.USER_NAME modifyByName,
+		type.MODIFY_TIME modifyTime
+		
+		from
+		
+		i_issue_type type 
+		left join info_ge_dict dict on type.MODULE_STATE = dict.DICT_CODE 
+		AND dict.TYPE_CODE = 'ISSUE_DATA_STATE'
+		left join sys_user user1  on   type.CREATE_BY = user1.USER_ID 
+		left join sys_user user2  on   type.MODIFY_BY = user2.USER_ID
+		
+		<where>
+				<if test="params.bo.keyWords !=null and params.bo.keyWords !=''">
+				type.TYPE_CODE like '%${params.bo.keyWords}%'
+				or
+				type.TYPE_DESC like '%${params.bo.keyWords}%'
+				</if>
+				
+			</where>
+			<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by type.CREATE_TIME DESC
+		</if>		
+
+			
+</select>
+
+<!-- 通过编号查询 -->
+		<select id="searchIssueForModify" resultType="com.huibo.issue.po.IssueTypePo" >
+			select
+		
+		type.TYPE_CODE typeCode,
+		type.TYPE_DESC typeDesc,
+		type.MODULE_STATE moudleState,
+		dict.DICT_DESC dictDesc,
+		type.CREATE_BY createBy,
+		user1.USER_NAME createByName,
+		type.CREATE_TIME createTime,
+		type.MODIFY_BY modifyBy,
+		user2.USER_NAME modifyByName,
+		type.MODIFY_TIME modifyTime
+		
+		from
+		
+		i_issue_type type 
+		left join info_ge_dict dict on type.MODULE_STATE = dict.DICT_CODE 
+		AND dict.TYPE_CODE = 'ISSUE_DATA_STATE'
+		left join sys_user user1  on   type.CREATE_BY = user1.USER_ID 
+		left join sys_user user2  on   type.MODIFY_BY = user2.USER_ID
+				where
+			type.TYPE_CODE = #{typeCode}
+			
+		
+		</select>
+		
+<!-- 验证 -->
+	<select id="validatePriorityCode" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM i_issue_type type
+		<where>
+			<if test="typeCode != null and typeCode != ''">
+				and type.TYPE_CODE = #{typeCode}
+			</if>
+		</where>
+	</select>
+		
+<!-- 删除语句 -->
+
+		<delete id="delIssueType">
+			delete
+			from
+				i_issue_type
+			where
+			TYPE_CODE
+			in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			
+			#{id}
+			
+		</foreach>
+			</delete>
+		
+<!-- 增加缺陷 -->
+
+		<insert id="addIssueType">
+			insert
+			into
+			i_issue_type
+			(TYPE_CODE,TYPE_DESC,MODULE_STATE,CREATE_BY,CREATE_TIME,MODIFY_BY,MODIFY_TIME)
+			values
+			(#{typeCode},#{typeDesc},#{moudleState},#{createBy},#{createTime},#{modifyBy},#{modifyTime})
+		</insert>
+<!-- 修改缺陷数据 -->
+	
+		<update id="modifyIssueClassification">
+			update
+			
+				i_issue_type
+			set
+				
+				TYPE_DESC =#{typeDesc}
+				where
+			TYPE_CODE =#{typeCode}
+		</update>
+<!-- 修改禁用启用状态 -->
+
+		<update id="modifyDictDesc">
+			update
+				i_issue_type
+			set
+				MODULE_STATE =#{dictCode}
+				where
+			TYPE_CODE =#{typeCode}
+		
+		</update>
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.ProjectRoleDao">
+	
+	<!-- 分页查询 -->
+	<select id="queryProjectRole" resultType="com.huibo.issue.po.ProjectRole" parameterType="com.bn.javax.dao.Page">
+	select
+			role.ROLE_CODE roleCode,	<!-- 角色编号 -->
+			role.ROLE_NAME roleName,	<!-- 角色名称 -->
+			dict.DICT_DESC moduleState,	<!-- 当前状态 -->
+			
+			role.CREATE_BY 		createBy,
+			USER1.USER_NAME 	createByName,
+			role.CREATE_TIME 	createTime,
+			role.MODIFY_BY 		modifyBy,
+			USER2.USER_NAME 	modifyByNmae,
+			role.MODIFY_TIME 	modifyTime,
+			
+			GROUP_CONCAT(DISTINCT s.STATE_DESC ORDER BY rs.ISSUE_STATE) stateDesc,	<!-- 可操作状态 -->
+			GROUP_CONCAT(DISTINCT rs.ISSUE_STATE ORDER BY rs.ISSUE_STATE) stateCode	<!-- 状态编号 -->
+		from
+			i_issue_role role
+		LEFT JOIN sys_user USER1 ON role.CREATE_BY = USER1.user_id
+		LEFT JOIN sys_user USER2 ON role.MODIFY_BY = USER2.user_id	
+		left join
+			i_issue_role_state_rel rs
+		ON 
+			rs.ROLE_CODE=role.ROLE_CODE
+		LEFT JOIN
+			i_issue_state s
+		on
+			rs.ISSUE_STATE=s.STATE_CODE
+		LEFT JOIN
+			info_ge_dict dict
+		ON 	
+			role.MODULE_STATE = dict.DICT_CODE AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+
+		<where>
+			<if test="params.bo.keyWord!=null and params.bo.keyWord!=''">
+				and role.ROLE_CODE like '%${params.bo.keyWord}%'
+				or role.ROLE_NAME like '%${params.bo.keyWord}%'
+			</if>
+		</where>
+		GROUP BY 
+			role.ROLE_CODE
+	</select>
+	
+	<!-- 增加角色关系 -->
+	<insert id="addProjectRole" parameterType="com.huibo.issue.bo.ProjectRoleBo">
+		insert
+		into
+			i_issue_role
+		(
+			ROLE_CODE,
+			ROLE_NAME,
+			MODULE_STATE,
+			CREATE_BY,
+			CREATE_TIME,
+			MODIFY_BY,
+			MODIFY_TIME
+		)
+		values
+		(
+			#{roleCode},
+			#{roleName},
+			"01",
+			#{createBy},
+			now(),
+			#{modifyBy},
+			now()
+		)
+	</insert>
+	
+	<!-- 新增角色状态关联表信息-->
+	<insert id="addProjectRoleRel" parameterType="com.huibo.issue.bo.ProjectRoleBo">
+		insert
+		into
+			i_issue_role_state_rel
+		(
+			ROLE_CODE,
+			ISSUE_STATE
+		)
+		values
+		(
+			#{roleCode},
+			#{issueCode}
+		)
+	</insert>
+	
+	<!-- 删除角色编号对应的角色信息+状态关联表相关数据 -->
+	<delete id="romoveProjectRoleById" parameterType="String">
+		delete
+			r,rs
+		from
+			i_issue_role r 
+		right join 
+			i_issue_role_state_rel rs
+		on	
+			rs.ROLE_CODE = r.ROLE_CODE
+		where
+			r.ROLE_CODE
+		in
+			(${roleCodes})
+	</delete>
+	
+	<!-- 验证编号不重复 -->
+	<select id="validateRole" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM i_issue_role role
+		<where>
+			<if test="roleCode != null and roleCode != ''">
+				and role.ROLE_CODE = #{roleCode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 禁用、启用转换 -->
+	<update id="switchRo" parameterType="com.huibo.issue.bo.ProjectRoleBo">
+		update 
+			i_issue_role
+		set
+			MODULE_STATE=#{moduleState},
+			MODIFY_TIME=now()
+		where 
+			ROLE_CODE=#{roleCode}
+	</update>
+	
+	<!-- 单条查询 -->
+	<select id="queryProjectRoleById" resultType="com.huibo.issue.po.ProjectRole">
+		select
+			r.ROLE_CODE roleCode,	<!-- 角色编号 -->
+			r.ROLE_NAME roleName,	<!-- 角色名称 -->
+			GROUP_CONCAT(DISTINCT s.STATE_DESC ORDER BY rs.ISSUE_STATE) stateDesc,	<!-- 可操作状态 -->
+			dict.DICT_DESC moduleState,	<!-- 当前状态 -->
+			GROUP_CONCAT(DISTINCT rs.ISSUE_STATE ORDER BY rs.ISSUE_STATE) stateCode	<!-- 状态编号 -->
+		from
+			i_issue_role r
+		left join
+			i_issue_role_state_rel rs
+		ON 
+			rs.ROLE_CODE=r.ROLE_CODE
+		LEFT JOIN
+			i_issue_state s
+		on
+			rs.ISSUE_STATE=s.STATE_CODE
+		LEFT JOIN
+			info_ge_dict dict 
+		ON 
+			s.MODULE_STATE = dict.DICT_CODE AND dict.TYPE_CODE = "ISSUE_DATA_STATE"
+		where
+			r.ROLE_CODE = #{roleCode}
+		GROUP BY 
+			r.ROLE_CODE
+	</select>
+	
+	<!-- 修改当前选择行的角色信息表中的数据 -->
+	<update id="modifyProjectRole" parameterType="com.huibo.issue.bo.ProjectRoleBo">
+		update
+			i_issue_role
+		set
+			ROLE_NAME = #{roleName},
+			MODIFY_BY = #{modifyBy},
+			MODIFY_TIME = now()
+		WHERE
+			ROLE_CODE = #{roleCode}
+	</update>
+	
+	<!-- 删除需要修改的当前选择行的状态关联表相关数据 -->
+	<delete id="romoveProjectRoleRelById">
+		delete
+		from
+			i_issue_role_state_rel
+		where
+			ROLE_CODE = #{roleCode}
+	</delete>
+	
+	<!-- 修改当前选择行的角色信息关联表中的数据 -->
+	<insert id="updateRoleStateRel" parameterType="com.huibo.issue.bo.ProjectRoleBo">
+		insert
+		into
+			i_issue_role_state_rel
+		(
+			ROLE_CODE,
+			ISSUE_STATE
+		)
+		values
+		(
+			#{roleCode},
+			#{issueCode}
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huibo.issue.dao.MemberDao">
+	<select id="getMember" resultType="com.huibo.issue.po.MemberPo">
+			SELECT
+				u.USER_ID userId ,
+				u.USER_NAME userName ,
+				r2.ROLE_CODE roleCode ,
+				GROUP_CONCAT(u.USER_NAME) concat,
+				r2.ROLE_NAME roleName 
+			FROM
+				i_issue_project_role_rel r1
+			INNER JOIN
+				i_issue_role r2 ON r2.ROLE_CODE = r1.ROLE_CODE
+			INNER JOIN
+				sys_user u ON u.USER_ID = r1.USER_ID
+			INNER JOIN
+				info_issue_project p ON p.PROJECT_ID = r1.PROJECT_ID
+			WHERE
+				p.PROJECT_ID = #{pId}
+			GROUP BY r2.ROLE_NAME
+	</select>
+	
+	<select id="getRole" resultType="com.huibo.issue.po.MemberPo">
+		SELECT
+			r.role_code  roleCode,
+			r.role_name  roleName,
+			COUNT(a.role_name)
+		from
+			i_issue_role r
+		LEFT JOIN(
+		SELECT
+			r2.ROLE_NAME
+		FROM
+		i_issue_role r2 LEFT JOIN
+		i_issue_project_role_rel r3
+		ON r3.ROLE_CODE = r2.ROLE_CODE
+		WHERE PROJECT_ID = #{pId}
+		GROUP BY ROLE_NAME
+		) a
+		ON r.role_name = a.role_name
+		GROUP BY r.role_name
+		HAVING COUNT(a.role_name)= 0
+	</select>
+	
+	<select id="getUser" resultType="com.huibo.issue.po.UserPo">
+		select
+			USER_ID 	userId,
+			USER_NAME 	userName
+		from
+			sys_user
+	</select>
+	
+	<select id="getMemberUser" resultType="com.huibo.issue.po.UserPo">
+		SELECT
+			u2.USER_ID  		userId,
+			u2.USER_NAME		userName
+		FROM
+			sys_user u2
+		WHERE
+		u2.USER_ID
+		NOT IN
+		(
+		SELECT
+			u.USER_ID 
+		FROM
+			sys_user u
+		INNER JOIN
+			i_issue_project_role_rel r1
+		ON
+			r1.USER_ID = u.USER_ID
+		INNER JOIN
+		i_issue_role r2
+		ON
+			r1.ROLE_CODE = r2.ROLE_CODE
+		INNER JOIN
+			info_issue_project p
+		ON
+			p.PROJECT_ID = r1.PROJECT_ID
+		WHERE
+			p.PROJECT_ID = #{pId}
+		AND r1.ROLE_CODE = #{roleCode}
+		)
+		
+	</select>
+	
+	<select id="getUserByRoleCode" resultType="com.huibo.issue.po.UserPo">
+		SELECT
+			u.USER_ID userId ,
+			u.USER_NAME userName 
+		FROM
+			i_issue_project_role_rel r1
+		INNER JOIN
+			i_issue_role r2 ON r2.ROLE_CODE = r1.ROLE_CODE
+		INNER JOIN
+			sys_user u ON u.USER_ID = r1.USER_ID
+		INNER JOIN
+			info_issue_project p ON p.PROJECT_ID = r1.PROJECT_ID
+		WHERE
+			p.PROJECT_ID = #{pId} and r2.ROLE_CODE = #{roleCode}
+	</select>
+	
+	<insert id="addRole">
+		INSERT
+		INTO
+			i_issue_project_role_rel(
+				PROJECT_ID ,
+				ROLE_CODE ,
+				USER_ID 
+			)
+		VALUES
+			<foreach collection="usIds" item="userId" separator="),(" open="(" close=")">
+				#{pId}, #{roleCode},#{userId}
+			</foreach>
+			
+	</insert>
+	
+	
+	<delete id="removeRole">
+		delete
+		from
+			i_issue_project_role_rel
+		where
+			ROLE_CODE
+		in
+		<foreach collection="array" item="id"
+			open="(" close=")" separator=",">
+		  #{id}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteMemberUser">
+		delete
+		from
+			i_issue_project_role_rel
+		where
+			PROJECT_ID = #{pId}
+			and
+			ROLE_CODE = #{roleCode}
+			and
+			USER_ID
+			in
+			<foreach collection="usIds" item="userId" separator="," open="(" close=")">
+				 #{userId}
+			</foreach>
+	</delete>
+</mapper>

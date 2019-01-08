@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.frame.dao.SysThemeDao">
+
+	<!-- 返回主题的(PO)数据对象 -->
+	<sql id="resultThemeObj">
+		select
+			theme_name "themeName",
+			theme_desc "themeDesc",
+			mainframe_url "mainFrameUrl"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findThemeList" resultType="com.bn.frame.po.SysThemePo">
+		<include refid="resultThemeObj"/>
+		FROM sys_theme
+		WHERE theme_name not in ('default')
+	</select>
+	
+</mapper>

@@ -1,0 +1,96 @@
+package com.huibo.issue.service;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.UserManagementBo;
+import com.huibo.issue.dao.UserManagementDao;
+import com.huibo.issue.po.UserDeptPo;
+import com.huibo.issue.po.UserManagementPo;
+import com.huibo.issue.po.UserRolePo;
+import com.huibo.issue.po.UserSexPo;
+
+/**
+* <p>Title: 缺陷跟踪管理系统 - BusinesslogicService</p>
+*
+* <p>Description:服务层管理的service</p>
+*
+* <p>Copyright: Copyright hbkj(c) 2018</p>
+*
+* <p>Company: 重庆汇博科技股份有限公司</p>
+*
+* @author 揭振宇
+* @version 1.0
+*/
+@Service
+public class UserManagementService {
+
+	/**
+	* 业务层类：主要处理业务逻辑的类，里面封装好方法给控制器调用
+	* 
+	*/	
+	@Autowired
+	//注入的Dao对象可以通过Dao接口与数据库进行数据交互
+	private UserManagementDao userManagementDao;
+
+	public List<UserManagementPo> getAllUsers(Page page) {
+		//查询全部的用户信息，返回list集合对象
+		return userManagementDao.getAllUsers(page);
+	}
+
+	public List<UserDeptPo> searchDept() {
+		//查询全部的部门，返回list集合对象
+		return userManagementDao.searchDept();
+	}
+
+	public List<UserSexPo> searchSex() {
+		//查询全部的性别信息，返回list集合对象
+		return userManagementDao.searchSex();
+	}
+
+	public List<UserRolePo> searchRole() {
+		//查询全部的角色信息，返回list集合对象
+		return userManagementDao.searchRole();
+	}
+
+	public UserManagementPo getUserById(UserManagementBo userManagementBo) {
+		//查询给定编号的用户信息，返回一个用户Po对象
+		return userManagementDao.getUserById(userManagementBo);
+	}
+	
+	/************************************分割线以上是查询语句业务以下是操作语句业务****************************************/
+
+	
+	public Integer delUserType(String[] delIds) {
+		//删除给定编号的用户信息，无返回，参数为用户基础信息的bo
+		userManagementDao.delUserType(delIds);
+		//返回1则证明方法已经执行完毕所以可以直接返回一个1给前端判断是否删除成功
+		return 1;
+	}
+	
+	public Integer addUser(UserManagementBo bo) {
+		//构造一个用户角色对象
+		UserRolePo role = new UserRolePo();
+		//通过bo里面的属性给角色对象构造对象
+		role.setRole(bo.getRole());
+		role.setRoleId(bo.getRoleId());
+		userManagementDao.addUser(bo);
+		//返回1则证明方法已经执行完毕所以可以直接返回一个1给前端判断是否删除成功
+		return 1;
+	}
+
+	public Integer modifyUser(UserManagementBo bo) {
+		//修改得到的的用户信息，无返回，参数为用户基础信息的bo
+		userManagementDao.modifyUser(bo);
+		return 1;
+	}
+
+	public Integer validatePriorityCode(UserManagementBo bo) {
+		// TODO Auto-generated method stub
+		return userManagementDao.validatePriorityCode(bo);
+	}
+}

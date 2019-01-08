@@ -1,0 +1,102 @@
+package com.huibo.issue.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bn.frame.util.CommonFunction;
+import com.bn.javax.dao.Page;
+import com.huibo.issue.bo.IssueSeverityBo;
+import com.huibo.issue.dao.IssueSeverityDao;
+import com.huibo.issue.po.IssueSeverityPo;
+
+/**
+ * <p>title:缺陷管理系统-IssueSeverityService</p>
+ * 
+ * <p>Description:缺陷严重程度的Service</p>
+ * 
+ * <p>Copyright:Copyright hbrc(c) 2018</p>
+ * 
+ * <p>Company:重庆汇博人才</p>
+ * 
+ * @author 张浩
+ * @version 1.0
+ */
+
+@Service
+public class IssueSeverityService {
+	
+	@Autowired
+	private IssueSeverityDao issueSeverityDao ;
+	/**
+	 * 	查询所有
+	 * @param 
+	 * @return
+	 */
+	public Map<String,Object> getIssueSeverity(IssueSeverityBo bo) {
+		Map<String,Object>map = new HashMap<String, Object>();
+		Page page = new Page(bo);
+		List<IssueSeverityPo> list = issueSeverityDao.getIssueSeverity(page);
+		map.put("rows", list);
+		map.put("total", page.getTotalRecord());
+		return map;
+	}
+	/**
+	 * 	新增
+	 * @param po
+	 * @return
+	 */
+	public Integer addSeverity(IssueSeverityPo po) {
+		po.setModuleState("01");
+		po.setCreateBy(CommonFunction.getUserFromSession().getUserId());
+		po.setModifyBy(CommonFunction.getUserFromSession().getUserId());
+		Integer row = issueSeverityDao.addSeverity(po);
+		return row;
+	}
+	/**
+	 * 	删除
+	 * @param delIds
+	 * @return
+	 */
+	public Integer deleteSeverity(String[] delIds) {
+		return issueSeverityDao.deleteSeverity(delIds);
+	}
+	
+	/**
+	 * 	禁用、启用
+	 */
+	public Integer operation(IssueSeverityBo bo) {
+		return issueSeverityDao.operation(bo);
+	}
+	
+	/**
+	 * 根据编号查询单条数据
+	 * @param po
+	 * @return
+	 */
+	public IssueSeverityPo getSeverityByCode(IssueSeverityPo po) {
+		return issueSeverityDao.getSeverityByCode(po);
+	}
+	
+	/**
+	 * 修改
+	 * @param po
+	 * @return
+	 */
+	public Integer updateSeverity(IssueSeverityPo po) {
+		po.setModifyBy(CommonFunction.getUserFromSession().getUserId());
+		return issueSeverityDao.updateSeverity(po);
+	}
+	
+	/**
+	 * 	表单验证
+	 * @param po
+	 * @return
+	 */
+	public Integer validatePriorityCode(IssueSeverityPo po) {
+		return issueSeverityDao.validatePriorityCode(po);
+	}
+}

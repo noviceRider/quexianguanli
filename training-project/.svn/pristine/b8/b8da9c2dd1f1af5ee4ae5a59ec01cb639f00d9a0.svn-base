@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>功能授权</title>
+		<meta charset="UTF-8">
+		<meta name="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/common/main.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../js/common.js"></script>
+		<script type="text/javascript" src="js/vcl4function-func.js"></script>
+	</head>
+
+	<body class="easyui-layout" style="margin-left:5px;margin-right:5px;">
+		<div data-options="region:'north',border:false" style="height: 80px;">
+			<table class="btbHead">
+				<tr>
+					<td style='width: 25%;'>
+						<img src='../../images/common/title.gif' align='absmiddle'/>功能管理 
+					</td>
+					<td style="text-align: right;">
+						<span id="roleName"></span>
+					</td>
+				</tr>
+			</table>
+			
+			<!-- 查询 -->
+			<table class="btbForm">
+				<tr>
+					<td>
+						关键字&nbsp;<input name="keyWord" class="easyui-textbox" data-options="prompt:'请输入功能编号、功能名称、功能描述、模块名称等关键字'" style="width:340px;"/>
+					</td>
+					<td style="text-align: right;">
+						<a href="javascript:doSearch()" id="searchBtn" class="easyui-linkbutton" iconCls="icon-search">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+						<a href="javascript:doVcl()" id="modifyBtn" class="easyui-linkbutton" iconCls="icon-ok">&nbsp;授&nbsp;&nbsp;权&nbsp;</a>
+						<a href="javascript:doCancel()" id="deleteBtn" class="easyui-linkbutton" iconCls="icon-cancel">取消授权</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- 左侧树形菜单 -->
+		<div data-options="region:'west',split:true" style="width:250px;">
+			<!-- 树形菜单，数据由js动态加载 -->
+			<ul id="tt" class="easyui-tree"></ul>
+		</div>
+		
+		<!-- 功能列表 -->
+		<div data-options="region:'center'">
+			<table id="dg" class="easyui-datagrid" style="width:100%" data-options="onClickRow:onClickRow,selectOnCheck:false,singleSelect:true">
+				<thead>
+					<tr>
+						<th data-options="field:'cb',checkbox:true"></th>
+						<th data-options="field:'funcId',halign:'center'" width="15%">功能编号</th>
+						<th data-options="field:'funcName',halign:'center'" width="20%">功能名称</th>
+						<th data-options="field:'funcDesc',halign:'center'" width="37%">功能描述</th>
+						<th data-options="field:'menuName',halign:'center'" width="15%">所属模块</th>
+						<th data-options="field:'isVcl',align:'center',halign:'center'" width="10%" formatter="isVclFormatter">授权</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</body>
+</html>

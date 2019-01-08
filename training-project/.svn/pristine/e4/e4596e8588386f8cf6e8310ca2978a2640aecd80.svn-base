@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head >
+    	<title>商品典当</title>
+    	<meta charset="UTF-8">
+    	<meta name="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="../../gmodule/js/pageStacker.js"></script>
+    	<script type="text/javascript" src="busiPawn/js/agreement.js"></script>
+	</head>
+  
+	<body>
+		<div id="detailsPage" style="width: 100%;padding:0;margin:0;background:white;border:0px solid rgba(204, 204, 204, 1);float:left">
+				<!-- 内容标题 
+		    	<div style="width:100%;height:40px;padding:0;margin:0;float:left;background:skyblue;">
+		    		<div style="float:left;width:30px;height:30px;border-right:1px solid rgba(204, 204, 204, 1);padding:10px 0 0 10px;"> <img alt="详情" src="images/title.png"> 
+		    		</div>
+		    		<p style="float:left;font-size: 15px;margin:10px 0 0 10px;">商品详情</p>
+		    		<div onclick="closePage()" style="width:30px;height:40px;float:right;cursor:pointer;margin-top:5px">
+						<img alt="X关闭" src="images/close.png">
+					</div>
+		    	</div>-->
+		    	
+		    	<!-- 详情 -->
+		    	<div style="width:100%;float:left;padding:0;margin:0;border-top:0px solid rgba(204, 204, 204, 1);font-size: 14px;">
+		    	
+		    		<table style="width:100%;height:100%">
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="客户资料"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="memberInfo_form" class="easyui-form" method="post">
+	                					<table id="memberDetails_table" collapse="10px" style="width:100%;margin-top:5px;border:0px solid red" >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							会员编号
+					    						</td>
+					    						<td>
+					    							<input id="memberId" name="memberId" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    							<a id="reInput" href="javascript:reInput()" class="easyui-linkbutton" iconCls="icon-search">重新填写</a>
+					    							<label id="tip" style="color: red">会员信息已存在,可使用或者重新填写</label>
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							会员姓名
+					    						</td>
+					    						<td>
+					    							<input id="memberName" name="memberName" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td  style="width:25%;text-align: right;">
+					    							手机号码
+					    						</td>
+					    						<td>
+					    							<input id="mobile"  type="text" name="mobile" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							证件号码
+					    						</td>
+					    						<td>
+					    							<input  id="certNo" name="certNo" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr >
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							账户名称
+					    						</td>
+					    						<td>
+					    							<input id="accountName" name="accountName" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							开户银行
+					    						</td>
+					    						<td>
+					    							<input id="bankName" name="bankName" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+					    					<tr>
+					    						<td style="width:25%;text-align: right;">
+					    							银行卡号
+					    						</td>
+					    						<td>
+					    							<input id="account" name="account" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+					    						</td>
+					    					</tr>
+				    					</table>
+			    					</form>
+                				</div>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="商品资料"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="assessForm" class="easyui-form" method="post">
+		    							<table style="width: 100%;margin-top: 5px">
+		    								<tr>
+	    										<td style="width:25%;text-align: right">商品编号:</td>
+	    										<td><span id="goodsIdPP"></span></td>
+	    									</tr>
+		    								<tr>
+	    										<td style="width:25%;text-align: right">商品名称:</td>
+	    										<td><p  id="goodsNamePP"></p></td>
+	    									</tr>
+	    									
+	    									<tr>
+	    										<td style="width:25%;text-align: right">官方价:</td>
+	    										<td ><span  id="officialPricePP"></span>元</td>
+	    									</tr>
+	    									<tr>
+	    										<td style="width:25%;text-align: right">评估价:</td>
+	    										<td colspan=""><span id="valuationPricePP"></span>元</td>
+	    									</tr>
+	    									<tr>
+	    										<td style="width:25%;text-align: right">典当价:</td>
+	    										<td ><span id="pawnPricePP"></span>元</td>
+	    									</tr>
+	    									<tr>
+	    										<td style="width:25%;text-align: right">客户首买价:</td>
+	    										<td><span id="firstPricePP"></span>元</td>
+	    									</tr>
+	    								</table>
+		    						</form>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="典当协议"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<form id="pawnForm" class="easyui-form" method="post">
+		    							<table style="width: 100%;margin-top: 5px">
+		    								<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							协议编号
+				    						</td>
+				    						<td>
+				    							<input id="pawnId" name="pawnId"  style="padding:0;margin:0;width:240px">
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							当票编号
+				    						</td>
+				    						<td>
+				    							<input id="pawnTicket" name="pawnTicketCode" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td  style="width:25%;text-align: right;">
+				    							放款方式
+				    						</td>
+				    						<td>
+				    							<selector id="payType" name="payType" class="easyui-combobox" data-options="panelHeight:'auto',editable:false" style="padding:0;margin:0;width:240px"></selector>
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							放款金额
+				    						</td>
+				    						<td>
+				    							<input id="loanAmount" name="loanAmount" class="easyui-textbox" style="padding:0;margin:0;width:240px">元
+				    						</td>
+				    					</tr >
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							利息
+				    						</td>
+				    						<td>
+				    							<input id="loanInterest" name="loanInterest" class="easyui-textbox" style="padding:0;margin:0;width:240px">%/天
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							贷款时长
+				    						</td>
+				    						<td>
+				    							<input id="loanTerm" name="loanTerm" class="easyui-textbox" style="padding:0;margin:0;width:240px">天
+				    						</td>
+				    					</tr>
+				    					<tr>
+				    						<td style="width:25%;text-align: right;">
+				    							还款日期
+				    						</td>
+				    						<td>
+				    							<input id="repaymentDate" readonly="readonly" name="repaymentDate" class="easyui-textbox" style="padding:0;margin:0;width:240px">
+				    						</td>
+				    					</tr>
+	    								</table>
+		    						</form>
+                				</div>
+                			</td>
+		    			</tr>
+		    			<tr>
+		    				<td style="width:100%">
+		    					<div id="p" class="easyui-panel" title="鉴定记录"     
+        						style="width:100%;height:auto;padding:10px;background:#fafafa;"   
+        						data-options="closable:false,    
+                				collapsible:false,minimizable:false,maximizable:false">
+                					<div id="goodsImages"  style="width:100%;height:100%;margin:auto;border:0px red solid;text-align: center">
+		    							
+		    							<div id="ShowHistoryIdentifyItems" >
+		    								<table id="agreementshowhistoryIdentifyTable" class="easyui-datagrid" style="width:100%;margin-top: 5px;height:auto"></table>
+		    							</div>
+   									</div>
+                				</div>
+                			</td>
+		    			</tr>
+		    		</table>
+		    	</div>
+			</div>
+			
+			<!-- form表单按钮 -->
+		
+	</body>
+</html>

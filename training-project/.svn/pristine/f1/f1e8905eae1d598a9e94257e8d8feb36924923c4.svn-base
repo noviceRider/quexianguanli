@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>单位信息</title>
+	<link rel="stylesheet" type="text/css" href="../../css/common/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+</head>
+<body>
+	<form name="inputForm" id="inputForm">
+		<table class='btbHead'>
+			<tr>
+				<td style='width: 25%;'>
+					<img src='../../themes/default/images/common/title.gif' align='absmiddle'/> 单位信息 
+				</td>
+				<td style="text-align: right;">
+					<a href="#" id="saveCompanyBtn" class="easyui-linkbutton" onclick="doSave();">&nbsp;保存&nbsp;</a>
+				</td>
+			</tr>
+		</table>
+		
+		<!--表格区域-->
+		<table id="companyInput" class="btbForm">
+			<tr>
+				<td width="13%" align="right">
+					单位名称
+				</td>
+				<td colspan="3">
+					<input type="text" name="companyName" id="companyName" class="required"  style="width: 350px;"/><span class="alertTipNormal">&nbsp*</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="right">
+					单位地址
+				</td>
+				<td colspan="3">
+					<input type="text" name="companyAdr" id="companyAdr" style="width: 350px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					邮政编码
+				</td>
+				<td>
+					<input type="text" name="zipCode" id="zipCode" class="zipcode" style="width: 250px;"/>
+				</td>
+				<td align="right" width="13%">
+					负责人
+				</td>
+				<td width="37%">
+					<input type="text" name="principalMan" id="principalMan" style="width: 250px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					联系电话
+				</td>
+				<td>
+					<input type="text" name="telNo" id="telNo" style="width: 250px;"/>
+				</td>
+				<td align="right">
+					传真号码
+				</td>
+				<td>
+					<input type="text" name="faxNo" id="faxNo" style="width: 250px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					电子邮件
+				</td>
+				<td>
+					<input type="text" name="email" id="email" class="email" style="width: 250px;"/>
+				</td>
+				<td align="right">
+					邮件密码
+				</td>
+				<td>
+					<input type="text" name="emailPwd" style="width: 250px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					单位网址
+				</td>
+				<td>
+					<input type="text" name="webSite" id="webSite" style="width: 250px;"/>
+				</td>
+				<td align="right">
+					帐户名称
+				</td>
+				<td>
+					<input type="text" name="acctName" id="acctName" style="width: 250px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					开户银行
+				</td>
+				<td>
+					<input type="text" name="bankName" id="bankName" style="width: 250px;"/>
+				</td>
+				<td align="right">
+					银行帐号
+				</td>
+				<td>
+					<input type="text" name="acctNo" id="acctNo" style="width: 250px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="top">
+					备注
+				</td>
+				<td colspan="3">
+					<textarea style="width:99% ; height: 80px;" id="remark" name="remark" ></textarea>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+<script>
+	/**
+	* 初始加载数据
+	**/
+	$(function(){
+		$.ajax({  
+			url: basePath + '/company_load1.json',  
+			type: 'post',  
+			dataType: 'json', 
+			beforeSend:Common.ajaxLoading,
+			success:function(data) {
+				Common.loadData(data.company);
+				
+				Common.ajaxLoadEnd();
+			},  
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+	});
+	
+	/**
+	* 保存单位信息
+	**/
+	function doSave() {
+		$.ajax({  
+			url: basePath + '/company_save1.json',  
+			data:  $('#inputForm').serializeObject(),  
+			type: 'post',  
+			dataType: 'json',  
+			success:function(data) {
+				if(data.resultCode) {
+					$.messager.alert('提示','单位信息已经保存成功!','info');
+				}
+				else
+					$.messager.alert('错误','单位信息保存过程中中出现错误!','error');
+			},  
+			error : function() {
+				$.messager.alert('错误','服务器内部错误!','error');
+			}
+		});		
+	}
+</script>
+	
+</html>

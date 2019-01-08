@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>moduleconfig.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    
+    <link rel="stylesheet" type="text/css" href="../../../css/common/main.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/themes/icon.css">
+    
+    <script type="text/javascript" src="../../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../js/common.js" charset="UTF-8"></script>
+	
+	<script type="text/javascript" src="js/moduleconfig.js" charset="UTF-8"></script>
+
+  </head>
+  
+  <body>
+    <!-- 标题以及各种功能按钮 -->
+    <table style="width:100%;padding:5px;">
+    	<tr>
+    		<td style="width:25%">
+    			<img src='../../../images/common/title.gif' style="vertical-align:middle;">模块配置
+    		</td>
+    		<td style="text-align: right;">
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="queryModule()">&nbsp;查&nbsp;&nbsp;询&nbsp;</a>
+    			<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addModule()">&nbsp;新&nbsp;&nbsp;增&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyModule()">&nbsp;修&nbsp;&nbsp;改&nbsp;</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeModule()">&nbsp;删&nbsp;&nbsp;除&nbsp;</a>
+    		</td>
+    	</tr>
+    </table>
+
+  	<!-- 选择不同获取不同的信息 -->
+  	<form id="keyWordForm">
+  		<table class="btbForm">
+			<tr>
+				<td>
+					关键字&nbsp;<input id="keyWord" name="keyWord" class="easyui-textbox" data-options="prompt:'输入模板编号或名称...'" style="height:20px;"></input>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					对应的模板&nbsp;<input id="templateNameIdKeyWord" name="templateName"  class="easyui-textbox" data-options="editable:false,panelHeight:'auto',prompt:'请选择对应模板...'" style="width:200px;"></input><input id="templateCodeIdKeyWord" name="templateCode" type="hidden"></input>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addTemplate('home')"></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					模块分类&nbsp;<input id="moduleCatIdKeyWord" name="moduleCat" class="easyui-combotree" data-options="editable:false,panelHeight:'auto'" style="width:;"></input>
+				</td>
+			</tr>
+		</table>
+  	</form>
+  	
+  	<!-- 定义外边距 -->
+	<div style="margin-top:5px"></div>
+  	
+  	<!-- 定义datagrid数据网格 -->
+	<div id="module_div">
+		<table id="module_dg" style="width:100%;" class="easyui-datagrid" data-options="pagination:true,pageSize:20,striped:true,autoRowHeight:true,rownumbers:true">
+			<thead>
+				<tr>
+					<th data-options="field:'ck',checkbox:'true',hidden:true"></th>
+					
+					<th data-options="field:'moduleCode',alias:'a.module_code',align:'center',halign:'center',sortable:'true'" style="width:15%">模块编号</th>
+					<th data-options="field:'templateName',alias:'a.module_code',align:'center',halign:'center',sortable:'true'" style="width:10%">对应模板</th>
+					<th data-options="field:'moduleName',alias:'a.module_name',align:'left',halign:'center',sortable:'true'" style="width:10%">模块名称</th>
+					<th data-options="field:'moduleDesc',alias:'a.module_desc',align:'left',halign:'center',sortable:'true',hidden:true" style="width:15%">模块描述</th>
+					<th data-options="field:'typeName',alias:'b.type_name',align:'center',halign:'center',sortable:'true'" style="width:10%">模块分类</th>
+					<th data-options="field:'configParam',alias:'b.type_name',align:'left',halign:'center',sortable:'true',hidden:true" style="width:15%">配置参数</th>
+					<th data-options="field:'ver',alias:'a.ver',align:'center',halign:'center',sortable:'true'" style="width:8%">版本号</th>
+					<th data-options="field:'createByName',alias:'a.ver',align:'center',halign:'center',sortable:'true',hidden:true" style="width:">创建人</th>
+					<th data-options="field:'createTime',alias:'a.ver',align:'center',halign:'center',sortable:'true',hidden:true" style="width:">创建时间</th>
+					<th data-options="field:'modifyByName',alias:'a.ver',align:'center',halign:'center',sortable:'true'" style="width:10%">修改人</th>
+					<th data-options="field:'modifyTime',alias:'a.ver',align:'center',halign:'center',sortable:'true'" style="width:15%">修改时间</th>
+					<th data-options="field:'isUsed',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:isUsedFormatter" style="width:7%">是否有效</th>
+					<th data-options="field:'operate',alias:'a.is_used',align:'center',halign:'center',sortable:'true',formatter:operateFormatter" style="width:12%">操作</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+	<!-- 新增、修改页面 -->
+	<div id="dialog_add_modify" style="display: none;"></div>
+
+	<!-- 选择模板页面 -->
+	<div id="dialog_template" style="display: none;"></div>
+	
+	<!-- 详情页面 -->
+	<div id="dialog_detail" style="display: none;"></div>
+
+  </body>
+</html>

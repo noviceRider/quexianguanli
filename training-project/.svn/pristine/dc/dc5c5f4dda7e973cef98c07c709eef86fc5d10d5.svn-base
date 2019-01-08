@@ -1,0 +1,572 @@
+*{
+	-webkit-transition:all 0.5s linear;
+}
+html{font-size:50px;-webkit-tap-highlight-color:transparent;height:100%;min-width:320px;overflow-x:hidden}
+body{height:100%;overflow:hidden; filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#1c75bf,endcolorstr=#013887,gradientType=0);
+    -ms-filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#1c75bf,endcolorstr=#013887,gradientType=0);/*IE8*/	
+    background:#1c75bf; /* 一些不支持背景渐变的浏览器 */  
+    background:-moz-linear-gradient(top, #1c75bf, rgba(100, 87, 13, 1));  
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#1c75bf), to(rgba(0, 39, 95, 1)));  
+    background:-o-linear-gradient(top, #1c75bf, rgba(100, 87, 13, 1)); }
+div,img,input,h2,table,tr,td,select,i,option,button,a,dl,dd,ul,li,b{
+	margin:0;
+	padding:0;
+	font-style:normal;
+	font: 14px/1.6 tahoma,arial,sans-serif;
+	color:#333;
+	box-sizing: border-box;
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+canvas{z-index:-1;position:absolute;}
+.wrap{
+	width:890px;
+	margin:0 auto;
+	overflow:auto;/*margin嵌套问题*/
+    height: auto;
+    margin: 10% auto 0 auto;
+}
+.wrap:before{/*margin嵌套问题*/
+	content:'';
+	display:table;
+}
+.logo{
+	width:100%;
+	height:52px;
+	margin-top:30px;
+}
+.logo a{
+	width:220px;
+	height:100%;
+	text-decoration: none;
+	display:inline-block;
+}
+.logo a img{
+	display:block;
+}
+
+.register-wrap{
+	width:100%;
+}
+.register-wrap:after{/*内容没有撑开盒子的处理方法*/
+	content:'';
+	display:block;
+	clear:both;
+}
+.register-wrap .pic{
+	width:40%;
+	padding: 20px 0 0 40px;
+	float:left;
+	display:inline-block;
+}
+.register-wrap .register{
+	width:400px;
+	float:right;
+	display:inline-block;
+	border:1px solid #568cc5;
+	background-color:rgba(107,163,221,0.2);
+	border-radius:8px;
+}
+.register-wrap .register .register-top{
+	border-bottom: 0px solid #2c73be;
+	box-sizing: content-box;
+	padding: 8px 0 0 0;
+	display:block;
+	/*点击切换到扫码登录时隐藏*/
+}
+.register-top:after{
+	/*内容没有撑开盒子的处理方法*/
+	content:'';
+	display:block;
+	clear:both;
+}
+.register-wrap .register .register-top h2{
+	font-size: 14px;
+	color: #e7f2f4;
+	height: 42px;
+	line-height: 42px;
+	font-weight:800;
+	letter-spacing: 1px;
+	float:left;
+	cursor: pointer;
+	width:119px;
+	text-align: center;
+	position:relative;
+} 
+.register-wrap .register .register-top h2.normal{
+	border-bottom: 2px solid #49d4fb;
+	margin-left:40px;
+	top:4px;
+}
+.register-wrap .register .register-top h2.nopassword{
+	/* border-bottom: 2px solid #49d4fb; */
+	margin-left:36px;
+	top:4px;
+}
+
+.register-wrap .register .register-top a{
+	display:inline-block;
+	float:right;
+	width:46px;
+	height:46px;
+	margin-right:8px;
+	background:url(../images/erweima_46x46.png) no-repeat 0 0;
+}
+
+/*=======普通登录样式===========*/
+
+.register-wrap .register .register-con{
+	padding: 0 0 30px 38px;
+	 display:block; 
+	 /*切换到其他登录方式时，隐藏*/
+}
+.register-wrap .register .register-con:after{
+	/*内容没有撑开盒子的处理方法*/
+	content:'';
+	display:block;
+	clear:both;
+}
+.register-wrap .register .register-con ul{
+	margin-top:20px;
+}
+
+.register-wrap .register .register-con ul li {
+	margin-bottom:10px;
+	vertical-align: top;
+	/* border:1px solid #ccc; */
+}
+.register-con ul #rc-inner-num,#rc-inner-virity {
+	width:300px;
+	height:32px;
+	padding:0 6px;
+	color:#ffd797;
+	border:1px solid #ffd797;
+	display:none;
+}
+
+.register-con ul #rc-inner-num>i,#rc-inner-virity>i,#rc-innerError>i{
+	display:inline-block;
+	float:left;
+	width:20px;
+	height:20px;
+	margin:6px 10px;
+	border:none;
+	background:url(../images/bz_16x16.png) no-repeat 0 0;
+}
+.register-con ul #rc-inner-num>span,#rc-inner-virity>span,#rc-innerError>span{
+	color:#ffd797;
+	display:inline-block;
+	float:left;
+	line-height:30px;
+	font-size:12px;
+}
+.register-wrap .register .register-con ul li  input{
+	width:300px;
+	height: 40px;
+	line-height:40px;
+    padding: 0 6px; 
+    font-size:100%;
+    display:inline-block;
+	vertical-align: top;
+}
+/*清除IE10中的text和password的默认图标*/
+::-ms-clear{ display:none; }
+::-ms-reveal{ display:none; }
+
+.register-wrap .register .register-con ul li i{
+	display:inline-block;
+	width:104px;
+	height:40px;
+	text-align: center;
+	line-height:40px;
+	margin-right:10px;
+	font-size:14px;
+	border:1px solid #ccc;
+	background:#eaeaea;
+	vertical-align: top;
+}
+.register-wrap .register .register-con ul li  .btn{
+	width:104px;
+	margin-left:10px;
+	height: 40px;
+    padding: 0 6px;
+    font-size:100%;
+    border-radius: 0;
+    /* display:inline-block; */
+    border:1px solid #ccc;
+    vertical-align: top;
+}
+.register-wrap .register .register-con ul li button{
+	display: inline;
+	border: none;
+	width: 300px;
+	height: 40px;
+	padding: 0 6px;
+	background: #27c6f3;
+	border-radius: 2px;
+	cursor: pointer;
+	color: #fff;
+}
+.register-wrap .register .register-con ul li.read{
+	padding-bottom:20px;
+}
+.register-wrap .register .register-con ul li.read input{
+	width:14px;
+	height:14px; 
+	/*IE8-11的兼容性*/
+	height:18px\0;
+	width:104px\0;
+	line-height:18px\0;
+	margin-left:-45px\0;
+
+	line-height:14px;
+	display:inline-block;
+	margin-right:10px;
+	font-size:14px;
+	border-radius: 0;
+	outline:none;
+	float:left;
+	vertical-align: top; 
+}
+.register-wrap .register .register-con ul li.read b{
+	margin-left:-8px;
+	margin-left:-50px\0;
+	vertical-align: top\0;
+	color:#99c0e9;
+	float:left;
+}
+.register-wrap .register .register-con ul li.read a{
+	text-decoration: none;
+	float:right;
+	margin-right:60px;
+}
+ .register-wrap .register .register-con ul li a{
+	text-decoration: none;
+}
+.register-wrap .register .register-con ul li a{
+	display:inline-block;
+	color:#99c0e9;
+} 
+ .register-wrap .register .register-con ul li a.haiwai{
+	float:left;
+}
+.register-wrap .register .register-con ul li a.zhuce{
+	float:right;
+	margin-right:60px;
+} 
+.register-wrap .register .register-con ul li.zjdl{
+	clear:both;
+	color:#99c0e9;
+	padding:20px 0;
+}
+.register-wrap .register .register-con ul li div{
+	width:100px;
+	height:36px;
+	float:left;
+	margin-right:6px;
+	border:1px solid #ccc;
+	cursor: pointer;
+}
+.register-wrap .register .register-con ul li div.qq{
+
+	background:url(../images/sprite_200x300.png) no-repeat 0 -120px ;
+}
+.register-wrap .register .register-con ul li div.weixin{
+	background:url(../images/sprite_200x300.png) no-repeat 0 -200px ;
+}
+.register-wrap .register .register-con ul li div.weibo{
+	background:url(../images/sprite_200x300.png) no-repeat 0 -160px;
+}
+
+/*=========手机号码无密码登录==========*/
+.register-wrap .register .login-con{
+	padding: 0 0 30px 38px;
+	display:none;
+	/*切换到其他登录方式时，隐藏*/
+}
+.login-con:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+.login-con ul{
+	margin-top:20px;
+}
+.login-con ul:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.login-con ul li{
+	margin-bottom:10px;
+}
+.login-con ul #inner-num,#inner-virity {
+	width:300px;
+	height:32px;
+	padding:0 6px;
+	color:#ff1877;
+	border:1px solid #ffd797;
+	display:none;
+}
+.login-con ul #inner-num>i,#inner-virity>i{
+	display:inline-block;
+	float:left;
+	width:20px;
+	height:20px;
+	margin:6px 10px;
+	border:none;
+	background:url(../images/bz_16x16.png) no-repeat 0 0;
+}
+.login-con ul #inner-num>span,#inner-virity>span{
+	color:#ff1877;
+	display:inline-block;
+	float:left;
+	line-height:26px;
+}
+.login-con ul li.lg-num select{
+	height: 30px;
+	width:104px;
+	margin-right: 10px;
+	line-height: 1.5;
+	border: 1px solid #c4c4c4;
+	border-radius: 0;
+	color: #333;
+	font-size: 14px;
+	padding: 4px 35px 4px 10px; 
+	 /*将默认的select选择框样式清除*/
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+
+	background:url('../images/arrow_29x30.png') no-repeat scroll right center #fff;
+	vertical-align: top;/*处理li中的元素错位问题*/
+	width:104px\0;
+	background:none\0;
+	padding: 4px 6px 4px 6px\0;
+}
+.login-con ul li.lg-num input{
+	width:300px;
+	height: 40px;
+	line-height:40px;
+    padding: 0 6px; 
+    font-size:100%;
+    display:inline-block;
+	vertical-align: top;
+}
+.login-con ul li.password input{
+	width:300px;
+	height: 40px;
+	line-height:40px;
+    padding: 0 6px; 
+    font-size:100%;
+    display:inline-block;
+}
+.register-wrap .register .login-con ul li button{
+	display: inline;
+	border: none;
+	width: 300px;
+	height: 40px;
+	padding: 0 6px;
+	background: #27c6f3;
+	border-radius: 2px;
+	cursor: pointer;
+	color: #fff;
+}
+.register-wrap .register .login-con ul li button.getcode{
+	color:#fff;
+	background-color:rgba(0,0,0,0.3);
+	border:1px solid #212545;
+}
+.register-wrap .register .login-con ul li.read{
+	padding-bottom:20px;
+}
+.register-wrap .register .login-con ul li.read input{
+	width:14px;
+	height:14px; 
+	height:18px\0;
+	width:104px\0;
+	line-height:18px\0;
+	margin-left:-45px\0;/*IE8-11的兼容性*/
+	line-height:14px;
+	display:inline-block;
+	margin-right:10px;
+	font-size:14px;
+	border-radius: 0;
+	outline:none;
+	float:left;
+	vertical-align: top; 
+}
+.register-wrap .register .login-con ul li.read b{
+	margin-left:-8px;
+	margin-left:-50px\0;
+	vertical-align: top\0;
+	color:#99c0e9;
+	float:left;
+}
+.register-wrap .register .login-con ul li.read a{
+	text-decoration: none;
+	float:right;
+	margin-right:60px;
+}
+ .register-wrap .register .login-con ul li a{
+	text-decoration: none;
+}
+.register-wrap .register .login-con ul li a{
+	display:inline-block;
+	color:#99c0e9;
+	text-decoration: none;
+} 
+ .register-wrap .register .login-con ul li a.haiwai{
+	float:left;
+	text-decoration: none;
+}
+.register-wrap .register .login-con ul li a.zhuce{
+	float:right;
+	margin-right:60px;
+	text-decoration: none;
+} 
+.register-wrap .register .login-con ul li.zjdl{
+	clear:both;
+	color:#99c0e9;
+	padding:20px 0;
+}
+.register-wrap .register .login-con ul li div{
+	width:100px;
+	height:36px;
+	float:left;
+	margin-right:6px;
+	border:1px solid #ccc;
+	cursor: pointer;
+}
+.register-wrap .register .login-con ul li div.qq{
+	background:url(../images/sprite_200x300.png) no-repeat 0 -120px ;
+}
+.register-wrap .register .login-con ul li div.weixin{
+	background:url(../images/sprite_200x300.png) no-repeat 0 -200px ;
+}
+.register-wrap .register .login-con ul li div.weibo{
+	background:url(../images/sprite_200x300.png) no-repeat 0 -160px;
+}
+/*=========扫码登录==============*/
+.saoma{
+   /*  height: 380px; */
+    width: 350px;
+  	padding:0 0 30px 40px;
+  	display:none;
+  	/*该登录方式下，只有点击右上角图标才能切换到其他登录方式*/
+}
+.saoma>div{
+	border:none;
+}
+.saoma .screen-tu{
+	width:53px;
+	height:53px;
+	position:relative;
+	left:298px;
+	top:10px;
+	cursor: pointer;
+	background:url(../images/tubiao_52x53.png) no-repeat;
+	background-position:0 0 ;
+}
+.saoma .saoyisao{
+	position: relative;
+    height: 80px;
+    top: -20px;
+    width: 200px;
+    background: url(../images/saoyisao_190x37.png) no-repeat;
+}
+.saoma .qr-code{
+	width:152px;
+	height:152px;
+	margin:0 auto;
+	position:relative;
+	top:-30px;
+}
+.saoma .qr-code img{
+	display:block;
+}
+.saoma .link{
+	width:200px;
+	height: 30px;
+	bottom: 0;
+	position:relative;
+	left:50%;
+	margin-left:-85px;
+	height:30px;
+}
+.saoma .link a{
+	text-decoration: none;
+	font-size: 16px;
+	line-height:30px;
+	font-family: Microsoft YaHei;
+	color:#5e93c9;
+	letter-spacing: 1px;
+}
+
+/*========footer部分样式开始==========*/
+.footer{
+	width:100%;
+	position:absolute;
+	bottom:0px
+}
+
+.footer-wrap{
+	width:70%;
+	margin:0 auto;
+}
+.footer-wrap-top{
+	padding-top:25px;
+	margin-bottom:30px;
+}
+.footer-wrap-top:after{
+	/*内容没有撑开盒子的处理方法*/
+	content:'';
+	display:block;
+	clear:both;
+}
+.footer-wrap-top-left{
+	float:left;
+}
+.footer-wrap-top-left dl{
+	float:left;
+	width:130px;
+}
+.footer-wrap-top-left dl dt{
+	font-size: 14px;
+	color: #333;
+	margin-bottom:8px;
+}
+.footer-wrap-top-left dl dd a{
+	display: block;
+	color: #575884;
+	line-height: 24px;
+}
+.footer-wrap-top-left dl.bz dd a:hover{
+	text-decoration:none;
+}
+.footer-wrap-top-right{
+	float:right;
+}
+.footer-wrap-top-right h2{
+	font-size: 14px;
+	padding:10px 0;
+	font-weight: 800;
+	letter-spacing: 1px;
+}
+.footer-bottom{
+	clear:both;
+	width:100%;
+	text-align:center;
+	color: #5981aa;
+	height: 40px;
+	font-size:12px;
+	line-height: 40px;
+}
+/*========footer部分样式结束==========*/

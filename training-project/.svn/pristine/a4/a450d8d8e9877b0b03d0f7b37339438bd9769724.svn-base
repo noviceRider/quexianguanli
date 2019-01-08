@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bn.gmodule.dataaccess.dao.AccessCategoryDao">
+	<!-- 返回数据类型(PO)数据对象 -->
+	<sql id="resultAccessCategoryObj">
+		select
+			t.category_code 	"categoryCode",
+			t.category_name 	"categoryName",
+			t.p_category_code	"pcategoryCode",
+			t.package_name		"packageName",
+			t.category_path		"categoryPath",
+			t.is_used 			"isUsed",
+			t.sort_no 			"sortNo",
+			t.category_code		"id",
+			t.category_name		"text"
+	</sql>
+
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findPage" parameterType="com.bn.javax.dao.Page" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		<where>
+		 	1 = 1
+			<if test="params.bo.keyword != null and params.bo.keyword != ''">
+				and (t.category_name like '%${params.bo.keyword}%' or
+					t.package_name like '%${params.bo.keyword}%')
+			</if>
+		</where>
+		<if test="params.bo.sort != null and params.bo.sort != ''">
+			order by ${params.bo.sort}
+			<if test="params.bo.order != null and params.bo.order != ''">
+				 ${params.bo.order}
+			</if>
+		</if>
+		<!-- 设置默认排序 -->
+		<if test="params.bo.order == null or params.bo.order == ''">
+			order by t.sort_no desc
+		</if>		
+	</select>
+	
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findAll" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t	
+		order by t.sort_no
+	</select>
+	
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findAllLeaf" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		where t.is_used = '1' and
+		t.category_code not in (select p_category_code from code_data_access_category)	
+		order by t.sort_no
+	</select>
+	
+	<!-- 查询出指定分类的所有叶子节点，返回查询出的数据结果集 -->
+	<select id="findAllLeafByPath" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo"   resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		where t.is_used = '1' and
+			t.category_code not in (select p_category_code from code_data_access_category)	
+			and t.category_path like '${categoryPath}%'
+		order by t.sort_no
+	</select>
+
+	<!-- 查询出指定分类的所有非根节点，返回查询出的数据结果集 -->
+	<select id="findAllSubByPath" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo"   resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		where t.is_used = '1'
+			and t.p_category_code != -1	
+			and t.category_path like '${categoryPath}%'
+		order by t.sort_no
+	</select>
+	
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findByParent" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		<where>
+		 	1 = 1 and t.p_category_code = #{categoryCode}
+			<if test="keyword != null and keyword != ''">
+				and (t.category_name like '%${keyword}%' or
+					t.package_name like '%${keyword}%')
+			</if>
+			<if test="isUsed != null and isUsed != '' and isUsed != '-1'">
+				and t.is_used = #{isUsed}
+			</if>
+		</where>
+		order by t.sort_no	
+	</select>
+	
+	<!-- 返回查询出的数据结果集 -->
+	<select id="findByCode" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		<include refid="resultAccessCategoryObj"/>
+		from code_data_access_category t
+		where t.category_code = #{categoryCode}
+	</select>
+	
+	<!-- 统计子节点数量 -->
+	<select id="getCountChildNum" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo" resultType="com.bn.gmodule.dataaccess.po.AccessCategoryPo">
+		select 
+			count(category_code) "childNum"
+		from code_data_access_category 
+		where p_category_code = #{pcategoryCode}
+		<if test="isUsed != null and isUsed != '' and isUsed != '-1'">
+				and is_used = #{isUsed}
+			</if>
+	</select>
+	
+	<!-- 添加数据访问分类信息 -->
+	<insert id="addCategory" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo">
+		insert into code_data_access_category
+		(
+			category_code,
+			category_name,
+			p_category_code,
+			package_name,
+			category_path,
+			is_used,
+			sort_no
+		) values(
+			#{categoryCode, jdbcType = VARCHAR},
+			#{categoryName, jdbcType = VARCHAR},
+			#{pcategoryCode, jdbcType = VARCHAR},
+			#{packageName, jdbcType = VARCHAR},
+			#{categoryPath, jdbcType = VARCHAR},
+			#{isUsed, jdbcType = CHAR},
+			#{sortNo, jdbcType = VARCHAR}
+		)
+	</insert>
+	
+	<!-- 修改信息 -->
+	<update id="modifyCategory" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo">
+		update code_data_access_category set
+			category_name = #{categoryName, jdbcType = VARCHAR},
+			package_name = #{packageName, jdbcType = VARCHAR},
+			category_path = #{categoryPath, jdbcType = VARCHAR},
+			is_used = #{isUsed, jdbcType = CHAR},
+			sort_no = #{sortNo, jdbcType = VARCHAR}
+		where category_code = #{categoryCode}
+	</update>
+	
+	<!-- 删除数据（设置为无效） -->
+	<update id="deleteCategory" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo">
+		update code_data_access_category set
+			is_used = '0'
+		where category_code = #{categoryCode}
+	</update>
+	
+	<!-- 删除数据 -->
+	<delete id="removeCategory" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo">
+		delete from code_data_access_category 
+		where category_code = #{categoryCode}
+	</delete>
+	
+	<!-- 删除根节点下的所有节点数据 -->
+	<delete id="removeCategoryByRoot" parameterType="com.bn.gmodule.dataaccess.bo.AccessCategoryBo">
+		delete from code_data_access_category 
+		where category_path like '${categoryCode}%'
+	</delete>
+
+</mapper>
